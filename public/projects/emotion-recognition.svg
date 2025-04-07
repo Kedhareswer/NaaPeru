@@ -1,0 +1,65 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#d1d5db"/>
+  
+  <!-- Face Container -->
+  <g transform="translate(250,150)">
+    <!-- Minimalist Face -->
+    <circle cx="150" cy="150" r="100" fill="none" stroke="#6b7280" stroke-width="2"/>
+    
+    <!-- Facial Features -->
+    <g transform="translate(150,150)">
+      <!-- Eyes -->
+      <line x1="-40" y1="-20" x2="-20" y2="-20" stroke="#6b7280" stroke-width="3"/>
+      <line x1="20" y1="-20" x2="40" y2="-20" stroke="#6b7280" stroke-width="3"/>
+      
+      <!-- Smile -->
+      <path d="M -30 20 Q 0 40 30 20" fill="none" stroke="#6b7280" stroke-width="3"/>
+    </g>
+  </g>
+  
+  <!-- Analysis Grid -->
+  <g transform="translate(500,150)">
+    <!-- Emotion Bars -->
+    <g>
+      <rect x="0" y="0" width="150" height="16" fill="#9ca3af"/>
+      <rect x="0" y="0" width="120" height="16" fill="#6b7280"/>
+      <text x="160" y="12" font-family="system-ui" font-size="14" fill="#6b7280">Happy 80%</text>
+    </g>
+    
+    <g transform="translate(0,30)">
+      <rect x="0" y="0" width="150" height="16" fill="#9ca3af"/>
+      <rect x="0" y="0" width="45" height="16" fill="#6b7280"/>
+      <text x="160" y="12" font-family="system-ui" font-size="14" fill="#6b7280">Sad 30%</text>
+    </g>
+    
+    <g transform="translate(0,60)">
+      <rect x="0" y="0" width="150" height="16" fill="#9ca3af"/>
+      <rect x="0" y="0" width="75" height="16" fill="#6b7280"/>
+      <text x="160" y="12" font-family="system-ui" font-size="14" fill="#6b7280">Neutral 50%</text>
+    </g>
+  </g>
+  
+  <!-- Status Indicator -->
+  <g transform="translate(50,50)">
+    <circle cx="0" cy="0" r="6" fill="#6b7280"/>
+    <text x="16" y="4" font-family="system-ui" font-size="14" fill="#6b7280">Active</text>
+  </g>
+  
+  <!-- Neural Network Visualization -->
+  <g transform="translate(200,400)">
+    <!-- Nodes and Connections -->
+    <g stroke="#9ca3af" stroke-width="1">
+      <line x1="0" y1="0" x2="50" y2="-20"/>
+      <line x1="0" y1="0" x2="50" y2="20"/>
+      <line x1="50" y1="-20" x2="100" y2="0"/>
+      <line x1="50" y1="20" x2="100" y2="0"/>
+    </g>
+    
+    <g fill="#6b7280">
+      <circle cx="0" cy="0" r="4"/>
+      <circle cx="50" cy="-20" r="4"/>
+      <circle cx="50" cy="20" r="4"/>
+      <circle cx="100" cy="0" r="4"/>
+    </g>
+  </g>
+</svg>
