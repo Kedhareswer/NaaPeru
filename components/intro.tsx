@@ -1,4 +1,5 @@
 "use client"
+
 import { useRef, useState, useEffect } from "react"
 import { motion, useScroll, useTransform, useMotionValueEvent, useSpring, AnimatePresence } from "framer-motion"
 import { ArrowDown, Code, Sparkles, Database } from "lucide-react"
@@ -9,35 +10,28 @@ export default function Intro() {
   const [textReveal, setTextReveal] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   
-  // Scroll progress for parallax and fade effects
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
   })
 
-  // Smooth spring animation for scroll progress
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001
   })
 
-  // Transform values based on scroll position
   const opacity = useTransform(smoothProgress, [0, 0.4], [1, 0])
   const scale = useTransform(smoothProgress, [0, 0.4], [1, 0.8])
   const y = useTransform(smoothProgress, [0, 0.4], [0, -50])
-  
-  // Parallax effects for different elements
   const imageY = useTransform(smoothProgress, [0, 1], [0, 100])
   const backgroundY = useTransform(smoothProgress, [0, 1], [0, -50])
   
-  // Trigger text reveal animation after component mounts
   useEffect(() => {
     const timer = setTimeout(() => setTextReveal(true), 500)
     return () => clearTimeout(timer)
   }, [])
 
-  // Track scroll position to trigger animations
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     if (latest > 0.05 && !scrolled) {
       setScrolled(true)
@@ -46,16 +40,14 @@ export default function Intro() {
     }
   })
 
-  // Character animation for text reveal
   const nameChars = "Kedhareswer".split("")
   
   return (
     <section
       id="intro"
       ref={containerRef}
-      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-white to-gray-50 dark:from-zinc-900 dark:to-zinc-800"
+      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-white to-gray-50 dark:from-zinc-900 dark:to-zinc-800"
     >
-      {/* Background elements with parallax effect */}
       <motion.div 
         className="absolute inset-0 w-full h-full"
         style={{ y: backgroundY }}
@@ -63,7 +55,6 @@ export default function Intro() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.8)_0%,rgba(255,255,255,0)_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(30,30,30,0.8)_0%,rgba(30,30,30,0)_70%)] z-0" />
       </motion.div>
       
-      {/* Primary noise texture overlay with subtle animation */}
       <motion.div 
         className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-25 z-10"
         style={{
@@ -82,7 +73,6 @@ export default function Intro() {
         aria-hidden="true"
       />
       
-      {/* Secondary noise layer with different blend mode for depth */}
       <motion.div 
         className="absolute inset-0 pointer-events-none mix-blend-soft-light opacity-10 z-10"
         style={{
@@ -104,7 +94,6 @@ export default function Intro() {
         aria-hidden="true"
       />
       
-      {/* Floating icons with random movement */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[Code, Database, Sparkles].map((Icon, i) => (
           <motion.div 
@@ -131,23 +120,21 @@ export default function Intro() {
         ))}
       </div>
 
-      {/* Main content with scroll-based animations */}
       <motion.div 
-        className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12" 
+        className="absolute inset-0 flex items-center justify-center px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-12" 
         style={{ opacity, scale, y }}
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 w-full max-w-7xl mx-auto">
-          {/* Left column - Text content */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 w-full max-w-7xl mx-auto">
           <motion.div
             ref={textRef}
-            className="p-4 sm:p-6 lg:p-8 flex flex-col justify-center space-y-4 sm:space-y-6 lg:space-y-8"
+            className="p-4 md:p-6 lg:p-8 flex flex-col justify-center space-y-4 md:space-y-6 lg:space-y-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
             <div className="overflow-hidden">
               <motion.h2
-                className="text-sm sm:text-base uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400 font-light"
+                className="text-sm md:text-base uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400 font-light"
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -158,17 +145,17 @@ export default function Intro() {
             
             <div className="overflow-hidden">
               <motion.h1
-                className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-extralight leading-[1.1] sm:leading-tight tracking-tighter"
+                className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extralight leading-tight tracking-tighter"
                 initial={{ y: 100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
                 <span className="block">
-                  <span className="inline-block mr-4 text-zinc-400 dark:text-zinc-500">Hey,</span>
+                  <span className="inline-block mr-2 md:mr-4 text-zinc-400 dark:text-zinc-500">Hey,</span>
                   <span className="inline-block">I'm</span>
                 </span>
-                <div className="mt-2 sm:mt-4 overflow-hidden">
-                  <div className="flex">
+                <div className="mt-2 md:mt-4 overflow-hidden">
+                  <div className="flex flex-wrap">
                     {nameChars.map((char, index) => (
                       <motion.span 
                         key={index}
@@ -191,7 +178,7 @@ export default function Intro() {
 
             <div className="overflow-hidden">
               <motion.p
-                className="text-sm sm:text-base lg:text-lg xl:text-xl font-normal max-w-sm sm:max-w-xl lg:max-w-2xl text-zinc-600 dark:text-zinc-400 leading-relaxed"
+                className="text-sm md:text-base lg:text-lg max-w-xl text-zinc-600 dark:text-zinc-400 leading-relaxed"
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
@@ -201,14 +188,14 @@ export default function Intro() {
             </div>
 
             <motion.div
-              className="mt-6 lg:mt-12 space-y-4 lg:space-y-6"
+              className="mt-6 lg:mt-8 space-y-4 lg:space-y-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1 }}
             >
               <div className="overflow-hidden">
                 <motion.p 
-                  className="text-base xs:text-lg sm:text-xl font-medium text-zinc-800 dark:text-zinc-200 tracking-tight"
+                  className="text-lg md:text-xl font-medium text-zinc-800 dark:text-zinc-200 tracking-tight"
                   initial={{ y: 40 }}
                   animate={{ y: 0 }}
                   transition={{ duration: 0.5, delay: 1.1 }}
@@ -219,7 +206,7 @@ export default function Intro() {
               
               <div className="overflow-hidden">
                 <motion.p 
-                  className="text-xs xs:text-sm sm:text-base text-zinc-600 dark:text-zinc-400 font-light tracking-wide"
+                  className="text-sm md:text-base text-zinc-600 dark:text-zinc-400 font-light tracking-wide"
                   initial={{ y: 40 }}
                   animate={{ y: 0 }}
                   transition={{ duration: 0.5, delay: 1.2 }}
@@ -229,7 +216,7 @@ export default function Intro() {
               </div>
               
               <motion.div 
-                className="flex flex-wrap gap-3 sm:gap-4 mt-4 sm:mt-6"
+                className="flex flex-wrap gap-3 md:gap-4 mt-4 md:mt-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 1.4 }}
@@ -246,7 +233,7 @@ export default function Intro() {
                     download={link.download}
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noopener noreferrer" : undefined}
-                    className={`inline-flex items-center px-4 py-2 text-sm sm:text-base border-2 rounded-lg transition-all duration-300 ${link.primary ? 
+                    className={`inline-flex items-center px-4 py-2 text-sm md:text-base border-2 rounded-lg transition-all duration-300 ${link.primary ? 
                       'border-zinc-900 dark:border-zinc-100 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 hover:bg-transparent hover:text-zinc-900 dark:hover:bg-transparent dark:hover:text-zinc-100' : 
                       'border-zinc-900 dark:border-zinc-100 hover:bg-zinc-900 hover:text-white dark:hover:bg-zinc-100 dark:hover:text-zinc-900'}`}
                     initial={{ opacity: 0, y: 20 }}
@@ -262,23 +249,22 @@ export default function Intro() {
             </motion.div>
           </motion.div>
 
-          {/* Right column - Profile image with effects */}
           <motion.div
-            className="relative w-full aspect-[4/5] lg:aspect-square flex items-center justify-center p-4 sm:p-6 lg:p-8 mx-auto max-w-[320px] sm:max-w-[500px] lg:max-w-none"
+            className="relative w-full aspect-square max-w-[280px] md:max-w-[400px] lg:max-w-none mx-auto flex items-center justify-center p-4 md:p-6 lg:p-8"
             style={{ y: imageY }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.5 }}
           >
             <motion.div 
-              className="absolute inset-0 bg-gradient-to-br from-zinc-100/50 to-zinc-300/50 dark:from-zinc-800/50 dark:to-zinc-900/50 rounded-2xl sm:rounded-3xl transform rotate-[-4deg] scale-[0.96] z-0"
+              className="absolute inset-0 bg-gradient-to-br from-zinc-100/50 to-zinc-300/50 dark:from-zinc-800/50 dark:to-zinc-900/50 rounded-2xl md:rounded-3xl transform rotate-[-4deg] scale-[0.96] z-0"
               initial={{ opacity: 0, rotate: -8, scale: 0.9 }}
               animate={{ opacity: 1, rotate: -4, scale: 0.96 }}
               transition={{ duration: 1, delay: 0.7 }}
             />
             
             <motion.div
-              className="relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden border border-white/20 dark:border-zinc-700/50 shadow-2xl backdrop-blur-sm z-10"
+              className="relative w-full h-full rounded-2xl md:rounded-3xl overflow-hidden border border-white/20 dark:border-zinc-700/50 shadow-2xl backdrop-blur-sm z-10"
               initial={{ opacity: 0, scale: 0.9, rotate: 4 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{ duration: 1, delay: 0.9 }}
@@ -302,26 +288,16 @@ export default function Intro() {
                   className="w-full h-full object-cover transition-transform duration-700"
                 />
               </motion.div>
-              
-              <motion.div
-                className="absolute -bottom-3 sm:-bottom-4 -right-3 sm:-right-4 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 px-4 sm:px-5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl shadow-xl backdrop-blur-sm border border-white/20 dark:border-zinc-900/50 z-20"
-                initial={{ x: 50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 1.2, type: "spring" }}
-                whileHover={{ y: -4, scale: 1.05 }}
-              >
-              </motion.div>
             </motion.div>
             
-            {/* Decorative elements */}
             <motion.div 
-              className="absolute -bottom-4 -left-4 w-16 h-16 bg-zinc-200 dark:bg-zinc-700 rounded-full z-0"
+              className="absolute -bottom-4 -left-4 w-12 md:w-16 h-12 md:h-16 bg-zinc-200 dark:bg-zinc-700 rounded-full z-0"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 0.5 }}
               transition={{ duration: 0.6, delay: 1.3 }}
             />
             <motion.div 
-              className="absolute -top-4 -right-4 w-24 h-24 bg-zinc-200 dark:bg-zinc-700 rounded-full z-0"
+              className="absolute -top-4 -right-4 w-16 md:w-24 h-16 md:h-24 bg-zinc-200 dark:bg-zinc-700 rounded-full z-0"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 0.3 }}
               transition={{ duration: 0.6, delay: 1.4 }}
@@ -330,11 +306,10 @@ export default function Intro() {
         </div>
       </motion.div>
 
-      {/* Scroll indicator with animation */}
       <AnimatePresence>
         {!scrolled && (
           <motion.div
-            className="absolute bottom-6 sm:bottom-8 lg:bottom-10 left-1/2 transform -translate-x-1/2"
+            className="absolute bottom-6 md:bottom-8 lg:bottom-10 left-1/2 transform -translate-x-1/2"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -342,7 +317,7 @@ export default function Intro() {
           >
             <motion.a
               href="#about"
-              className="flex flex-col items-center clickable group"
+              className="flex flex-col items-center group"
               animate={{ y: [0, 10, 0] }}
               transition={{
                 y: { repeat: Number.POSITIVE_INFINITY, duration: 1.5, repeatType: "reverse" },
@@ -360,6 +335,5 @@ export default function Intro() {
         )}
       </AnimatePresence>
     </section>
-  );
+  )
 }
-

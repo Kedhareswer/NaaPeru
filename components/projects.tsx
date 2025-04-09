@@ -25,7 +25,6 @@ type Project = {
   duration?: string
 }
 
-// Add featured projects from featured-work.tsx
 const projects: Project[] = [
   // Featured projects
   {
