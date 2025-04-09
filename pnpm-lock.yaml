@@ -101,6 +101,12 @@ importers:
       '@react-three/fiber':
         specifier: 8.13.0
         version: 8.13.0(@types/react@19.0.12)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(three@0.146.0)
+      '@splinetool/react-spline':
+        specifier: ^4.0.0
+        version: 4.0.0(@splinetool/runtime@1.9.82)(next@15.1.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@splinetool/runtime':
+        specifier: ^1.9.82
+        version: 1.9.82
       '@supabase/ssr':
         specifier: 0.6.1
         version: 0.6.1(@supabase/supabase-js@2.43.4)
@@ -1106,6 +1112,20 @@ packages:
       react-native:
         optional: true
 
+  '@splinetool/react-spline@4.0.0':
+    resolution: {integrity: sha512-FqrV7/K2q998Y0t83QUauQxsifKWAg9CFZoSb64qRuH7IfHkDs5/OgU1ACkg0aTgsEPtFlH+kATQ+8X6MrizHQ==}
+    peerDependencies:
+      '@splinetool/runtime': '*'
+      next: '>=14.2.0'
+      react: '*'
+      react-dom: '*'
+    peerDependenciesMeta:
+      next:
+        optional: true
+
+  '@splinetool/runtime@1.9.82':
+    resolution: {integrity: sha512-qfNTnezSGuh7nPUPgRVfpH+g2FYywvYmHzOLmp8dahMxuY7HshOwLEhKVapaaWxIpq4h/WweU83pBWb48bwA8A==}
+
   '@supabase/auth-js@2.64.2':
     resolution: {integrity: sha512-s+lkHEdGiczDrzXJ1YWt2y3bxRi+qIUnXcgkpLSrId7yjBeaXBFygNjTaoZLG02KNcYwbuZ9qkEIqmj2hF7svw==}
 
@@ -1257,6 +1277,9 @@ packages:
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
+
+  blurhash@2.0.5:
+    resolution: {integrity: sha512-cRygWd7kGBQO3VEhPiTgq4Wc43ctsM+o46urrmPOiuAe+07fzlSB9OJVdpgDL0jPqXUVQ9ht7aq7kxOeJHRK+w==}
 
   brace-expansion@2.0.1:
     resolution: {integrity: sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==}
@@ -1587,6 +1610,9 @@ packages:
   lodash.clamp@4.0.3:
     resolution: {integrity: sha512-HvzRFWjtcguTW7yd8NJBshuNaCa8aqNFtnswdT7f/cMd/1YKy5Zzoq4W/Oxvnx9l7aeY258uSdDfM793+eLsVg==}
 
+  lodash.debounce@4.0.8:
+    resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
+
   lodash.omit@4.5.0:
     resolution: {integrity: sha512-XeqSp49hNGmlkj2EJlfrQFIzQ6lXdNro9sddtQzcJY8QaoC2GO0DT7xaIokHeyM+mIT0mPMlPvkYzg2xCuHdZg==}
     deprecated: This package is deprecated. Use destructuring assignment syntax instead.
@@ -1696,6 +1722,10 @@ packages:
   object-hash@3.0.0:
     resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
     engines: {node: '>= 6'}
+
+  on-change@4.0.2:
+    resolution: {integrity: sha512-cMtCyuJmTx/bg2HCpHo3ZLeF7FZnBOapLqZHr2AlLeJ5Ul0Zu2mUJJz051Fdwu/Et2YW04ZD+TtU+gVy0ACNCA==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   package-json-from-dist@1.0.1:
     resolution: {integrity: sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}
@@ -1811,6 +1841,9 @@ packages:
   react-merge-refs@1.1.0:
     resolution: {integrity: sha512-alTKsjEL0dKH/ru1Iyn7vliS2QRcBp9zZPGoWxUOvRGWPUYgjo+V01is7p04It6KhgrzhJGnIj9GgX8W4bZoCQ==}
 
+  react-merge-refs@2.1.1:
+    resolution: {integrity: sha512-jLQXJ/URln51zskhgppGJ2ub7b2WFKGq3cl3NYKtlHoTG+dN2q7EzWrn3hN3EgPsTMvpR9tpq5ijdp7YwFZkag==}
+
   react-reconciler@0.27.0:
     resolution: {integrity: sha512-HmMDKciQjYmBRGuuhIaKA1ba/7a+UsM5FzOZsMO2JYHt9Jh8reCb7j1eDC95NOyUlKM9KRyvdx0flBuDvYSBoA==}
     engines: {node: '>=0.10.0'}
@@ -1919,6 +1952,9 @@ packages:
 
   scheduler@0.25.0:
     resolution: {integrity: sha512-xFVuu11jh+xcO7JOAGJNOXld8/TcEHK/4CituBUeUb5hqxJLj9YuemAEuvm9gQ/+pgXYfbQuqAkiYu+u7YEsNA==}
+
+  semver-compare@1.0.0:
+    resolution: {integrity: sha512-YM3/ITh2MJ5MtzaM429anh+x2jiLVjqILF4m4oyQB18W7Ggea7BfqdH/wGMK7dDiMghv/6WG7znWMwUDzJiXow==}
 
   semver@7.7.1:
     resolution: {integrity: sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==}
@@ -2044,6 +2080,9 @@ packages:
 
   three@0.146.0:
     resolution: {integrity: sha512-1lvNfLezN6OJ9NaFAhfX4sm5e9YCzHtaRgZ1+B4C+Hv6TibRMsuBAM5/wVKzxjpYIlMymvgsHEFrrigEfXnb2A==}
+
+  thumbhash@0.1.1:
+    resolution: {integrity: sha512-kH5pKeIIBPQXAOni2AiY/Cu/NKdkFREdpH+TLdM0g6WA7RriCv0kPLgP731ady67MhTAqrVG/4mnEeibVuCJcg==}
 
   tiny-invariant@1.3.3:
     resolution: {integrity: sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==}
@@ -3108,6 +3147,23 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
+  '@splinetool/react-spline@4.0.0(@splinetool/runtime@1.9.82)(next@15.1.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@splinetool/runtime': 1.9.82
+      blurhash: 2.0.5
+      lodash.debounce: 4.0.8
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+      react-merge-refs: 2.1.1
+      thumbhash: 0.1.1
+    optionalDependencies:
+      next: 15.1.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+
+  '@splinetool/runtime@1.9.82':
+    dependencies:
+      on-change: 4.0.2
+      semver-compare: 1.0.0
+
   '@supabase/auth-js@2.64.2':
     dependencies:
       '@supabase/node-fetch': 2.6.15
@@ -3268,6 +3324,8 @@ snapshots:
       require-from-string: 2.0.2
 
   binary-extensions@2.3.0: {}
+
+  blurhash@2.0.5: {}
 
   brace-expansion@2.0.1:
     dependencies:
@@ -3572,6 +3630,8 @@ snapshots:
 
   lodash.clamp@4.0.3: {}
 
+  lodash.debounce@4.0.8: {}
+
   lodash.omit@4.5.0: {}
 
   lodash.pick@4.4.0: {}
@@ -3663,6 +3723,8 @@ snapshots:
   object-assign@4.1.1: {}
 
   object-hash@3.0.0: {}
+
+  on-change@4.0.2: {}
 
   package-json-from-dist@1.0.1: {}
 
@@ -3760,6 +3822,8 @@ snapshots:
   react-is@18.3.1: {}
 
   react-merge-refs@1.1.0: {}
+
+  react-merge-refs@2.1.1: {}
 
   react-reconciler@0.27.0(react@19.0.0):
     dependencies:
@@ -3870,6 +3934,8 @@ snapshots:
       loose-envify: 1.4.0
 
   scheduler@0.25.0: {}
+
+  semver-compare@1.0.0: {}
 
   semver@7.7.1:
     optional: true
@@ -4028,6 +4094,8 @@ snapshots:
       three: 0.146.0
 
   three@0.146.0: {}
+
+  thumbhash@0.1.1: {}
 
   tiny-invariant@1.3.3: {}
 

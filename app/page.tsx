@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import Header from "@/components/header"
 import Intro from "@/components/intro"
 import About from "@/components/about"
+import SkillsParticipations from "@/components/skills-participations"
 import Projects from "@/components/projects"
 import Contact from "@/components/contact"
 import CustomCursor from "@/components/custom-cursor"
@@ -42,6 +43,7 @@ export default function Home() {
             <Header />
             <Intro />
             <About /> 
+            <SkillsParticipations />
             <Projects />
             <Testimonials />
             <Blog />

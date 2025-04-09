@@ -58,7 +58,7 @@ export default function Testimonials() {
           transition={{ duration: 0.5 }}
           className="text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12"
         >
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-light mb-2 sm:mb-3 md:mb-4">Testimonials</h2>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-light mb-2 sm:mb-3 md:mb-4">Kind Words</h2>
           <p className="text-xs sm:text-sm md:text-base text-gray-600">What colleagues and clients say about my work</p>
         </motion.div>
 
