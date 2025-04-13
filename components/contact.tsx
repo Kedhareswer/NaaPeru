@@ -78,7 +78,7 @@ export default function Contact() {
                 whileTap={{ scale: 0.95 }}
               >
                 <img
-                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDAgMjQwIj48cGF0aCBkPSJNMTIwIDIwYzU1LjIgMCAxMDAgNDQuOCAxMDAgMTAwcy00NC44IDEwMC0xMDAgMTAwLTEwMC00NC44LTEwMC0xMDAgNDQuOC0xMDAgMTAwLTEwMHptMC0yMEMzNi4zIDAgMCA1My44IDAgMTIwczM2LjMgMTIwIDEyMCAxMjAgMTIwLTUzLjggMTIwLTEyMFMyMDMuNyAwIDEyMCAwem0wIDEwMGMxMS4xIDAgMjAgOC45IDIwIDIwcy04LjkgMjAtMjAgMjAtMjAtOC45LTIwLTIwIDguOS0yMCAyMC0yMHptMC00MGMzMy4xIDAgNjAgMjYuOSA2MCA2MHMtMjYuOSA2MC02MCA2MC02MC0yNi45LTYwLTYwIDI2LjktNjAgNjAtNjB6bTAtMjBjLTQ0LjIgMC04MCAzNS44LTgwIDgwczM1LjggODAgODAgODAgODAtMzUuOCA4MC04MC0zNS44LTgwLTgwLTgweiIvPjwvc3ZnPg=="
+                  src="public\whatsapp.jpg"
                   alt="WhatsApp QR Code"
                   className="w-32 h-32"
                 />
