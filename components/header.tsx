@@ -8,7 +8,7 @@ import "../styles/navigation.css"
 const navItems = [
   { name: "Intro", href: "#intro" },
   { name: "About", href: "#about" },
-  { name: "Projects", href: "#projects" },
+  { name: "Projects", href: "#case-studies" },
   { name: "Contact", href: "#contact" },
 ]
 

@@ -33,11 +33,11 @@ const testimonials = [
     linkedin: "https://www.linkedin.com/in/ajay-sharma-%F0%9F%87%AE%F0%9F%87%B3-52879b88/"
   },
   {
-    name: "Sarah Chen",
+    name: "Suhail Mahamad",
     role: "ML Operations Engineer",
-    text: "A brilliant problem-solver who consistently delivers innovative solutions. Their deep understanding of ML systems and ability to optimize workflows has transformed our deployment pipeline.",
-    image: "/testimonials/sarah.svg",
-    linkedin: "https://www.linkedin.com/in/sarah-chen-ml/"
+    text: "A brilliant problem-solver who consistently delivers innovative solutions. His deep understanding of AI systems and ability to optimize workflows has transformed our deployment pipeline.",
+    image: "/testimonials/suhail.jpg",
+    linkedin: "https://www.linkedin.com/in/mahamad-suhail/"
   },
   {
     name: "David Wilson",

@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
-import { ArrowUpRight, Github, Linkedin, Mail } from "lucide-react"
+import { ArrowUpRight, Mail } from "lucide-react"
 
 export default function Contact() {
   const ref = useRef(null)
@@ -66,41 +66,24 @@ export default function Contact() {
             </p>
 
             <div className="space-y-4 mb-8">
-              <p className="flex items-center">
-                <Mail className="w-5 h-5 mr-3" />
-                <span>kedhareswer.12110626@gmail.com</span>
-              </p>
               <p>Phagwara, Punjab, India</p>
             </div>
 
             <div>
-              <h4 className="text-sm uppercase tracking-wider mb-4">Connect</h4>
-              <div className="flex space-x-4">
-                <motion.a
-                  href="https://github.com/Kedhareswer"
-                  className="w-10 h-10 border border-black rounded-full flex items-center justify-center clickable"
-                  whileHover={{ backgroundColor: "#000", color: "#fff" }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Github className="w-5 h-5" />
-                </motion.a>
-                <motion.a
-                  href="https://www.linkedin.com/in/kedhareswernaidu"
-                  className="w-10 h-10 border border-black rounded-full flex items-center justify-center clickable"
-                  whileHover={{ backgroundColor: "#000", color: "#fff" }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Linkedin className="w-5 h-5" />
-                </motion.a>
-                <motion.a
-                  href="mailto:kedhareswer.12110626@gmail.com"
-                  className="w-10 h-10 border border-black rounded-full flex items-center justify-center clickable"
-                  whileHover={{ backgroundColor: "#000", color: "#fff" }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Mail className="w-5 h-5" />
-                </motion.a>
-              </div>
+              <h4 className="text-sm uppercase tracking-wider mb-4">Connect on WhatsApp</h4>
+              <motion.a
+                href="https://wa.me/qr/BSDC2CPQ44N3P1"
+                className="inline-block clickable"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <img
+                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDAgMjQwIj48cGF0aCBkPSJNMTIwIDIwYzU1LjIgMCAxMDAgNDQuOCAxMDAgMTAwcy00NC44IDEwMC0xMDAgMTAwLTEwMC00NC44LTEwMC0xMDAgNDQuOC0xMDAgMTAwLTEwMHptMC0yMEMzNi4zIDAgMCA1My44IDAgMTIwczM2LjMgMTIwIDEyMCAxMjAgMTIwLTUzLjggMTIwLTEyMFMyMDMuNyAwIDEyMCAwem0wIDEwMGMxMS4xIDAgMjAgOC45IDIwIDIwcy04LjkgMjAtMjAgMjAtMjAtOC45LTIwLTIwIDguOS0yMCAyMC0yMHptMC00MGMzMy4xIDAgNjAgMjYuOSA2MCA2MHMtMjYuOSA2MC02MCA2MC02MC0yNi45LTYwLTYwIDI2LjktNjAgNjAtNjB6bTAtMjBjLTQ0LjIgMC04MCAzNS44LTgwIDgwczM1LjggODAgODAgODAgODAtMzUuOCA4MC04MC0zNS44LTgwLTgwLTgweiIvPjwvc3ZnPg=="
+                  alt="WhatsApp QR Code"
+                  className="w-32 h-32"
+                />
+                <p className="text-sm mt-2 text-center">Scan to chat on WhatsApp</p>
+              </motion.a>
             </div>
           </motion.div>
 
