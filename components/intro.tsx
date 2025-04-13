@@ -139,7 +139,7 @@ export default function Intro() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                Data Scientist & AI Enthusiast
+                Turning Data into Actionable Insights
               </motion.h2>
             </div>
             
@@ -183,7 +183,7 @@ export default function Intro() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
               >
-                A driven B.Tech CSE student who embarked on an exciting journey into Data Science and AI. Through innovative thinking and technical expertise, Kedhareswer transformed complex data challenges into powerful insights that made a real difference.
+                A passionate B.Tech CSE student with a natural talent for uncovering patterns in data. I combine technical expertise with creative problem-solving to transform complex data challenges into clear, actionable insights. My journey in Data Science and AI is driven by a genuine curiosity to make technology more accessible and impactful.
               </motion.p>
             </div>
 
@@ -200,7 +200,7 @@ export default function Intro() {
                   animate={{ y: 0 }}
                   transition={{ duration: 0.5, delay: 1.1 }}
                 >
-                  Creating Impact Through Data
+                  Let's Build Something Meaningful
                 </motion.p>
               </div>
               
@@ -211,7 +211,7 @@ export default function Intro() {
                   animate={{ y: 0 }}
                   transition={{ duration: 0.5, delay: 1.2 }}
                 >
-                  Ready to explore data-driven possibilities? Connect with Kedhareswer!
+                  Have a data challenge? Let's collaborate and create impactful solutions together.
                 </motion.p>
               </div>
               

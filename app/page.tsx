@@ -6,12 +6,13 @@ import Header from "@/components/header"
 import Intro from "@/components/intro"
 import About from "@/components/about"
 import SkillsParticipations from "@/components/skills-participations"
-import Projects from "@/components/projects"
+import CaseStudies from "@/components/case-studies"
 import Contact from "@/components/contact"
 import CustomCursor from "@/components/custom-cursor"
 import LoadingScreen from "@/components/loading-screen"
 import Testimonials from "@/components/testimonials"
 import Blog from "@/components/blog"
+import Footer from "@/components/footer"
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
@@ -44,10 +45,11 @@ export default function Home() {
             <Intro />
             <About /> 
             <SkillsParticipations />
-            <Projects />
+            <CaseStudies />
             <Testimonials />
             <Blog />
             <Contact />
+            <Footer />
           </motion.div>
         )}
       </AnimatePresence>

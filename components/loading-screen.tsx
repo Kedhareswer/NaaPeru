@@ -1,62 +1,103 @@
 "use client"
 
 import { useEffect } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 export default function LoadingScreen() {
   useEffect(() => {
     document.body.style.overflow = "hidden"
-
     return () => {
-      document.body.style.overflow = ""
+      document.body.style.overflow = "auto"
     }
   }, [])
 
   return (
-    <motion.div
-      className="fixed inset-0 bg-white flex flex-col items-center justify-center z-50"
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.8 }}
-    >
-      <motion.div className="flex flex-col items-center gap-12">
-        <motion.div className="relative w-32 h-32">
-          {/* Animated squares */}
-          {[...Array(4)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute top-0 left-0 w-16 h-16 border-2 border-black"
-              initial={{ x: 0, y: 0, opacity: 0 }}
+    <AnimatePresence>
+      <motion.div
+        className="fixed inset-0 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm flex items-center justify-center z-[100]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+      >
+        <motion.div
+          className="flex flex-col items-center space-y-8"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.6, duration: 1.0, ease: "easeOut" }}
+        >
+          <div className="relative w-40 h-40">
+            {[...Array(5)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute border-[1.5px] border-zinc-800/60 dark:border-zinc-200/60"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  top: "0%",
+                  left: "0%",
+                  rotate: `${i * (360 / 5)}deg`,
+                }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{
+                  opacity: [0.4, 0.8, 0.4],
+                  rotate: [`${i * (360 / 5)}deg`, `${i * (360 / 5) + 360}deg`],
+                  scale: [0.8, 1, 0.8],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  delay: i * 0.2,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
+          </div>
+          
+          <motion.div
+            className="flex items-center space-x-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
+          >
+            <motion.span
+              className="text-lg font-light tracking-[0.3em] uppercase text-black/70"
               animate={{
-                x: i % 2 === 0 ? 0 : 16,
-                y: i < 2 ? 0 : 16,
-                opacity: 0.5,
-                rotate: [0, 90, 180, 270, 360],
+                opacity: [0.5, 0.9, 0.5],
               }}
               transition={{
                 duration: 2,
-                repeat: Number.POSITIVE_INFINITY,
-                repeatType: "reverse",
-                delay: i * 0.2,
+                repeat: Infinity,
                 ease: "easeInOut",
               }}
-            />
-          ))}
+            >
+              Loading
+            </motion.span>
+            <motion.div
+              className="flex space-x-1.5"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              {[...Array(3)].map((_, i) => (
+                <motion.span
+                  key={i}
+                  className="w-1.5 h-1.5 rounded-full bg-black/70"
+                  animate={{
+                    scale: [0.85, 1.15, 0.85],
+                    opacity: [0.5, 0.9, 0.5],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    delay: i * 0.3,
+                    ease: "easeInOut",
+                  }}
+                />
+              ))}
+            </motion.div>
+          </motion.div>
         </motion.div>
-
-        <motion.p
-          className="text-base tracking-[0.4em] uppercase font-light"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 1, 0] }}
-          transition={{
-            duration: 3,
-            repeat: Number.POSITIVE_INFINITY,
-            repeatType: "loop",
-          }}
-        >
-          Loading
-        </motion.p>
       </motion.div>
-    </motion.div>
+    </AnimatePresence>
   )
 }
-
