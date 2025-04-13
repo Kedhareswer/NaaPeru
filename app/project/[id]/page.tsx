@@ -9,9 +9,18 @@ import { caseStudies } from '@/components/case-studies'
 
 export default function ProjectPage({ params }: { params: { id: string } }) {
   const router = useRouter()
-  const [project, setProject] = useState(caseStudies[parseInt(params.id)])
+  const [project, setProject] = useState(() => {
+    const projectId = parseInt(params.id)
+    return caseStudies[projectId] || null
+  })
+
+  useEffect(() => {
+    const projectId = parseInt(params.id)
+    setProject(caseStudies[projectId] || null)
+  }, [params.id])
 
   if (!project) {
+    router.push('/#case-studies')
     return null
   }
 
@@ -26,7 +35,7 @@ export default function ProjectPage({ params }: { params: { id: string } }) {
         <Button
           variant="ghost"
           className="mb-8 hover:bg-gray-100"
-          onClick={() => router.back()}
+          onClick={() => router.push('/#case-studies')}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Projects

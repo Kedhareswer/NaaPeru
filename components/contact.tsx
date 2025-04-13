@@ -78,7 +78,7 @@ export default function Contact() {
                 whileTap={{ scale: 0.95 }}
               >
                 <img
-                  src="public\whatsapp.jpg"
+                  src="/whatsapp.jpg"
                   alt="WhatsApp QR Code"
                   className="w-32 h-32"
                 />
@@ -157,4 +157,3 @@ export default function Contact() {
     </section>
   )
 }
-

@@ -44,76 +44,7 @@ type CaseStudy = {
 }
 
 const caseStudies: CaseStudy[] = [
-  {
-    title: "AI-Powered Image Style Transfer",
-    description: "A web application that transforms ordinary photos into artistic masterpieces using advanced deep learning algorithms for style transfer.",
-    image: "/projects/image-to-oil-paint.svg",
-    link: "#",
-    startDate: "2023-08-01",
-    technologies: ["PyTorch", "FastAPI", "React", "TensorFlow", "Docker"],
-    tags: ["Computer Vision", "Deep Learning", "Web Development"],
-    problemStatement: "Artists and content creators need efficient tools to transform images into different artistic styles while maintaining the original content's integrity.",
-    approach: [
-      "Implemented custom CNN architecture for style transfer",
-      "Developed real-time processing pipeline",
-      "Created intuitive user interface for style selection",
-      "Optimized model for web deployment"
-    ],
-    challenges: [
-      "Balancing style transfer quality with processing speed",
-      "Handling various image formats and sizes",
-      "Implementing efficient model deployment"
-    ],
-    solutions: [
-      "Used model quantization for faster inference",
-      "Implemented adaptive image preprocessing",
-      "Developed containerized deployment solution"
-    ],
-    outcomes: [
-      "Achieved style transfer in under 5 seconds",
-      "Processed over 100,000 images",
-      "4.8/5 user satisfaction rating"
-    ],
-    impact: "The platform has enabled artists and content creators to explore new creative possibilities and streamline their workflow.",
-    featured: true,
-    role: "ML Engineer",
-    duration: "4 months"
-  },
-  {
-    title: "Real-time Emotion Recognition System",
-    description: "An advanced computer vision system that detects and analyzes facial expressions in real-time, providing emotional insights for various applications.",
-    image: "/projects/emotion-recognition.svg",
-    link: "#",
-    startDate: "2023-04-15",
-    technologies: ["OpenCV", "TensorFlow", "Flask", "WebRTC", "Redis"],
-    tags: ["Computer Vision", "Real-time Processing", "Machine Learning"],
-    problemStatement: "Traditional emotion recognition systems lack real-time capabilities and accuracy in diverse environments.",
-    approach: [
-      "Developed custom CNN for facial expression recognition",
-      "Implemented real-time video processing pipeline",
-      "Created scalable backend architecture",
-      "Integrated WebRTC for live video streaming"
-    ],
-    challenges: [
-      "Achieving real-time performance",
-      "Handling varying lighting conditions",
-      "Ensuring privacy compliance"
-    ],
-    solutions: [
-      "Optimized model architecture for speed",
-      "Implemented adaptive preprocessing",
-      "Developed on-device processing"
-    ],
-    outcomes: [
-      "95% accuracy in emotion detection",
-      "30ms average processing time",
-      "Successfully deployed in 5 commercial applications"
-    ],
-    impact: "The system has revolutionized human-computer interaction and emotional intelligence applications.",
-    featured: true,
-    role: "Lead Developer",
-    duration: "8 months"
-  },
+
   {
     title: "Neural Network Visualization Platform",
     description: "An interactive platform for visualizing and understanding complex neural network architectures in real-time, enabling users to explore deep learning concepts through hands-on experimentation.",
@@ -183,6 +114,154 @@ const caseStudies: CaseStudy[] = [
     featured: true,
     role: "Machine Learning Engineer",
     duration: "12 months"
+  },
+  {
+    title: "Video Game Industry Analysis",
+    description: "A comprehensive analysis of video game sales data to understand market trends, genre preferences, and publisher performance across different regions.",
+    image: "/projects/analytics-dashboard.svg",
+    link: "https://www.canva.com/design/DAFzfYIR8aU/HsNpIG8kX42bYTjky17DGQ/view",
+    startDate: "2024-02-01",
+    technologies: ["Python", "Pandas", "Tableau", "Statistical Analysis", "Data Visualization"],
+    tags: ["EDA", "Data Analysis", "Data Visualization", "Tableau"],
+    problemStatement: "To analyze video game sales data to understand genre preferences, regional trends, and publisher dominance in the gaming industry, and provide recommendations for companies and regions to enhance their market presence and performance.",
+    approach: [
+      "Collected and preprocessed comprehensive video game sales data",
+      "Performed exploratory data analysis using Python and Pandas",
+      "Created interactive visualizations using Tableau",
+      "Conducted statistical analysis of market trends",
+      "Generated actionable insights for stakeholders"
+    ],
+    challenges: [
+      "Handling large-scale historical sales data",
+      "Normalizing data from multiple sources",
+      "Identifying meaningful patterns in complex market dynamics",
+      "Creating clear visualizations for diverse stakeholders"
+    ],
+    solutions: [
+      "Implemented efficient data processing pipelines",
+      "Developed standardized data cleaning procedures",
+      "Created custom visualization templates",
+      "Designed interactive dashboards for easy exploration"
+    ],
+    outcomes: [
+      "Identified key growth opportunities in emerging markets",
+      "Mapped successful genre-region combinations",
+      "Provided actionable recommendations for publishers",
+      "Created reusable analysis framework for future studies"
+    ],
+    impact: "The analysis provided valuable insights for game publishers and developers, helping them make data-driven decisions about market entry, genre focus, and regional strategy.",
+    role: "Data Analyst",
+    duration: "1 month",
+    featured: true
+  },
+  {
+    title: "Video Game Impact Analysis",
+    description: "A comprehensive research project analyzing the relationship between video games and player behavior, focusing on debunking misconceptions and highlighting positive impacts.",
+    image: "/projects/analytics-dashboard.svg",
+    link: "https://www.canva.com/design/DAGEDBeQEgE/iMwEiAhbTPrwobdHrCS7Sg/view",
+    startDate: "2024-01-15",
+    technologies: ["Python", "Machine Learning", "NLP", "Data Visualization", "Statistical Analysis"],
+    tags: ["Machine Learning", "NLP", "EDA", "Python", "Data Visualization"],
+    problemStatement: "Perceptions persist that video games are linked to promoting violence among players. This perception often overshadows the potential positive impacts that gaming may have. To address this misconception, the project endeavors to conduct comprehensive research, surveys, and other analyses to uncover the nuanced relationship between video games and behavior. By exploring various dimensions of gaming, including socio-demographic factors, game genres, and player behaviors, the project aims to highlight the positive aspects of gaming while debunking the notion of a direct causal link between video games and violence. Through this exploration, the project seeks to provide evidence-based insights that showcase the multifaceted nature of gaming and its potential to foster positive outcomes among players.",
+    approach: [
+      "Conducted extensive literature review on gaming impact studies",
+      "Implemented NLP analysis on player feedback and community discussions",
+      "Developed machine learning models to identify behavioral patterns",
+      "Created interactive visualizations for data presentation",
+      "Performed statistical analysis on survey responses"
+    ],
+    challenges: [
+      "Processing and analyzing large volumes of unstructured player data",
+      "Addressing selection bias in survey responses",
+      "Developing robust methodologies for behavioral analysis",
+      "Ensuring ethical data collection and privacy compliance"
+    ],
+    solutions: [
+      "Implemented advanced NLP techniques for text analysis",
+      "Developed weighted sampling methods for survey data",
+      "Created comprehensive data validation pipeline",
+      "Established strict data anonymization protocols"
+    ],
+    outcomes: [
+      "Successfully analyzed 100,000+ player interactions",
+      "Identified positive correlations between gaming and cognitive skills",
+      "Published findings in peer-reviewed journals",
+      "Developed evidence-based recommendations for stakeholders"
+    ],
+    impact: "The research has contributed to a more nuanced understanding of gaming's impact on behavior, helping to shift public perception and inform policy discussions.",
+    featured: true,
+    role: "Data Analyst",
+    duration: "6 months"
+  },
+  {
+    title: "AI-Powered Image Style Transfer",
+    description: "A web application that transforms ordinary photos into artistic masterpieces using advanced deep learning algorithms for style transfer.",
+    image: "/projects/image-to-oil-paint.svg",
+    link: "#",
+    startDate: "2023-08-01",
+    technologies: ["PyTorch", "FastAPI", "React", "TensorFlow", "Docker"],
+    tags: ["Computer Vision", "Deep Learning", "Web Development"],
+    problemStatement: "Artists and content creators need efficient tools to transform images into different artistic styles while maintaining the original content's integrity.",
+    approach: [
+      "Implemented custom CNN architecture for style transfer",
+      "Developed real-time processing pipeline",
+      "Created intuitive user interface for style selection",
+      "Optimized model for web deployment"
+    ],
+    challenges: [
+      "Balancing style transfer quality with processing speed",
+      "Handling various image formats and sizes",
+      "Implementing efficient model deployment"
+    ],
+    solutions: [
+      "Used model quantization for faster inference",
+      "Implemented adaptive image preprocessing",
+      "Developed containerized deployment solution"
+    ],
+    outcomes: [
+      "Achieved style transfer in under 5 seconds",
+      "Processed over 100,000 images",
+      "4.8/5 user satisfaction rating"
+    ],
+    impact: "The platform has enabled artists and content creators to explore new creative possibilities and streamline their workflow.",
+    featured: true,
+    role: "ML Engineer",
+    duration: "4 months"
+  },
+  {
+    title: "Real-time Emotion Recognition System",
+    description: "An advanced computer vision system that detects and analyzes facial expressions in real-time, providing emotional insights for various applications.",
+    image: "/projects/emotion-recognition.svg",
+    link: "#",
+    startDate: "2023-04-15",
+    technologies: ["OpenCV", "TensorFlow", "Flask", "WebRTC", "Redis"],
+    tags: ["Computer Vision", "Real-time Processing", "Machine Learning"],
+    problemStatement: "Traditional emotion recognition systems lack real-time capabilities and accuracy in diverse environments.",
+    approach: [
+      "Developed custom CNN for facial expression recognition",
+      "Implemented real-time video processing pipeline",
+      "Created scalable backend architecture",
+      "Integrated WebRTC for live video streaming"
+    ],
+    challenges: [
+      "Achieving real-time performance",
+      "Handling varying lighting conditions",
+      "Ensuring privacy compliance"
+    ],
+    solutions: [
+      "Optimized model architecture for speed",
+      "Implemented adaptive preprocessing",
+      "Developed on-device processing"
+    ],
+    outcomes: [
+      "95% accuracy in emotion detection",
+      "30ms average processing time",
+      "Successfully deployed in 5 commercial applications"
+    ],
+    impact: "The system has revolutionized human-computer interaction and emotional intelligence applications.",
+    featured: true,
+    role: "Lead Developer",
+    duration: "8 months"
   },
   {
     title: "Intelligent Document Analysis System",
@@ -284,7 +363,7 @@ export default function CaseStudies() {
             <motion.div
               key={index}
               className="group relative aspect-[4/3] overflow-hidden rounded-lg bg-gray-100 cursor-pointer"
-              onClick={() => router.push(`/project/${index}`)}
+              onClick={() => router.push(`/project/${index + 2}`)}
               onMouseEnter={() => setHoveredStudy(study)}
               onMouseLeave={() => setHoveredStudy(null)}
               initial={{ opacity: 0, y: 20 }}
