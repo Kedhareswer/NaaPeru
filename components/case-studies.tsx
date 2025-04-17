@@ -85,7 +85,7 @@ const caseStudies: CaseStudy[] = [
     description: "An academic research project utilizing deep learning techniques to enhance the quality and clarity of endoscopic images, ensuring improved visibility for diagnostic and surgical support.",
     image: "/projects/endoscopy-image-enhancement.png",
     link: "#",
-    startDate: "2023-09-01",
+    startDate: "2025-15-01",
     technologies: ["PyTorch", "Flask", "OpenCV", "NumPy", "JavaScript", "Bootstrap 5", "WebRTC", "HTML5"],
     tags: ["Medical Imaging", "Endoscopy", "Deep Learning", "Academic Research"],
     problemStatement: "Endoscopic procedures often produce low-resolution or noisy images, limiting the clarity required for accurate diagnosis and surgical guidance. There is a need for advanced enhancement techniques tailored to medical imaging constraints.",
