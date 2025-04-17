@@ -1,13 +1,20 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import TextPressure from "./TextPressure"
 
 export default function LoadingScreen() {
+  const [progress, setProgress] = useState(0)
+
   useEffect(() => {
     document.body.style.overflow = "hidden"
+    const interval = setInterval(() => {
+      setProgress(prev => Math.min(prev + Math.random() * 15, 100))
+    }, 500)
     return () => {
       document.body.style.overflow = "auto"
+      clearInterval(interval)
     }
   }, [])
 
@@ -26,76 +33,42 @@ export default function LoadingScreen() {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.6, duration: 1.0, ease: "easeOut" }}
         >
-          <div className="relative w-40 h-40">
-            {[...Array(5)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute border-[1.5px] border-zinc-800/60 dark:border-zinc-200/60"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  top: "0%",
-                  left: "0%",
-                  rotate: `${i * (360 / 5)}deg`,
-                }}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{
-                  opacity: [0.4, 0.8, 0.4],
-                  rotate: [`${i * (360 / 5)}deg`, `${i * (360 / 5) + 360}deg`],
-                  scale: [0.8, 1, 0.8],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  delay: i * 0.2,
-                  ease: "easeInOut",
-                }}
-              />
-            ))}
+          <div style={{ position: 'relative', height: '300px', width: '400px' }}>
+            <TextPressure
+              text="Loading..."
+              flex={true}
+              alpha={true}
+              stroke={true}
+              width={true}
+              weight={true}
+              italic={true}
+              textColor="#000000"
+              strokeColor="#666666"
+              strokeWidth={1}
+              minFontSize={48}
+            />
           </div>
-          
-          <motion.div
-            className="flex items-center space-x-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
+          <motion.div 
+            className="w-64 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.0 }}
           >
-            <motion.span
-              className="text-lg font-light tracking-[0.3em] uppercase text-black/70"
-              animate={{
-                opacity: [0.5, 0.9, 0.5],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              Loading
-            </motion.span>
             <motion.div
-              className="flex space-x-1.5"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-            >
-              {[...Array(3)].map((_, i) => (
-                <motion.span
-                  key={i}
-                  className="w-1.5 h-1.5 rounded-full bg-black/70"
-                  animate={{
-                    scale: [0.85, 1.15, 0.85],
-                    opacity: [0.5, 0.9, 0.5],
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    delay: i * 0.3,
-                    ease: "easeInOut",
-                  }}
-                />
-              ))}
-            </motion.div>
+              className="h-full bg-blue-500 dark:bg-blue-400 rounded-full"
+              initial={{ width: '0%' }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.5 }}
+            />
           </motion.div>
+          <motion.p
+            className="text-sm text-gray-500 dark:text-gray-400"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2 }}
+          >
+            {Math.round(progress)}% Complete
+          </motion.p>
         </motion.div>
       </motion.div>
     </AnimatePresence>

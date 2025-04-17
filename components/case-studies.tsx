@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useInView } from "framer-motion"
 import { ScrollArea } from "./ui/scroll-area"
 import { Star, ArrowRight, ChevronRight, ExternalLink, Github } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
+import Link from "next/link"
 
 // Shutter animation variants
 const shutterVariants = {
@@ -85,7 +86,7 @@ const caseStudies: CaseStudy[] = [
     description: "An academic research project utilizing deep learning techniques to enhance the quality and clarity of endoscopic images, ensuring improved visibility for diagnostic and surgical support.",
     image: "/projects/endoscopy-image-enhancement.png",
     link: "#",
-    startDate: "2025-15-01",
+    startDate: "2025-01-15",
     technologies: ["PyTorch", "Flask", "OpenCV", "NumPy", "JavaScript", "Bootstrap 5", "WebRTC", "HTML5"],
     tags: ["Medical Imaging", "Endoscopy", "Deep Learning", "Academic Research"],
     problemStatement: "Endoscopic procedures often produce low-resolution or noisy images, limiting the clarity required for accurate diagnosis and surgical guidance. There is a need for advanced enhancement techniques tailored to medical imaging constraints.",
@@ -238,7 +239,6 @@ const caseStudies: CaseStudy[] = [
 export { caseStudies }
 
 export default function CaseStudies() {
-  const router = useRouter()
   const [hoveredStudy, setHoveredStudy] = useState<CaseStudy | null>(null)
   const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null)
   const studiesRef = useRef<HTMLDivElement>(null)
@@ -253,23 +253,21 @@ export default function CaseStudies() {
             A collection of innovative solutions and impactful projects.
           </p>
         </div>
-        </div>
+
         <div className="grid grid-cols-1 gap-8">
           {/* First row with 2 larger featured projects */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {caseStudies.slice(0, 2).map((study, index) => (
-              <motion.div
-                key={index}
-                className="group relative overflow-hidden rounded-lg bg-gray-100 cursor-pointer h-[400px] md:h-[500px]"
-                onClick={() => router.push(`/project/${index}`)}
-                onMouseEnter={() => setHoveredStudy(study)}
-                onMouseLeave={() => setHoveredStudy(null)}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: 1.02 }}
-              >
-                <div className="relative h-full w-full">
+              <Link href={`/project/${index}`} key={index} className="group relative overflow-hidden rounded-lg bg-gray-100 cursor-pointer h-[400px] md:h-[500px]">
+                <motion.div
+                  className="relative h-full w-full"
+                  onMouseEnter={() => setHoveredStudy(study)}
+                  onMouseLeave={() => setHoveredStudy(null)}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ scale: 1.02 }}
+                >
                   <img
                     src={study.image}
                     alt={study.title}
@@ -282,188 +280,54 @@ export default function CaseStudies() {
                     viewport={{ once: true }}
                     variants={shutterVariants}
                   />
-                </div>
-                <div className="absolute inset-0 bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-60">
-                  <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                    <h3 className="text-white text-2xl font-semibold mb-2">{study.title}</h3>
-                    <p className="text-gray-200 text-sm">{new Date(study.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</p>
+                  <div className="absolute inset-0 bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-60">
+                    <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                      <h3 className="text-white text-2xl font-semibold mb-2">{study.title}</h3>
+                      <p className="text-gray-200 text-sm">{new Date(study.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</p>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </Link>
             ))}
           </div>
 
           {/* Second row with 3 smaller projects */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {caseStudies.slice(2, 5).map((study, index) => (
-            <motion.div
-              key={index}
-              className="group relative overflow-hidden rounded-lg bg-gray-100 cursor-pointer h-[300px]"
-              onClick={() => router.push(`/project/${index + 2}`)}
-              onMouseEnter={() => setHoveredStudy(study)}
-              onMouseLeave={() => setHoveredStudy(null)}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className="relative h-full w-full">
-                <img
-                  src={study.image}
-                  alt={study.title}
-                  className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110 p-4"
-                />
+              <Link href={`/project/${index + 2}`} key={index} className="group relative overflow-hidden rounded-lg bg-gray-100 cursor-pointer h-[300px]">
                 <motion.div
-                  className="absolute inset-0 bg-gray-900 origin-right"
-                  initial="closed"
-                  whileInView="open"
-                  viewport={{ once: true }}
-                  variants={shutterVariants}
-                />
-              </div>
-              <div className="absolute inset-0 bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-60">
-                <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                  <h3 className="text-white text-xl font-semibold mb-2">{study.title}</h3>
-                  <p className="text-gray-200 text-sm">{new Date(study.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-          </div>
-        </div>
-
-        <AnimatePresence>
-          {selectedStudy && (
-            <motion.div
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <motion.div
-                className="bg-white rounded-xl w-full max-w-4xl max-h-[90vh] overflow-hidden"
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-              >
-                <ScrollArea className="h-[90vh]">
-                  <div className="p-6 md:p-8">
-                    <div className="flex justify-between items-start mb-6">
-                      <div>
-                        <h2 className="text-2xl md:text-3xl font-semibold mb-2">
-                          {selectedStudy.title}
-                        </h2>
-                        <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                          {selectedStudy.role && (
-                            <span>Role: {selectedStudy.role}</span>
-                          )}
-                          {selectedStudy.duration && (
-                            <span>Duration: {selectedStudy.duration}</span>
-                          )}
-                        </div>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setSelectedStudy(null)}
-                      >
-                        ×
-                      </Button>
-                    </div>
-                    <div className="space-y-8">
-                      <div>
-                        <h3 className="text-lg font-semibold mb-3">Problem Statement</h3>
-                        <p className="text-gray-600">{selectedStudy.problemStatement.split(/\b(Deep Learning|Neural Networks|Medical Imaging|Document Processing|NLP|Computer Vision)\b/).map((part: string, i: number) => {
-                          const isKeyword = /^(Deep Learning|Neural Networks|Medical Imaging|Document Processing|NLP|Computer Vision)$/.test(part);
-                          return isKeyword ? 
-                            <span key={i} className="font-medium text-primary">{part}</span> : 
-                            <span key={i}>{part}</span>;
-                        })}</p>
-                      </div>
-
-                      <div>
-                        <h3 className="text-lg font-semibold mb-3">Approach</h3>
-                        <ul className="list-disc list-inside space-y-2 text-gray-600">
-                          {selectedStudy.approach.map((item: string, i: number) => (
-                            <li key={i}>{item}</li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                          <h3 className="text-lg font-semibold mb-3">Challenges</h3>
-                          <ul className="list-disc list-inside space-y-2 text-gray-600">
-                            {selectedStudy.challenges.map((challenge, i) => (
-                              <li key={i}>{challenge}</li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold mb-3">Solutions</h3>
-                          <ul className="list-disc list-inside space-y-2 text-gray-600">
-                            {selectedStudy.solutions.map((solution, i) => (
-                              <li key={i}>{solution}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h3 className="text-lg font-semibold mb-3">Outcomes & Impact</h3>
-                        <ul className="list-disc list-inside space-y-2 text-gray-600 mb-4">
-                          {selectedStudy.outcomes.map((outcome, i) => (
-                            <li key={i}>{outcome}</li>
-                          ))}
-                        </ul>
-                        <p className="text-gray-600">{selectedStudy.impact.split(/\b(Neural Network|Deep Learning|Patient Care|Treatment|Document Management|Information)\b/).map((part, i) => {
-                          const isKeyword = /^(Neural Network|Deep Learning|Patient Care|Treatment|Document Management|Information)$/.test(part);
-                          return isKeyword ? 
-                            <span key={i} className="font-medium text-primary">{part}</span> : 
-                            <span key={i}>{part}</span>;
-                        })}</p>
-                      </div>
-
-                      <div>
-                        <h3 className="text-lg font-semibold mb-3">Technologies Used</h3>
-                        <div className="flex flex-wrap gap-2">
-                          {selectedStudy.technologies.map((tech, i) => (
-                            <span
-                              key={i}
-                              className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="flex gap-4">
-                        {selectedStudy.githubUrl && (
-                          <Button
-                            variant="outline"
-                            className="flex items-center gap-2"
-                            onClick={() => window.open(selectedStudy.githubUrl, '_blank')}
-                          >
-                            <Github className="w-4 h-4" /> View on GitHub
-                          </Button>
-                        )}
-                        {selectedStudy.liveDemo && (
-                          <Button
-                            className="flex items-center gap-2"
-                            onClick={() => window.open(selectedStudy.liveDemo, '_blank')}
-                          >
-                            <ExternalLink className="w-4 h-4" /> Live Demo
-                          </Button>
-                        )}
-                      </div>
+                  className="relative h-full w-full"
+                  onMouseEnter={() => setHoveredStudy(study)}
+                  onMouseLeave={() => setHoveredStudy(null)}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <img
+                    src={study.image}
+                    alt={study.title}
+                    className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110 p-4"
+                  />
+                  <motion.div
+                    className="absolute inset-0 bg-gray-900 origin-right"
+                    initial="closed"
+                    whileInView="open"
+                    viewport={{ once: true }}
+                    variants={shutterVariants}
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-60">
+                    <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                      <h3 className="text-white text-xl font-semibold mb-2">{study.title}</h3>
+                      <p className="text-gray-200 text-sm">{new Date(study.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</p>
                     </div>
                   </div>
-                </ScrollArea>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-        </section>
+                </motion.div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }

@@ -1,0 +1,189 @@
+{
+    "About Me": "A passionate data science student with a strong foundation in AI and machine learning, dedicated to solving real-world problems through data-driven solutions.",
+    "Education": [
+        {
+            "Institution": "Lovely Professional University",
+            "Degree": "Bachelor of Technology - Computer Science and Engineering",
+            "Specialization": "Data Science (AI & ML)",
+            "CGPA": 7.55,
+            "Duration": "Since September 2021"
+        },
+        {
+            "Institution": "Sri Siddhartha Junior College",
+            "Degree": "Intermediate",
+            "Marks": 889,
+            "Duration": "July 2019 - June 2021"
+        },
+        {
+            "Institution": "Vijaya Bharathi English Medium High School",
+            "Degree": "Matriculation",
+            "CGPA": 9.5,
+            "Duration": "June 2018 - March 2019"
+        }
+    ],
+    "Experience": [
+        {
+            "Company": "Outlier.AI, Data Annotation, Soul.AI",
+            "Role": "AI Evaluator, AI Trainer - Individual Contractor",
+            "Duration": "November 2024 - Present",
+            "Responsibilities": [
+                "Evaluated AI-generated mathematical content.",
+                "Assessed factuality, relevance, and quality of AI text.",
+                "Crafted and answered subject-specific questions.",
+                "Ranked AI-generated responses for consistency and precision."
+            ]
+        },
+        {
+            "Company": "The Forage",
+            "Role": "AWS APAC Solutions Architecture Virtual Experience",
+            "Duration": "December 2024 - January 2025",
+            "Responsibilities": [
+                "Designed a scalable hosting architecture using Elastic Beanstalk.",
+                "Described the architecture and cost calculations in simple terms."
+            ]
+        },
+        {
+            "Company": "PSYLIQ",
+            "Role": "Data Analyst Intern",
+            "Duration": "January 2024 - February 2024",
+            "Responsibilities": [
+                "Cleaned and analyzed HR employee data.",
+                "Created visualizations using MySQL, Python, and Power BI.",
+                "Improved data comprehension by 25% within a month."
+            ]
+        }
+    ],
+
+    "Testimonials": [],
+    "Skills and Expertise": {
+        "Programming Languages": [
+            "Python",
+            "Natural Language Processing",
+            "Machine Learning",
+            "HTML",
+            "CSS"
+        ],
+        "Tools/Platforms": [
+            "MySQL",
+            "Tableau",
+            "Power BI",
+            "Jupyter Notebook",
+            "Microsoft Excel",
+            "Google Collab"
+        ],
+        "Soft Skills": [
+            "Leadership",
+            "Team Player",
+            "Communication",
+            "Adaptability"
+        ]
+    },
+    "Participations and Research Works": [],
+    "Blogs": [
+        {
+            "title": "Navigating Machine Learning Pitfalls: From Data Chaos to Model Mastery",
+            "excerpt": "Exploring common machine learning pitfalls including data preprocessing challenges, leakage issues, and model evaluation traps - with practical mitigation strategies.",
+            "date": "2025-03-06",
+            "platform": "LinkedIn",
+            "link": "https://www.linkedin.com/posts/kedhareswernaidu_machinelearning-datascience-datacleaning-activity-7292594788757848064-cTIG?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFKPTrMBWgaoeHZGGPkD4kmQ6AoY9JvxObU",
+            "readTime": "5 min read",
+            "category": "Machine Learning"
+        },
+        {
+            "title": "Mastering Gradient Descent: The Journey to Smarter Predictions",
+            "excerpt": "Explore how gradient descent optimizes machine learning models through iterative refinement, using a practical example of travel time prediction to demonstrate its power in real-world applications.",
+            "date": "2025-01-20",
+            "platform": "LinkedIn",
+            "link": "https://www.linkedin.com/feed/update/urn:li:activity:7264226589834448896?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFKPTrMBWgaoeHZGGPkD4kmQ6AoY9JvxObU",
+            "readTime": "5 min read",
+            "category": "Machine Learning"
+        },
+        {
+            "title": "Building Scalable Machine Learning Systems",
+            "excerpt": "Sharing insights on designing and implementing machine learning systems that can scale effectively.",
+            "date": "2024-01-05",
+            "platform": "LinkedIn",
+            "link": "#",
+            "readTime": "6 min read",
+            "category": "Machine Learning"
+        }
+    ],
+    "Case Studies": [
+        {
+            "title": "Neural Network Visualization Platform",
+"startDate": "2023-06-01",
+"githubUrl": "",
+"liveDemo": "",
+            "description": "An interactive platform for visualizing and understanding complex neural network architectures in real-time, enabling users to explore deep learning concepts through hands-on experimentation.",
+            "technologies": ["React", "D3.js", "TensorFlow.js", "WebGL", "Node.js"],
+            "problemStatement": "Deep learning concepts are often abstract and difficult to grasp for newcomers. Traditional learning resources lack interactive elements that could help visualize these complex systems.",
+            "outcomes": [
+                "Increased user understanding of neural networks by 85%",
+                "Reduced learning curve for deep learning concepts",
+                "Achieved 10,000+ monthly active users"
+            ]
+        },
+        {
+            "title": "AI-Based Endoscopic Image Enhancement",
+"startDate": "2025-01-15",
+"githubUrl": "https://github.com/Kedhareswer/Endoscopy-Image-Enhancement",
+"liveDemo": "",
+            "description": "An academic research project utilizing deep learning techniques to enhance the quality and clarity of endoscopic images, ensuring improved visibility for diagnostic and surgical support.",
+            "technologies": ["PyTorch", "Flask", "OpenCV", "NumPy", "JavaScript", "Bootstrap 5", "WebRTC", "HTML5"],
+            "problemStatement": "Endoscopic procedures often produce low-resolution or noisy images, limiting the clarity required for accurate diagnosis and surgical guidance. There is a need for advanced enhancement techniques tailored to medical imaging constraints.",
+            "outcomes": [
+                "Achieved significant visual improvement in low-quality endoscopic images",
+                "Validated model performance using structural similarity metrics",
+                "Enabled real-time enhancement for endoscopic video streams"
+            ]
+        },
+        {
+            "title": "Video Game Industry Analysis",
+"startDate": "2024-02-01",
+"githubUrl": "",
+"liveDemo": "https://www.canva.com/design/DAFzfYIR8aU/HsNpIG8kX42bYTjky17DGQ/view",
+            "description": "A comprehensive analysis of video game sales data to understand market trends, genre preferences, and publisher performance across different regions.",
+            "technologies": ["Python", "Pandas", "Tableau", "Statistical Analysis", "Data Visualization"],
+            "problemStatement": "To analyze video game sales data to understand genre preferences, regional trends, and publisher dominance in the gaming industry, and provide recommendations for companies and regions to enhance their market presence and performance.",
+            "outcomes": [
+                "Identified key growth opportunities in emerging markets",
+                "Mapped successful genre-region combinations",
+                "Provided actionable recommendations for publishers"
+            ]
+        },
+        {
+            "title": "Video Game Impact Analysis",
+"startDate": "2024-01-15",
+"githubUrl": "",
+"liveDemo": "https://www.canva.com/design/DAGEDBeQEgE/iMwEiAhbTPrwobdHrCS7Sg/view",
+            "description": "A comprehensive research project analyzing the relationship between video games and player behavior, focusing on debunking misconceptions and highlighting positive impacts.",
+            "technologies": ["Python", "Machine Learning", "NLP", "Data Visualization", "Statistical Analysis"],
+            "problemStatement": "Perceptions persist that video games are linked to promoting violence among players. This perception often overshadows the potential positive impacts that gaming may have. To address this misconception, the project endeavors to conduct comprehensive research, surveys, and other analyses to uncover the nuanced relationship between video games and behavior.",
+            "outcomes": [
+                "Successfully analyzed 100,000+ player interactions",
+                "Identified positive correlations between gaming and cognitive skills",
+                "Published findings in peer-reviewed journals"
+            ]
+        },
+        {
+            "title": "Image to Sketch AI",
+"startDate": "2024-11-15",
+"githubUrl": "",
+"liveDemo": "https://image-to-sketch-wine.vercel.app/",
+            "description": "A web-based AI tool that converts uploaded images into hand-drawn-style sketches using deep learning, with real-time customization and preview options.",
+            "technologies": ["PyTorch", "TensorFlow", "React", "FastAPI", "Vercel"],
+            "problemStatement": "Convert digital images into authentic sketch-like representations using deep learning, providing a seamless experience for generating sketches that emulate traditional hand-drawn art.",
+            "outcomes": [
+                "Successfully transformed digital images into hand-drawn-style sketches",
+                "Sketches displayed intricate line and shading details",
+                "Achieved high visual appeal and accurate facial representation"
+            ]
+        }
+    ],
+    "Contact Information": {
+        "LinkedIn": "www.linkedin.com/in/kedhareswernaidu",
+        "GitHub": "https://github.com/Kedhareswer",
+        "Email": "kedhareswer.12110626@gmail.com",
+        "Phone Number": "+91 9398911432"
+    }
+}

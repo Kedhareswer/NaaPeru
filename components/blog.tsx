@@ -26,7 +26,7 @@ const blogPosts = [
     excerpt: "Sharing insights on designing and implementing machine learning systems that can scale effectively.",
     date: "2024-01-05",
     platform: "LinkedIn",
-    link: "#",
+    link: "/not-found",
     readTime: "6 min read",
     category: "Machine Learning",
   },

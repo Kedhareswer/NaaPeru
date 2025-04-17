@@ -82,7 +82,6 @@ export default function Contact() {
                   alt="WhatsApp QR Code"
                   className="w-32 h-32"
                 />
-                <p className="text-sm mt-2 text-center">Scan to chat on WhatsApp</p>
               </motion.a>
             </div>
           </motion.div>

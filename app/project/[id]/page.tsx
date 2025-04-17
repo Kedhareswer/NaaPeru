@@ -6,6 +6,7 @@ import { ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useRouter, useParams } from 'next/navigation'
 import { caseStudies } from '@/components/case-studies'
+import { GlossaryTooltip } from '@/components/ui/glossary-tooltip'
 
 export default function ProjectPage() {
   const router = useRouter()
@@ -20,7 +21,6 @@ export default function ProjectPage() {
   }, [params?.id])
 
   if (!project) {
-    router.push('/#case-studies')
     return null
   }
 
@@ -50,12 +50,33 @@ export default function ProjectPage() {
             <img
               src={project.image}
               alt={project.title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain bg-gray-50 p-8"
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="md:col-span-2 space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 relative">
+            {(project.githubUrl || project.link) && (
+              <div className="fixed bottom-8 right-8 z-50 flex gap-4">
+                {project.githubUrl && (
+                  <Button
+                    variant="outline"
+                    className="bg-white shadow-lg hover:shadow-xl transition-shadow"
+                    onClick={() => window.open(project.githubUrl, '_blank')}
+                  >
+                    View on GitHub
+                  </Button>
+                )}
+                {project.link && project.link !== '#' && (
+                  <Button
+                    className="shadow-lg hover:shadow-xl transition-shadow"
+                    onClick={() => window.open(project.link, '_blank')}
+                  >
+                    View Live Demo
+                  </Button>
+                )}
+              </div>
+            )}
+            <div className="lg:col-span-2 space-y-10">
               <div>
                 <h1 className="text-4xl font-bold mb-4">{project.title}</h1>
                 <p className="text-gray-600 text-lg">{project.description}</p>
@@ -63,14 +84,22 @@ export default function ProjectPage() {
 
               <div>
                 <h2 className="text-2xl font-semibold mb-4">Problem Statement</h2>
-                <p className="text-gray-600">{project.problemStatement}</p>
+                <div className="text-gray-600 leading-relaxed">
+                  <GlossaryTooltip term="Problem Domain" definition="The specific area or context in which the project aims to solve issues or improve processes.">
+                    {project.problemStatement}
+                  </GlossaryTooltip>
+                </div>
               </div>
 
               <div>
                 <h2 className="text-2xl font-semibold mb-4">Approach</h2>
-                <ul className="list-disc list-inside space-y-2 text-gray-600">
+                <ul className="list-disc list-inside space-y-3 text-gray-600">
                   {project.approach.map((item, i) => (
-                    <li key={i}>{item}</li>
+                    <li key={i} className="leading-relaxed">
+                      <GlossaryTooltip term="Methodology" definition="The systematic approach and techniques used to address the project's challenges.">
+                        {item}
+                      </GlossaryTooltip>
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -86,7 +115,7 @@ export default function ProjectPage() {
               </div>
             </div>
 
-            <div className="space-y-8">
+            <div className="space-y-10 lg:sticky lg:top-24 lg:self-start">
               <div>
                 <h2 className="text-2xl font-semibold mb-4">Project Details</h2>
                 <div className="space-y-4">
@@ -140,30 +169,7 @@ export default function ProjectPage() {
                 </div>
               </div>
 
-              {(project.githubUrl || project.liveDemo) && (
-                <div>
-                  <h2 className="text-2xl font-semibold mb-4">Links</h2>
-                  <div className="space-y-3">
-                    {project.githubUrl && (
-                      <Button
-                        variant="outline"
-                        className="w-full"
-                        onClick={() => window.open(project.githubUrl, '_blank')}
-                      >
-                        View on GitHub
-                      </Button>
-                    )}
-                    {project.liveDemo && (
-                      <Button
-                        className="w-full"
-                        onClick={() => window.open(project.liveDemo, '_blank')}
-                      >
-                        View Live Demo
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              )}
+
             </div>
           </div>
         </motion.div>
