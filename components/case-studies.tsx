@@ -81,39 +81,43 @@ const caseStudies: CaseStudy[] = [
     duration: "6 months"
   },
   {
-    title: "Medical Imaging AI Assistant",
-    description: "An advanced computer vision system that assists medical professionals in analyzing diagnostic imaging, leveraging deep learning for accurate anomaly detection and classification.",
-    image: "/projects/medical-imaging.svg",
+    title: "AI-Based Endoscopic Image Enhancement",
+    description: "An academic research project utilizing deep learning techniques to enhance the quality and clarity of endoscopic images, ensuring improved visibility for diagnostic and surgical support.",
+    image: "/projects/endoscopy-image-enhancement.png",
     link: "#",
-    startDate: "2023-01-01",
-    technologies: ["Python", "PyTorch", "OpenCV", "Flask", "React"],
-    tags: ["Medical Imaging", "Computer Vision", "Healthcare AI"],
-    problemStatement: "Medical professionals face challenges in quickly and accurately analyzing large volumes of diagnostic images, leading to potential delays in diagnosis and treatment.",
+    startDate: "2023-09-01",
+    technologies: ["PyTorch", "Flask", "OpenCV", "NumPy", "JavaScript", "Bootstrap 5", "WebRTC", "HTML5"],
+    tags: ["Medical Imaging", "Endoscopy", "Deep Learning", "Academic Research"],
+    problemStatement: "Endoscopic procedures often produce low-resolution or noisy images, limiting the clarity required for accurate diagnosis and surgical guidance. There is a need for advanced enhancement techniques tailored to medical imaging constraints.",
     approach: [
-      "Developed custom CNN architectures for medical image analysis",
-      "Implemented transfer learning from established medical imaging models",
-      "Created an intuitive web interface for result visualization",
-      "Integrated with existing medical imaging systems"
+      "Built a two-stage enhancement pipeline combining SRCNN and U-Net architectures",
+      "Used SRCNN to improve initial resolution and contrast",
+      "Applied U-Net for detail preservation and contextual refinement",
+      "Included real-time video support and automated quality metric evaluation",
+      "Designed a user-friendly interface for visual inspection and testing"
     ],
     challenges: [
-      "Ensuring high accuracy in anomaly detection",
-      "Processing diverse types of medical imaging formats",
-      "Meeting strict healthcare data security requirements"
+      "Preserving diagnostic-relevant features during enhancement",
+      "Maintaining real-time processing speeds for video frames",
+      "Ensuring model robustness across diverse endoscopic image types"
     ],
     solutions: [
-      "Implemented ensemble learning for improved accuracy",
-      "Created unified image processing pipeline",
-      "Developed HIPAA-compliant data handling system"
+      "Utilized lightweight SRCNN model for fast inference",
+      "Fine-tuned U-Net on CUFS dataset and endoscopic image patches",
+      "Implemented SSIM and PSNR metrics for validation",
+      "Optimized preprocessing and post-processing for medical imaging constraints"
     ],
     outcomes: [
-      "Achieved 95% accuracy in anomaly detection",
-      "Reduced image analysis time by 60%",
-      "Successfully processed 50,000+ images"
+      "Achieved significant visual improvement in low-quality endoscopic images",
+      "Validated model performance using structural similarity metrics",
+      "Enabled real-time enhancement for endoscopic video streams",
+      "Contributed to academic research in medical imaging and deep learning"
     ],
-    impact: "The system has significantly improved diagnostic efficiency and accuracy, leading to faster patient care and better treatment outcomes.",
+    impact: "This research contributes to the field of medical imaging by improving the usability and clarity of endoscopic visuals, aiding in better diagnosis, surgical precision, and academic study.",
     featured: true,
-    role: "Machine Learning Engineer",
-    duration: "12 months"
+    role: "Research Lead, ML Developer, Data Preprocessing Specialist",
+    duration: "5 months",
+    githubUrl: "https://github.com/Kedhareswer/Endoscopy-Image-Enhancement"
   },
   {
     title: "Video Game Industry Analysis",
@@ -194,108 +198,40 @@ const caseStudies: CaseStudy[] = [
     duration: "6 months"
   },
   {
-    title: "AI-Powered Image Style Transfer",
-    description: "A web application that transforms ordinary photos into artistic masterpieces using advanced deep learning algorithms for style transfer.",
-    image: "/projects/image-to-oil-paint.svg",
-    link: "#",
-    startDate: "2023-08-01",
-    technologies: ["PyTorch", "FastAPI", "React", "TensorFlow", "Docker"],
-    tags: ["Computer Vision", "Deep Learning", "Web Development"],
-    problemStatement: "Artists and content creators need efficient tools to transform images into different artistic styles while maintaining the original content's integrity.",
+    title: "Image to Sketch AI",
+    description: "A web-based AI tool that converts uploaded images into hand-drawn-style sketches using deep learning, with real-time customization and preview options.",
+    image: "/projects/image-to-sketch.png",
+    link: "https://image-to-sketch-wine.vercel.app/",
+    startDate: "2024-11-15",
+    technologies: ["PyTorch", "TensorFlow", "React", "FastAPI", "Vercel"],
+    tags: ["Computer Vision", "Deep Learning", "Web Development", "Artistic AI"],
+    problemStatement: "Convert digital images into authentic sketch-like representations using deep learning, providing a seamless experience for generating sketches that emulate traditional hand-drawn art.",
     approach: [
-      "Implemented custom CNN architecture for style transfer",
-      "Developed real-time processing pipeline",
-      "Created intuitive user interface for style selection",
-      "Optimized model for web deployment"
+      "Used CUHK Face Sketch Database (CUFS) containing photo-sketch pairs",
+      "Preprocessed data with resizing, normalization, and augmentation",
+      "Developed a custom DNN optimized for sketch generation",
+      "Fine-tuned hyperparameters for balance between quality and training time",
+      "Evaluated model using MAE and SSIM along with qualitative analysis"
     ],
     challenges: [
-      "Balancing style transfer quality with processing speed",
-      "Handling various image formats and sizes",
-      "Implementing efficient model deployment"
+      "Capturing fine details and texture in sketch style",
+      "Maintaining visual fidelity across diverse input images",
+      "Designing a responsive, user-friendly interface for sketch preview"
     ],
     solutions: [
-      "Used model quantization for faster inference",
-      "Implemented adaptive image preprocessing",
-      "Developed containerized deployment solution"
+      "Utilized convolutional layers tailored for edge and texture detection",
+      "Added real-time preview with adjustable parameters",
+      "Deployed on Vercel with lightweight model for fast processing"
     ],
     outcomes: [
-      "Achieved style transfer in under 5 seconds",
-      "Processed over 100,000 images",
-      "4.8/5 user satisfaction rating"
+      "Successfully transformed digital images into hand-drawn-style sketches",
+      "Sketches displayed intricate line and shading details",
+      "Achieved high visual appeal and accurate facial representation"
     ],
-    impact: "The platform has enabled artists and content creators to explore new creative possibilities and streamline their workflow.",
+    impact: "The application empowers users to create personalized, sketch-style artwork from digital images, with potential in creative AI, portrait rendering, and art education.",
     featured: true,
-    role: "ML Engineer",
+    role: "Full Stack & ML Developer",
     duration: "4 months"
-  },
-  {
-    title: "Real-time Emotion Recognition System",
-    description: "An advanced computer vision system that detects and analyzes facial expressions in real-time, providing emotional insights for various applications.",
-    image: "/projects/emotion-recognition.svg",
-    link: "#",
-    startDate: "2023-04-15",
-    technologies: ["OpenCV", "TensorFlow", "Flask", "WebRTC", "Redis"],
-    tags: ["Computer Vision", "Real-time Processing", "Machine Learning"],
-    problemStatement: "Traditional emotion recognition systems lack real-time capabilities and accuracy in diverse environments.",
-    approach: [
-      "Developed custom CNN for facial expression recognition",
-      "Implemented real-time video processing pipeline",
-      "Created scalable backend architecture",
-      "Integrated WebRTC for live video streaming"
-    ],
-    challenges: [
-      "Achieving real-time performance",
-      "Handling varying lighting conditions",
-      "Ensuring privacy compliance"
-    ],
-    solutions: [
-      "Optimized model architecture for speed",
-      "Implemented adaptive preprocessing",
-      "Developed on-device processing"
-    ],
-    outcomes: [
-      "95% accuracy in emotion detection",
-      "30ms average processing time",
-      "Successfully deployed in 5 commercial applications"
-    ],
-    impact: "The system has revolutionized human-computer interaction and emotional intelligence applications.",
-    featured: true,
-    role: "Lead Developer",
-    duration: "8 months"
-  },
-  {
-    title: "Intelligent Document Analysis System",
-    description: "A sophisticated document processing platform that leverages NLP and machine learning to extract, analyze, and organize information from various document types.",
-    image: "/projects/chatbot.svg",
-    link: "https://kedhareswer.github.io/PDFChatBot/",
-    startDate: "2023-02-28",
-    technologies: ["Python", "HuggingFace", "FAISS", "KeyBERT", "React"],
-    tags: ["Natural Language Processing", "Document Processing", "AI Chatbot"],
-    problemStatement: "Organizations struggle with efficient processing and analysis of large document collections, leading to time-consuming manual review processes.",
-    approach: [
-      "Implemented advanced NLP models for text understanding",
-      "Developed efficient document indexing system",
-      "Created conversational interface for document queries",
-      "Built automated summary generation system"
-    ],
-    challenges: [
-      "Handling diverse document formats and structures",
-      "Maintaining context in long conversations",
-      "Optimizing search and retrieval performance"
-    ],
-    solutions: [
-      "Created unified document processing pipeline",
-      "Implemented context-aware conversation system",
-      "Optimized vector search with FAISS"
-    ],
-    outcomes: [
-      "90% accuracy in information extraction",
-      "60% reduction in document processing time",
-      "Successfully processed 100,000+ pages"
-    ],
-    impact: "The system has transformed document management processes, significantly reducing manual effort and improving information accessibility.",
-    githubUrl: "https://kedhareswer.github.io/PDFChatBot/",
-    liveDemo: "https://kedhareswer.github.io/PDFChatBot/"
   }
 ]
 
@@ -324,7 +260,7 @@ export default function CaseStudies() {
             {caseStudies.slice(0, 2).map((study, index) => (
               <motion.div
                 key={index}
-                className="group relative aspect-[16/9] overflow-hidden rounded-lg bg-gray-100 cursor-pointer"
+                className="group relative overflow-hidden rounded-lg bg-gray-100 cursor-pointer h-[400px] md:h-[500px]"
                 onClick={() => router.push(`/project/${index}`)}
                 onMouseEnter={() => setHoveredStudy(study)}
                 onMouseLeave={() => setHoveredStudy(null)}
@@ -337,7 +273,7 @@ export default function CaseStudies() {
                   <img
                     src={study.image}
                     alt={study.title}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110 p-4"
                   />
                   <motion.div
                     className="absolute inset-0 bg-gray-900 origin-right"
@@ -362,7 +298,7 @@ export default function CaseStudies() {
             {caseStudies.slice(2, 5).map((study, index) => (
             <motion.div
               key={index}
-              className="group relative aspect-[4/3] overflow-hidden rounded-lg bg-gray-100 cursor-pointer"
+              className="group relative overflow-hidden rounded-lg bg-gray-100 cursor-pointer h-[300px]"
               onClick={() => router.push(`/project/${index + 2}`)}
               onMouseEnter={() => setHoveredStudy(study)}
               onMouseLeave={() => setHoveredStudy(null)}
@@ -375,7 +311,7 @@ export default function CaseStudies() {
                 <img
                   src={study.image}
                   alt={study.title}
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110 p-4"
                 />
                 <motion.div
                   className="absolute inset-0 bg-gray-900 origin-right"

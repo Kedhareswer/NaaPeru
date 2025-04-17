@@ -4,20 +4,20 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import { caseStudies } from '@/components/case-studies'
 
-export default function ProjectPage({ params }: { params: { id: string } }) {
+export default function ProjectPage() {
   const router = useRouter()
-  const [project, setProject] = useState(() => {
-    const projectId = parseInt(params.id)
-    return caseStudies[projectId] || null
-  })
+  const params = useParams()
+  const [project, setProject] = useState<typeof caseStudies[0] | null>(null)
 
   useEffect(() => {
-    const projectId = parseInt(params.id)
-    setProject(caseStudies[projectId] || null)
-  }, [params.id])
+    if (params?.id) {
+      const projectId = parseInt(params.id as string)
+      setProject(caseStudies[projectId] || null)
+    }
+  }, [params?.id])
 
   if (!project) {
     router.push('/#case-studies')
