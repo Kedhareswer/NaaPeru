@@ -1,44 +1,12 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { ArrowUpRight, Mail } from "lucide-react"
+import ChatInterface from "./chat-interface"
 
 export default function Contact() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.2 })
-  const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    message: "",
-  })
-
-  const handleChange = (e: { target: { name: any; value: any } }) => {
-    setFormState({
-      ...formState,
-      [e.target.name]: e.target.value,
-    })
-  }
-
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault()
-    
-    // Demo message handling
-    try {
-      console.log('Form submitted with data:', formState)
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // Demo success handling
-      alert('Message sent successfully! (Demo Mode)')
-      setFormState({ name: '', email: '', message: '' }) // Reset form
-      
-    } catch (error) {
-      console.error('Error in demo submission:', error)
-      alert('Failed to send message. Please try again. (Demo Mode)')
-    }
-  }
 
   return (
     <section id="contact" className="py-24 md:py-32 bg-gray-50" ref={ref}>
@@ -59,31 +27,11 @@ export default function Contact() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8 }}
           >
-            <h3 className="text-xl font-light mb-6">Get In Touch</h3>
+            {/* Placeholder Section */}
+            <h3 className="text-xl font-light mb-6">Placeholder Section</h3>
             <p className="text-gray-800 mb-8">
-              I'm currently available for research collaborations, internships, and project opportunities. Feel free to
-              reach out if you'd like to connect.
+              This is a placeholder for future content or functionality.
             </p>
-
-            <div className="space-y-4 mb-8">
-              <p>Phagwara, Punjab, India</p>
-            </div>
-
-            <div>
-              <h4 className="text-sm uppercase tracking-wider mb-4">Connect on WhatsApp</h4>
-              <motion.a
-                href="https://wa.me/qr/BSDC2CPQ44N3P1"
-                className="inline-block clickable"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <img
-                  src="/whatsapp.jpg"
-                  alt="WhatsApp QR Code"
-                  className="w-32 h-32"
-                />
-              </motion.a>
-            </div>
           </motion.div>
 
           <motion.div
@@ -91,65 +39,7 @@ export default function Contact() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8 }}
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm mb-2">
-                  Name
-                </label>
-                <motion.input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formState.name}
-                  onChange={handleChange}
-                  className="w-full border border-black p-3 bg-transparent"
-                  whileFocus={{ borderColor: "#000", borderWidth: "2px" }}
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm mb-2">
-                  Email
-                </label>
-                <motion.input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                  className="w-full border border-black p-3 bg-transparent"
-                  whileFocus={{ borderColor: "#000", borderWidth: "2px" }}
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm mb-2">
-                  Message
-                </label>
-                <motion.textarea
-                  id="message"
-                  name="message"
-                  value={formState.message}
-                  onChange={handleChange}
-                  rows={5}
-                  className="w-full border border-black p-3 bg-transparent"
-                  whileFocus={{ borderColor: "#000", borderWidth: "2px" }}
-                  required
-                />
-              </div>
-
-              <motion.button
-                type="submit"
-                className="px-6 py-3 bg-black text-white flex items-center clickable"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Send Message
-                <ArrowUpRight className="w-4 h-4 ml-2" />
-              </motion.button>
-            </form>
+            <ChatInterface />
           </motion.div>
         </div>
       </div>

@@ -22,7 +22,7 @@ const testimonials = [
     name: "Manish Chetla",
     role: "Video Game Developer at MC Studios",
     text: "Outstanding analytical skills and a natural talent for explaining complex concepts. His contributions to our team have been invaluable.",
-    image: "/testimonials/manish.svg",
+    image: "/testimonials/manish.jpeg",
     linkedin: "https://www.linkedin.com/in/manish-chetla/"
   },
   {
@@ -70,34 +70,36 @@ export default function Testimonials() {
             <CarouselContent className="-ml-2 md:-ml-4">
               {testimonials.map((testimonial, index) => (
               <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
-                <div className="p-6 rounded-xl shadow-lg border border-gray-200 bg-white h-full">
-                <div className="mb-4">
-                  <svg
-                    className="w-6 h-6 sm:w-8 sm:h-8 text-black opacity-20"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                  </svg>
-                </div>
-                <p className="text-gray-700 mb-4 text-sm sm:text-base leading-relaxed">{testimonial.text}</p>
-                <div className="border-t pt-4 flex items-center gap-3">
-                  <Avatar className="h-12 w-12 border-2 border-gray-200">
-                    <AvatarImage src={testimonial.image} alt={testimonial.name} />
-                    <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
-                  </Avatar>
+                <div className="p-6 sm:p-8 rounded-xl shadow-lg border border-gray-200 bg-white h-full flex flex-col justify-between">
                   <div>
-                    <a
-                      href={testimonial.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-bold text-sm sm:text-base hover:text-blue-600 transition-colors duration-200"
-                    >
-                      {testimonial.name}
-                    </a>
-                    <p className="text-gray-500 text-xs sm:text-sm">{testimonial.role}</p>
+                    <div className="mb-6">
+                      <svg
+                        className="w-8 h-8 sm:w-10 sm:h-10 text-black opacity-15"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-700 mb-6 text-sm sm:text-base leading-relaxed min-h-[80px]">{testimonial.text}</p>
                   </div>
-                </div>
+                  <div className="border-t pt-6 flex items-center gap-4">
+                    <Avatar className="h-14 w-14 border-2 border-gray-200">
+                      <AvatarImage src={testimonial.image} alt={testimonial.name} />
+                      <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <a
+                        href={testimonial.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-bold text-base sm:text-lg hover:text-blue-600 transition-colors duration-200"
+                      >
+                        {testimonial.name}
+                      </a>
+                      <p className="text-gray-500 text-sm sm:text-base mt-1">{testimonial.role}</p>
+                    </div>
+                  </div>
                 </div>
               </CarouselItem>
             ))}
