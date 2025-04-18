@@ -70,8 +70,12 @@ export default function Testimonials() {
             <CarouselContent className="-ml-2 md:-ml-4">
               {testimonials.map((testimonial, index) => (
               <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
-                <div className="p-6 sm:p-8 rounded-xl shadow-lg border border-gray-200 bg-white h-full flex flex-col justify-between">
-                  <div>
+                <div className="p-6 sm:p-8 rounded-xl shadow-[inset_0_0_10px_rgba(0,0,0,0.1)] border border-gray-200 bg-white h-full flex flex-col justify-between">
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
                     <div className="mb-6">
                       <svg
                         className="w-8 h-8 sm:w-10 sm:h-10 text-black opacity-15"
@@ -82,8 +86,13 @@ export default function Testimonials() {
                       </svg>
                     </div>
                     <p className="text-gray-700 mb-6 text-sm sm:text-base leading-relaxed min-h-[80px]">{testimonial.text}</p>
-                  </div>
-                  <div className="border-t pt-6 flex items-center gap-4">
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="border-t pt-6 flex items-center gap-4"
+                  >
                     <Avatar className="h-14 w-14 border-2 border-gray-200">
                       <AvatarImage src={testimonial.image} alt={testimonial.name} />
                       <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
@@ -99,7 +108,7 @@ export default function Testimonials() {
                       </a>
                       <p className="text-gray-500 text-sm sm:text-base mt-1">{testimonial.role}</p>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               </CarouselItem>
             ))}

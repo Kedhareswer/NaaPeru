@@ -243,42 +243,59 @@ export default function CaseStudies() {
   const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null)
   const studiesRef = useRef<HTMLDivElement>(null)
 
+  // Use useInView to detect when the section is in view
+  const isInView = useInView(studiesRef, { margin: "0px 0px -50% 0px" })
+
   return (
     <section id="case-studies" className="min-h-screen bg-white py-20" ref={studiesRef}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+        >
           <h2 className="text-3xl md:text-4xl font-light mb-4">Featured Work</h2>
           <div className="w-20 h-1 bg-black mx-auto"></div>
           <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-            A collection of innovative solutions and impactful projects.
+             My innovative solutions and impactful projects.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 gap-8">
           {/* First row with 2 larger featured projects */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {caseStudies.slice(0, 2).map((study, index) => (
-              <Link href={`/project/${index}`} key={index} className="group relative overflow-hidden rounded-lg bg-gray-100 cursor-pointer h-[400px] md:h-[500px]">
+              <Link href={`/project/${index}`} key={index} className="group relative overflow-hidden rounded-2xl bg-gray-100 cursor-pointer h-[400px] md:h-[500px] transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg shadow-sm">
                 <motion.div
                   className="relative h-full w-full"
                   onMouseEnter={() => setHoveredStudy(study)}
                   onMouseLeave={() => setHoveredStudy(null)}
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   whileHover={{ scale: 1.02 }}
                 >
+                  <motion.div
+                    className="absolute inset-0 bg-gray-900"
+                    initial={{ scaleX: 1 }}
+                    whileInView={{ scaleX: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                    style={{ originX: 0 }}
+                  />
+                  <motion.div
+                    className="absolute inset-0 bg-gray-900"
+                    initial={{ scaleX: 1 }}
+                    whileInView={{ scaleX: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, ease: "easeInOut", delay: 0.1 }}
+                    style={{ originX: 1 }}
+                  />
                   <img
                     src={study.image}
                     alt={study.title}
                     className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110 p-4"
-                  />
-                  <motion.div
-                    className="absolute inset-0 bg-gray-900 origin-right"
-                    initial="closed"
-                    whileInView="open"
-                    viewport={{ once: true }}
-                    variants={shutterVariants}
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-60">
                     <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
@@ -294,13 +311,13 @@ export default function CaseStudies() {
           {/* Second row with 3 smaller projects */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {caseStudies.slice(2, 5).map((study, index) => (
-              <Link href={`/project/${index + 2}`} key={index} className="group relative overflow-hidden rounded-lg bg-gray-100 cursor-pointer h-[300px]">
+              <Link href={`/project/${index + 2}`} key={index} className="group relative overflow-hidden rounded-2xl bg-gray-100 cursor-pointer h-[300px] transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg shadow-sm">
                 <motion.div
                   className="relative h-full w-full"
                   onMouseEnter={() => setHoveredStudy(study)}
                   onMouseLeave={() => setHoveredStudy(null)}
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   whileHover={{ scale: 1.02 }}
                 >
@@ -310,11 +327,20 @@ export default function CaseStudies() {
                     className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110 p-4"
                   />
                   <motion.div
-                    className="absolute inset-0 bg-gray-900 origin-right"
-                    initial="closed"
-                    whileInView="open"
+                    className="absolute inset-0 bg-gray-900"
+                    initial={{ scaleX: 1 }}
+                    whileInView={{ scaleX: 0 }}
                     viewport={{ once: true }}
-                    variants={shutterVariants}
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                    style={{ originX: 0 }}
+                  />
+                  <motion.div
+                    className="absolute inset-0 bg-gray-900"
+                    initial={{ scaleX: 1 }}
+                    whileInView={{ scaleX: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, ease: "easeInOut", delay: 0.1 }}
+                    style={{ originX: 1 }}
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-60">
                     <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">

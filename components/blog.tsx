@@ -1,6 +1,7 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useInView } from "framer-motion"
+import { useRef } from "react"
 
 const blogPosts = [
   {
@@ -33,8 +34,11 @@ const blogPosts = [
 ]
 
 export default function Blog() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, amount: 1 })
+
   return (
-    <section id="blog" className="py-20 bg-gray-50">
+    <section id="blog" className="py-20 bg-gray-50" ref={ref}>
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -52,25 +56,47 @@ export default function Blog() {
           {blogPosts.map((post, index) => (
             <motion.article
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300"
+              initial={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: index * 0.15, ease: "easeOut" }}
+              className="group relative bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-[inset_0_0_10px_rgba(0,0,0,0.1)] hover:shadow-[inset_0_0_15px_rgba(0,0,0,0.2)] transition-shadow duration-300"
             >
               <a href={post.link} className="block p-6 h-full">
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between text-sm text-gray-500">
+                  <motion.div
+                    initial={{ y: 50 }}
+                    animate={isInView ? { y: 0 } : { y: 50 }}
+                    transition={{ duration: 1, delay: index * 0.5, ease: "easeOut" }}
+                    className="flex items-center justify-between text-sm text-gray-500"
+                  >
                     <span className="px-3 py-1 bg-gray-100 rounded-full">{post.category}</span>
                     <span>{post.date}</span>
-                  </div>
+                  </motion.div>
                   
-                  <h3 className="text-xl font-light leading-tight group-hover:text-gray-600 transition-colors duration-200">
+                  <motion.h3
+                    initial={{ y: 50 }}
+                    animate={isInView ? { y: 0 } : { y: 50 }}
+                    transition={{ duration: 1, delay: index * 0.5, ease: "easeOut" }}
+                    className="text-xl font-light leading-tight group-hover:text-gray-600 transition-colors duration-200"
+                  >
                     {post.title}
-                  </h3>
+                  </motion.h3>
                   
-                  <p className="text-gray-600 line-clamp-3">{post.excerpt}</p>
+                  <motion.p
+                    initial={{ y: 50 }}
+                    animate={isInView ? { y: 0 } : { y: 50 }}
+                    transition={{ duration: 1, delay: index * 0.5, ease: "easeOut" }}
+                    className="text-gray-600 line-clamp-3"
+                  >
+                    {post.excerpt}
+                  </motion.p>
                   
-                  <div className="pt-4 mt-auto flex items-center justify-between text-sm">
+                  <motion.div
+                    initial={{ y: 50 }}
+                    animate={isInView ? { y: 0 } : { y: 50 }}
+                    transition={{ duration: 1, delay: index * 0.5, ease: "easeOut" }}
+                    className="pt-4 mt-auto flex items-center justify-between text-sm"
+                  >
                     <span className="flex items-center text-gray-500">
                       <svg
                         className="w-4 h-4 mr-2"
@@ -89,7 +115,7 @@ export default function Blog() {
                       {post.readTime}
                     </span>
                     <span className="text-gray-500">{post.platform}</span>
-                  </div>
+                  </motion.div>
                 </div>
               </a>
             </motion.article>

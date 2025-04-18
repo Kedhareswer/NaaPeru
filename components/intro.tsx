@@ -46,13 +46,13 @@ export default function Intro() {
     <section
       id="intro"
       ref={containerRef}
-      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-white to-gray-50 dark:from-zinc-900 dark:to-zinc-800"
+      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-white to-zinc-100 dark:from-black dark:to-zinc-900"
     >
       <motion.div 
         className="absolute inset-0 w-full h-full"
         style={{ y: backgroundY }}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.8)_0%,rgba(255,255,255,0)_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(30,30,30,0.8)_0%,rgba(30,30,30,0)_70%)] z-0" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.9)_0%,rgba(255,255,255,0)_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.9)_0%,rgba(0,0,0,0)_70%)] z-0" />
       </motion.div>
       
       <motion.div 
@@ -98,7 +98,7 @@ export default function Intro() {
         {[Code, Database, Sparkles].map((Icon, i) => (
           <motion.div 
             key={i}
-            className="absolute text-zinc-300/20 dark:text-zinc-600/20"
+            className="absolute text-zinc-300/20 dark:text-zinc-700/20"
             style={{
               left: `${20 + i * 25}%`,
               top: `${30 + i * 15}%`,
@@ -234,8 +234,8 @@ export default function Intro() {
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noopener noreferrer" : undefined}
                     className={`inline-flex items-center px-4 py-2 text-sm md:text-base border-2 rounded-lg transition-all duration-300 ${link.primary ? 
-                      'border-zinc-900 dark:border-zinc-100 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 hover:bg-transparent hover:text-zinc-900 dark:hover:bg-transparent dark:hover:text-zinc-100' : 
-                      'border-zinc-900 dark:border-zinc-100 hover:bg-zinc-900 hover:text-white dark:hover:bg-zinc-100 dark:hover:text-zinc-900'}`}
+                      'border-black dark:border-white bg-black dark:bg-white text-white dark:text-black hover:bg-transparent hover:text-black dark:hover:bg-transparent dark:hover:text-white' : 
+                      'border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black'}`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: 1.5 + (i * 0.1) }}
@@ -257,7 +257,7 @@ export default function Intro() {
             transition={{ duration: 1, delay: 0.5 }}
           >
             <motion.div 
-              className="absolute inset-0 bg-gradient-to-br from-zinc-100/50 to-zinc-300/50 dark:from-zinc-800/50 dark:to-zinc-900/50 rounded-2xl md:rounded-3xl transform rotate-[-4deg] scale-[0.96] z-0"
+              className="absolute inset-0 bg-gradient-to-br from-white/50 to-zinc-200/50 dark:from-zinc-900/50 dark:to-black/50 rounded-2xl md:rounded-3xl transform rotate-[-4deg] scale-[0.96] z-0"
               initial={{ opacity: 0, rotate: -8, scale: 0.9 }}
               animate={{ opacity: 1, rotate: -4, scale: 0.96 }}
               transition={{ duration: 1, delay: 0.7 }}

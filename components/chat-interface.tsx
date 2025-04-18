@@ -145,11 +145,43 @@ export default function ChatInterface() {
             transition={{ duration: 0.3 }}
             className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
+            {message.role === 'assistant' && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-8 h-8 rounded-full mr-2"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 8v4l3 3" />
+                <path d="M6 12h6" />
+              </svg>
+            )}
             <div
               className={`max-w-[80%] rounded-2xl p-4 ${message.role === 'user' ? 'bg-black text-white' : 'bg-gray-50 border border-gray-200'} shadow-[inset_0_0_5px_rgba(0,0,0,0.2)]`}
             >
               <p className="text-[15px] leading-relaxed">{message.content}</p>
             </div>
+            {message.role === 'user' && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-8 h-8 rounded-full ml-2"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M14.5 11.5a3.5 3.5 0 0 1-7 0" />
+                <path d="M12 15v1" />
+              </svg>
+            )}
           </motion.div>
         ))}
         {loading && (
