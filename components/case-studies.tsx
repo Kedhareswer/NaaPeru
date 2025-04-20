@@ -27,6 +27,7 @@ type CaseStudy = {
   title: string
   description: string
   image: string
+  hoverImage: string
   link: string
   tags: string[]
   startDate: string
@@ -50,6 +51,7 @@ const caseStudies: CaseStudy[] = [
     title: "Neural Network Visualization Platform",
     description: "An interactive platform for visualizing and understanding complex neural network architectures in real-time, enabling users to explore deep learning concepts through hands-on experimentation.",
     image: "/projects/neural-network.svg",
+    hoverImage: "/projects/neural-network-hover.svg", // Add hover image
     link: "#",
     startDate: "2023-06-01",
     technologies: ["React", "D3.js", "TensorFlow.js", "WebGL", "Node.js"],
@@ -85,9 +87,10 @@ const caseStudies: CaseStudy[] = [
     title: "AI-Based Endoscopic Image Enhancement",
     description: "An academic research project utilizing deep learning techniques to enhance the quality and clarity of endoscopic images, ensuring improved visibility for diagnostic and surgical support.",
     image: "/projects/endoscopy-image-enhancement.png",
+    hoverImage: "/projects/endoscopy-image-enhancement-2.png", // Add hover image
     link: "#",
     startDate: "2025-01-15",
-    technologies: ["PyTorch", "Flask", "OpenCV", "NumPy", "JavaScript", "Bootstrap 5", "WebRTC", "HTML5"],
+    technologies: ["PyTorch", "Flask", "OpenCV", "NumPy", "JavaScript", "Bootstrap 5", "WebRTC", "HTML5", "DL"],
     tags: ["Medical Imaging", "Endoscopy", "Deep Learning", "Academic Research"],
     problemStatement: "Endoscopic procedures often produce low-resolution or noisy images, limiting the clarity required for accurate diagnosis and surgical guidance. There is a need for advanced enhancement techniques tailored to medical imaging constraints.",
     approach: [
@@ -121,48 +124,51 @@ const caseStudies: CaseStudy[] = [
     githubUrl: "https://github.com/Kedhareswer/Endoscopy-Image-Enhancement"
   },
   {
-    title: "Video Game Industry Analysis",
-    description: "A comprehensive analysis of video game sales data to understand market trends, genre preferences, and publisher performance across different regions.",
-    image: "/projects/analytics-dashboard.svg",
-    link: "https://www.canva.com/design/DAFzfYIR8aU/HsNpIG8kX42bYTjky17DGQ/view",
-    startDate: "2024-02-01",
-    technologies: ["Python", "Pandas", "Tableau", "Statistical Analysis", "Data Visualization"],
-    tags: ["EDA", "Data Analysis", "Data Visualization", "Tableau"],
-    problemStatement: "To analyze video game sales data to understand genre preferences, regional trends, and publisher dominance in the gaming industry, and provide recommendations for companies and regions to enhance their market presence and performance.",
+    title: "ResearchBolt - An AI Research Assistant",
+    description: "A real-time collaborative workspace for research teams. Chat with team members, share documents, and leverage AI assistance for your research projects.",
+    image: "/projects/research-bolt.png",
+    hoverImage: "/projects/research-bolt-2.png", // Add hover image
+    link: "https://github.com/Kedhareswer/ai-project-planner",
+    startDate: "2025-02-01",
+    technologies: ["React", "Next.js", "Gemini API", "Supabase", "TypeScript", "Tailwind CSS"],
+    tags: ["AI", "Collaboration", "Research", "Real-time"],
+    problemStatement: "Research teams often struggle with efficient collaboration and knowledge sharing. Traditional tools lack integrated AI assistance and real-time collaboration features, leading to fragmented workflows and reduced productivity.",
     approach: [
-      "Collected and preprocessed comprehensive video game sales data",
-      "Performed exploratory data analysis using Python and Pandas",
-      "Created interactive visualizations using Tableau",
-      "Conducted statistical analysis of market trends",
-      "Generated actionable insights for stakeholders"
+      "Implemented real-time chat using Supabase's real-time subscriptions",
+      "Integrated Gemini API for intelligent research assistance",
+      "Developed document sharing and collaboration features",
+      "Created team management system with role-based access",
+      "Built responsive UI with modern design principles"
     ],
     challenges: [
-      "Handling large-scale historical sales data",
-      "Normalizing data from multiple sources",
-      "Identifying meaningful patterns in complex market dynamics",
-      "Creating clear visualizations for diverse stakeholders"
+      "Managing real-time state synchronization across users",
+      "Optimizing AI response times for better user experience",
+      "Implementing secure document sharing and permissions",
+      "Ensuring scalability for large research teams"
     ],
     solutions: [
-      "Implemented efficient data processing pipelines",
-      "Developed standardized data cleaning procedures",
-      "Created custom visualization templates",
-      "Designed interactive dashboards for easy exploration"
+      "Used Supabase real-time features for instant updates",
+      "Implemented caching and streaming for AI responses",
+      "Created robust permission system with Supabase RLS",
+      "Designed scalable architecture with microservices"
     ],
     outcomes: [
-      "Identified key growth opportunities in emerging markets",
-      "Mapped successful genre-region combinations",
-      "Provided actionable recommendations for publishers",
-      "Created reusable analysis framework for future studies"
+      "Can reduce research collaboration time by 40%",
+      "Improves team communication efficiency",
+      "Streamlines document management process",
+      "Enhances research quality with AI assistance"
     ],
-    impact: "The analysis provided valuable insights for game publishers and developers, helping them make data-driven decisions about market entry, genre focus, and regional strategy.",
-    role: "Data Analyst",
-    duration: "1 month",
-    featured: true
+    impact: "The platform has power to transform how research teams collaborate, making knowledge sharing more efficient and leveraging AI to accelerate research ideas and workflows.",
+    featured: true,
+    role: "Full Stack Developer",
+    duration: "3 months",
+    githubUrl: "https://github.com/Kedhareswer/ai-project-planner"
   },
   {
     title: "Video Game Impact Analysis",
     description: "A comprehensive research project analyzing the relationship between video games and player behavior, focusing on debunking misconceptions and highlighting positive impacts.",
     image: "/projects/analytics-dashboard.svg",
+    hoverImage: "/projects/analytics-dashboard-hover.svg", // Add hover image
     link: "https://www.canva.com/design/DAGEDBeQEgE/iMwEiAhbTPrwobdHrCS7Sg/view",
     startDate: "2024-01-15",
     technologies: ["Python", "Machine Learning", "NLP", "Data Visualization", "Statistical Analysis"],
@@ -201,7 +207,8 @@ const caseStudies: CaseStudy[] = [
   {
     title: "Image to Sketch AI",
     description: "A web-based AI tool that converts uploaded images into hand-drawn-style sketches using deep learning, with real-time customization and preview options.",
-    image: "/projects/image-to-sketch.png",
+    image: "/projects/image-to-sketch-dark.png",
+    hoverImage: "/projects/image-to-sketch.png",
     link: "https://image-to-sketch-wine.vercel.app/",
     startDate: "2024-11-15",
     technologies: ["PyTorch", "TensorFlow", "React", "FastAPI", "Vercel"],
@@ -242,6 +249,7 @@ export default function CaseStudies() {
   const [hoveredStudy, setHoveredStudy] = useState<CaseStudy | null>(null)
   const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null)
   const studiesRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
 
   // Use useInView to detect when the section is in view
   const isInView = useInView(studiesRef, { margin: "0px 0px -50% 0px" })
@@ -266,7 +274,7 @@ export default function CaseStudies() {
           {/* First row with 2 larger featured projects */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {caseStudies.slice(0, 2).map((study, index) => (
-              <Link href={`/project/${index}`} key={index} className="group relative overflow-hidden rounded-2xl bg-gray-100 cursor-pointer h-[400px] md:h-[500px] transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg shadow-sm">
+              <Link href={`/project/${index}`} key={index} className="group relative overflow-hidden rounded-2xl bg-gray-50 cursor-pointer h-[400px] md:h-[500px] transform transition-all duration-300 hover:scale-[1.02] shadow-[inset_0_2px_4px_rgba(0,0,0,0.1),inset_0_8px_16px_rgba(0,0,0,0.1)] border border-gray-200/50">
                 <motion.div
                   className="relative h-full w-full"
                   onMouseEnter={() => setHoveredStudy(study)}
@@ -293,7 +301,7 @@ export default function CaseStudies() {
                     style={{ originX: 1 }}
                   />
                   <img
-                    src={study.image}
+                    src={hoveredStudy === study ? study.hoverImage : study.image} // Use hover image if hovered
                     alt={study.title}
                     className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110 p-4"
                   />
@@ -311,7 +319,7 @@ export default function CaseStudies() {
           {/* Second row with 3 smaller projects */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {caseStudies.slice(2, 5).map((study, index) => (
-              <Link href={`/project/${index + 2}`} key={index} className="group relative overflow-hidden rounded-2xl bg-gray-100 cursor-pointer h-[300px] transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg shadow-sm">
+              <Link href={`/project/${index + 2}`} key={index} className="group relative overflow-hidden rounded-2xl bg-gray-50 cursor-pointer h-[300px] transform transition-all duration-300 hover:scale-[1.02] shadow-[inset_0_2px_4px_rgba(0,0,0,0.1),inset_0_8px_16px_rgba(0,0,0,0.1)] border border-gray-200/50">
                 <motion.div
                   className="relative h-full w-full"
                   onMouseEnter={() => setHoveredStudy(study)}
@@ -322,7 +330,7 @@ export default function CaseStudies() {
                   whileHover={{ scale: 1.02 }}
                 >
                   <img
-                    src={study.image}
+                    src={hoveredStudy === study ? study.hoverImage : study.image} // Use hover image if hovered
                     alt={study.title}
                     className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110 p-4"
                   />
@@ -352,6 +360,49 @@ export default function CaseStudies() {
               </Link>
             ))}
           </div>
+        </div>
+
+        {/* View More Projects Button */}
+        <div className="flex justify-center mt-12">
+          <Button
+            onClick={() => router.push('/projects')}
+            className="relative text-lg font-semibold py-3 px-6 rounded-lg group"
+            style={{
+              background: 'linear-gradient(145deg, #e2e2e2, #ffffff)',
+              color: '#333',
+              border: 'none',
+              boxShadow: `
+                0 1px 1px rgba(255,255,255,0.8) inset,
+                0 -2px 4px rgba(0,0,0,0.1) inset,
+                0 4px 8px rgba(0,0,0,0.1),
+                0 2px 4px rgba(0,0,0,0.05)
+              `,
+              borderRadius: '12px',
+              position: 'relative',
+              overflow: 'hidden',
+              transform: 'translateZ(0)',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            <span className="relative z-10">View More Projects</span>
+            <span
+              className="absolute inset-0 bg-gradient-to-r from-blue-500 to-green-500 opacity-0 
+              group-hover:opacity-100 transition-all duration-500"
+              style={{
+                clipPath: 'circle(0% at 50% 50%)',
+                transition: 'clip-path 0.7s ease'
+              }}
+            ></span>
+            <span
+              className="absolute inset-0 rounded-lg"
+              style={{
+                background: 'linear-gradient(145deg, #ffffff, #e2e2e2)',
+                transform: 'scale(0.98)',
+                transition: 'all 0.3s ease',
+                zIndex: -1
+              }}
+            ></span>
+          </Button>
         </div>
       </div>
     </section>

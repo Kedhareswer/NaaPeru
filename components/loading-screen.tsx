@@ -31,7 +31,7 @@ export default function LoadingScreen() {
     <AnimatePresence mode="wait">
       {!isComplete && (
         <motion.div
-          className="fixed inset-0 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm flex items-center justify-center z-[100]"
+          className="fixed inset-0 bg-white backdrop-blur-sm flex items-center justify-center z-[100]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -43,7 +43,7 @@ export default function LoadingScreen() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.6, duration: 1.0, ease: "easeOut" }}
           >
-            <div style={{ position: 'relative', height: '300px', width: '400px' }}>
+            <div style={{ position: 'relative', height: '300px', width: '400px', filter: 'contrast(1.1)' }}>
               <TextPressure
                 text="Loading..."
                 flex={true}
@@ -53,26 +53,26 @@ export default function LoadingScreen() {
                 weight={true}
                 italic={true}
                 textColor="#000000"
-                strokeColor="#666666"
-                strokeWidth={1}
-                minFontSize={48}
+                strokeColor="#333333"
+                strokeWidth={1.5}
+                minFontSize={96}
               />
             </div>
             <motion.div 
-              className="w-64 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden"
+              className="w-64 h-1 bg-gray-100 rounded-full overflow-hidden shadow-inner"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.0 }}
             >
               <motion.div
-                className="h-full bg-blue-500 dark:bg-blue-400 rounded-full"
+                className="h-full bg-black rounded-full shadow-lg"
                 initial={{ width: '0%' }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.5 }}
               />
             </motion.div>
             <motion.p
-              className="text-sm text-gray-500 dark:text-gray-400"
+              className="text-sm text-gray-600 font-light tracking-wider"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2 }}

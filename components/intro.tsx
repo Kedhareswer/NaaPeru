@@ -46,13 +46,13 @@ export default function Intro() {
     <section
       id="intro"
       ref={containerRef}
-      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-white to-zinc-100 dark:from-black dark:to-zinc-900"
+      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-white"
     >
       <motion.div 
         className="absolute inset-0 w-full h-full"
         style={{ y: backgroundY }}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.9)_0%,rgba(255,255,255,0)_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.9)_0%,rgba(0,0,0,0)_70%)] z-0" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.9)_0%,rgba(255,255,255,0)_70%)] z-0" />
       </motion.div>
       
       <motion.div 
@@ -98,7 +98,7 @@ export default function Intro() {
         {[Code, Database, Sparkles].map((Icon, i) => (
           <motion.div 
             key={i}
-            className="absolute text-zinc-300/20 dark:text-zinc-700/20"
+            className="absolute text-zinc-300/20"
             style={{
               left: `${20 + i * 25}%`,
               top: `${30 + i * 15}%`,
@@ -134,7 +134,7 @@ export default function Intro() {
           >
             <div className="overflow-hidden">
               <motion.h2
-                className="text-sm md:text-base uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400 font-light"
+                className="text-sm md:text-base uppercase tracking-[0.2em] text-zinc-500 font-light"
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -151,7 +151,7 @@ export default function Intro() {
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
                 <span className="block">
-                  <span className="inline-block mr-2 md:mr-4 text-zinc-400 dark:text-zinc-500">Hey,</span>
+                  <span className="inline-block mr-2 md:mr-4 text-zinc-400">Hey,</span>
                   <span className="inline-block">I'm</span>
                 </span>
                 <div className="mt-2 md:mt-4 overflow-hidden">
@@ -159,7 +159,7 @@ export default function Intro() {
                     {nameChars.map((char, index) => (
                       <motion.span 
                         key={index}
-                        className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 via-zinc-600 to-zinc-900 dark:from-zinc-100 dark:via-zinc-400 dark:to-zinc-100"
+                        className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 via-zinc-600 to-zinc-900"
                         initial={{ y: 100, opacity: 0 }}
                         animate={textReveal ? { y: 0, opacity: 1 } : { y: 100, opacity: 0 }}
                         transition={{ 
@@ -178,7 +178,7 @@ export default function Intro() {
 
             <div className="overflow-hidden">
               <motion.p
-                className="text-sm md:text-base lg:text-lg max-w-xl text-zinc-600 dark:text-zinc-400 leading-relaxed"
+                className="text-sm md:text-base lg:text-lg max-w-xl text-zinc-600 leading-relaxed"
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
@@ -195,7 +195,7 @@ export default function Intro() {
             >
               <div className="overflow-hidden">
                 <motion.p 
-                  className="text-lg md:text-xl font-medium text-zinc-800 dark:text-zinc-200 tracking-tight"
+                  className="text-lg md:text-xl font-medium text-zinc-800 tracking-tight"
                   initial={{ y: 40 }}
                   animate={{ y: 0 }}
                   transition={{ duration: 0.5, delay: 1.1 }}
@@ -206,7 +206,7 @@ export default function Intro() {
               
               <div className="overflow-hidden">
                 <motion.p 
-                  className="text-sm md:text-base text-zinc-600 dark:text-zinc-400 font-light tracking-wide"
+                  className="text-sm md:text-base text-zinc-600 font-light tracking-wide"
                   initial={{ y: 40 }}
                   animate={{ y: 0 }}
                   transition={{ duration: 0.5, delay: 1.2 }}
@@ -234,8 +234,8 @@ export default function Intro() {
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noopener noreferrer" : undefined}
                     className={`inline-flex items-center px-4 py-2 text-sm md:text-base border-2 rounded-lg transition-all duration-300 ${link.primary ? 
-                      'border-black dark:border-white bg-black dark:bg-white text-white dark:text-black hover:bg-transparent hover:text-black dark:hover:bg-transparent dark:hover:text-white' : 
-                      'border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black'}`}
+                      'border-black bg-black text-white hover:bg-transparent hover:text-black' : 
+                      'border-black hover:bg-black hover:text-white'}`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: 1.5 + (i * 0.1) }}
@@ -257,21 +257,21 @@ export default function Intro() {
             transition={{ duration: 1, delay: 0.5 }}
           >
             <motion.div 
-              className="absolute inset-0 bg-gradient-to-br from-white/50 to-zinc-200/50 dark:from-zinc-900/50 dark:to-black/50 rounded-2xl md:rounded-3xl transform rotate-[-4deg] scale-[0.96] z-0"
+              className="absolute inset-0 bg-gradient-to-br from-white/50 to-zinc-200/50 rounded-2xl md:rounded-3xl transform rotate-[-4deg] scale-[0.96] z-0"
               initial={{ opacity: 0, rotate: -8, scale: 0.9 }}
               animate={{ opacity: 1, rotate: -4, scale: 0.96 }}
               transition={{ duration: 1, delay: 0.7 }}
             />
             
             <motion.div
-              className="relative w-full h-full rounded-2xl md:rounded-3xl overflow-hidden border border-white/20 dark:border-zinc-700/50 shadow-2xl backdrop-blur-sm z-10"
+              className="relative w-full h-full rounded-2xl md:rounded-3xl overflow-hidden border border-white/20 shadow-2xl backdrop-blur-sm z-10"
               initial={{ opacity: 0, scale: 0.9, rotate: 4 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{ duration: 1, delay: 0.9 }}
               whileHover={{ scale: 1.02, rotate: -1 }}
             >
               <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-white/10 to-black/30 dark:from-zinc-800/10 dark:to-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"
+                className="absolute inset-0 bg-gradient-to-br from-white/10 to-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
                 transition={{ duration: 1 }}
@@ -291,13 +291,13 @@ export default function Intro() {
             </motion.div>
             
             <motion.div 
-              className="absolute -bottom-4 -left-4 w-12 md:w-16 h-12 md:h-16 bg-zinc-200 dark:bg-zinc-700 rounded-full z-0"
+              className="absolute -bottom-4 -left-4 w-12 md:w-16 h-12 md:h-16 bg-zinc-200 rounded-full z-0"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 0.5 }}
               transition={{ duration: 0.6, delay: 1.3 }}
             />
             <motion.div 
-              className="absolute -top-4 -right-4 w-16 md:w-24 h-16 md:h-24 bg-zinc-200 dark:bg-zinc-700 rounded-full z-0"
+              className="absolute -top-4 -right-4 w-16 md:w-24 h-16 md:h-24 bg-zinc-200 rounded-full z-0"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 0.3 }}
               transition={{ duration: 0.6, delay: 1.4 }}
@@ -325,7 +325,7 @@ export default function Intro() {
             >
               <span className="text-xs tracking-widest uppercase mb-2 opacity-70 group-hover:opacity-100 transition-opacity">Scroll</span>
               <motion.div 
-                className="w-8 h-8 flex items-center justify-center rounded-full border border-zinc-300 dark:border-zinc-700 group-hover:border-zinc-900 dark:group-hover:border-zinc-300 transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-full border border-zinc-300 group-hover:border-zinc-900 transition-colors"
                 whileHover={{ scale: 1.1 }}
               >
                 <ArrowDown className="w-4 h-4 group-hover:scale-110 transition-transform" />

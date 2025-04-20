@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
 import { Send } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { useToast } from '@/components/ui/use-toast'
@@ -18,13 +18,18 @@ export default function ChatInterface() {
   const [showWelcome, setShowWelcome] = useState(true)
   const { toast } = useToast()
 
+  const chatRef = useRef(null)
+  const isInView = useInView(chatRef, { once: true })
+
   useEffect(() => {
-    const welcomeMessage = {
-      role: 'assistant' as const,
-      content: `Hi there! 👋 I'm Kedhareswer's AI assistant. I can tell you all about his work, projects, and experience in data science and AI. How can I help you today?`
+    if (isInView) {
+      const welcomeMessage = {
+        role: 'assistant' as const,
+        content: `Hi there! 👋 I'm Kedhareswer's AI assistant. I can tell you all about his work, projects, and experience in data science and AI. How can I help you today?`
+      }
+      setMessages([welcomeMessage])
     }
-    setMessages([welcomeMessage])
-  }, [])
+  }, [isInView])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -135,7 +140,7 @@ export default function ChatInterface() {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-[inset_0_0_10px_rgba(0,0,0,0.2)] overflow-hidden border border-gray-200">
+    <div ref={chatRef} className="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-[inset_0_0_10px_rgba(0,0,0,0.2)] overflow-hidden border border-gray-200">
       <div className="h-[400px] overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
         {messages.map((message, index) => (
           <motion.div

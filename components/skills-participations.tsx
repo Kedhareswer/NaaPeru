@@ -1,8 +1,9 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
 import { Trophy, Award, Medal, Heart, Music, Book, Camera, Gamepad, Plane } from "lucide-react"
+import { FloatingLogo, generateRandomPosition, logoMap } from './floating-logos'
 import "../styles/shiny-button.css"
 
 const hobbies = [
@@ -120,18 +121,38 @@ export default function SkillsParticipations() {
                 >
                   <h3 className="text-lg font-medium mb-4">{category.category}</h3>
                   <div className="flex flex-wrap gap-2">
-                    {category.items.map((skill, skillIndex) => (
-                      <motion.span
-                        key={skill}
-                        className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-sm shiny-button"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                        transition={{ duration: 0.4, delay: index * 0.1 + skillIndex * 0.05 }}
-                        whileHover={{ scale: 1.05 }}
-                      >
-                        {skill}
-                      </motion.span>
-                    ))}
+                    {category.items.map((skill, skillIndex) => {
+                      const [isHovered, setIsHovered] = useState(false);
+                      return (
+                        <div key={skill} className="relative">
+                          <motion.span
+                            className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-sm shiny-button"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                            transition={{ duration: 0.4, delay: index * 0.1 + skillIndex * 0.05 }}
+                            whileHover={{ scale: 1.05 }}
+                            onHoverStart={() => setIsHovered(true)}
+                            onHoverEnd={() => setIsHovered(false)}
+                          >
+                            {skill}
+                          </motion.span>
+                          {isHovered && skill in logoMap && [
+                            ...Array(3).keys()
+                          ].map((i) => {
+                            const { x, y } = generateRandomPosition(100, 100);
+                            return (
+                              <FloatingLogo
+                                key={`${skill}-${i}`}
+                                x={x}
+                                y={y}
+                                delay={i * 0.2}
+                                skill={skill}
+                              />
+                            );
+                          })}
+                        </div>
+                      );
+                    })}
                   </div>
                 </motion.div>
               ))}
