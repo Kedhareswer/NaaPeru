@@ -165,44 +165,45 @@ const caseStudies: CaseStudy[] = [
     githubUrl: "https://github.com/Kedhareswer/ai-project-planner"
   },
   {
-    title: "Video Game Impact Analysis",
-    description: "A comprehensive research project analyzing the relationship between video games and player behavior, focusing on debunking misconceptions and highlighting positive impacts.",
-    image: "/projects/analytics-dashboard.svg",
-    hoverImage: "/projects/analytics-dashboard-hover.svg", // Add hover image
-    link: "https://www.canva.com/design/DAGEDBeQEgE/iMwEiAhbTPrwobdHrCS7Sg/view",
+    title: "EmailInsight Project",
+    description: "An interactive learning journey for email classification that goes beyond traditional spam/ham detection, featuring a comprehensive website showcasing the machine learning process.",
+    image: "/projects/email-insight.png",
+    hoverImage: "/projects/email-insight-2.png",
+    link: "https://mail-classification-case-study-6izg753sg.vercel.app/",
+    githubUrl: "https://github.com/Kedhareswer/Mail_Classification_Case_Study",
     startDate: "2024-01-15",
-    technologies: ["Python", "Machine Learning", "NLP", "Data Visualization", "Statistical Analysis"],
-    tags: ["Machine Learning", "NLP", "EDA", "Python", "Data Visualization"],
-    problemStatement: "Perceptions persist that video games are linked to promoting violence among players. This perception often overshadows the potential positive impacts that gaming may have. To address this misconception, the project endeavors to conduct comprehensive research, surveys, and other analyses to uncover the nuanced relationship between video games and behavior. By exploring various dimensions of gaming, including socio-demographic factors, game genres, and player behaviors, the project aims to highlight the positive aspects of gaming while debunking the notion of a direct causal link between video games and violence. Through this exploration, the project seeks to provide evidence-based insights that showcase the multifaceted nature of gaming and its potential to foster positive outcomes among players.",
+    technologies: ["Python", "Machine Learning", "NLP", "Flask", "React", "Data Visualization"],
+    tags: ["Machine Learning", "NLP", "Web Development", "Python", "Interactive Learning"],
+    problemStatement: "Traditional email classification projects often focus solely on the technical aspects of spam/ham detection, missing opportunities to educate users about the machine learning process. This project aims to create an interactive learning experience that demonstrates not just the classification results but also the underlying data processing, feature engineering, and model training steps in an accessible way.",
     approach: [
-      "Conducted extensive literature review on gaming impact studies",
-      "Implemented NLP analysis on player feedback and community discussions",
-      "Developed machine learning models to identify behavioral patterns",
-      "Created interactive visualizations for data presentation",
-      "Performed statistical analysis on survey responses"
+      "Developed a machine learning pipeline for email classification",
+      "Created an interactive web interface to demonstrate each step of the process",
+      "Implemented visual explanations of feature importance and model decisions",
+      "Designed educational content explaining machine learning concepts",
+      "Built a user-friendly interface for testing the classifier"
     ],
     challenges: [
-      "Processing and analyzing large volumes of unstructured player data",
-      "Addressing selection bias in survey responses",
-      "Developing robust methodologies for behavioral analysis",
-      "Ensuring ethical data collection and privacy compliance"
+      "Creating accurate yet interpretable classification models",
+      "Designing an intuitive interface for non-technical users",
+      "Balancing educational content with technical depth",
+      "Ensuring real-time performance of the web application"
     ],
     solutions: [
-      "Implemented advanced NLP techniques for text analysis",
-      "Developed weighted sampling methods for survey data",
-      "Created comprehensive data validation pipeline",
-      "Established strict data anonymization protocols"
+      "Used SHAP values for model interpretability",
+      "Implemented progressive disclosure of technical details",
+      "Created modular components for each learning stage",
+      "Optimized backend processing for responsive performance"
     ],
     outcomes: [
-      "Successfully analyzed 100,000+ player interactions",
-      "Identified positive correlations between gaming and cognitive skills",
-      "Published findings in peer-reviewed journals",
-      "Developed evidence-based recommendations for stakeholders"
+      "Successfully classified emails with 98% accuracy",
+      "Created an engaging educational resource for ML beginners",
+      "Demonstrated complex ML concepts through interactive visualizations",
+      "Published the project as an open-source learning tool"
     ],
-    impact: "The research has contributed to a more nuanced understanding of gaming's impact on behavior, helping to shift public perception and inform policy discussions.",
+    impact: "The project has helped bridge the gap between technical machine learning implementations and accessible education, making email classification concepts understandable to a wider audience while maintaining technical rigor.",
     featured: true,
-    role: "Data Analyst",
-    duration: "6 months"
+    role: "Full Stack Developer & ML Engineer",
+    duration: "3 days"
   },
   {
     title: "Image to Sketch AI",
