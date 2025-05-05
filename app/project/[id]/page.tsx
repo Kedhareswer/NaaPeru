@@ -27,8 +27,8 @@ export default function ProjectPage() {
           description: "An interactive platform for handwritten digit recognition using a convolutional neural network (CNN) trained on the MNIST dataset, achieving 98.7% accuracy on test data.",
           image: "/projects/digit-interface.jpeg",
           hoverImage: "/projects/digit-model-info (1).jpeg",
-          link: "https://github.com/yourusername/mnist-digit-recognition",
-          githubUrl: "https://github.com/yourusername/mnist-digit-recognition",
+          link: "https://github.com/Kedhareswer/Digit_Classifier_DeepLearning",
+          githubUrl: "https://github.com/Kedhareswer/Digit_Classifier_DeepLearning",
           startDate: "2024-03-15",
           technologies: ["PyTorch", "TensorFlow", "CNN", "Python", "NumPy"],
           tags: ["Deep Learning", "Computer Vision", "Neural Networks"],
@@ -61,9 +61,27 @@ export default function ProjectPage() {
           featured: true,
           role: "ML Engineer",
           duration: "2 months"
+        },
+        {
+          title: "Personal Portfolio Website",
+          description: "A modern, responsive portfolio website showcasing my data science projects, skills, and professional journey. Built with Next.js and Tailwind CSS for optimal performance and user experience.",
+          image: "/projects/portfolio-image.jpeg",
+          hoverImage: "/projects/portfolio-hover.jpeg",
+          link: "https://github.com/Kedhareswer/portfolio",
+          githubUrl: "https://github.com/Kedhareswer/portfolio",
+          startDate: "2024-03-01",
+          technologies: ["Next.js", "React", "Tailwind CSS", "Framer Motion", "TypeScript", "Vercel"],
+          tags: ["Web Development", "Portfolio", "Responsive Design"],
+          problemStatement: "Create a professional online presence that effectively communicates my data science expertise, projects, and skills to potential employers and collaborators.",
+          outcomes: [
+            "Developed a fully responsive, modern portfolio website",
+            "Implemented smooth animations and transitions for enhanced UX",
+            "Integrated dynamic project showcases with live demos"
+          ],
+          role: "Web Developer",
+          duration: "1 month"
         }
       ]
-      setProject(allProjects[projectId] || null)
     }
   }, [params?.id])
   
