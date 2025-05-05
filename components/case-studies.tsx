@@ -365,45 +365,9 @@ export default function CaseStudies() {
 
         {/* View More Projects Button */}
         <div className="flex justify-center mt-12">
-          <Button
-            onClick={() => router.push('/projects')}
-            className="relative text-lg font-semibold py-3 px-6 rounded-lg group"
-            style={{
-              background: 'linear-gradient(145deg, #e2e2e2, #ffffff)',
-              color: '#333',
-              border: 'none',
-              boxShadow: `
-                0 1px 1px rgba(255,255,255,0.8) inset,
-                0 -2px 4px rgba(0,0,0,0.1) inset,
-                0 4px 8px rgba(0,0,0,0.1),
-                0 2px 4px rgba(0,0,0,0.05)
-              `,
-              borderRadius: '12px',
-              position: 'relative',
-              overflow: 'hidden',
-              transform: 'translateZ(0)',
-              transition: 'all 0.3s ease'
-            }}
-          >
-            <span className="relative z-10">View More Projects</span>
-            <span
-              className="absolute inset-0 bg-gradient-to-r from-blue-500 to-green-500 opacity-0 
-              group-hover:opacity-100 transition-all duration-500"
-              style={{
-                clipPath: 'circle(0% at 50% 50%)',
-                transition: 'clip-path 0.7s ease'
-              }}
-            ></span>
-            <span
-              className="absolute inset-0 rounded-lg"
-              style={{
-                background: 'linear-gradient(145deg, #ffffff, #e2e2e2)',
-                transform: 'scale(0.98)',
-                transition: 'all 0.3s ease',
-                zIndex: -1
-              }}
-            ></span>
-          </Button>
+          <Link href="/projects">
+            <Button variant="outline" className="mt-8">View More Projects</Button>
+          </Link>
         </div>
       </div>
     </section>
