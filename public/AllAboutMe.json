@@ -110,6 +110,20 @@
     ],
     "Case Studies": [
         {
+            "title": "Personal Portfolio Website",
+            "startDate": "2024-03-01",
+            "githubUrl": "https://github.com/Kedhareswer/portfolio",
+            "liveDemo": "https://v0-work-1.vercel.app/",
+            "description": "A modern, responsive portfolio website showcasing my data science projects, skills, and professional journey. Built with Next.js and Tailwind CSS for optimal performance and user experience.",
+            "technologies": ["Next.js", "React", "Tailwind CSS", "Framer Motion", "TypeScript", "Vercel"],
+            "problemStatement": "Create a professional online presence that effectively communicates my data science expertise, projects, and skills to potential employers and collaborators.",
+            "outcomes": [
+                "Developed a fully responsive, modern portfolio website",
+                "Implemented smooth animations and transitions for enhanced UX",
+                "Integrated dynamic project showcases with live demos"
+            ]
+        },
+        {
             "title": "Neural Network Visualization Platform",
 "startDate": "2023-06-01",
 "githubUrl": "",
