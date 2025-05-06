@@ -73,15 +73,39 @@ export default function ProjectPage() {
           technologies: ["Next.js", "React", "Tailwind CSS", "Framer Motion", "TypeScript", "Vercel"],
           tags: ["Web Development", "Portfolio", "Responsive Design"],
           problemStatement: "Create a professional online presence that effectively communicates my data science expertise, projects, and skills to potential employers and collaborators.",
+          approach: [
+            "Designed modern UI with Next.js and Tailwind CSS",
+            "Implemented responsive layouts and animations",
+            "Created dynamic project showcase components",
+            "Optimized performance and accessibility"
+          ],
+          challenges: [
+            "Ensuring cross-browser compatibility",
+            "Optimizing performance with animations",
+            "Managing complex state and routing",
+            "Implementing responsive design patterns"
+          ],
+          solutions: [
+            "Used CSS-in-JS for styling consistency",
+            "Leveraged Framer Motion for smooth animations",
+            "Implemented efficient state management",
+            "Applied mobile-first design principles"
+          ],
           outcomes: [
             "Developed a fully responsive, modern portfolio website",
             "Implemented smooth animations and transitions for enhanced UX",
             "Integrated dynamic project showcases with live demos"
           ],
+          impact: "Created a professional portfolio that effectively showcases technical expertise and project work, leading to increased visibility and engagement with potential collaborators.",
           role: "Web Developer",
           duration: "1 month"
         }
       ]
+      // Find and set the project based on projectId
+      const foundProject = allProjects[projectId];
+      if (foundProject) {
+        setProject(foundProject);
+      }
     }
   }, [params?.id])
   
