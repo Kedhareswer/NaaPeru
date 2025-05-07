@@ -13,11 +13,11 @@ interface Message {
 }
 
 interface AppointmentData {
-  name: string
   contact: string
-  subject: string
-  date: string
-  time: string
+  name?: string
+  subject?: string
+  date?: string
+  time?: string
 }
 
 export default function ChatInterface() {
@@ -54,7 +54,7 @@ export default function ChatInterface() {
       if (/book an appointment/i.test(input)) {
         const appointmentMessage = {
           role: 'assistant' as const,
-          content: "To book an appointment, please provide the following information:\n1. Your Name\n2. Contact Information (email/phone)\n3. Subject of Meeting\n4. Preferred Date (YYYY-MM-DD)\n5. Preferred Time",
+          content: "Please provide your contact information (email or phone number) to schedule an appointment. Other details like name, subject, date and time are optional.",
           isAppointment: true
         }
         setMessages(prev => [...prev, appointmentMessage])
@@ -66,14 +66,14 @@ export default function ChatInterface() {
       const lastMessage = messages[messages.length - 1]
       if (lastMessage?.isAppointment) {
         try {
-          // Extract appointment details from user input
-          const lines = input.split('\n')
+          // Extract contact information and auto-generate other details
+          const contact = input.trim()
           const appointmentData: AppointmentData = {
-            name: lines[0]?.trim() || '',
-            contact: lines[1]?.trim() || '',
-            subject: lines[2]?.trim() || '',
-            date: lines[3]?.trim() || '',
-            time: lines[4]?.trim() || ''
+            contact,
+            name: 'Guest',
+            subject: 'General Discussion',
+            date: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Tomorrow
+            time: '14:00' // 2 PM default
           }
 
           // Submit appointment
