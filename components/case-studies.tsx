@@ -22,7 +22,7 @@ const projects: Project[] = [
     title: "Image to Sketch",
     description: "Developed a deep learning model to convert images into sketches, achieving 90% accuracy in sketch rendering and optimizing processing speed by 30%.",
     category: "Deep Learning",
-    date: "November 2024",
+    date: "April 2025",
     image: "/projects/image-to-sketch.png",
     link: "/projects/image-to-sketch"
   },
@@ -31,7 +31,7 @@ const projects: Project[] = [
     title: "Endoscopy Image Enhancement",
     description: "Advanced medical imaging enhancement system using deep learning for improved endoscopic visualization and diagnosis accuracy.",
     category: "Deep Learning",
-    date: "December 2024",
+    date: "May 2025",
     image: "/projects/endoscopy-image-enhancement.png",
     link: "/projects/endoscopy-enhancement"
   },
@@ -40,7 +40,7 @@ const projects: Project[] = [
     title: "Digit Classifier",
     description: "A modern web-based digit recognition application that uses Deep Learning to classify handwritten digits. Built with Next.js, FastAPI, and TensorFlow.",
     category: "Deep Learning",
-    date: "Present",
+    date: "May 2025",
     image: "/projects/digit.png",
     link: "/projects/digit-classifier"
   },
@@ -49,7 +49,7 @@ const projects: Project[] = [
     title: "Collaborative Research Hub",
     description: "A comprehensive real-time collaborative workspace designed for research teams, integrating advanced AI capabilities with robust team collaboration features.",
     category: "Machine Learning",
-    date: "March 2025",
+    date: "Present",
     image: "/projects/research-bolt.png",
     link: "/projects/collaborative-research-hub"
   },
@@ -73,7 +73,7 @@ const projects: Project[] = [
   }
 ]
 
-const categories = ["All", "Machine Learning", "Data Analytics", "Natural Language Processing", "Deep Learning", "Predictive Analytics"]
+const categories = ["ML", "DL", "Data Science", "Other Projects"]
 
 export default function CaseStudies() {
   const [selectedCategory, setSelectedCategory] = useState("All")
@@ -128,25 +128,25 @@ export default function CaseStudies() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                <div className="aspect-video relative bg-gray-100">
+              <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+                <div className="aspect-[16/9] relative bg-gray-100 overflow-hidden">
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="object-cover w-full h-full"
+                    className="object-cover w-full h-full transform hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <div className="p-6">
+                <div className="p-6 flex flex-col flex-grow">
                   <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-semibold">{project.title}</h3>
-                    <span className="text-sm text-gray-500">{project.date}</span>
+                    <h3 className="text-xl font-semibold leading-tight line-clamp-2">{project.title}</h3>
+                    <span className="text-sm text-gray-500 whitespace-nowrap ml-4">{project.date}</span>
                   </div>
-                  <p className="text-gray-600 mb-4">{project.description}</p>
-                  <div className="flex justify-between items-center">
+                  <p className="text-gray-600 mb-6 flex-grow line-clamp-3">{project.description}</p>
+                  <div className="flex justify-between items-center mt-auto">
                     <span className="text-sm font-medium bg-gray-100 px-3 py-1 rounded-full">
                       {project.category}
                     </span>
-                    <Button variant="ghost" size="sm" className="group" asChild>
+                    <Button variant="ghost" size="sm" className="group hover:bg-gray-50" asChild>
                       <a href={project.link} target="_blank" rel="noopener noreferrer">
                         View Details
                         <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

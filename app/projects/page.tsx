@@ -160,7 +160,7 @@ const allProjects: Project[] = [
   }
 ]
 
-const categories = ["All", "Machine Learning", "Data Analytics", "Natural Language Processing", "Deep Learning", "Predictive Analytics"]
+const categories = ["ML", "DL", "Data Science", "Other Projects"]
 
 export default function ProjectsPage() {
   const [selectedCategory, setSelectedCategory] = useState("All")
