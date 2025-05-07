@@ -285,8 +285,8 @@ export default function ChatInterface() {
         </DialogContent>
       </Dialog>
 
-      <div ref={chatRef} className="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-[inset_0_0_10px_rgba(0,0,0,0.2)] overflow-hidden border border-gray-200">
-        <div className="h-[400px] overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+      <div ref={chatRef} className="w-full max-w-2xl mx-auto bg-gradient-to-b from-white to-gray-50 rounded-2xl shadow-xl overflow-hidden border border-gray-100 backdrop-blur-lg">
+        <div className="h-[500px] overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-black/10 scrollbar-track-transparent hover:scrollbar-thumb-black/20 transition-colors">
         {messages.map((message, index) => (
           <motion.div
             key={index}
@@ -312,7 +312,7 @@ export default function ChatInterface() {
               </svg>
             )}
             <div
-              className={`max-w-[80%] rounded-2xl p-4 ${message.role === 'user' ? 'bg-black text-white' : 'bg-gray-50 border border-gray-200'} shadow-[inset_0_0_5px_rgba(0,0,0,0.2)]`}
+              className={`max-w-[80%] rounded-2xl p-4 ${message.role === 'user' ? 'bg-gradient-to-br from-black to-gray-800 text-white shadow-xl ring-1 ring-white/10' : 'bg-white/90 border border-gray-100 shadow-lg ring-1 ring-black/5'} backdrop-blur-md transition-all duration-200 hover:scale-[1.01]`}
             >
               <p className="text-[15px] leading-relaxed">{message.content}</p>
             </div>
@@ -343,19 +343,19 @@ export default function ChatInterface() {
             <div className="bg-gray-50 rounded-2xl p-4 border border-gray-200 shadow-[inset_0_0_5px_rgba(0,0,0,0.2)]">
               <div className="flex space-x-2">
                 <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
+                  animate={{ scale: [1, 1.2, 1], opacity: [0.4, 1, 0.4] }}
                   transition={{ repeat: Infinity, duration: 1, ease: "easeInOut" }}
-                  className="w-2 h-2 bg-black/40 rounded-full"
+                  className="w-2 h-2 bg-black/60 rounded-full"
                 />
                 <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
+                  animate={{ scale: [1, 1.2, 1], opacity: [0.4, 1, 0.4] }}
                   transition={{ repeat: Infinity, duration: 1, delay: 0.2, ease: "easeInOut" }}
-                  className="w-2 h-2 bg-black/40 rounded-full"
+                  className="w-2 h-2 bg-black/60 rounded-full"
                 />
                 <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
+                  animate={{ scale: [1, 1.2, 1], opacity: [0.4, 1, 0.4] }}
                   transition={{ repeat: Infinity, duration: 1, delay: 0.4, ease: "easeInOut" }}
-                  className="w-2 h-2 bg-black/40 rounded-full"
+                  className="w-2 h-2 bg-black/60 rounded-full"
                 />
               </div>
             </div>
@@ -370,7 +370,7 @@ export default function ChatInterface() {
                 key={index}
                 type="button"
                 onClick={() => setInput(reply)}
-                className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
+                className="px-4 py-2 text-sm bg-white/80 hover:bg-black hover:text-white border border-gray-100 rounded-full transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-1 backdrop-blur-sm"
               >
                 {reply}
               </button>
@@ -382,13 +382,13 @@ export default function ChatInterface() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type your message..."
-              className="flex-1 bg-white border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-black transition-colors text-[15px]"
+              className="flex-1 bg-white/90 backdrop-blur-md border border-gray-100 rounded-xl px-4 py-3 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/5 transition-all duration-300 text-[15px] shadow-md hover:shadow-lg"
             />
             <motion.button
               type="submit"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="bg-black text-white px-6 py-3 rounded-xl flex items-center space-x-2 hover:bg-black/90 transition-colors"
+              className="bg-gradient-to-r from-black to-gray-800 text-white px-6 py-3 rounded-xl flex items-center space-x-2 hover:from-gray-800 hover:to-black transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 ring-1 ring-white/10"
               disabled={loading}
             >
               <span className="text-[15px]">Send</span>
