@@ -86,29 +86,14 @@ export default function ChatInterface() {
             status: 'pending'
           }
           
+          // Validate contact information
+          if (!contact.includes('@') && !/^\+?[1-9]\d{1,14}$/.test(contact)) {
+            throw new Error('Please provide a valid email or phone number')
+          }
+
           // Set pending appointment and show confirmation dialog
           setPendingAppointment(appointmentData)
           setShowConfirmation(true)
-          return
-
-          // Submit appointment
-          const response = await fetch('/api/appointments', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(appointmentData)
-          })
-
-          const result = await response.json()
-
-          if (!response.ok) {
-            throw new Error(result.error || 'Failed to schedule appointment')
-          }
-
-          const confirmationMessage = {
-            role: 'assistant' as const,
-            content: `Great! Your appointment has been scheduled. Here are the details:\n\nName: ${appointmentData.name}\nContact: ${appointmentData.contact}\nSubject: ${appointmentData.subject}\nDate: ${appointmentData.date}\nTime: ${appointmentData.time}\n\nYou will receive a confirmation email shortly.`
-          }
-          setMessages(prev => [...prev, confirmationMessage])
           setLoading(false)
           return
         } catch (error) {
@@ -223,6 +208,11 @@ export default function ChatInterface() {
       const result = await response.json()
 
       if (!response.ok) {
+        toast({
+          title: 'Error',
+          description: result.error || 'Failed to schedule appointment',
+          variant: 'destructive'
+        })
         throw new Error(result.error || 'Failed to schedule appointment')
       }
 
@@ -231,6 +221,12 @@ export default function ChatInterface() {
         content: `Great! Your appointment has been scheduled. Here are the details:\n\nName: ${pendingAppointment.name}\nContact: ${pendingAppointment.contact}\nSubject: ${pendingAppointment.subject}\nDate: ${pendingAppointment.date}\nTime: ${pendingAppointment.time}\nTimezone: ${pendingAppointment.timezone}\n\nYou will receive a confirmation email shortly.`
       }
       setMessages(prev => [...prev, confirmationMessage])
+      
+      toast({
+        title: 'Success',
+        description: 'Appointment scheduled successfully!',
+        variant: 'default'
+      })
     } catch (error) {
       console.error('Error scheduling appointment:', error)
       const errorMessage = {
