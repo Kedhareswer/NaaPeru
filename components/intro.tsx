@@ -46,7 +46,7 @@ export default function Intro() {
     <section
       id="intro"
       ref={containerRef}
-      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-white"
+      className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-white px-4 sm:px-6 md:px-8"
     >
       <motion.div 
         className="absolute inset-0 w-full h-full"
@@ -121,13 +121,13 @@ export default function Intro() {
       </div>
 
       <motion.div 
-        className="absolute inset-0 flex items-center justify-center px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-12" 
+        className="absolute inset-0 flex flex-col md:flex-row items-center justify-center px-2 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-12"
         style={{ opacity, scale, y }}
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 w-full max-w-7xl mx-auto">
+        <div className="flex flex-col-reverse md:grid md:grid-cols-2 gap-8 md:gap-12 w-full max-w-3xl md:max-w-5xl mx-auto items-center">
           <motion.div
             ref={textRef}
-            className="p-4 md:p-6 lg:p-8 flex flex-col justify-center space-y-4 md:space-y-6 lg:space-y-8"
+            className="p-2 sm:p-4 md:p-6 flex flex-col justify-center space-y-4 md:space-y-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
@@ -216,7 +216,7 @@ export default function Intro() {
               </div>
               
               <motion.div 
-                className="flex flex-wrap gap-3 md:gap-4 mt-4 md:mt-6"
+                className="flex flex-wrap justify-center md:justify-start gap-3 md:gap-4 mt-4 md:mt-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 1.4 }}
@@ -309,7 +309,7 @@ export default function Intro() {
       <AnimatePresence>
         {!scrolled && (
           <motion.div
-            className="absolute bottom-6 md:bottom-8 lg:bottom-10 left-1/2 transform -translate-x-1/2"
+            className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}

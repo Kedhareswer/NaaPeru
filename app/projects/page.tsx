@@ -12,7 +12,7 @@ interface Project {
   id: number
   title: string
   description: string
-  category: string
+  categories: string[]
   date: string
   image: string
   technologies: string[]
@@ -27,7 +27,7 @@ const allProjects: Project[] = [
     id: 1,
     title: "Email Classification",
     description: "A robust machine learning system designed to accurately classify emails as spam or legitimate while minimizing false positives, featuring an intuitive web interface for real-time classification.",
-    category: "Machine Learning",
+    categories: ["Machine Learning", "Data Science"],
     date: "March 2024",
     image: "/projects/email-insight-2.png",
     technologies: ["Next.js", "React", "Tailwind CSS", "Python", "scikit-learn"],
@@ -50,7 +50,7 @@ const allProjects: Project[] = [
     id: 2,
     title: "Predictive Machine Learning",
     description: "Advanced predictive analytics system using machine learning algorithms for accurate forecasting and decision support.",
-    category: "Machine Learning",
+    categories: ["Machine Learning", "Data Science"],
     date: "January 2025",
     image: "/projects/neural-network.svg",
     technologies: ["Python", "TensorFlow", "scikit-learn", "FastAPI"],
@@ -70,7 +70,7 @@ const allProjects: Project[] = [
     id: 3,
     title: "Traffic Monitoring System",
     description: "The Traffic Monitoring System is an advanced computer vision solution that enables real-time monitoring and analysis of traffic flow through multiple video streams. The system leverages state-of-the-art object detection and tracking capabilities to identify vehicles, pedestrians, and other traffic participants, providing valuable insights for traffic management and analysis. It features both a desktop application and a web interface, making it versatile for different deployment scenarios.",
-    category: "Computer Vision",
+    categories: ["Computer Vision"],
     date: "January 2024",
     image: "/projects/traffic-monitoring-system.png",
     technologies: ["OpenCV", "YOLOv8", "PyTorch", "Python 3.7+", "PyQt5", "Flask", "Flask-SocketIO", "HTML/CSS"],
@@ -92,7 +92,7 @@ const allProjects: Project[] = [
     id: 4,
     title: "Image to Sketch",
     description: "Developed a deep learning model to convert images into sketches, achieving 90% accuracy in sketch rendering and optimizing processing speed by 30%.",
-    category: "Deep Learning",
+    categories: ["Deep Learning", "Machine Learning"],
     date: "November 2024",
     image: "/projects/image-to-sketch.png",
     technologies: ["Deep Learning"],
@@ -111,7 +111,7 @@ const allProjects: Project[] = [
     id: 5,
     title: "Digit Classifier",
     description: "A modern web-based digit recognition application that uses Deep Learning to classify handwritten digits. Built with Next.js, FastAPI, and TensorFlow.",
-    category: "Deep Learning",
+    categories: ["Deep Learning", "Machine Learning"],
     date: "Present",
     image: "/projects/digit.png",
     technologies: ["Deep Learning"],
@@ -129,7 +129,7 @@ const allProjects: Project[] = [
     id: 6,
     title: "Artify AI - Image to Oil Paint",
     description: "AI-powered art transformation system that converts photographs into stunning oil painting style artworks.",
-    category: "Deep Learning",
+    categories: ["Deep Learning", "Machine Learning"],
     date: "February 2025",
     image: "/projects/image-to-sketch-dark.png",
     technologies: ["Deep Learning"],
@@ -145,7 +145,7 @@ const allProjects: Project[] = [
     id: 7,
     title: "Collaborative Research Hub",
     description: "A comprehensive real-time collaborative workspace designed for research teams, integrating advanced AI capabilities with robust team collaboration features.",
-    category: "Machine Learning",
+    categories: ["Machine Learning", "Data Science"],
     date: "March 2025",
     image: "/projects/research-bolt.png",
     technologies: ["Machine Learning"],
@@ -167,7 +167,7 @@ export default function ProjectsPage() {
   const [searchQuery, setSearchQuery] = useState("")
 
   const filteredProjects = allProjects
-    .filter(project => selectedCategory === "All" || project.category === selectedCategory)
+    .filter(project => selectedCategory === "All" || project.categories.includes(selectedCategory))
     .filter(project =>
       project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       project.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -271,9 +271,13 @@ export default function ProjectsPage() {
                   </div>
                   
                   <div className="mt-6 flex justify-between items-center">
-                    <span className="text-sm font-medium bg-gray-100 px-3 py-1 rounded-full">
-                      {project.category}
-                    </span>
+                    <div className="flex gap-2 flex-wrap">
+                      {project.categories.map((cat, idx) => (
+                        <span key={idx} className="text-sm font-medium bg-gray-100 px-3 py-1 rounded-full">
+                          {cat}
+                        </span>
+                      ))}
+                    </div>
                     <div className="flex gap-2">
                       {project.githubUrl && (
                         <Button variant="outline" size="sm" asChild>

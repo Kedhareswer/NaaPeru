@@ -10,10 +10,11 @@ interface Project {
   id: number
   title: string
   description: string
-  category: string
+  categories: string[]
   date: string
   image: string
   link: string
+  demoUrl?: string
 }
 
 const projects: Project[] = [
@@ -21,16 +22,17 @@ const projects: Project[] = [
     id: 1,
     title: "Image to Sketch",
     description: "Developed a deep learning model to convert images into sketches, achieving 90% accuracy in sketch rendering and optimizing processing speed by 30%.",
-    category: "Deep Learning",
+    categories: ["Deep Learning", "Machine Learning"],
     date: "April 2025",
     image: "/projects/image-to-sketch.png",
-    link: "/projects/image-to-sketch"
+    link: "/projects/image-to-sketch",
+    demoUrl: "https://image-to-sketch-wine.vercel.app/"
   },
   {
     id: 2,
     title: "Endoscopy Image Enhancement",
     description: "Advanced medical imaging enhancement system using deep learning for improved endoscopic visualization and diagnosis accuracy.",
-    category: "Deep Learning",
+    categories: ["Deep Learning", "Machine Learning"],
     date: "May 2025",
     image: "/projects/endoscopy-image-enhancement.png",
     link: "/projects/endoscopy-enhancement"
@@ -39,7 +41,7 @@ const projects: Project[] = [
     id: 3,
     title: "Digit Classifier",
     description: "A modern web-based digit recognition application that uses Deep Learning to classify handwritten digits. Built with Next.js, FastAPI, and TensorFlow.",
-    category: "Deep Learning",
+    categories: ["Deep Learning", "Machine Learning"],
     date: "May 2025",
     image: "/projects/digit.png",
     link: "/projects/digit-classifier"
@@ -48,7 +50,7 @@ const projects: Project[] = [
     id: 4,
     title: "Collaborative Research Hub",
     description: "A comprehensive real-time collaborative workspace designed for research teams, integrating advanced AI capabilities with robust team collaboration features.",
-    category: "Machine Learning",
+    categories: ["Machine Learning", "Data Science"],
     date: "Present",
     image: "/projects/research-bolt.png",
     link: "/projects/collaborative-research-hub"
@@ -57,7 +59,7 @@ const projects: Project[] = [
     id: 5,
     title: "Artify AI - Image to Oil Paint",
     description: "AI-powered art transformation system that converts photographs into stunning oil painting style artworks.",
-    category: "Deep Learning",
+    categories: ["Deep Learning", "Machine Learning"],
     date: "February 2025",
     image: "/projects/image-to-sketch-dark.png",
     link: "/projects/artify-ai"
@@ -66,21 +68,21 @@ const projects: Project[] = [
     id: 6,
     title: "PDF Chatbot",
     description: "Intelligent document interaction system that enables natural language conversations with PDF content using advanced NLP.",
-    category: "Natural Language Processing",
+    categories: ["Machine Learning", "Data Science", "Other Projects"],
     date: "March 2025",
     image: "/projects/research-bolt.png",
     link: "/projects/pdf-chatbot"
   }
 ]
 
-const categories = ["ML", "DL", "Data Science", "Other Projects"]
+const categories = ["Machine Learning", "Deep Learning", "Data Science", "Other Projects"]
 
 export default function CaseStudies() {
   const [selectedCategory, setSelectedCategory] = useState("All")
 
   const filteredProjects = selectedCategory === "All"
     ? projects
-    : projects.filter(project => project.category === selectedCategory)
+    : projects.filter(project => project.categories.includes(selectedCategory))
 
   return (
     <section id="case-studies" className="py-20 bg-white">
@@ -143,15 +145,29 @@ export default function CaseStudies() {
                   </div>
                   <p className="text-gray-600 mb-6 flex-grow line-clamp-3">{project.description}</p>
                   <div className="flex justify-between items-center mt-auto">
-                    <span className="text-sm font-medium bg-gray-100 px-3 py-1 rounded-full">
-                      {project.category}
-                    </span>
-                    <Button variant="ghost" size="sm" className="group hover:bg-gray-50" asChild>
-                      <a href={project.link} target="_blank" rel="noopener noreferrer">
-                        View Details
-                        <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                      </a>
-                    </Button>
+                    <div className="flex flex-wrap gap-2">
+                      {project.categories.map((category, idx) => (
+                        <span key={idx} className="text-sm font-medium bg-gray-100 px-3 py-1 rounded-full">
+                          {category}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex gap-2">
+                      {project.demoUrl && (
+                        <Button variant="ghost" size="sm" className="group hover:bg-gray-50" asChild>
+                          <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                            Live Demo
+                            <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                          </a>
+                        </Button>
+                      )}
+                      <Button variant="ghost" size="sm" className="group hover:bg-gray-50" asChild>
+                        <a href={project.link} target="_blank" rel="noopener noreferrer">
+                          View Details
+                          <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                        </a>
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </Card>
