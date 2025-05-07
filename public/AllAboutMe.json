@@ -110,6 +110,32 @@
     ],
     "Case Studies": [
         {
+            "title": "Medical Image Enhancement Web Application",
+            "startDate": "2024-03-15",
+            "githubUrl": "https://github.com/Kedhareswer/Endoscopy-Image-Enhancement",
+            "liveDemo": "",
+            "description": "A comprehensive web application for enhancing medical images using advanced AI models, featuring real-time processing capabilities and performance metrics visualization.",
+            "technologies": ["PyTorch", "Flask", "OpenCV", "NumPy", "JavaScript", "Bootstrap 5", "WebRTC", "HTML5", "scikit-image"],
+            "problemStatement": "Medical imaging often suffers from quality issues that can impact diagnostic accuracy. This project addresses the need for advanced enhancement techniques specifically tailored to medical imaging constraints.",
+            "outcomes": [
+                "Implemented SRCNN and UNet models for image super-resolution",
+                "Developed real-time video enhancement capabilities",
+                "Integrated PSNR and SSIM metrics for quality assessment",
+                "Created an intuitive interface for medical professionals"
+            ],
+            "features": [
+                "Image Enhancement using SRCNN and UNet models",
+                "Edge Detection and Comparison",
+                "Real-time Video Processing",
+                "Frame Capture and Enhancement",
+                "Performance Metrics Visualization"
+            ],
+            "modelArchitectures": {
+                "SRCNN": "3-layer CNN with ReLU activation for super-resolution",
+                "UNet": "Encoder-decoder architecture with skip connections for spatial preservation"
+            }
+        },
+        {
             "title": "Personal Portfolio Website",
             "startDate": "2024-03-01",
             "githubUrl": "https://github.com/Kedhareswer/portfolio",
@@ -125,9 +151,9 @@
         },
         {
             "title": "Neural Network Visualization Platform",
-"startDate": "2025-03-11",
-"githubUrl": "",
-"liveDemo": "",
+            "startDate": "2025-03-11",
+            "githubUrl": "",
+            "liveDemo": "",
             "description": "An interactive platform for visualizing and understanding complex neural network architectures in real-time, enabling users to explore deep learning concepts through hands-on experimentation.",
             "technologies": ["React", "D3.js", "TensorFlow.js", "WebGL", "Node.js"],
             "problemStatement": "Deep learning concepts are often abstract and difficult to grasp for newcomers. Traditional learning resources lack interactive elements that could help visualize these complex systems.",
@@ -135,20 +161,6 @@
                 "Increased user understanding of neural networks by 85%",
                 "Reduced learning curve for deep learning concepts",
                 "Achieved 10,000+ monthly active users"
-            ]
-        },
-        {
-            "title": "AI-Based Endoscopic Image Enhancement",
-"startDate": "2025-01-15",
-"githubUrl": "https://github.com/Kedhareswer/Endoscopy-Image-Enhancement",
-"liveDemo": "",
-            "description": "An academic research project utilizing deep learning techniques to enhance the quality and clarity of endoscopic images, ensuring improved visibility for diagnostic and surgical support.",
-            "technologies": ["PyTorch", "Flask", "OpenCV", "NumPy", "JavaScript", "Bootstrap 5", "WebRTC", "HTML5"],
-            "problemStatement": "Endoscopic procedures often produce low-resolution or noisy images, limiting the clarity required for accurate diagnosis and surgical guidance. There is a need for advanced enhancement techniques tailored to medical imaging constraints.",
-            "outcomes": [
-                "Achieved significant visual improvement in low-quality endoscopic images",
-                "Validated model performance using structural similarity metrics",
-                "Enabled real-time enhancement for endoscopic video streams"
             ]
         },
         {
@@ -177,6 +189,20 @@
                 "Successfully analyzed 100,000+ player interactions",
                 "Identified positive correlations between gaming and cognitive skills",
                 "Published findings in peer-reviewed journals"
+            ]
+        },
+        {
+            "title": "Digit Classifier Deep Learning",
+            "startDate": "2024-11-15",
+            "githubUrl": "https://github.com/Kedhareswer/Digit_Classifier_DeepLearning",
+            "liveDemo": "http://localhost:3000",
+            "description": "A modern web-based digit recognition application that uses Deep Learning to classify handwritten digits. Built with Next.js, FastAPI, and TensorFlow.",
+            "technologies": ["Next.js", "React", "TypeScript", "FastAPI", "Python", "TensorFlow", "Keras", "OpenCV", "Pillow"],
+            "problemStatement": "Develop a web-based application for real-time digit recognition using deep learning techniques.",
+            "outcomes": [
+                "Real-time digit recognition with high accuracy",
+                "Support for single and multiple digit recognition",
+                "Modern UI with dark theme and touch support"
             ]
         },
         {

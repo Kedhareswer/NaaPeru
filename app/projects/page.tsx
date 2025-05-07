@@ -1,169 +1,295 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { caseStudies } from '@/components/case-studies'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import { useState } from "react"
+import { motion } from "framer-motion"
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { ChevronLeft, ChevronRight, Search, Filter } from "lucide-react"
+import Header from "@/components/header"
 
-// Add the new MNIST project
-const mnistProject = {
-  title: "MNIST Digit Recognition Model",
-  description: "An interactive platform for handwritten digit recognition using a convolutional neural network (CNN) trained on the MNIST dataset, achieving 98.7% accuracy on test data.",
-  image: "/projects/mnist-recognition.svg",
-  hoverImage: "/projects/mnist-recognition-hover.svg",
-  link: "#",
-  startDate: "2024-03-15",
-  technologies: ["PyTorch", "TensorFlow", "CNN", "Python", "NumPy"],
-  tags: ["Deep Learning", "Computer Vision", "Neural Networks"],
-  problemStatement: "Deep learning concepts are often abstract and difficult to grasp. This project demonstrates practical application through digit recognition.",
-  approach: [
-    "Implemented CNN architecture with TensorFlow",
-    "Trained model on 60,000 MNIST examples",
-    "Optimized model for web deployment",
-    "Achieved 98.7% accuracy on test set"
-  ],
-  challenges: [
-    "Balancing model size and accuracy",
-    "Optimizing for web deployment",
-    "Handling different writing styles",
-    "Managing computational resources"
-  ],
-  solutions: [
-    "Used model compression techniques",
-    "Implemented efficient CNN architecture",
-    "Applied data augmentation",
-    "Optimized for browser execution"
-  ],
-  outcomes: [
-    "98.7% accuracy on test dataset",
-    "Optimized model size (~200 KB)",
-    "Successful web integration",
-    "Robust across different writing styles"
-  ],
-  impact: "Created an accessible platform for understanding neural networks through practical digit recognition, while maintaining high accuracy and efficient deployment.",
-  featured: true,
-  role: "ML Engineer",
-  duration: "2 months"
+interface Project {
+  id: number
+  title: string
+  description: string
+  category: string
+  date: string
+  image: string
+  technologies: string[]
+  objectives: string[]
+  outcomes: string[]
+  githubUrl?: string
+  liveDemo?: string
 }
 
-// Combine existing case studies with the new MNIST project
-const allProjects = [...caseStudies, mnistProject]
+const allProjects: Project[] = [
+  {
+    id: 1,
+    title: "Email Classification",
+    description: "A robust machine learning system designed to accurately classify emails as spam or legitimate while minimizing false positives, featuring an intuitive web interface for real-time classification.",
+    category: "Machine Learning",
+    date: "March 2024",
+    image: "/projects/email-insight-2.png",
+    technologies: ["Next.js", "React", "Tailwind CSS", "Python", "scikit-learn"],
+    objectives: [
+      "Build a robust email classification system",
+      "Implement feature engineering for email content",
+      "Create an intuitive web interface",
+      "Minimize false positive classifications"
+    ],
+    outcomes: [
+      "98% classification accuracy",
+      "Real-time email analysis capability",
+      "User-friendly web interface",
+      "Successful spam detection system"
+    ],
+    githubUrl: "https://github.com/Kedhareswer/Mail_Classification_Case_Study",
+    liveDemo: "https://mail-classification-case-study-6izg753sg.vercel.app/"
+  },
+  {
+    id: 2,
+    title: "Predictive Machine Learning",
+    description: "Advanced predictive analytics system using machine learning algorithms for accurate forecasting and decision support.",
+    category: "Machine Learning",
+    date: "January 2025",
+    image: "/projects/neural-network.svg",
+    technologies: ["Python", "TensorFlow", "scikit-learn", "FastAPI"],
+    objectives: [
+      "Develop accurate forecasting models",
+      "Implement decision support algorithms",
+      "Create real-time prediction system"
+    ],
+    outcomes: [
+      "85% prediction accuracy",
+      "Reduced decision-making time by 40%",
+      "Successfully deployed in production"
+    ],
+    githubUrl: "https://github.com/Kedhareswer/Predictive-Maintenance-Classification-"
+  },
+  {
+    id: 3,
+    title: "Traffic Monitoring System",
+    description: "The Traffic Monitoring System is an advanced computer vision solution that enables real-time monitoring and analysis of traffic flow through multiple video streams. The system leverages state-of-the-art object detection and tracking capabilities to identify vehicles, pedestrians, and other traffic participants, providing valuable insights for traffic management and analysis. It features both a desktop application and a web interface, making it versatile for different deployment scenarios.",
+    category: "Computer Vision",
+    date: "January 2024",
+    image: "/projects/traffic-monitoring-system.png",
+    technologies: ["OpenCV", "YOLOv8", "PyTorch", "Python 3.7+", "PyQt5", "Flask", "Flask-SocketIO", "HTML/CSS"],
+    objectives: [
+      "Implement multi-threaded video capture for efficient stream handling",
+      "Develop real-time frame processing with OpenCV",
+      "Integrate YOLOv8 for robust object detection",
+      "Create a responsive desktop application using PyQt5",
+      "Develop a web interface for remote access using Flask"
+    ],
+    outcomes: [
+      "Successfully implemented real-time traffic monitoring with up to 4 simultaneous video streams",
+      "Achieved accurate vehicle and pedestrian detection using YOLOv8",
+      "Created user-friendly interfaces for both desktop and web platforms"
+    ],
+    githubUrl: "https://github.com/yourusername/traffic-monitoring-system"
+  },
+  {
+    id: 4,
+    title: "Image to Sketch",
+    description: "Developed a deep learning model to convert images into sketches, achieving 90% accuracy in sketch rendering and optimizing processing speed by 30%.",
+    category: "Deep Learning",
+    date: "November 2024",
+    image: "/projects/image-to-sketch.png",
+    technologies: ["Deep Learning"],
+    objectives: [
+      "Convert images into sketches",
+      "Optimize processing speed"
+    ],
+    outcomes: [
+      "90% accuracy in sketch rendering",
+      "30% optimization in processing speed"
+    ],
+    githubUrl: "https://github.com/Kedhareswer/MLGeneFunction",
+    liveDemo: "https://image-to-sketch-wine.vercel.app/"
+  },
+  {
+    id: 5,
+    title: "Digit Classifier",
+    description: "A modern web-based digit recognition application that uses Deep Learning to classify handwritten digits. Built with Next.js, FastAPI, and TensorFlow.",
+    category: "Deep Learning",
+    date: "Present",
+    image: "/projects/digit.png",
+    technologies: ["Deep Learning"],
+    objectives: [
+      "Classify handwritten digits",
+      "Use Deep Learning"
+    ],
+    outcomes: [
+      "Modern web-based application",
+      "Built with Next.js, FastAPI, and TensorFlow"
+    ],
+    githubUrl: "https://github.com/Kedhareswer/Digit_Classifier_DeepLearning"
+  },
+  {
+    id: 6,
+    title: "Artify AI - Image to Oil Paint",
+    description: "AI-powered art transformation system that converts photographs into stunning oil painting style artworks.",
+    category: "Deep Learning",
+    date: "February 2025",
+    image: "/projects/image-to-sketch-dark.png",
+    technologies: ["Deep Learning"],
+    objectives: [
+      "Convert photographs into oil painting style artworks"
+    ],
+    outcomes: [
+      "AI-powered art transformation system"
+    ],
+    githubUrl: "https://github.com/Kedhareswer/Image-to-Oil_Paint"
+  },
+  {
+    id: 7,
+    title: "Collaborative Research Hub",
+    description: "A comprehensive real-time collaborative workspace designed for research teams, integrating advanced AI capabilities with robust team collaboration features.",
+    category: "Machine Learning",
+    date: "March 2025",
+    image: "/projects/research-bolt.png",
+    technologies: ["Machine Learning"],
+    objectives: [
+      "Real-time collaborative workspace",
+      "Integrate advanced AI capabilities"
+    ],
+    outcomes: [
+      "Robust team collaboration features"
+    ],
+    githubUrl: "https://github.com/Kedhareswer/ai-project-planner"
+  }
+]
 
-// Project categories
-const categories = {
-  'ML': 'Machine Learning',
-  'DL': 'Deep Learning',
-  'Other': 'Other Projects'
-}
-
-type Category = keyof typeof categories
+const categories = ["All", "Machine Learning", "Data Analytics", "Natural Language Processing", "Deep Learning", "Predictive Analytics"]
 
 export default function ProjectsPage() {
-  const [selectedCategory, setSelectedCategory] = useState<Category | 'All'>('All')
+  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [searchQuery, setSearchQuery] = useState("")
 
-  // Categorize projects
-  const categorizeProject = (project: typeof allProjects[0]) => {
-    if (project.tags.some(tag => tag.includes('Deep Learning') || tag.includes('Neural Network'))) {
-      return 'DL'
-    }
-    if (project.tags.some(tag => tag.includes('Machine Learning') || tag.includes('ML'))) {
-      return 'ML'
-    }
-    return 'Other'
-  }
-
-  // Filter projects based on selected category
-  const filteredProjects = selectedCategory === 'All'
-    ? allProjects
-    : allProjects.filter(project => categorizeProject(project) === selectedCategory)
+  const filteredProjects = allProjects
+    .filter(project => selectedCategory === "All" || project.category === selectedCategory)
+    .filter(project =>
+      project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.description.toLowerCase().includes(searchQuery.toLowerCase())
+    )
 
   return (
-    <div className="min-h-screen bg-white py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-12">
-          <Link href="/#case-studies">
-            <Button
-              variant="ghost"
-              className="hover:bg-gray-100 text-sm font-medium tracking-wide transition-all duration-300"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Home
-            </Button>
-          </Link>
-        </div>
-
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h1 className="text-4xl md:text-5xl font-light mb-4">All Projects</h1>
-          <div className="w-20 h-1 bg-black mx-auto"></div>
-          <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-            Explore my complete portfolio of projects across different domains.
-          </p>
-        </motion.div>
-
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          <Button
-            variant={selectedCategory === 'All' ? 'default' : 'outline'}
-            onClick={() => setSelectedCategory('All')}
-            className="min-w-[120px]"
-          >
-            All Projects
+    <div className="min-h-screen bg-white">
+      <Header />
+      
+      <main className="container mx-auto px-6 py-20">
+        <div className="flex items-center mb-8">
+          <Button variant="ghost" className="mr-4" asChild>
+            <a href="/#case-studies">
+              <ChevronLeft className="w-4 h-4 mr-2" />
+              Back to Featured
+            </a>
           </Button>
-          {Object.entries(categories).map(([key, label]) => (
-            <Button
-              key={key}
-              variant={selectedCategory === key ? 'default' : 'outline'}
-              onClick={() => setSelectedCategory(key as Category)}
-              className="min-w-[120px]"
-            >
-              {label}
-            </Button>
-          ))}
+          <h1 className="text-3xl font-bold">All Projects</h1>
         </div>
 
-        {/* Projects Grid */}
+        <div className="flex flex-col md:flex-row gap-4 mb-8">
+          <div className="relative flex-grow">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Input
+              type="text"
+              placeholder="Search projects..."
+              className="pl-10"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <div className="flex gap-2 overflow-x-auto pb-2">
+            {categories.map(category => (
+              <Button
+                key={category}
+                variant={selectedCategory === category ? "default" : "outline"}
+                onClick={() => setSelectedCategory(category)}
+                className="whitespace-nowrap"
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project, index) => (
-            <Link href={`/project/${index}`} key={index}>
-              <motion.div
-                className="group relative overflow-hidden rounded-2xl bg-gray-50 cursor-pointer h-[400px] transform transition-all duration-300 hover:scale-[1.02] shadow-[inset_0_2px_4px_rgba(0,0,0,0.1),inset_0_8px_16px_rgba(0,0,0,0.1)] border border-gray-200/50"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110 p-4"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-60">
-                  <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 transform translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                    <h3 className="text-white text-xl font-semibold mb-2">{project.title}</h3>
-                    <p className="text-gray-200 text-sm mb-4">{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.slice(0, 3).map((tag, i) => (
-                        <span
-                          key={i}
-                          className="bg-white/10 text-white px-2 py-1 rounded-md text-xs"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <Card className="h-full flex flex-col">
+                <div className="aspect-video relative bg-gray-100">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+                <div className="p-6 flex-grow">
+                  <div className="flex justify-between items-start mb-4">
+                    <h2 className="text-xl font-semibold">{project.title}</h2>
+                    <span className="text-sm text-gray-500">{project.date}</span>
+                  </div>
+                  <p className="text-gray-600 mb-4">{project.description}</p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-medium mb-2">Technologies</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {project.technologies.map(tech => (
+                          <span
+                            key={tech}
+                            className="text-sm bg-gray-100 px-3 py-1 rounded-full"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-medium mb-2">Key Objectives</h3>
+                      <ul className="list-disc list-inside text-sm text-gray-600">
+                        {project.objectives.map((objective, i) => (
+                          <li key={i}>{objective}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-medium mb-2">Outcomes</h3>
+                      <ul className="list-disc list-inside text-sm text-gray-600">
+                        {project.outcomes.map((outcome, i) => (
+                          <li key={i}>{outcome}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 flex justify-between items-center">
+                    <span className="text-sm font-medium bg-gray-100 px-3 py-1 rounded-full">
+                      {project.category}
+                    </span>
+                    <div className="flex gap-2">
+                      {project.githubUrl && (
+                        <Button variant="outline" size="sm" asChild>
+                          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                            GitHub
+                          </a>
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>
-              </motion.div>
-            </Link>
+              </Card>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </main>
     </div>
   )
 }
