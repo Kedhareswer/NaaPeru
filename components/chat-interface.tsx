@@ -9,6 +9,15 @@ import { useToast } from '@/components/ui/use-toast'
 interface Message {
   role: 'user' | 'assistant'
   content: string
+  isAppointment?: boolean
+}
+
+interface AppointmentData {
+  name: string
+  contact: string
+  subject: string
+  date: string
+  time: string
 }
 
 export default function ChatInterface() {
@@ -45,11 +54,58 @@ export default function ChatInterface() {
       if (/book an appointment/i.test(input)) {
         const appointmentMessage = {
           role: 'assistant' as const,
-          content: "To book an appointment, please provide your Name, Contact Information, and Subject."
+          content: "To book an appointment, please provide the following information:\n1. Your Name\n2. Contact Information (email/phone)\n3. Subject of Meeting\n4. Preferred Date (YYYY-MM-DD)\n5. Preferred Time",
+          isAppointment: true
         }
         setMessages(prev => [...prev, appointmentMessage])
         setLoading(false)
         return
+      }
+
+      // Check if this is an appointment booking response
+      const lastMessage = messages[messages.length - 1]
+      if (lastMessage?.isAppointment) {
+        try {
+          // Extract appointment details from user input
+          const lines = input.split('\n')
+          const appointmentData: AppointmentData = {
+            name: lines[0]?.trim() || '',
+            contact: lines[1]?.trim() || '',
+            subject: lines[2]?.trim() || '',
+            date: lines[3]?.trim() || '',
+            time: lines[4]?.trim() || ''
+          }
+
+          // Submit appointment
+          const response = await fetch('/api/appointments', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(appointmentData)
+          })
+
+          const result = await response.json()
+
+          if (!response.ok) {
+            throw new Error(result.error || 'Failed to schedule appointment')
+          }
+
+          const confirmationMessage = {
+            role: 'assistant' as const,
+            content: `Great! Your appointment has been scheduled. Here are the details:\n\nName: ${appointmentData.name}\nContact: ${appointmentData.contact}\nSubject: ${appointmentData.subject}\nDate: ${appointmentData.date}\nTime: ${appointmentData.time}\n\nYou will receive a confirmation email shortly.`
+          }
+          setMessages(prev => [...prev, confirmationMessage])
+          setLoading(false)
+          return
+        } catch (error) {
+          console.error('Error scheduling appointment:', error)
+          const errorMessage = {
+            role: 'assistant' as const,
+            content: 'Sorry, there was an error scheduling your appointment. Please try again or contact directly via email.'
+          }
+          setMessages(prev => [...prev, errorMessage])
+          setLoading(false)
+          return
+        }
       }
 
       // Proceed with the API call for other queries
