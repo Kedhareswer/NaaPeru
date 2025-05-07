@@ -13,11 +13,14 @@ interface Message {
 }
 
 interface AppointmentData {
-  contact: string
-  name?: string
-  subject?: string
-  date?: string
-  time?: string
+  contact: string          // Required
+  name?: string           // Optional, defaults to "Guest"
+  subject?: string        // Optional, defaults to "General Discussion"
+  date?: string          // Optional, auto-generated
+  time?: string          // Optional, auto-generated
+  timezone?: string      // New field for timezone
+  preferences?: string   // New field for any special requirements
+  status: 'pending' | 'confirmed' | 'cancelled'  // Track appointment status
 }
 
 export default function ChatInterface() {
@@ -25,7 +28,12 @@ export default function ChatInterface() {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [showWelcome, setShowWelcome] = useState(true)
+  const [showConfirmation, setShowConfirmation] = useState(false)
+  const [pendingAppointment, setPendingAppointment] = useState<AppointmentData | null>(null)
   const { toast } = useToast()
+
+  // Get user's timezone
+  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   const chatRef = useRef(null)
   const isInView = useInView(chatRef, { once: true })
@@ -73,8 +81,15 @@ export default function ChatInterface() {
             name: 'Guest',
             subject: 'General Discussion',
             date: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Tomorrow
-            time: '14:00' // 2 PM default
+            time: '14:00', // 2 PM default
+            timezone: userTimezone,
+            status: 'pending'
           }
+          
+          // Set pending appointment and show confirmation dialog
+          setPendingAppointment(appointmentData)
+          setShowConfirmation(true)
+          return
 
           // Submit appointment
           const response = await fetch('/api/appointments', {
@@ -195,9 +210,87 @@ export default function ChatInterface() {
     setLoading(false)
   }
 
+  const handleConfirmAppointment = async () => {
+    if (!pendingAppointment) return
+
+    try {
+      const response = await fetch('/api/appointments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(pendingAppointment)
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to schedule appointment')
+      }
+
+      const confirmationMessage = {
+        role: 'assistant' as const,
+        content: `Great! Your appointment has been scheduled. Here are the details:\n\nName: ${pendingAppointment.name}\nContact: ${pendingAppointment.contact}\nSubject: ${pendingAppointment.subject}\nDate: ${pendingAppointment.date}\nTime: ${pendingAppointment.time}\nTimezone: ${pendingAppointment.timezone}\n\nYou will receive a confirmation email shortly.`
+      }
+      setMessages(prev => [...prev, confirmationMessage])
+    } catch (error) {
+      console.error('Error scheduling appointment:', error)
+      const errorMessage = {
+        role: 'assistant' as const,
+        content: 'Sorry, there was an error scheduling your appointment. Please try again or contact directly via email.'
+      }
+      setMessages(prev => [...prev, errorMessage])
+    }
+
+    setShowConfirmation(false)
+    setPendingAppointment(null)
+    setLoading(false)
+  }
+
+  const quickReplies = [
+    'Book an appointment',
+    'Tell me about your experience',
+    'What are your skills?',
+    'Show me your projects'
+  ]
+
   return (
-    <div ref={chatRef} className="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-[inset_0_0_10px_rgba(0,0,0,0.2)] overflow-hidden border border-gray-200">
-      <div className="h-[400px] overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+    <>
+      <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm Appointment</DialogTitle>
+          </DialogHeader>
+          <div className="p-4 space-y-4">
+            <p>Please confirm your appointment details:</p>
+            {pendingAppointment && (
+              <div className="space-y-2">
+                <p><strong>Name:</strong> {pendingAppointment.name}</p>
+                <p><strong>Contact:</strong> {pendingAppointment.contact}</p>
+                <p><strong>Subject:</strong> {pendingAppointment.subject}</p>
+                <p><strong>Date:</strong> {pendingAppointment.date}</p>
+                <p><strong>Time:</strong> {pendingAppointment.time}</p>
+                <p><strong>Timezone:</strong> {pendingAppointment.timezone}</p>
+              </div>
+            )}
+            <div className="flex justify-end space-x-2 pt-4">
+              <button
+                onClick={() => setShowConfirmation(false)}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmAppointment}
+                className="px-4 py-2 text-sm font-medium text-white bg-black rounded-md hover:bg-black/90"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <div ref={chatRef} className="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-[inset_0_0_10px_rgba(0,0,0,0.2)] overflow-hidden border border-gray-200">
+        <div className="h-[400px] overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
         {messages.map((message, index) => (
           <motion.div
             key={index}
@@ -274,26 +367,41 @@ export default function ChatInterface() {
         )}
       </div>
       <form onSubmit={handleSubmit} className="border-t border-gray-200 p-4 bg-gray-50/50">
-        <div className="flex space-x-4">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type your message..."
-            className="flex-1 bg-white border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-black transition-colors text-[15px]"
-          />
-          <motion.button
-            type="submit"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="bg-black text-white px-6 py-3 rounded-xl flex items-center space-x-2 hover:bg-black/90 transition-colors"
-            disabled={loading}
-          >
-            <span className="text-[15px]">Send</span>
-            <Send className="w-4 h-4" />
-          </motion.button>
+        <div className="space-y-4">
+          <div className="flex flex-wrap gap-2">
+            {quickReplies.map((reply, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => setInput(reply)}
+                className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
+              >
+                {reply}
+              </button>
+            ))}
+          </div>
+          <div className="flex space-x-4">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Type your message..."
+              className="flex-1 bg-white border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-black transition-colors text-[15px]"
+            />
+            <motion.button
+              type="submit"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="bg-black text-white px-6 py-3 rounded-xl flex items-center space-x-2 hover:bg-black/90 transition-colors"
+              disabled={loading}
+            >
+              <span className="text-[15px]">Send</span>
+              <Send className="w-4 h-4" />
+            </motion.button>
+          </div>
         </div>
       </form>
     </div>
+    </>
   )
 }
