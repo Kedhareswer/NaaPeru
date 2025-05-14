@@ -72,7 +72,7 @@ const projects: Project[] = [
     date: "March 2025",
     image: "/projects/web-dev-projects.png",
     link: "/projects/web-dev-projects",
-    demoUrl: "https://100-web-projects.vercel.app"
+    demoUrl: "https://v0-vintage-web-development-app.vercel.app/"
   }
 ]
 
