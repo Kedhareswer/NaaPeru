@@ -120,7 +120,7 @@ export default function Header() {
           </nav>
 
           <motion.button
-            className="md:hidden clickable"
+            className="md:hidden clickable min-h-[44px] min-w-[44px] flex items-center justify-center"
             onClick={() => setIsOpen(true)}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -145,7 +145,7 @@ export default function Header() {
                 onClick={() => setIsOpen(false)}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                className="clickable"
+                className="clickable min-h-[44px] min-w-[44px] flex items-center justify-center"
               >
                 <X className="w-6 h-6" />
               </motion.button>

@@ -179,7 +179,7 @@ export default function ProjectsPage() {
       
       <main className="container mx-auto px-6 py-20">
         <div className="flex items-center mb-8">
-          <Button variant="ghost" className="mr-4" asChild>
+          <Button variant="ghost" className="mr-4 min-h-[44px] min-w-[44px]" asChild>
             <a href="/#case-studies">
               <ChevronLeft className="w-4 h-4 mr-2" />
               Back to Featured
@@ -194,7 +194,7 @@ export default function ProjectsPage() {
             <Input
               type="text"
               placeholder="Search projects..."
-              className="pl-10"
+              className="pl-10 min-h-[44px]"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -205,7 +205,7 @@ export default function ProjectsPage() {
                 key={category}
                 variant={selectedCategory === category ? "default" : "outline"}
                 onClick={() => setSelectedCategory(category)}
-                className="whitespace-nowrap"
+                className="whitespace-nowrap min-h-[44px] min-w-[44px]"
               >
                 {category}
               </Button>
@@ -213,7 +213,7 @@ export default function ProjectsPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {filteredProjects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -280,12 +280,25 @@ export default function ProjectsPage() {
                     </div>
                     <div className="flex gap-2">
                       {project.githubUrl && (
-                        <Button variant="outline" size="sm" asChild>
+                        <Button variant="outline" size="sm" className="min-h-[44px] min-w-[44px]" asChild>
                           <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                             GitHub
                           </a>
                         </Button>
                       )}
+                      {project.liveDemo && (
+                        <Button variant="default" size="sm" className="min-h-[44px] min-w-[44px]" asChild>
+                          <a href={project.liveDemo} target="_blank" rel="noopener noreferrer">
+                            Live Demo
+                          </a>
+                        </Button>
+                      )}
+                      <Button variant="ghost" size="sm" className="min-h-[44px] min-w-[44px]" asChild>
+                        <a href={`/projects/${project.title.toLowerCase().replace(/\s+/g, '-')}`}>
+                          Details
+                          <ChevronRight className="w-4 h-4 ml-2" />
+                        </a>
+                      </Button>
                     </div>
                   </div>
                 </div>

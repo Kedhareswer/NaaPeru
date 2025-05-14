@@ -251,11 +251,11 @@ export default function ChatInterface() {
   return (
     <>
       <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
-        <DialogContent>
+        <DialogContent className="w-[95vw] max-w-md mx-auto">
           <DialogHeader>
             <DialogTitle>Confirm Appointment</DialogTitle>
           </DialogHeader>
-          <div className="p-4 space-y-4">
+          <div className="p-4 md:p-6 space-y-4">
             <p>Please confirm your appointment details:</p>
             {pendingAppointment && (
               <div className="space-y-2">
@@ -267,16 +267,16 @@ export default function ChatInterface() {
                 <p><strong>Timezone:</strong> {pendingAppointment.timezone}</p>
               </div>
             )}
-            <div className="flex justify-end space-x-2 pt-4">
+            <div className="flex justify-end space-x-3 pt-4">
               <button
                 onClick={() => setShowConfirmation(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                className="min-h-[44px] min-w-[80px] px-5 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 touch-manipulation"
               >
                 Cancel
               </button>
               <button
                 onClick={handleConfirmAppointment}
-                className="px-4 py-2 text-sm font-medium text-white bg-black rounded-md hover:bg-black/90"
+                className="min-h-[44px] min-w-[80px] px-5 py-3 text-sm font-medium text-white bg-black rounded-md hover:bg-black/90 touch-manipulation"
               >
                 Confirm
               </button>
@@ -286,7 +286,7 @@ export default function ChatInterface() {
       </Dialog>
 
       <div ref={chatRef} className="w-full max-w-2xl mx-auto bg-gradient-to-b from-white to-gray-50 rounded-2xl shadow-xl overflow-hidden border border-gray-100 backdrop-blur-lg">
-        <div className="h-[500px] overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-black/10 scrollbar-track-transparent hover:scrollbar-thumb-black/20 transition-colors">
+        <div className="h-[500px] overflow-y-auto p-4 sm:p-6 space-y-4 sm:space-y-6 scrollbar-thin scrollbar-thumb-black/10 scrollbar-track-transparent hover:scrollbar-thumb-black/20 transition-colors">
         {messages.map((message, index) => (
           <motion.div
             key={index}
@@ -312,7 +312,7 @@ export default function ChatInterface() {
               </svg>
             )}
             <div
-              className={`max-w-[80%] rounded-2xl p-4 ${message.role === 'user' ? 'bg-gradient-to-br from-black to-gray-800 text-white shadow-xl ring-1 ring-white/10' : 'bg-white/90 border border-gray-100 shadow-lg ring-1 ring-black/5'} backdrop-blur-md transition-all duration-200 hover:scale-[1.01]`}
+              className={`max-w-[80%] rounded-2xl p-4 sm:p-5 min-h-[44px] ${message.role === 'user' ? 'bg-gradient-to-br from-black to-gray-800 text-white shadow-xl ring-1 ring-white/10' : 'bg-white/90 border border-gray-100 shadow-lg ring-1 ring-black/5'} backdrop-blur-md transition-all duration-200 hover:scale-[1.01] touch-manipulation`}
             >
               <p className="text-[15px] leading-relaxed">{message.content}</p>
             </div>
@@ -362,15 +362,15 @@ export default function ChatInterface() {
           </motion.div>
         )}
       </div>
-      <form onSubmit={handleSubmit} className="border-t border-gray-200 p-4 bg-gray-50/50">
-        <div className="space-y-4">
+      <form onSubmit={handleSubmit} className="border-t border-gray-200 p-4 sm:p-5 bg-gray-50/50">
+        <div className="space-y-4 sm:space-y-5">
           <div className="flex flex-wrap gap-2">
             {quickReplies.map((reply, index) => (
               <button
                 key={index}
                 type="button"
                 onClick={() => setInput(reply)}
-                className="px-4 py-2 text-sm bg-white/80 hover:bg-black hover:text-white border border-gray-100 rounded-full transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-1 backdrop-blur-sm"
+                className="min-h-[44px] px-5 py-3 text-sm bg-white/80 hover:bg-black hover:text-white border border-gray-100 rounded-full transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-1 backdrop-blur-sm touch-manipulation"
               >
                 {reply}
               </button>
@@ -382,17 +382,18 @@ export default function ChatInterface() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type your message..."
-              className="flex-1 bg-white/90 backdrop-blur-md border border-gray-100 rounded-xl px-4 py-3 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/5 transition-all duration-300 text-[15px] shadow-md hover:shadow-lg"
+              className="flex-1 bg-white/90 backdrop-blur-md border border-gray-100 rounded-xl px-4 py-3 min-h-[48px] focus:outline-none focus:border-black focus:ring-2 focus:ring-black/5 transition-all duration-300 text-[15px] shadow-md hover:shadow-lg"
+              disabled={loading}
             />
             <motion.button
               type="submit"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="bg-gradient-to-r from-black to-gray-800 text-white px-6 py-3 rounded-xl flex items-center space-x-2 hover:from-gray-800 hover:to-black transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 ring-1 ring-white/10"
+              className="bg-gradient-to-r from-black to-gray-800 text-white px-6 py-3 min-h-[48px] min-w-[90px] rounded-xl flex items-center justify-center space-x-2 hover:from-gray-800 hover:to-black transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 ring-1 ring-white/10 touch-manipulation"
               disabled={loading}
             >
               <span className="text-[15px]">Send</span>
-              <Send className="w-4 h-4" />
+              <Send className="w-4 h-4 ml-2" />
             </motion.button>
           </div>
         </div>

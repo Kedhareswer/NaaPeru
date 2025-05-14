@@ -101,7 +101,7 @@ export default function CaseStudies() {
           </p>
         </motion.div>
 
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-12">
           {categories.map((category, index) => (
             <motion.div
               key={category}
@@ -113,7 +113,7 @@ export default function CaseStudies() {
               <Button
                 variant={selectedCategory === category ? "default" : "outline"}
                 onClick={() => setSelectedCategory(category)}
-                className="text-sm"
+                className="text-sm min-h-[44px] min-w-[44px] px-3 sm:px-4"
               >
                 {category}
               </Button>
@@ -121,7 +121,7 @@ export default function CaseStudies() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {filteredProjects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -154,14 +154,14 @@ export default function CaseStudies() {
                     </div>
                     <div className="flex gap-2">
                       {project.demoUrl && (
-                        <Button variant="ghost" size="sm" className="group hover:bg-gray-50" asChild>
+                        <Button variant="ghost" size="sm" className="group hover:bg-gray-50 min-h-[44px] min-w-[44px]" asChild>
                           <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
                             Live Demo
                             <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                           </a>
                         </Button>
                       )}
-                      <Button variant="ghost" size="sm" className="group hover:bg-gray-50" asChild>
+                      <Button variant="ghost" size="sm" className="group hover:bg-gray-50 min-h-[44px] min-w-[44px]" asChild>
                         <a href={project.link} target="_blank" rel="noopener noreferrer">
                           View Details
                           <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -182,7 +182,7 @@ export default function CaseStudies() {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <Button asChild>
+          <Button asChild className="min-h-[44px] min-w-[44px] px-4 py-2">
             <a href="/projects">
               View All Projects
               <ChevronRight className="w-4 h-4 ml-2" />

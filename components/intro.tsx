@@ -233,7 +233,7 @@ export default function Intro() {
                     download={link.download}
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noopener noreferrer" : undefined}
-                    className={`inline-flex items-center px-4 py-2 text-sm md:text-base border-2 rounded-lg transition-all duration-300 ${link.primary ? 
+                    className={`inline-flex items-center min-h-[44px] min-w-[44px] px-4 py-2 text-sm md:text-base border-2 rounded-lg transition-all duration-300 ${link.primary ? 
                       'border-black bg-black text-white hover:bg-transparent hover:text-black' : 
                       'border-black hover:bg-black hover:text-white'}`}
                     initial={{ opacity: 0, y: 20 }}
@@ -250,7 +250,7 @@ export default function Intro() {
           </motion.div>
 
           <motion.div
-            className="relative w-full aspect-square max-w-[280px] md:max-w-[400px] lg:max-w-none mx-auto flex items-center justify-center p-4 md:p-6 lg:p-8"
+            className="relative w-full aspect-square max-w-[250px] sm:max-w-[280px] md:max-w-[400px] lg:max-w-none mx-auto flex items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8"
             style={{ y: imageY }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -325,10 +325,10 @@ export default function Intro() {
             >
               <span className="text-xs tracking-widest uppercase mb-2 opacity-70 group-hover:opacity-100 transition-opacity">Scroll</span>
               <motion.div 
-                className="w-8 h-8 flex items-center justify-center rounded-full border border-zinc-300 group-hover:border-zinc-900 transition-colors"
+                className="w-12 h-12 sm:w-10 sm:h-10 md:w-8 md:h-8 flex items-center justify-center rounded-full border border-zinc-300 group-hover:border-zinc-900 transition-colors"
                 whileHover={{ scale: 1.1 }}
               >
-                <ArrowDown className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                <ArrowDown className="w-6 h-6 sm:w-5 sm:h-5 md:w-4 md:h-4 group-hover:scale-110 transition-transform" />
               </motion.div>
             </motion.a>
           </motion.div>
