@@ -69,7 +69,7 @@ const projects: Project[] = [
     title: "Web Development - 100 Mini Projects",
     description: "A comprehensive collection of 100 web development projects showcasing modern frontend technologies, responsive design patterns, and interactive user interfaces.",
     categories: ["Other Projects"],
-    date: "March 2025",
+    date: "March 2023",
     image: "/projects/web-dev-projects.png",
     link: "/projects/web-dev-projects",
     demoUrl: "https://v0-vintage-web-development-app.vercel.app/"
