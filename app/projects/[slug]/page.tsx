@@ -43,7 +43,7 @@ const allProjects: Project[] = [
   // Additional projects can be added here
 ]
 
-export default async function ProjectDetailPage({ params }: { params: { slug: string } }) {
+export default function ProjectDetailPage({ params }: { params: { slug: string } }) {
   const project = allProjects.find(
     (p) => p.title.toLowerCase().replace(/\s+/g, "-") === params.slug
   )
