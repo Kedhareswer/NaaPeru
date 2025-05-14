@@ -86,7 +86,7 @@ const allProjects: Project[] = [
       "Achieved accurate vehicle and pedestrian detection using YOLOv8",
       "Created user-friendly interfaces for both desktop and web platforms"
     ],
-    githubUrl: "https://github.com/yourusername/traffic-monitoring-system"
+    githubUrl: "https://github.com/Kedhareswer/Object-Detection-and-Tracking"
   },
   {
     id: 4,
@@ -293,12 +293,6 @@ export default function ProjectsPage() {
                           </a>
                         </Button>
                       )}
-                      <Button variant="ghost" size="sm" className="min-h-[44px] min-w-[44px]" asChild>
-                        <a href={`/projects/${project.title.toLowerCase().replace(/\s+/g, '-')}`}>
-                          Details
-                          <ChevronRight className="w-4 h-4 ml-2" />
-                        </a>
-                      </Button>
                     </div>
                   </div>
                 </div>

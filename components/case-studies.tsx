@@ -66,12 +66,13 @@ const projects: Project[] = [
   },
   {
     id: 6,
-    title: "PDF Chatbot",
-    description: "Intelligent document interaction system that enables natural language conversations with PDF content using advanced NLP.",
-    categories: ["Machine Learning", "Data Science", "Other Projects"],
+    title: "Web Development - 100 Mini Projects",
+    description: "A comprehensive collection of 100 web development projects showcasing modern frontend technologies, responsive design patterns, and interactive user interfaces.",
+    categories: ["Other Projects"],
     date: "March 2025",
-    image: "/projects/research-bolt.png",
-    link: "/projects/pdf-chatbot"
+    image: "/projects/web-dev-projects.png",
+    link: "/projects/web-dev-projects",
+    demoUrl: "https://100-web-projects.vercel.app"
   }
 ]
 
