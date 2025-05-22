@@ -225,7 +225,7 @@ export default function Intro() {
                   { label: "Email", href: "mailto:Kedhareswer.12110626@gmail.com" },
                   { label: "LinkedIn", href: "https://www.linkedin.com/in/kedhareswernaidu/", external: true },
                   { label: "GitHub", href: "https://github.com/Kedhareswer", external: true },
-                  { label: "Download CV", href: "/Kedhareswer_Feb_update.pdf", download: true, primary: true }
+                  { label: "Download CV", href: "/Kedhareswer_May_update.pdf", download: true, primary: true }
                 ].map((link, i) => (
                   <motion.a
                     key={link.label}
