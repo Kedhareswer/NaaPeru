@@ -51,7 +51,7 @@ const projects: Project[] = [
     title: "Collaborative Research Hub",
     description: "A comprehensive real-time collaborative workspace designed for research teams, integrating advanced AI capabilities with robust team collaboration features.",
     categories: ["Machine Learning", "Data Science"],
-    date: "Present",
+    date: "March 2025",
     image: "/projects/research-bolt.png",
     link: "/projects/collaborative-research-hub"
   },
