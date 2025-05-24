@@ -72,7 +72,7 @@ export default function ChatInterface() {
       console.error('Error:', error)
       const errorMessage = {
         role: 'assistant' as const,
-        content: "I'm sorry, I encountered an error processing your request. Please try again later."
+        content: "sorry, I encountered an error processing your request. Maybe due to expired API."
       }
       setMessages(prev => [...prev, errorMessage])
     } finally {
