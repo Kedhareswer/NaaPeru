@@ -59,7 +59,7 @@ export default function LoadingScreen() {
               />
             </div>
             <motion.div 
-              className="w-64 h-1 bg-gray-100 rounded-full overflow-hidden shadow-inner"
+              className="w-64 h-1 bg-gray-100 rounded-full overflow-hidden shadow-inner relative"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.0 }}
@@ -69,6 +69,16 @@ export default function LoadingScreen() {
                 initial={{ width: '0%' }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.5 }}
+              />
+              <motion.div
+                className="absolute top-0 left-0 h-full w-16 bg-gradient-to-r from-transparent via-white/60 to-transparent pointer-events-none"
+                animate={{ x: [0, 192] }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 1.2,
+                  ease: "linear"
+                }}
+                style={{ zIndex: 2 }}
               />
             </motion.div>
             <motion.p

@@ -8,11 +8,6 @@ import "../styles/shiny-button.css"
 
 const hobbies = [
   {
-    name: "Photography",
-    icon: Camera,
-    description: "Capturing moments and exploring visual storytelling"
-  },
-  {
     name: "Gaming",
     icon: Gamepad,
     description: "Strategic gaming and virtual world exploration"
@@ -25,7 +20,7 @@ const hobbies = [
   {
     name: "Music",
     icon: Music,
-    description: "Playing guitar and composing digital music"
+    description: "Listening to music and exploring new genres"
   },
   {
     name: "Traveling",
@@ -47,6 +42,13 @@ const skills = [
     items: [
       "TensorFlow", "PyTorch", "Scikit-learn", "Pandas", "NumPy",
       "Power BI", "Tableau", "Azure", "Git"
+    ]
+  },
+  {
+    category: "AI Tools",
+    items: [
+      "Vercel", "Lovable", "Bolt", "Jules", "Cursor", "Windsurf",
+      "Wix Studio", "Relume", "Gemini Studio"
     ]
   },
   {

@@ -3,12 +3,15 @@
 import { useRef, useState, useEffect } from "react"
 import { motion, useScroll, useTransform, useMotionValueEvent, useSpring, AnimatePresence } from "framer-motion"
 import { ArrowDown, Code, Sparkles, Database } from "lucide-react"
+import { useMediaQuery } from "@/hooks/use-mobile"
 
 export default function Intro() {
   const containerRef = useRef<HTMLDivElement>(null)
   const textRef = useRef<HTMLDivElement>(null)
   const [textReveal, setTextReveal] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const isMobile = useMediaQuery("(max-width: 768px)")
+  const isTablet = useMediaQuery("(max-width: 1024px)")
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -115,26 +118,26 @@ export default function Intro() {
               repeatType: "mirror",
             }}
           >
-            <Icon size={24 + i * 12} />
+            <Icon size={isMobile ? 16 + i * 8 : 24 + i * 12} />
           </motion.div>
         ))}
       </div>
 
       <motion.div 
-        className="absolute inset-0 flex flex-col md:flex-row items-center justify-center px-2 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-12"
+        className="absolute inset-0 flex flex-col items-center justify-center px-2 sm:px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-12"
         style={{ opacity, scale, y }}
       >
-        <div className="flex flex-col-reverse md:grid md:grid-cols-2 gap-8 md:gap-12 w-full max-w-3xl md:max-w-5xl mx-auto items-center">
+        <div className="flex flex-col w-full max-w-3xl md:max-w-5xl mx-auto items-center lg:grid lg:grid-cols-2 gap-8 md:gap-12">
           <motion.div
             ref={textRef}
-            className="p-2 sm:p-4 md:p-6 flex flex-col justify-center space-y-4 md:space-y-6"
+            className="order-2 lg:order-1 p-2 sm:p-4 md:p-6 flex flex-col justify-center space-y-4 md:space-y-6 text-center lg:text-left"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
             <div className="overflow-hidden">
               <motion.h2
-                className="text-sm md:text-base uppercase tracking-[0.2em] text-zinc-500 font-light"
+                className="text-xs sm:text-sm md:text-base uppercase tracking-[0.2em] text-zinc-500 font-light"
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -145,7 +148,7 @@ export default function Intro() {
             
             <div className="overflow-hidden">
               <motion.h1
-                className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extralight leading-tight tracking-tighter"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extralight leading-tight tracking-tighter"
                 initial={{ y: 100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
@@ -155,7 +158,7 @@ export default function Intro() {
                   <span className="inline-block">I'm</span>
                 </span>
                 <div className="mt-2 md:mt-4 overflow-hidden">
-                  <div className="flex flex-wrap">
+                  <div className="flex flex-wrap justify-center lg:justify-start">
                     {nameChars.map((char, index) => (
                       <motion.span 
                         key={index}
@@ -178,7 +181,7 @@ export default function Intro() {
 
             <div className="overflow-hidden">
               <motion.p
-                className="text-sm md:text-base lg:text-lg max-w-xl text-zinc-600 leading-relaxed"
+                className="text-xs sm:text-sm md:text-base lg:text-lg max-w-xl mx-auto lg:mx-0 text-zinc-600 leading-relaxed"
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
@@ -188,14 +191,14 @@ export default function Intro() {
             </div>
 
             <motion.div
-              className="mt-6 lg:mt-8 space-y-4 lg:space-y-6"
+              className="mt-4 sm:mt-6 lg:mt-8 space-y-3 sm:space-y-4 lg:space-y-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1 }}
             >
               <div className="overflow-hidden">
                 <motion.p 
-                  className="text-lg md:text-xl font-medium text-zinc-800 tracking-tight"
+                  className="text-base sm:text-lg md:text-xl font-medium text-zinc-800 tracking-tight"
                   initial={{ y: 40 }}
                   animate={{ y: 0 }}
                   transition={{ duration: 0.5, delay: 1.1 }}
@@ -206,7 +209,7 @@ export default function Intro() {
               
               <div className="overflow-hidden">
                 <motion.p 
-                  className="text-sm md:text-base text-zinc-600 font-light tracking-wide"
+                  className="text-xs sm:text-sm md:text-base text-zinc-600 font-light tracking-wide"
                   initial={{ y: 40 }}
                   animate={{ y: 0 }}
                   transition={{ duration: 0.5, delay: 1.2 }}
@@ -216,7 +219,7 @@ export default function Intro() {
               </div>
               
               <motion.div 
-                className="flex flex-wrap justify-center md:justify-start gap-3 md:gap-4 mt-4 md:mt-6"
+                className="flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-3 md:gap-4 mt-4 md:mt-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 1.4 }}
@@ -233,7 +236,7 @@ export default function Intro() {
                     download={link.download}
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noopener noreferrer" : undefined}
-                    className={`inline-flex items-center min-h-[44px] min-w-[44px] px-4 py-2 text-sm md:text-base border-2 rounded-lg transition-all duration-300 ${link.primary ? 
+                    className={`inline-flex items-center min-h-[44px] min-w-[44px] px-3 sm:px-4 py-2 text-xs sm:text-sm md:text-base border-2 rounded-lg transition-all duration-300 ${link.primary ? 
                       'border-black bg-black text-white hover:bg-transparent hover:text-black' : 
                       'border-black hover:bg-black hover:text-white'}`}
                     initial={{ opacity: 0, y: 20 }}
@@ -250,7 +253,7 @@ export default function Intro() {
           </motion.div>
 
           <motion.div
-            className="relative w-full aspect-square max-w-[250px] sm:max-w-[280px] md:max-w-[400px] lg:max-w-none mx-auto flex items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8"
+            className="order-1 lg:order-2 relative w-full aspect-square max-w-[200px] sm:max-w-[250px] md:max-w-[300px] lg:max-w-none mx-auto flex items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8 mb-6 lg:mb-0"
             style={{ y: imageY }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -291,13 +294,13 @@ export default function Intro() {
             </motion.div>
             
             <motion.div 
-              className="absolute -bottom-4 -left-4 w-12 md:w-16 h-12 md:h-16 bg-zinc-200 rounded-full z-0"
+              className="absolute -bottom-4 -left-4 w-8 sm:w-12 md:w-16 h-8 sm:h-12 md:h-16 bg-zinc-200 rounded-full z-0"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 0.5 }}
               transition={{ duration: 0.6, delay: 1.3 }}
             />
             <motion.div 
-              className="absolute -top-4 -right-4 w-16 md:w-24 h-16 md:h-24 bg-zinc-200 rounded-full z-0"
+              className="absolute -top-4 -right-4 w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 bg-zinc-200 rounded-full z-0"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 0.3 }}
               transition={{ duration: 0.6, delay: 1.4 }}
@@ -325,10 +328,10 @@ export default function Intro() {
             >
               <span className="text-xs tracking-widest uppercase mb-2 opacity-70 group-hover:opacity-100 transition-opacity">Scroll</span>
               <motion.div 
-                className="w-12 h-12 sm:w-10 sm:h-10 md:w-8 md:h-8 flex items-center justify-center rounded-full border border-zinc-300 group-hover:border-zinc-900 transition-colors"
+                className="w-10 h-10 sm:w-10 sm:h-10 md:w-8 md:h-8 flex items-center justify-center rounded-full border border-zinc-300 group-hover:border-zinc-900 transition-colors"
                 whileHover={{ scale: 1.1 }}
               >
-                <ArrowDown className="w-6 h-6 sm:w-5 sm:h-5 md:w-4 md:h-4 group-hover:scale-110 transition-transform" />
+                <ArrowDown className="w-5 h-5 sm:w-5 sm:h-5 md:w-4 md:h-4 group-hover:scale-110 transition-transform" />
               </motion.div>
             </motion.a>
           </motion.div>
