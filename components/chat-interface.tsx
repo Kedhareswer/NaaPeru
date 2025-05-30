@@ -53,11 +53,20 @@ export default function ChatInterface() {
         }
         setMessages(prev => [...prev, assistantMessage])
       } else {
-        // Process with Gemini API
-        const response = await fetch('/api/gemini', {
+        // Process with AIML API
+        const response = await fetch('https://api.aimlapi.com/v1/chat/completions', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: input })
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_AIML_API_KEY}`
+          },
+          body: JSON.stringify({
+            model: 'google/gemma-3-27b-it',
+            messages: [{
+              role: 'user',
+              content: input
+            }]
+          })
         })
 
         if (!response.ok) {
@@ -65,7 +74,7 @@ export default function ChatInterface() {
         }
 
         const data = await response.json()
-        const assistantMessage = { role: 'assistant' as const, content: data.response }
+        const assistantMessage = { role: 'assistant' as const, content: data.choices[0].message.content }
         setMessages(prev => [...prev, assistantMessage])
       }
     } catch (error) {
