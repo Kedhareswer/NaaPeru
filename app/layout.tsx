@@ -2,7 +2,6 @@ import type React from "react"
 import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import PageTransition from "@/components/page-transition"
 import { Analytics } from "@vercel/analytics/react"
 import ScrollToTop from "@/components/scroll-to-top"
 import StickyNavIndicator from "@/components/sticky-nav-indicator"
@@ -73,7 +72,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Suspense fallback={null}>
           <StickyNavIndicator />
-          <PageTransition>{children}</PageTransition>
+          {children}
           <ScrollToTop />
         </Suspense>
         <Analytics />

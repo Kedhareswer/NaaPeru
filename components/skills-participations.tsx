@@ -1,6 +1,8 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useState } from "react"
+
+import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { Trophy, Award, Medal, Music, Book, Gamepad, Plane } from "lucide-react"
 import { FloatingLogo, generateRandomPosition, logoMap } from "./floating-logos"
@@ -100,6 +102,7 @@ const participations = [
 export default function SkillsParticipations() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
+  const [isHoveredSkills, setIsHoveredSkills] = useState({})
 
   return (
     <section ref={ref} className="py-16 bg-gray-50">
@@ -113,7 +116,7 @@ export default function SkillsParticipations() {
             className="space-y-8"
           >
             <div className="flex items-center space-x-4">
-              <h2 className="text-2xl font-light">Skills</h2>
+              <h2 className="text-2xl font-light text-gray-900">Skills</h2>
               <div className="h-px bg-black flex-grow" />
             </div>
 
@@ -125,29 +128,28 @@ export default function SkillsParticipations() {
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
-                  <h3 className="text-lg font-medium mb-4">{category.category}</h3>
+                  <h3 className="text-lg font-medium mb-4 text-gray-900">{category.category}</h3>
                   <div className="flex flex-wrap gap-2">
                     {category.items.map((skill, skillIndex) => {
-                      const [isHovered, setIsHovered] = useState(false)
                       return (
                         <div key={skill} className="relative">
                           <motion.span
-                            className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-sm relative overflow-hidden transition-all duration-300 hover:shadow-lg"
+                            className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-sm relative overflow-hidden transition-all duration-300 hover:shadow-lg font-medium text-gray-800"
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                             transition={{ duration: 0.4, delay: index * 0.1 + skillIndex * 0.05 }}
                             whileHover={{ scale: 1.05 }}
-                            onHoverStart={() => setIsHovered(true)}
-                            onHoverEnd={() => setIsHovered(false)}
+                            onMouseEnter={() => setIsHoveredSkills((prev) => ({ ...prev, [skill]: true }))}
+                            onMouseLeave={() => setIsHoveredSkills((prev) => ({ ...prev, [skill]: false }))}
                             style={{
-                              background: isHovered
+                              background: isHoveredSkills[skill]
                                 ? "linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%)"
                                 : "white",
                             }}
                           >
                             {skill}
                           </motion.span>
-                          {isHovered &&
+                          {isHoveredSkills[skill] &&
                             skill in logoMap &&
                             [...Array(3).keys()].map((i) => {
                               const { x, y } = generateRandomPosition(100, 100)
@@ -170,7 +172,7 @@ export default function SkillsParticipations() {
             className="space-y-8"
           >
             <div className="flex items-center space-x-4">
-              <h2 className="text-2xl font-light">Participations</h2>
+              <h2 className="text-2xl font-light text-gray-900">Participations</h2>
               <div className="h-px bg-black flex-grow" />
             </div>
 
@@ -183,7 +185,7 @@ export default function SkillsParticipations() {
                   transition={{ duration: 0.6, delay: 0.2 + sectionIndex * 0.1 }}
                   className="space-y-4"
                 >
-                  <h3 className="text-lg font-medium">{section.title}</h3>
+                  <h3 className="text-lg font-medium text-gray-900">{section.title}</h3>
                   <div className="space-y-4">
                     {section.items.map((item, itemIndex) => (
                       <motion.div
@@ -198,8 +200,8 @@ export default function SkillsParticipations() {
                           <item.icon className="w-5 h-5" />
                         </div>
                         <div>
-                          <h4 className="font-medium">{item.name}</h4>
-                          <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+                          <h4 className="font-medium text-gray-900">{item.name}</h4>
+                          <p className="text-sm text-gray-600 mt-1 leading-relaxed">{item.description}</p>
                         </div>
                       </motion.div>
                     ))}
@@ -208,6 +210,7 @@ export default function SkillsParticipations() {
               ))}
             </div>
           </motion.div>
+
           {/* Hobbies Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -216,7 +219,7 @@ export default function SkillsParticipations() {
             className="space-y-8"
           >
             <div className="flex items-center space-x-4">
-              <h2 className="text-2xl font-light">Hobbies</h2>
+              <h2 className="text-2xl font-light text-gray-900">Hobbies</h2>
               <div className="h-px bg-black flex-grow" />
             </div>
 
@@ -235,8 +238,8 @@ export default function SkillsParticipations() {
                       <hobby.icon className="w-5 h-5 text-gray-600" />
                     </div>
                     <div>
-                      <h4 className="font-medium">{hobby.name}</h4>
-                      <p className="text-sm text-gray-600 mt-1">{hobby.description}</p>
+                      <h4 className="font-medium text-gray-900">{hobby.name}</h4>
+                      <p className="text-sm text-gray-600 mt-1 leading-relaxed">{hobby.description}</p>
                     </div>
                   </div>
                 </motion.div>

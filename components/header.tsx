@@ -161,7 +161,7 @@ export default function Header() {
           >
             <div className="container mx-auto px-6 py-4 flex justify-between items-center">
               <motion.div
-                className="text-sm font-light tracking-widest"
+                className="text-sm font-light tracking-[0.2em] text-gray-900"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
@@ -181,8 +181,8 @@ export default function Header() {
                       variants={variants}
                       initial="hidden"
                       animate="visible"
-                      className={`relative text-xs tracking-widest uppercase hover:font-medium cursor-pointer group transition-all duration-200 ${
-                        isActive ? "font-medium text-black" : "text-gray-700 hover:text-black"
+                      className={`relative text-sm font-light tracking-[0.1em] uppercase cursor-pointer group transition-all duration-200 ${
+                        isActive ? "font-medium text-black" : "text-gray-700 hover:text-black hover:font-medium"
                       }`}
                       whileHover={{ y: -1 }}
                       transition={{ type: "spring", stiffness: 400, damping: 25 }}
@@ -228,7 +228,7 @@ export default function Header() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <div className="container mx-auto px-6 py-6 flex justify-between items-center">
-            <motion.div className="text-sm font-light tracking-widest text-black" whileHover={{ scale: 1.05 }}>
+            <motion.div className="text-sm font-light tracking-[0.2em] text-black" whileHover={{ scale: 1.05 }}>
               <button onClick={() => handleNavClick("/")} className="cursor-pointer">
                 DATA.SENSE
               </button>
@@ -245,8 +245,8 @@ export default function Header() {
                     variants={variants}
                     initial="hidden"
                     animate="visible"
-                    className={`relative text-xs tracking-widest uppercase hover:font-medium cursor-pointer group ${
-                      isActive ? "font-medium text-black" : "text-gray-700 hover:text-black"
+                    className={`relative text-sm font-light tracking-[0.1em] uppercase cursor-pointer group ${
+                      isActive ? "font-medium text-black" : "text-gray-700 hover:text-black hover:font-medium"
                     }`}
                   >
                     {item.name}
@@ -290,7 +290,7 @@ export default function Header() {
             transition={{ duration: 0.3 }}
           >
             <div className="container mx-auto px-6 py-6 flex justify-between items-center border-b border-gray-100">
-              <div className="text-sm font-light tracking-widest">DATA.SCIENCE</div>
+              <div className="text-sm font-light tracking-[0.2em] text-gray-900">DATA.SENSE</div>
               <motion.button
                 onClick={() => setIsOpen(false)}
                 whileHover={{ scale: 1.1 }}
@@ -308,8 +308,8 @@ export default function Header() {
                   <motion.button
                     key={item.name}
                     onClick={() => handleNavClick(item.href)}
-                    className={`text-3xl tracking-widest uppercase hover:font-medium cursor-pointer transition-all duration-200 ${
-                      isActive ? "font-medium text-black" : "text-gray-700 hover:text-black"
+                    className={`text-2xl md:text-3xl font-light tracking-[0.1em] uppercase cursor-pointer transition-all duration-200 ${
+                      isActive ? "font-medium text-black" : "text-gray-700 hover:text-black hover:font-medium"
                     }`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -325,7 +325,7 @@ export default function Header() {
 
             {/* Mobile Menu Footer */}
             <div className="p-6 border-t border-gray-100">
-              <div className="text-center text-sm text-gray-500">
+              <div className="text-center text-sm text-gray-600 font-light">
                 <p>© 2025 Kedhareswer Naidu</p>
               </div>
             </div>

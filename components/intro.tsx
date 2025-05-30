@@ -152,7 +152,7 @@ export default function Intro() {
               >
                 <div className="overflow-hidden">
                   <motion.h2
-                    className="text-[10px] xs:text-xs sm:text-sm uppercase tracking-[0.15em] xs:tracking-[0.2em] text-zinc-500 font-light"
+                    className="text-xs sm:text-sm uppercase tracking-[0.15em] text-gray-600 font-light"
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
@@ -163,13 +163,13 @@ export default function Intro() {
 
                 <div className="overflow-hidden">
                   <motion.h1
-                    className="text-xl xs:text-2xl sm:text-3xl font-extralight leading-tight tracking-tight"
+                    className="text-xl xs:text-2xl sm:text-3xl font-light leading-tight tracking-tight"
                     initial={{ y: 50 }}
                     animate={{ y: 0 }}
                     transition={{ duration: 0.6, delay: 0.6 }}
                   >
                     <span className="block mb-1">
-                      <span className="text-zinc-400 mr-2">Hey,</span>
+                      <span className="text-gray-600 mr-2">Hey,</span>
                       <span>I'm</span>
                     </span>
                     <div className="overflow-hidden">
@@ -177,7 +177,7 @@ export default function Intro() {
                         {nameChars.map((char, index) => (
                           <motion.span
                             key={index}
-                            className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 via-zinc-600 to-zinc-900"
+                            className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 via-zinc-600 to-zinc-900 font-medium"
                             initial={{ y: 50, opacity: 0 }}
                             animate={textReveal ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
                             transition={{
@@ -196,7 +196,7 @@ export default function Intro() {
 
                 <div className="overflow-hidden">
                   <motion.p
-                    className="text-xs xs:text-sm sm:text-base text-zinc-600 leading-relaxed max-w-sm mx-auto"
+                    className="text-sm sm:text-base text-gray-700 leading-relaxed max-w-sm mx-auto"
                     initial={{ y: 30, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, delay: 1 }}
@@ -214,7 +214,7 @@ export default function Intro() {
                 >
                   <div className="overflow-hidden">
                     <motion.p
-                      className="text-sm xs:text-base sm:text-lg font-medium text-zinc-800"
+                      className="text-base sm:text-lg font-medium text-gray-900"
                       initial={{ y: 20 }}
                       animate={{ y: 0 }}
                       transition={{ duration: 0.5, delay: 1.3 }}
@@ -225,7 +225,7 @@ export default function Intro() {
 
                   <div className="overflow-hidden">
                     <motion.p
-                      className="text-xs xs:text-sm text-zinc-600 font-light"
+                      className="text-sm text-gray-600 font-light"
                       initial={{ y: 20 }}
                       animate={{ y: 0 }}
                       transition={{ duration: 0.5, delay: 1.4 }}
@@ -282,7 +282,7 @@ export default function Intro() {
                         href={link.href}
                         target={link.href.startsWith("http") ? "_blank" : undefined}
                         rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                        className="text-xs px-3 py-2 border border-zinc-300 rounded-full text-zinc-600 hover:border-zinc-600 hover:text-zinc-900 transition-all duration-200"
+                        className="text-xs px-3 py-2 border border-gray-300 rounded-full text-gray-700 hover:border-gray-600 hover:text-gray-900 transition-all duration-200 font-light"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.3, delay: 2 + i * 0.1 }}
@@ -311,7 +311,7 @@ export default function Intro() {
               >
                 <div className="overflow-hidden">
                   <motion.h2
-                    className="text-sm md:text-base lg:text-lg uppercase tracking-[0.2em] text-zinc-500 font-light"
+                    className="text-sm md:text-base lg:text-lg uppercase tracking-[0.2em] text-gray-600 font-light"
                     initial={{ y: 100, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
@@ -322,13 +322,13 @@ export default function Intro() {
 
                 <div className="overflow-hidden">
                   <motion.h1
-                    className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-extralight leading-tight tracking-tighter"
+                    className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-light leading-tight tracking-tight"
                     initial={{ y: 100 }}
                     animate={{ y: 0 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
                   >
                     <span className="block mb-2 lg:mb-4">
-                      <span className="text-zinc-400 mr-3 lg:mr-4">Hey,</span>
+                      <span className="text-gray-600 mr-3 lg:mr-4">Hey,</span>
                       <span>I'm</span>
                     </span>
                     <div className="overflow-hidden">
@@ -336,7 +336,7 @@ export default function Intro() {
                         {nameChars.map((char, index) => (
                           <motion.span
                             key={index}
-                            className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 via-zinc-600 to-zinc-900"
+                            className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 via-zinc-600 to-zinc-900 font-medium"
                             initial={{ y: 100, opacity: 0 }}
                             animate={textReveal ? { y: 0, opacity: 1 } : { y: 100, opacity: 0 }}
                             transition={{
@@ -355,7 +355,7 @@ export default function Intro() {
 
                 <div className="overflow-hidden">
                   <motion.p
-                    className="text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 text-zinc-600 leading-relaxed"
+                    className="text-base md:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 text-gray-700 leading-relaxed"
                     initial={{ y: 100, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, delay: 0.8 }}
@@ -375,7 +375,7 @@ export default function Intro() {
                 >
                   <div className="overflow-hidden">
                     <motion.p
-                      className="text-lg md:text-xl lg:text-2xl font-medium text-zinc-800 tracking-tight"
+                      className="text-lg md:text-xl lg:text-2xl font-medium text-gray-900 tracking-tight"
                       initial={{ y: 40 }}
                       animate={{ y: 0 }}
                       transition={{ duration: 0.5, delay: 1.1 }}
@@ -386,7 +386,7 @@ export default function Intro() {
 
                   <div className="overflow-hidden">
                     <motion.p
-                      className="text-sm md:text-base lg:text-lg text-zinc-600 font-light tracking-wide"
+                      className="text-sm md:text-base lg:text-lg text-gray-600 font-light tracking-wide"
                       initial={{ y: 40 }}
                       animate={{ y: 0 }}
                       transition={{ duration: 0.5, delay: 1.2 }}
@@ -414,7 +414,7 @@ export default function Intro() {
                         download={link.download}
                         target={link.external ? "_blank" : undefined}
                         rel={link.external ? "noopener noreferrer" : undefined}
-                        className={`inline-flex items-center min-h-[44px] min-w-[44px] px-4 md:px-6 py-3 text-sm md:text-base border-2 rounded-lg transition-all duration-300 ${
+                        className={`inline-flex items-center min-h-[44px] min-w-[44px] px-4 md:px-6 py-3 text-sm md:text-base border-2 rounded-lg transition-all duration-300 font-medium ${
                           link.primary
                             ? "border-black bg-black text-white hover:bg-transparent hover:text-black"
                             : "border-black hover:bg-black hover:text-white"
@@ -504,7 +504,7 @@ export default function Intro() {
                 y: { repeat: Number.POSITIVE_INFINITY, duration: 1.5, repeatType: "reverse" },
               }}
             >
-              <span className="text-[10px] xs:text-xs tracking-widest uppercase mb-2 opacity-70 group-hover:opacity-100 transition-opacity">
+              <span className="text-xs tracking-[0.15em] uppercase mb-2 opacity-70 group-hover:opacity-100 transition-opacity font-light">
                 Scroll
               </span>
               <motion.div

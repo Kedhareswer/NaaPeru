@@ -6,7 +6,8 @@ import { useRef } from "react"
 const blogPosts = [
   {
     title: "Navigating Machine Learning Pitfalls: From Data Chaos to Model Mastery",
-    excerpt: "Exploring common machine learning pitfalls including data preprocessing challenges, leakage issues, and model evaluation traps - with practical mitigation strategies.",
+    excerpt:
+      "Exploring common machine learning pitfalls including data preprocessing challenges, leakage issues, and model evaluation traps - with practical mitigation strategies.",
     date: "2025-03-06",
     platform: "LinkedIn",
     link: "https://www.linkedin.com/posts/kedhareswernaidu_machinelearning-datascience-datacleaning-activity-7292594788757848064-cTIG?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFKPTrMBWgaoeHZGGPkD4kmQ6AoY9JvxObU",
@@ -15,7 +16,8 @@ const blogPosts = [
   },
   {
     title: "Mastering Gradient Descent: The Journey to Smarter Predictions",
-    excerpt: "Explore how gradient descent optimizes machine learning models through iterative refinement, using a practical example of travel time prediction to demonstrate its power in real-world applications.",
+    excerpt:
+      "Explore how gradient descent optimizes machine learning models through iterative refinement, using a practical example of travel time prediction to demonstrate its power in real-world applications.",
     date: "2025-01-20",
     platform: "LinkedIn",
     link: "https://www.linkedin.com/feed/update/urn:li:activity:7264226589834448896?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFKPTrMBWgaoeHZGGPkD4kmQ6AoY9JvxObU",
@@ -46,9 +48,10 @@ export default function Blog() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-light mb-4">Latest Insights</h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Exploring the intersection of data science, AI, and technology through in-depth analysis and practical insights
+          <h2 className="text-3xl md:text-4xl font-light mb-4 text-gray-900">Latest Insights</h2>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
+            Exploring the intersection of data science, AI, and technology through in-depth analysis and practical
+            insights
           </p>
         </motion.div>
 
@@ -69,35 +72,35 @@ export default function Blog() {
                     transition={{ duration: 1, delay: index * 0.5, ease: "easeOut" }}
                     className="flex items-center justify-between text-sm text-gray-500"
                   >
-                    <span className="px-3 py-1 bg-gray-100 rounded-full">{post.category}</span>
-                    <span>{post.date}</span>
+                    <span className="px-3 py-1 bg-gray-100 rounded-full font-medium">{post.category}</span>
+                    <span className="font-light">{post.date}</span>
                   </motion.div>
-                  
+
                   <motion.h3
                     initial={{ y: 50 }}
                     animate={isInView ? { y: 0 } : { y: 50 }}
                     transition={{ duration: 1, delay: index * 0.5, ease: "easeOut" }}
-                    className="text-xl font-light leading-tight group-hover:text-gray-600 transition-colors duration-200"
+                    className="text-xl font-light leading-tight group-hover:text-gray-600 transition-colors duration-200 text-gray-900"
                   >
                     {post.title}
                   </motion.h3>
-                  
+
                   <motion.p
                     initial={{ y: 50 }}
                     animate={isInView ? { y: 0 } : { y: 50 }}
                     transition={{ duration: 1, delay: index * 0.5, ease: "easeOut" }}
-                    className="text-gray-600 line-clamp-3"
+                    className="text-gray-600 line-clamp-3 leading-relaxed"
                   >
                     {post.excerpt}
                   </motion.p>
-                  
+
                   <motion.div
                     initial={{ y: 50 }}
                     animate={isInView ? { y: 0 } : { y: 50 }}
                     transition={{ duration: 1, delay: index * 0.5, ease: "easeOut" }}
                     className="pt-4 mt-auto flex items-center justify-between text-sm"
                   >
-                    <span className="flex items-center text-gray-500">
+                    <span className="flex items-center text-gray-500 font-light">
                       <svg
                         className="w-4 h-4 mr-2"
                         fill="none"
@@ -114,7 +117,7 @@ export default function Blog() {
                       </svg>
                       {post.readTime}
                     </span>
-                    <span className="text-gray-500">{post.platform}</span>
+                    <span className="text-gray-500 font-light">{post.platform}</span>
                   </motion.div>
                 </div>
               </a>

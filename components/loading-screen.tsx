@@ -11,7 +11,7 @@ export default function LoadingScreen() {
   useEffect(() => {
     document.body.style.overflow = "hidden"
     const interval = setInterval(() => {
-      setProgress(prev => {
+      setProgress((prev) => {
         const newProgress = Math.min(prev + 2, 100)
         if (newProgress === 100) {
           clearInterval(interval)
@@ -43,22 +43,17 @@ export default function LoadingScreen() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.6, duration: 1.0, ease: "easeOut" }}
           >
-            <div style={{ position: 'relative', height: '300px', width: '400px', filter: 'contrast(1.1)' }}>
+            <div style={{ position: "relative", height: "300px", width: "400px" }}>
               <TextPressure
                 text="Loading..."
-                flex={true}
-                alpha={true}
-                stroke={true}
-                width={true}
-                weight={true}
-                italic={true}
-                textColor="#000000"
-                strokeColor="#333333"
-                strokeWidth={1.5}
-                minFontSize={96}
+                fontSize={96}
+                fontWeight={900}
+                color="#000000"
+                intensity={0.4}
+                className="w-full h-full"
               />
             </div>
-            <motion.div 
+            <motion.div
               className="w-64 h-1 bg-gray-100 rounded-full overflow-hidden shadow-inner relative"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -66,7 +61,7 @@ export default function LoadingScreen() {
             >
               <motion.div
                 className="h-full bg-black rounded-full shadow-lg"
-                initial={{ width: '0%' }}
+                initial={{ width: "0%" }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.5 }}
               />
@@ -74,9 +69,9 @@ export default function LoadingScreen() {
                 className="absolute top-0 left-0 h-full w-16 bg-gradient-to-r from-transparent via-white/60 to-transparent pointer-events-none"
                 animate={{ x: [0, 192] }}
                 transition={{
-                  repeat: Infinity,
+                  repeat: Number.POSITIVE_INFINITY,
                   duration: 1.2,
-                  ease: "linear"
+                  ease: "linear",
                 }}
                 style={{ zIndex: 2 }}
               />

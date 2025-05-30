@@ -172,7 +172,12 @@ export default function ProjectsPage() {
     )
 
   const handleViewDetails = (project: any) => {
-    setSelectedProject(project)
+    setSelectedProject({
+      ...project,
+      technologies: project.technologies || [],
+      objectives: project.objectives || [],
+      outcomes: project.outcomes || [],
+    })
     setIsModalOpen(true)
   }
 

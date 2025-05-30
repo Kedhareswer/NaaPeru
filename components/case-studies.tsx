@@ -14,7 +14,6 @@ interface Project {
   categories: string[]
   date: string
   image: string
-  link: string
   demoUrl?: string
   githubUrl?: string
   technologies: string[]
@@ -32,7 +31,6 @@ const projects: Project[] = [
     categories: ["Deep Learning", "Machine Learning"],
     date: "April 2025",
     image: "/projects/image-to-sketch.png",
-    link: "/projects/image-to-sketch",
     demoUrl: "https://image-to-sketch-wine.vercel.app/",
     githubUrl: "https://github.com/Kedhareswer/MLGeneFunction",
     technologies: ["Deep Learning", "Python", "TensorFlow", "OpenCV"],
@@ -56,7 +54,6 @@ const projects: Project[] = [
     categories: ["Deep Learning", "Machine Learning"],
     date: "May 2025",
     image: "/projects/endoscopy-image-enhancement.png",
-    link: "/projects/endoscopy-enhancement",
     githubUrl: "https://github.com/Kedhareswer/endoscopy-enhancement",
     technologies: ["Deep Learning", "Computer Vision", "Python", "Medical Imaging"],
     objectives: ["Enhance endoscopic image quality", "Improve diagnostic accuracy", "Reduce noise and artifacts"],
@@ -71,7 +68,6 @@ const projects: Project[] = [
     categories: ["Deep Learning", "Machine Learning"],
     date: "May 2025",
     image: "/projects/digit.png",
-    link: "/projects/digit-classifier",
     githubUrl: "https://github.com/Kedhareswer/Digit_Classifier_DeepLearning",
     technologies: ["Deep Learning", "Next.js", "FastAPI", "TensorFlow"],
     objectives: ["Classify handwritten digits", "Create web interface", "Implement real-time prediction"],
@@ -86,7 +82,6 @@ const projects: Project[] = [
     categories: ["Machine Learning", "Data Science"],
     date: "March 2025",
     image: "/projects/research-bolt.png",
-    link: "/projects/collaborative-research-hub",
     githubUrl: "https://github.com/Kedhareswer/ai-project-planner",
     technologies: ["Machine Learning", "React", "Node.js", "WebSocket"],
     objectives: ["Create collaborative workspace", "Integrate AI capabilities", "Enable real-time collaboration"],
@@ -101,7 +96,6 @@ const projects: Project[] = [
     categories: ["Deep Learning", "Machine Learning"],
     date: "February 2025",
     image: "/projects/image-to-sketch-dark.png",
-    link: "/projects/artify-ai",
     githubUrl: "https://github.com/Kedhareswer/Image-to-Oil_Paint",
     technologies: ["Deep Learning", "Python", "Neural Style Transfer", "Computer Vision"],
     objectives: ["Transform photos to oil paintings", "Preserve artistic quality", "Optimize processing speed"],
@@ -116,7 +110,6 @@ const projects: Project[] = [
     categories: ["Other Projects"],
     date: "March 2023",
     image: "/projects/web-dev-projects.png",
-    link: "/projects/web-dev-projects",
     demoUrl: "https://v0-vintage-web-development-app.vercel.app/",
     githubUrl: "https://github.com/Kedhareswer/web-dev-projects",
     technologies: ["HTML", "CSS", "JavaScript", "React", "Vue.js"],
@@ -156,7 +149,7 @@ export default function CaseStudies() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold mb-4 text-gray-900">Featured Projects</h2>
+          <h2 className="text-3xl md:text-4xl font-light mb-4 text-gray-900">Featured Projects</h2>
           <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Explore my portfolio of data science and AI projects, showcasing innovative solutions across various domains
             and technologies.
@@ -175,7 +168,7 @@ export default function CaseStudies() {
               <Button
                 variant={selectedCategory === category ? "default" : "outline"}
                 onClick={() => setSelectedCategory(category)}
-                className={`text-sm min-h-[44px] min-w-[44px] px-4 py-2 transition-all duration-200 ${
+                className={`text-sm min-h-[44px] min-w-[44px] px-4 py-2 transition-all duration-200 font-medium ${
                   selectedCategory === category
                     ? "bg-black text-white hover:bg-gray-800"
                     : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300"
