@@ -1,59 +1,19 @@
-"use client"
+import { HealthcareChat } from "@/components/healthcare-chat"
+import { PatientRecordsSidebar } from "@/components/patient-records-sidebar"
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import Header from "@/components/header"
-import Intro from "@/components/intro"
-import About from "@/components/about"
-import SkillsParticipations from "@/components/skills-participations"
-import CaseStudies from "@/components/case-studies"
-import Contact from "@/components/contact"
-import CustomCursor from "@/components/custom-cursor"
-import LoadingScreen from "@/components/loading-screen"
-import Testimonials from "@/components/testimonials"
-import Blog from "@/components/blog"
-import Footer from "@/components/footer"
-
-export default function Home() {
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    // Simulate loading time
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 2500)
-
-    return () => clearTimeout(timer)
-  }, [])
-
+export default function HomePage() {
   return (
-    <main className="relative bg-white text-black">
-      <CustomCursor />
-
-      <AnimatePresence mode="wait">
-        {isLoading ? (
-          <LoadingScreen key="loading" />
-        ) : (
-          <motion.div
-            key="content"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Header />
-            <Intro />
-            <About /> 
-            <SkillsParticipations />
-            <CaseStudies />
-            <Testimonials />
-            <Blog />
-            <Contact />
-            <Footer />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </main>
+    <div className="flex min-h-screen bg-slate-50">
+      <PatientRecordsSidebar />
+      <main className="flex-1 p-6">
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-slate-800">Healthcare Assistant</h1>
+            <p className="text-slate-600">Voice-enabled AI assistant for patient support and record management</p>
+          </div>
+          <HealthcareChat />
+        </div>
+      </main>
+    </div>
   )
 }
-
