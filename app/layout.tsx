@@ -4,17 +4,22 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import PageTransition from "@/components/page-transition"
 import { Analytics } from "@vercel/analytics/react"
+import ScrollToTop from "@/components/scroll-to-top"
+import StickyNavIndicator from "@/components/sticky-nav-indicator"
+import { Suspense } from "react"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Kedhareswer - Data Science Portfolio",
-  description: "Explore my journey in data science, AI, and machine learning. View my projects, skills, and experience in creating data-driven solutions.",
+  description:
+    "Explore my journey in data science, AI, and machine learning. View my projects, skills, and experience in creating data-driven solutions.",
   keywords: ["data science", "machine learning", "AI", "portfolio", "projects", "Kedhareswer"],
   authors: [{ name: "Kedhareswer" }],
   openGraph: {
     title: "Kedhareswer - Data Science Portfolio",
-    description: "Explore my journey in data science, AI, and machine learning. View my projects, skills, and experience.",
+    description:
+      "Explore my journey in data science, AI, and machine learning. View my projects, skills, and experience.",
     url: "https://kedhareswer-portfolio.vercel.app",
     siteName: "Kedhareswer Portfolio",
     images: [
@@ -22,8 +27,8 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Kedhareswer Portfolio"
-      }
+        alt: "Kedhareswer Portfolio",
+      },
     ],
     locale: "en_US",
     type: "website",
@@ -31,7 +36,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Kedhareswer - Data Science Portfolio",
-    description: "Explore my journey in data science, AI, and machine learning. View my projects, skills, and experience.",
+    description:
+      "Explore my journey in data science, AI, and machine learning. View my projects, skills, and experience.",
     images: ["/og-image.jpg"],
   },
   robots: {
@@ -48,6 +54,7 @@ export const metadata: Metadata = {
   verification: {
     google: "your-google-verification-code",
   },
+    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -64,9 +71,11 @@ export default function RootLayout({
         <link rel="canonical" href="https://kedhareswer-portfolio.vercel.app" />
       </head>
       <body className={inter.className}>
-        <PageTransition>
-          {children}
-        </PageTransition>
+        <Suspense fallback={null}>
+          <StickyNavIndicator />
+          <PageTransition>{children}</PageTransition>
+          <ScrollToTop />
+        </Suspense>
         <Analytics />
       </body>
     </html>

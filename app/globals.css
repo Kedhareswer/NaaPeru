@@ -1,12 +1,20 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
 
 @layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
-  
+
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -95,4 +103,3 @@
 .modal-content {
   animation: scaleIn 0.3s ease forwards;
 }
-

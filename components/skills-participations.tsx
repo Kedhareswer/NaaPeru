@@ -2,62 +2,66 @@
 
 import { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
-import { Trophy, Award, Medal, Heart, Music, Book, Camera, Gamepad, Plane } from "lucide-react"
-import { FloatingLogo, generateRandomPosition, logoMap } from './floating-logos'
-import "../styles/shiny-button.css"
+import { Trophy, Award, Medal, Music, Book, Gamepad, Plane } from "lucide-react"
+import { FloatingLogo, generateRandomPosition, logoMap } from "./floating-logos"
 
 const hobbies = [
   {
     name: "Gaming",
     icon: Gamepad,
-    description: "Strategic gaming and virtual world exploration"
+    description: "Strategic gaming and virtual world exploration",
   },
   {
     name: "Reading",
     icon: Book,
-    description: "Science fiction and technical literature enthusiast"
+    description: "Science fiction and technical literature enthusiast",
   },
   {
     name: "Music",
     icon: Music,
-    description: "Listening to music and exploring new genres"
+    description: "Listening to music and exploring new genres",
   },
   {
     name: "Traveling",
     icon: Plane,
-    description: "Exploring new cultures and destinations"
-  }
+    description: "Exploring new cultures and destinations",
+  },
 ]
 
 const skills = [
   {
     category: "Technical Skills",
     items: [
-      "Python", "R", "SQL", "Machine Learning", "Deep Learning",
-      "Computer Vision", "NLP", "Data Analysis", "Statistical Modeling"
-    ]
+      "Python",
+      "R",
+      "SQL",
+      "Machine Learning",
+      "Deep Learning",
+      "Computer Vision",
+      "NLP",
+      "Data Analysis",
+      "Statistical Modeling",
+    ],
   },
   {
     category: "Tools & Platforms",
-    items: [
-      "TensorFlow", "PyTorch", "Scikit-learn", "Pandas", "NumPy",
-      "Power BI", "Tableau", "Azure", "Git"
-    ]
+    items: ["TensorFlow", "PyTorch", "Scikit-learn", "Pandas", "NumPy", "Power BI", "Tableau", "Azure", "Git"],
   },
   {
     category: "AI Tools",
-    items: [
-      "Vercel", "Lovable", "Bolt", "Jules", "Cursor", "Windsurf",
-      "Wix Studio", "Relume", "Gemini Studio"
-    ]
+    items: ["Vercel", "Lovable", "Bolt", "Jules", "Cursor", "Windsurf", "Wix Studio", "Relume", "Gemini Studio"],
   },
   {
     category: "Soft Skills",
     items: [
-      "Problem Solving", "Team Leadership", "Project Management",
-      "Communication", "Critical Thinking", "Time Management"
-    ]
-  }
+      "Problem Solving",
+      "Team Leadership",
+      "Project Management",
+      "Communication",
+      "Critical Thinking",
+      "Time Management",
+    ],
+  },
 ]
 
 const participations = [
@@ -67,14 +71,14 @@ const participations = [
       {
         name: "AI/ML Hackathon 2023",
         description: "Developed an innovative solution for real-time emotion recognition",
-        icon: Trophy
+        icon: Trophy,
       },
       {
         name: "Data Science Challenge",
         description: "Created predictive models for business optimization",
-        icon: Award
-      }
-    ]
+        icon: Award,
+      },
+    ],
   },
   {
     title: "Certifications",
@@ -82,15 +86,15 @@ const participations = [
       {
         name: "AWS Machine Learning Specialty",
         description: "Advanced certification in cloud-based ML solutions",
-        icon: Medal
+        icon: Medal,
       },
       {
         name: "Google Data Analytics",
         description: "Professional certification in data analytics",
-        icon: Medal
-      }
-    ]
-  }
+        icon: Medal,
+      },
+    ],
+  },
 ]
 
 export default function SkillsParticipations() {
@@ -110,7 +114,7 @@ export default function SkillsParticipations() {
           >
             <div className="flex items-center space-x-4">
               <h2 className="text-2xl font-light">Skills</h2>
-              <div className="h-px bg-black flex-grow"/>
+              <div className="h-px bg-black flex-grow" />
             </div>
 
             <div className="space-y-8">
@@ -124,36 +128,33 @@ export default function SkillsParticipations() {
                   <h3 className="text-lg font-medium mb-4">{category.category}</h3>
                   <div className="flex flex-wrap gap-2">
                     {category.items.map((skill, skillIndex) => {
-                      const [isHovered, setIsHovered] = useState(false);
+                      const [isHovered, setIsHovered] = useState(false)
                       return (
                         <div key={skill} className="relative">
                           <motion.span
-                            className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-sm shiny-button"
+                            className="px-3 py-1.5 bg-white border border-gray-200 rounded-full text-sm relative overflow-hidden transition-all duration-300 hover:shadow-lg"
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                             transition={{ duration: 0.4, delay: index * 0.1 + skillIndex * 0.05 }}
                             whileHover={{ scale: 1.05 }}
                             onHoverStart={() => setIsHovered(true)}
                             onHoverEnd={() => setIsHovered(false)}
+                            style={{
+                              background: isHovered
+                                ? "linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%)"
+                                : "white",
+                            }}
                           >
                             {skill}
                           </motion.span>
-                          {isHovered && skill in logoMap && [
-                            ...Array(3).keys()
-                          ].map((i) => {
-                            const { x, y } = generateRandomPosition(100, 100);
-                            return (
-                              <FloatingLogo
-                                key={`${skill}-${i}`}
-                                x={x}
-                                y={y}
-                                delay={i * 0.2}
-                                skill={skill}
-                              />
-                            );
-                          })}
+                          {isHovered &&
+                            skill in logoMap &&
+                            [...Array(3).keys()].map((i) => {
+                              const { x, y } = generateRandomPosition(100, 100)
+                              return <FloatingLogo key={`${skill}-${i}`} x={x} y={y} delay={i * 0.2} skill={skill} />
+                            })}
                         </div>
-                      );
+                      )
                     })}
                   </div>
                 </motion.div>
@@ -170,7 +171,7 @@ export default function SkillsParticipations() {
           >
             <div className="flex items-center space-x-4">
               <h2 className="text-2xl font-light">Participations</h2>
-              <div className="h-px bg-black flex-grow"/>
+              <div className="h-px bg-black flex-grow" />
             </div>
 
             <div className="space-y-8">
@@ -207,7 +208,7 @@ export default function SkillsParticipations() {
               ))}
             </div>
           </motion.div>
-                  {/* Hobbies Section */}
+          {/* Hobbies Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -216,7 +217,7 @@ export default function SkillsParticipations() {
           >
             <div className="flex items-center space-x-4">
               <h2 className="text-2xl font-light">Hobbies</h2>
-              <div className="h-px bg-black flex-grow"/>
+              <div className="h-px bg-black flex-grow" />
             </div>
 
             <div className="space-y-4">
