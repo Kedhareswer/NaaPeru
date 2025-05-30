@@ -226,7 +226,7 @@ export default function ChatInterface() {
       const errorMessage = {
         role: "assistant" as const,
         content:
-          "Sorry, there was an error scheduling your appointment. Please try again or contact directly via email.",
+          "Sorry, there was an error scheduling your appointment. Please try again or contact directly via email. Thank You",
       }
       setMessages((prev) => [...prev, errorMessage])
     }
