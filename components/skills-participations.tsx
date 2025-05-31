@@ -35,7 +35,6 @@ const skills = [
     category: "Technical Skills",
     items: [
       "Python",
-      "R",
       "SQL",
       "Machine Learning",
       "Deep Learning",
@@ -47,7 +46,7 @@ const skills = [
   },
   {
     category: "Tools & Platforms",
-    items: ["TensorFlow", "PyTorch", "Scikit-learn", "Pandas", "NumPy", "Power BI", "Tableau", "Azure", "Git"],
+    items: ["Power BI", "Tableau", "Hugging Face", "Git"],
   },
   {
     category: "AI Tools",
