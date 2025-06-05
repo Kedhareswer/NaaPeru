@@ -76,6 +76,7 @@ interface LinkedInPost {
   category: string
 }
 
+// Fallback LinkedIn posts in case API fails
 const linkedInPosts: LinkedInPost[] = [
   {
     id: "1",
@@ -140,187 +141,346 @@ export default function LatestInsights() {
   const [error, setError] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<"all" | "github" | "linkedin">("all")
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date())
+  const [githubUsername, setGithubUsername] = useState<string>("Kedhareswer")
+  const [linkedinUsername, setLinkedinUsername] = useState<string>("kedhareswernaidu")
 
-  // Generate mock contributions data for the GitHub contribution graph
-  useEffect(() => {
-    const generateMockContributions = () => {
-      const today = new Date()
-      const oneYearAgo = new Date()
-      oneYearAgo.setFullYear(today.getFullYear() - 1)
+  // Fetch GitHub contribution data using GraphQL API
+  const fetchGitHubContributions = async () => {
+    try {
+      // GitHub GraphQL API endpoint
+      const endpoint = "https://api.github.com/graphql";
       
-      const mockData: GitHubContribution[] = []
-      let currentDate = new Date(oneYearAgo)
+      // GraphQL query to fetch contribution data
+      const query = `
+        query {
+          user(login: "${githubUsername}") {
+            contributionsCollection {
+              contributionCalendar {
+                totalContributions
+                weeks {
+                  contributionDays {
+                    contributionCount
+                    date
+                  }
+                }
+              }
+            }
+          }
+        }
+      `;
       
-      while (currentDate <= today) {
-        // Generate random contribution count and level
-        const count = Math.floor(Math.random() * 10)
-        let level: 0 | 1 | 2 | 3 | 4 = 0
-        
-        if (count === 0) level = 0
-        else if (count < 3) level = 1
-        else if (count < 5) level = 2
-        else if (count < 8) level = 3
-        else level = 4
-        
-        mockData.push({
-          date: currentDate.toISOString().split('T')[0],
-          count,
-          level
-        })
-        
-        // Move to next day
-        currentDate.setDate(currentDate.getDate() + 1)
+      // Make the API request
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // Note: In a production environment, you should use environment variables for tokens
+          // and implement proper authentication
+          "Authorization": `bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN || ""}`
+        },
+        body: JSON.stringify({ query })
+      });
+      
+      if (!response.ok) {
+        throw new Error(`GitHub API error: ${response.status}`);
       }
       
-      return mockData
+      const data = await response.json();
+      
+      if (data.errors) {
+        throw new Error(data.errors[0].message);
+      }
+      
+      // Process the contribution data
+      const calendarData = data.data.user.contributionsCollection.contributionCalendar;
+      const processedContributions: GitHubContribution[] = [];
+      
+      calendarData.weeks.forEach((week: { contributionDays: any[] }) => {
+        week.contributionDays.forEach(day => {
+          // Determine level based on contribution count
+          let level: 0 | 1 | 2 | 3 | 4 = 0;
+          const count = day.contributionCount;
+          
+          if (count === 0) level = 0;
+          else if (count < 3) level = 1;
+          else if (count < 5) level = 2;
+          else if (count < 8) level = 3;
+          else level = 4;
+          
+          processedContributions.push({
+            date: day.date,
+            count: count,
+            level: level
+          });
+        });
+      });
+      
+      setContributions(processedContributions);
+      return true;
+    } catch (err) {
+      console.error("Error fetching GitHub contributions:", err);
+      // If API fails, generate mock data as fallback
+      generateMockContributions();
+      return false;
+    }
+  };
+
+  // Generate mock contributions data as fallback
+  const generateMockContributions = () => {
+    const today = new Date()
+    const oneYearAgo = new Date()
+    oneYearAgo.setFullYear(today.getFullYear() - 1)
+    
+    const mockData: GitHubContribution[] = []
+    let currentDate = new Date(oneYearAgo)
+    
+    while (currentDate <= today) {
+      // Generate random contribution count and level
+      const count = Math.floor(Math.random() * 10)
+      let level: 0 | 1 | 2 | 3 | 4 = 0
+      
+      if (count === 0) level = 0
+      else if (count < 3) level = 1
+      else if (count < 5) level = 2
+      else if (count < 8) level = 3
+      else level = 4
+      
+      mockData.push({
+        date: currentDate.toISOString().split('T')[0],
+        count,
+        level
+      })
+      
+      // Move to next day
+      currentDate.setDate(currentDate.getDate() + 1)
     }
     
-    setContributions(generateMockContributions())
-  }, [])
+    setContributions(mockData)
+  }
+
+  // Fetch GitHub user data, repositories, and events
+  const fetchGitHubData = async () => {
+    try {
+      setLoading(true)
+
+      // Fetch user data
+      const userResponse = await fetch(`https://api.github.com/users/${githubUsername}`, {
+        headers: {
+          "Authorization": `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN || ""}`
+        }
+      })
+
+      if (!userResponse.ok) {
+        throw new Error(`GitHub API error: ${userResponse.status}`)
+      }
+
+      const userData = await userResponse.json()
+      setUserStats({
+        login: userData.login,
+        public_repos: userData.public_repos,
+        followers: userData.followers,
+        following: userData.following,
+        created_at: userData.created_at
+      })
+
+      // Fetch repositories
+      const reposResponse = await fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=3`, {
+        headers: {
+          "Authorization": `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN || ""}`
+        }
+      })
+
+      if (!reposResponse.ok) {
+        throw new Error(`GitHub API error: ${reposResponse.status}`)
+      }
+
+      const reposData = await reposResponse.json()
+      setRepos(reposData)
+
+      // Fetch events
+      const eventsResponse = await fetch(`https://api.github.com/users/${githubUsername}/events?per_page=5`, {
+        headers: {
+          "Authorization": `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN || ""}`
+        }
+      })
+
+      if (!eventsResponse.ok) {
+        throw new Error(`GitHub API error: ${eventsResponse.status}`)
+      }
+
+      const eventsData = await eventsResponse.json()
+      setEvents(eventsData)
+
+      // Fetch contributions
+      await fetchGitHubContributions()
+
+      setLastUpdated(new Date())
+      setLoading(false)
+      return true
+    } catch (err) {
+      console.error("Error fetching GitHub data:", err)
+      setError(err instanceof Error ? err.message : "Failed to fetch GitHub data")
+      setLoading(false)
+      
+      // Fallback to mock data if API fails
+      const mockUserData = {
+        login: githubUsername,
+        public_repos: 15,
+        followers: 42,
+        following: 38,
+        created_at: "2020-01-15T00:00:00Z"
+      }
+      setUserStats(mockUserData)
+
+      const mockReposData = [
+        {
+          id: 1,
+          name: "MLGeneFunction",
+          full_name: `${githubUsername}/MLGeneFunction`,
+          description: "Machine learning approach to predict gene functions",
+          html_url: `https://github.com/${githubUsername}/MLGeneFunction`,
+          stargazers_count: 25,
+          forks_count: 8,
+          language: "Python",
+          updated_at: "2023-05-15T00:00:00Z",
+          topics: ["machine-learning", "bioinformatics", "gene-prediction"],
+          watchers_count: 25
+        },
+        {
+          id: 2,
+          name: "endoscopy-enhancement",
+          full_name: `${githubUsername}/endoscopy-enhancement`,
+          description: "Image enhancement techniques for endoscopy images",
+          html_url: `https://github.com/${githubUsername}/endoscopy-enhancement`,
+          stargazers_count: 18,
+          forks_count: 5,
+          language: "Python",
+          updated_at: "2023-05-10T00:00:00Z",
+          topics: ["computer-vision", "medical-imaging", "image-processing"],
+          watchers_count: 18
+        },
+        {
+          id: 3,
+          name: "Digit_Classifier_DeepLearning",
+          full_name: `${githubUsername}/Digit_Classifier_DeepLearning`,
+          description: "Deep learning model for digit classification",
+          html_url: `https://github.com/${githubUsername}/Digit_Classifier_DeepLearning`,
+          stargazers_count: 12,
+          forks_count: 3,
+          language: "Python",
+          updated_at: "2023-05-05T00:00:00Z",
+          topics: ["deep-learning", "neural-networks", "digit-recognition"],
+          watchers_count: 12
+        }
+      ]
+      setRepos(mockReposData)
+
+      const mockEventsData = [
+        {
+          id: "e1",
+          type: "PushEvent",
+          repo: {
+            name: `${githubUsername}/MLGeneFunction`,
+            url: `https://github.com/${githubUsername}/MLGeneFunction`
+          },
+          payload: {
+            commits: [
+              { message: "Add new image processing algorithm" },
+              { message: "Fix bug in data preprocessing" }
+            ]
+          },
+          created_at: "2023-05-15T00:00:00Z"
+        },
+        {
+          id: "e2",
+          type: "PullRequestEvent",
+          repo: {
+            name: `${githubUsername}/endoscopy-enhancement`,
+            url: `https://github.com/${githubUsername}/endoscopy-enhancement`
+          },
+          payload: {
+            action: "opened",
+            pull_request: {
+              title: "Implement contrast enhancement feature"
+            }
+          },
+          created_at: "2023-05-10T00:00:00Z"
+        },
+        {
+          id: "e3",
+          type: "CreateEvent",
+          repo: {
+            name: `${githubUsername}/Digit_Classifier_DeepLearning`,
+            url: `https://github.com/${githubUsername}/Digit_Classifier_DeepLearning`
+          },
+          payload: {
+            ref_type: "branch",
+            ref: "feature/model-optimization"
+          },
+          created_at: "2023-05-05T00:00:00Z"
+        },
+        {
+          id: "e4",
+          type: "WatchEvent",
+          repo: {
+            name: "tensorflow/tensorflow",
+            url: "https://github.com/tensorflow/tensorflow"
+          },
+          payload: {},
+          created_at: "2023-05-01T00:00:00Z"
+        }
+      ]
+      setEvents(mockEventsData)
+      
+      return false
+    }
+  }
+
+  // Fetch LinkedIn data
+  // Note: LinkedIn's API has strict limitations and requires OAuth 2.0 authentication
+  // This is a simplified implementation that would need to be expanded in a real application
+  const fetchLinkedInData = async () => {
+    try {
+      // In a real implementation, you would use the LinkedIn API with proper authentication
+      // For example:
+      // const response = await fetch(`https://api.linkedin.com/v2/me/activities`, {
+      //   headers: {
+      //     'Authorization': `Bearer ${linkedInAccessToken}`
+      //   }
+      // });
+      
+      // Since direct API access requires OAuth and user authentication,
+      // we're using the fallback data for this implementation
+      // In a production environment, you would implement the full OAuth flow
+      
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      // Use the fallback data
+      setPosts(linkedInPosts)
+      return true
+    } catch (err) {
+      console.error("Error fetching LinkedIn data:", err)
+      // Use fallback data if API fails
+      setPosts(linkedInPosts)
+      return false
+    }
+  }
 
   useEffect(() => {
-    const fetchGitHubData = async () => {
-      try {
-        setLoading(true)
-
-        // In a real implementation, you would use the GitHub API
-        // For now, we'll simulate the API call with a timeout
-        setTimeout(() => {
-          // Fetch user stats (mock data for now)
-          const mockUserData = {
-            login: "Kedhareswer",
-            public_repos: 15,
-            followers: 42,
-            following: 38,
-            created_at: "2020-01-15T00:00:00Z"
-          }
-          setUserStats(mockUserData)
-
-          // Fetch repositories (mock data for now)
-          const mockReposData = [
-            {
-              id: 1,
-              name: "MLGeneFunction",
-              full_name: "Kedhareswer/MLGeneFunction",
-              description: "Machine learning approach to predict gene functions",
-              html_url: "https://github.com/Kedhareswer/MLGeneFunction",
-              stargazers_count: 25,
-              forks_count: 8,
-              language: "Python",
-              updated_at: "2023-05-15T00:00:00Z",
-              topics: ["machine-learning", "bioinformatics", "gene-prediction"],
-              watchers_count: 25
-            },
-            {
-              id: 2,
-              name: "endoscopy-enhancement",
-              full_name: "Kedhareswer/endoscopy-enhancement",
-              description: "Image enhancement techniques for endoscopy images",
-              html_url: "https://github.com/Kedhareswer/endoscopy-enhancement",
-              stargazers_count: 18,
-              forks_count: 5,
-              language: "Python",
-              updated_at: "2023-05-10T00:00:00Z",
-              topics: ["computer-vision", "medical-imaging", "image-processing"],
-              watchers_count: 18
-            },
-            {
-              id: 3,
-              name: "Digit_Classifier_DeepLearning",
-              full_name: "Kedhareswer/Digit_Classifier_DeepLearning",
-              description: "Deep learning model for digit classification",
-              html_url: "https://github.com/Kedhareswer/Digit_Classifier_DeepLearning",
-              stargazers_count: 12,
-              forks_count: 3,
-              language: "Python",
-              updated_at: "2023-05-05T00:00:00Z",
-              topics: ["deep-learning", "neural-networks", "digit-recognition"],
-              watchers_count: 12
-            }
-          ]
-          setRepos(mockReposData)
-
-          // Fetch recent activity (mock data for now)
-          const mockEventsData = [
-            {
-              id: "e1",
-              type: "PushEvent",
-              repo: {
-                name: "Kedhareswer/MLGeneFunction",
-                url: "https://github.com/Kedhareswer/MLGeneFunction"
-              },
-              payload: {
-                commits: [
-                  { message: "Add new image processing algorithm" },
-                  { message: "Fix bug in data preprocessing" }
-                ]
-              },
-              created_at: "2023-05-15T00:00:00Z"
-            },
-            {
-              id: "e2",
-              type: "PullRequestEvent",
-              repo: {
-                name: "Kedhareswer/endoscopy-enhancement",
-                url: "https://github.com/Kedhareswer/endoscopy-enhancement"
-              },
-              payload: {
-                action: "opened",
-                pull_request: {
-                  title: "Implement contrast enhancement feature"
-                }
-              },
-              created_at: "2023-05-10T00:00:00Z"
-            },
-            {
-              id: "e3",
-              type: "CreateEvent",
-              repo: {
-                name: "Kedhareswer/Digit_Classifier_DeepLearning",
-                url: "https://github.com/Kedhareswer/Digit_Classifier_DeepLearning"
-              },
-              payload: {
-                ref_type: "branch",
-                ref: "feature/model-optimization"
-              },
-              created_at: "2023-05-05T00:00:00Z"
-            },
-            {
-              id: "e4",
-              type: "WatchEvent",
-              repo: {
-                name: "tensorflow/tensorflow",
-                url: "https://github.com/tensorflow/tensorflow"
-              },
-              payload: {},
-              created_at: "2023-05-01T00:00:00Z"
-            }
-          ]
-          setEvents(mockEventsData)
-
-          setLastUpdated(new Date())
-          setLoading(false)
-        }, 1000)
-
-        // In a real implementation, you would use the GitHub API like this:
-        // const userResponse = await fetch("https://api.github.com/users/Kedhareswer")
-        // if (!userResponse.ok) throw new Error("Failed to fetch user data")
-        // const userData = await userResponse.json()
-        // setUserStats(userData)
-        // ... and so on for repos and events
-
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to fetch GitHub data")
-        setLoading(false)
-      }
+    const fetchAllData = async () => {
+      await Promise.all([
+        fetchGitHubData(),
+        fetchLinkedInData()
+      ])
     }
 
-    fetchGitHubData()
+    fetchAllData()
 
     // Set up auto-refresh every 5 minutes
-    const interval = setInterval(fetchGitHubData, 5 * 60 * 1000)
+    const interval = setInterval(fetchAllData, 5 * 60 * 1000)
     return () => clearInterval(interval)
-  }, [])
+  }, [githubUsername, linkedinUsername])
 
   const getEventIcon = (type: string) => {
     switch (type) {
@@ -582,7 +742,7 @@ export default function LatestInsights() {
             <p className="text-zinc-500 mb-4">{error}</p>
             <div className="flex justify-center gap-4">
               <a
-                href="https://github.com/Kedhareswer"
+                href={`https://github.com/${githubUsername}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center text-zinc-600 hover:text-zinc-900"
@@ -591,7 +751,7 @@ export default function LatestInsights() {
                 View on GitHub
               </a>
               <a
-                href="https://www.linkedin.com/in/kedhareswernaidu/"
+                href={`https://www.linkedin.com/in/${linkedinUsername}/`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center text-zinc-600 hover:text-zinc-900"
@@ -711,7 +871,7 @@ export default function LatestInsights() {
           transition={{ duration: 0.6, delay: 0.8 }}
         >
           <a
-            href="https://github.com/Kedhareswer"
+            href={`https://github.com/${githubUsername}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-zinc-200 rounded-xl text-zinc-700 hover:text-zinc-900 hover:border-zinc-300 transition-all duration-200"
@@ -721,7 +881,7 @@ export default function LatestInsights() {
             <ExternalLink className="w-3 h-3" />
           </a>
           <a
-            href="https://www.linkedin.com/in/kedhareswernaidu/"
+            href={`https://www.linkedin.com/in/${linkedinUsername}/`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-zinc-200 rounded-xl text-zinc-700 hover:text-zinc-900 hover:border-zinc-300 transition-all duration-200"
