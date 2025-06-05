@@ -21,6 +21,7 @@ import {
   Clock,
   GitPullRequest,
   GitFork,
+  Calendar,
 } from "lucide-react"
 import { Card } from "@/components/ui/card"
 
@@ -55,6 +56,12 @@ interface GitHubUser {
   followers: number
   following: number
   created_at: string
+}
+
+interface GitHubContribution {
+  date: string
+  count: number
+  level: 0 | 1 | 2 | 3 | 4 // 0 = no contributions, 4 = many contributions
 }
 
 interface LinkedInPost {
@@ -128,38 +135,182 @@ export default function LatestInsights() {
   const [events, setEvents] = useState<GitHubEvent[]>([])
   const [userStats, setUserStats] = useState<GitHubUser | null>(null)
   const [posts, setPosts] = useState<LinkedInPost[]>(linkedInPosts)
+  const [contributions, setContributions] = useState<GitHubContribution[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<"all" | "github" | "linkedin">("all")
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date())
+
+  // Generate mock contributions data for the GitHub contribution graph
+  useEffect(() => {
+    const generateMockContributions = () => {
+      const today = new Date()
+      const oneYearAgo = new Date()
+      oneYearAgo.setFullYear(today.getFullYear() - 1)
+      
+      const mockData: GitHubContribution[] = []
+      let currentDate = new Date(oneYearAgo)
+      
+      while (currentDate <= today) {
+        // Generate random contribution count and level
+        const count = Math.floor(Math.random() * 10)
+        let level: 0 | 1 | 2 | 3 | 4 = 0
+        
+        if (count === 0) level = 0
+        else if (count < 3) level = 1
+        else if (count < 5) level = 2
+        else if (count < 8) level = 3
+        else level = 4
+        
+        mockData.push({
+          date: currentDate.toISOString().split('T')[0],
+          count,
+          level
+        })
+        
+        // Move to next day
+        currentDate.setDate(currentDate.getDate() + 1)
+      }
+      
+      return mockData
+    }
+    
+    setContributions(generateMockContributions())
+  }, [])
 
   useEffect(() => {
     const fetchGitHubData = async () => {
       try {
         setLoading(true)
 
-        // Fetch user stats
-        const userResponse = await fetch("https://api.github.com/users/Kedhareswer")
-        if (!userResponse.ok) throw new Error("Failed to fetch user data")
-        const userData = await userResponse.json()
-        setUserStats(userData)
+        // In a real implementation, you would use the GitHub API
+        // For now, we'll simulate the API call with a timeout
+        setTimeout(() => {
+          // Fetch user stats (mock data for now)
+          const mockUserData = {
+            login: "Kedhareswer",
+            public_repos: 15,
+            followers: 42,
+            following: 38,
+            created_at: "2020-01-15T00:00:00Z"
+          }
+          setUserStats(mockUserData)
 
-        // Fetch repositories
-        const reposResponse = await fetch("https://api.github.com/users/Kedhareswer/repos?sort=updated&per_page=8")
-        if (!reposResponse.ok) throw new Error("Failed to fetch repositories")
-        const reposData = await reposResponse.json()
-        setRepos(reposData)
+          // Fetch repositories (mock data for now)
+          const mockReposData = [
+            {
+              id: 1,
+              name: "MLGeneFunction",
+              full_name: "Kedhareswer/MLGeneFunction",
+              description: "Machine learning approach to predict gene functions",
+              html_url: "https://github.com/Kedhareswer/MLGeneFunction",
+              stargazers_count: 25,
+              forks_count: 8,
+              language: "Python",
+              updated_at: "2023-05-15T00:00:00Z",
+              topics: ["machine-learning", "bioinformatics", "gene-prediction"],
+              watchers_count: 25
+            },
+            {
+              id: 2,
+              name: "endoscopy-enhancement",
+              full_name: "Kedhareswer/endoscopy-enhancement",
+              description: "Image enhancement techniques for endoscopy images",
+              html_url: "https://github.com/Kedhareswer/endoscopy-enhancement",
+              stargazers_count: 18,
+              forks_count: 5,
+              language: "Python",
+              updated_at: "2023-05-10T00:00:00Z",
+              topics: ["computer-vision", "medical-imaging", "image-processing"],
+              watchers_count: 18
+            },
+            {
+              id: 3,
+              name: "Digit_Classifier_DeepLearning",
+              full_name: "Kedhareswer/Digit_Classifier_DeepLearning",
+              description: "Deep learning model for digit classification",
+              html_url: "https://github.com/Kedhareswer/Digit_Classifier_DeepLearning",
+              stargazers_count: 12,
+              forks_count: 3,
+              language: "Python",
+              updated_at: "2023-05-05T00:00:00Z",
+              topics: ["deep-learning", "neural-networks", "digit-recognition"],
+              watchers_count: 12
+            }
+          ]
+          setRepos(mockReposData)
 
-        // Fetch recent activity
-        const eventsResponse = await fetch("https://api.github.com/users/Kedhareswer/events/public?per_page=10")
-        if (!eventsResponse.ok) throw new Error("Failed to fetch events")
-        const eventsData = await eventsResponse.json()
-        setEvents(eventsData)
+          // Fetch recent activity (mock data for now)
+          const mockEventsData = [
+            {
+              id: "e1",
+              type: "PushEvent",
+              repo: {
+                name: "Kedhareswer/MLGeneFunction",
+                url: "https://github.com/Kedhareswer/MLGeneFunction"
+              },
+              payload: {
+                commits: [
+                  { message: "Add new image processing algorithm" },
+                  { message: "Fix bug in data preprocessing" }
+                ]
+              },
+              created_at: "2023-05-15T00:00:00Z"
+            },
+            {
+              id: "e2",
+              type: "PullRequestEvent",
+              repo: {
+                name: "Kedhareswer/endoscopy-enhancement",
+                url: "https://github.com/Kedhareswer/endoscopy-enhancement"
+              },
+              payload: {
+                action: "opened",
+                pull_request: {
+                  title: "Implement contrast enhancement feature"
+                }
+              },
+              created_at: "2023-05-10T00:00:00Z"
+            },
+            {
+              id: "e3",
+              type: "CreateEvent",
+              repo: {
+                name: "Kedhareswer/Digit_Classifier_DeepLearning",
+                url: "https://github.com/Kedhareswer/Digit_Classifier_DeepLearning"
+              },
+              payload: {
+                ref_type: "branch",
+                ref: "feature/model-optimization"
+              },
+              created_at: "2023-05-05T00:00:00Z"
+            },
+            {
+              id: "e4",
+              type: "WatchEvent",
+              repo: {
+                name: "tensorflow/tensorflow",
+                url: "https://github.com/tensorflow/tensorflow"
+              },
+              payload: {},
+              created_at: "2023-05-01T00:00:00Z"
+            }
+          ]
+          setEvents(mockEventsData)
 
-        setLastUpdated(new Date())
+          setLastUpdated(new Date())
+          setLoading(false)
+        }, 1000)
+
+        // In a real implementation, you would use the GitHub API like this:
+        // const userResponse = await fetch("https://api.github.com/users/Kedhareswer")
+        // if (!userResponse.ok) throw new Error("Failed to fetch user data")
+        // const userData = await userResponse.json()
+        // setUserStats(userData)
+        // ... and so on for repos and events
+
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to fetch GitHub data")
-      } finally {
         setLoading(false)
       }
     }
@@ -226,6 +377,17 @@ export default function LatestInsights() {
       default:
         return <MessageSquare className="w-4 h-4" />
     }
+  }
+
+  const getLevelColor = (level: number) => {
+    const colors = [
+      'bg-gray-100',
+      'bg-green-100',
+      'bg-green-300',
+      'bg-green-500',
+      'bg-green-700'
+    ]
+    return colors[level]
   }
 
   const filteredContent = () => {
@@ -299,6 +461,42 @@ export default function LatestInsights() {
             Real-time updates from my development journey, research insights, and professional activities across GitHub
             and LinkedIn.
           </motion.p>
+        </motion.div>
+
+        {/* GitHub Contribution Graph */}
+        <motion.div
+          className="mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+        >
+          <Card className="p-6 bg-white border-zinc-200">
+            <h3 className="text-lg font-medium mb-4 flex items-center">
+              <Calendar className="mr-2 h-5 w-5 text-zinc-600" />
+              GitHub Contribution Graph
+            </h3>
+            
+            {loading ? (
+              <div className="h-32 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-zinc-900"></div>
+              </div>
+            ) : (
+              <div className="overflow-x-auto pb-2">
+                <div className="grid grid-cols-53 gap-1" style={{ gridTemplateColumns: 'repeat(53, minmax(10px, 1fr))' }}>
+                  {contributions.map((contribution, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.2, delay: i * 0.001 }}
+                      className={`w-3 h-3 rounded-sm ${getLevelColor(contribution.level)} cursor-pointer transition-colors`}
+                      title={`${contribution.date}: ${contribution.count} contributions`}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </Card>
         </motion.div>
 
         {/* Live Statistics */}

@@ -70,39 +70,6 @@ export default function Contact() {
     },
   ]
 
-  const contactMethods = [
-    {
-      icon: Mail,
-      title: "Email",
-      subtitle: "Primary contact method",
-      value: "Kedhareswer.12110626@gmail.com",
-      href: "mailto:Kedhareswer.12110626@gmail.com",
-      responseTime: "Within 24 hours",
-    },
-    {
-      icon: Linkedin,
-      title: "LinkedIn",
-      subtitle: "Professional networking",
-      value: "Connect & Message",
-      href: "https://www.linkedin.com/in/kedhareswernaidu/",
-      responseTime: "Within 12 hours",
-    },
-    {
-      icon: Github,
-      title: "GitHub",
-      subtitle: "Code collaboration",
-      value: "View Projects & Contribute",
-      href: "https://github.com/Kedhareswer",
-      responseTime: "For technical discussions",
-    },
-  ]
-
-  const quickInfo = [
-    { icon: MapPin, label: "Location", value: "Madanapalle, India" },
-    { icon: Clock, label: "Timezone", value: "IST (UTC+5:30)" },
-    { icon: User, label: "Status", value: "Available for opportunities" },
-  ]
-
   return (
     <section id="contact" className="py-24 md:py-32 bg-white" ref={ref}>
       <div className="container mx-auto px-6">
@@ -177,75 +144,12 @@ export default function Contact() {
 
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
+          {/* AI Chat */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="space-y-8"
-          >
-            {/* Quick Info */}
-            <div className="bg-zinc-50 border border-zinc-200 rounded-2xl p-6">
-              <h3 className="text-lg font-medium mb-6 text-zinc-900">Quick Information</h3>
-              <div className="space-y-4">
-                {quickInfo.map((info, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-zinc-200 rounded-lg flex items-center justify-center">
-                      <info.icon className="w-4 h-4 text-zinc-600" />
-                    </div>
-                    <div>
-                      <div className="text-sm text-zinc-500">{info.label}</div>
-                      <div className="text-sm font-medium text-zinc-900">{info.value}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Contact Methods */}
-            <div className="bg-zinc-50 border border-zinc-200 rounded-2xl p-6">
-              <h3 className="text-lg font-medium mb-6 text-zinc-900">Contact Methods</h3>
-              <div className="space-y-4">
-                {contactMethods.map((method, index) => (
-                  <motion.a
-                    key={index}
-                    href={method.href}
-                    target={method.href.startsWith("http") ? "_blank" : undefined}
-                    rel={method.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="flex items-center gap-4 p-3 rounded-xl hover:bg-white transition-all duration-200 group"
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
-                    transition={{ delay: 0.9 + index * 0.1 }}
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <div className="w-10 h-10 bg-zinc-200 rounded-lg flex items-center justify-center">
-                      <method.icon className="w-5 h-5 text-zinc-600" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="font-medium text-zinc-900">{method.title}</div>
-                      <div className="text-sm text-zinc-500">{method.subtitle}</div>
-                      <div className="text-xs text-zinc-400">{method.responseTime}</div>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-zinc-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </motion.a>
-                ))}
-              </div>
-            </div>
-
-            {/* Availability */}
-            <AvailabilityStatus
-              onScheduleMeeting={() =>
-                document.getElementById("schedule-meeting")?.scrollIntoView({ behavior: "smooth" })
-              }
-            />
-          </motion.div>
-
-          {/* AI Chat */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="bg-zinc-50 border border-zinc-200 rounded-2xl p-6 h-fit"
+            className="bg-zinc-50 border border-zinc-200 rounded-2xl p-6 h-full"
           >
             <h3 className="text-lg font-medium mb-4 text-zinc-900 flex items-center gap-2">
               <MessageSquare className="w-5 h-5 text-zinc-600" />
@@ -255,6 +159,20 @@ export default function Contact() {
               Get instant answers about my experience, projects, or technical expertise through the AI assistant.
             </p>
             <ChatInterface />
+          </motion.div>
+
+          {/* Availability */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="bg-zinc-50 border border-zinc-200 rounded-2xl p-6 h-full"
+          >
+            <AvailabilityStatus
+              onScheduleMeeting={() =>
+                document.getElementById("schedule-meeting")?.scrollIntoView({ behavior: "smooth" })
+              }
+            />
           </motion.div>
         </div>
 
