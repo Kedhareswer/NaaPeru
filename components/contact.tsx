@@ -26,44 +26,8 @@ import { useIsMobile } from "@/hooks/use-mobile"
 
 export default function Contact() {
   const ref = useRef(null)
-  const formRef = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.2 })
-  const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
   const isMobile = useIsMobile()
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormState((prev) => ({ ...prev, [name]: value }))
-  }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSubmitted(true)
-
-      // Reset form after showing success message
-      setTimeout(() => {
-        setIsSubmitted(false)
-        setFormState({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        })
-      }, 3000)
-    }, 1500)
-  }
 
   const staggerChildren = {
     hidden: { opacity: 0 },
@@ -212,141 +176,12 @@ export default function Contact() {
         </motion.div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            className="lg:col-span-2"
-          >
-            <motion.div
-              variants={staggerChildren}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              className="bg-zinc-50 border border-zinc-200 rounded-2xl p-8"
-            >
-              <motion.h3 variants={childVariants} className="text-2xl font-light mb-8 text-zinc-900">
-                Send a Message
-              </motion.h3>
-
-              <motion.form ref={formRef} onSubmit={handleSubmit} className="space-y-6" variants={childVariants}>
-                <AnimatePresence mode="wait">
-                  {isSubmitted ? (
-                    <motion.div
-                      className="bg-white border border-zinc-200 rounded-xl p-8 text-center"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                    >
-                      <motion.div
-                        className="w-16 h-16 bg-zinc-900 text-white rounded-full mx-auto flex items-center justify-center mb-4"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                      >
-                        <CheckCircle className="w-8 h-8" />
-                      </motion.div>
-                      <h4 className="text-xl font-medium mb-2 text-zinc-900">Message Sent Successfully</h4>
-                      <p className="text-zinc-600">Thank you for reaching out. I'll respond within 24 hours.</p>
-                    </motion.div>
-                  ) : (
-                    <motion.div className="space-y-6" initial={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <motion.div variants={childVariants}>
-                          <label htmlFor="name" className="block text-sm font-medium text-zinc-700 mb-2">
-                            Name
-                          </label>
-                          <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            value={formState.name}
-                            onChange={handleInputChange}
-                            required
-                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all duration-200 bg-white"
-                            placeholder="Your full name"
-                          />
-                        </motion.div>
-                        <motion.div variants={childVariants}>
-                          <label htmlFor="email" className="block text-sm font-medium text-zinc-700 mb-2">
-                            Email
-                          </label>
-                          <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formState.email}
-                            onChange={handleInputChange}
-                            required
-                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all duration-200 bg-white"
-                            placeholder="your.email@example.com"
-                          />
-                        </motion.div>
-                      </div>
-                      <motion.div variants={childVariants}>
-                        <label htmlFor="subject" className="block text-sm font-medium text-zinc-700 mb-2">
-                          Subject
-                        </label>
-                        <input
-                          type="text"
-                          id="subject"
-                          name="subject"
-                          value={formState.subject}
-                          onChange={handleInputChange}
-                          required
-                          className="w-full px-4 py-3 rounded-xl border border-zinc-300 focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all duration-200 bg-white"
-                          placeholder="What would you like to discuss?"
-                        />
-                      </motion.div>
-                      <motion.div variants={childVariants}>
-                        <label htmlFor="message" className="block text-sm font-medium text-zinc-700 mb-2">
-                          Message
-                        </label>
-                        <textarea
-                          id="message"
-                          name="message"
-                          value={formState.message}
-                          onChange={handleInputChange}
-                          required
-                          rows={6}
-                          className="w-full px-4 py-3 rounded-xl border border-zinc-300 focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all duration-200 bg-white resize-none"
-                          placeholder="Tell me about your project, goals, or how we can collaborate..."
-                        />
-                      </motion.div>
-                      <motion.div variants={childVariants}>
-                        <motion.button
-                          type="submit"
-                          disabled={isSubmitting}
-                          className="w-full bg-zinc-900 text-white py-4 px-6 rounded-xl hover:bg-zinc-800 transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed font-medium"
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          {isSubmitting ? (
-                            <>
-                              <Loader2 className="w-5 h-5 animate-spin" />
-                              <span>Sending...</span>
-                            </>
-                          ) : (
-                            <>
-                              <span>Send Message</span>
-                              <Send className="w-5 h-5" />
-                            </>
-                          )}
-                        </motion.button>
-                      </motion.div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.form>
-            </motion.div>
-          </motion.div>
-
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
             className="space-y-8"
           >
             {/* Quick Info */}
@@ -404,26 +239,13 @@ export default function Contact() {
               }
             />
           </motion.div>
-        </div>
-
-        {/* Bottom Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-20">
-          {/* Schedule Meeting */}
-          <motion.div
-            id="schedule-meeting"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, delay: 1.0 }}
-          >
-            <ScheduleMeeting />
-          </motion.div>
 
           {/* AI Chat */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, delay: 1.1 }}
-            className="bg-zinc-50 border border-zinc-200 rounded-2xl p-6"
+            initial={{ opacity: 0, x: 20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="bg-zinc-50 border border-zinc-200 rounded-2xl p-6 h-fit"
           >
             <h3 className="text-lg font-medium mb-4 text-zinc-900 flex items-center gap-2">
               <MessageSquare className="w-5 h-5 text-zinc-600" />
@@ -435,6 +257,17 @@ export default function Contact() {
             <ChatInterface />
           </motion.div>
         </div>
+
+        {/* Schedule Meeting */}
+        <motion.div
+          id="schedule-meeting"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 1.0 }}
+          className="mt-20"
+        >
+          <ScheduleMeeting />
+        </motion.div>
       </div>
     </section>
   )

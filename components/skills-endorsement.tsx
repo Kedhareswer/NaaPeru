@@ -36,7 +36,7 @@ const initialSkills: Skill[] = [
 
 export default function SkillsEndorsement() {
   const [skills, setSkills] = useState<Skill[]>(initialSkills)
-  const [filter, setFilter] = useState<string>('all')
+  const [filter, setFilter] = useState<string>('Soft Skills')
   const [sort, setSort] = useState<'endorsements' | 'rating'>('endorsements')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['Technical Skills', 'Tools & Platforms', 'Soft Skills'])
@@ -146,13 +146,6 @@ export default function SkillsEndorsement() {
       )}
       
       <div className="mb-6 flex flex-wrap gap-3">
-        <Button 
-          variant={filter === 'all' ? 'default' : 'outline'} 
-          size="sm"
-          onClick={() => setFilter('all')}
-        >
-          All Skills
-        </Button>
         {categories.map(category => (
           <Button 
             key={category}
