@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Calendar, Clock, Video, MessageSquare, Users, Check, X } from 'lucide-react'
-import { Card } from '@/components/ui/card'
+// Remove Card import to fix build error
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
@@ -113,7 +113,7 @@ export default function AvailabilityStatus({ onScheduleMeeting }: AvailabilityPr
   const availableSlots = selectedDayData?.slots.filter(slot => slot.available).length || 0
   
   return (
-    <Card className="overflow-hidden border border-gray-200 rounded-xl shadow-sm">
+    <div className="overflow-hidden border border-gray-200 rounded-xl shadow-sm bg-white">
       <div className="p-4 bg-white">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-medium">Real-time Availability</h3>
@@ -195,7 +195,7 @@ export default function AvailabilityStatus({ onScheduleMeeting }: AvailabilityPr
                     </div>
                   </TabsContent>
                 ))}
-              </Tabs>
+              </Tabs>)}
             </DialogContent>
           </Dialog>
         </div>
@@ -273,6 +273,6 @@ export default function AvailabilityStatus({ onScheduleMeeting }: AvailabilityPr
           </div>
         </div>
       </div>
-    </Card>
+    </div>
   )
 }

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Star, ThumbsUp, Award, Users, TrendingUp, ChevronDown, ChevronUp, Loader2 } from 'lucide-react'
-import { Card } from '@/components/ui/card'
+// Remove Card import to fix build error
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { useEndorsement } from '@/hooks/use-endorsement'
@@ -277,8 +277,8 @@ function SkillCard({ skill, onEndorse, endorsedSkills, endorsingSkillId }: Skill
   const [isHovered, setIsHovered] = useState(false)
   
   return (
-    <Card 
-      className="p-4 transition-all duration-200 hover:shadow-md"
+    <div 
+      className="p-4 transition-all duration-200 hover:shadow-md border rounded-lg bg-white"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -321,6 +321,6 @@ function SkillCard({ skill, onEndorse, endorsedSkills, endorsingSkillId }: Skill
           )}
         </Button>
       </motion.div>
-    </Card>
+    </div>
   )
 }
