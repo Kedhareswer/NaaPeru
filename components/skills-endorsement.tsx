@@ -2,49 +2,43 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Star, ThumbsUp, Award, Users, TrendingUp, ChevronDown, ChevronUp } from 'lucide-react'
+import { Star, ThumbsUp, Award, Users, TrendingUp, ChevronDown, ChevronUp, Loader2 } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
+import { useEndorsement } from '@/hooks/use-endorsement'
 
 interface Skill {
+  id: string
   name: string
   category: string
   endorsements: number
   rating: number
-  endorsed: boolean
+  endorsed?: boolean
 }
 
-const initialSkills: Skill[] = [
-  { name: 'Python', category: 'Technical Skills', endorsements: 42, rating: 4.8, endorsed: false },
-  { name: 'Machine Learning', category: 'Technical Skills', endorsements: 38, rating: 4.7, endorsed: false },
-  { name: 'Deep Learning', category: 'Technical Skills', endorsements: 35, rating: 4.6, endorsed: false },
-  { name: 'Computer Vision', category: 'Technical Skills', endorsements: 31, rating: 4.5, endorsed: false },
-  { name: 'NLP', category: 'Technical Skills', endorsements: 29, rating: 4.4, endorsed: false },
-  { name: 'Data Analysis', category: 'Technical Skills', endorsements: 36, rating: 4.6, endorsed: false },
-  { name: 'Statistical Modeling', category: 'Technical Skills', endorsements: 27, rating: 4.3, endorsed: false },
-  { name: 'SQL', category: 'Technical Skills', endorsements: 33, rating: 4.5, endorsed: false },
-  { name: 'Power BI', category: 'Tools & Platforms', endorsements: 25, rating: 4.2, endorsed: false },
-  { name: 'Tableau', category: 'Tools & Platforms', endorsements: 24, rating: 4.1, endorsed: false },
-  { name: 'Hugging Face', category: 'Tools & Platforms', endorsements: 22, rating: 4.0, endorsed: false },
-  { name: 'Git', category: 'Tools & Platforms', endorsements: 30, rating: 4.4, endorsed: false },
-  { name: 'Problem Solving', category: 'Soft Skills', endorsements: 40, rating: 4.8, endorsed: false },
-  { name: 'Team Leadership', category: 'Soft Skills', endorsements: 32, rating: 4.5, endorsed: false },
-  { name: 'Project Management', category: 'Soft Skills', endorsements: 28, rating: 4.3, endorsed: false },
-  { name: 'Communication', category: 'Soft Skills', endorsements: 34, rating: 4.6, endorsed: false },
-]
-
 export default function SkillsEndorsement() {
-  const [skills, setSkills] = useState<Skill[]>(initialSkills)
-  const [filter, setFilter] = useState<string>('Soft Skills')
+  const {
+    skills, 
+    categories: apiCategories, 
+    isLoading, 
+    error, 
+    userEmail, 
+    endorsedSkills,
+    loadSkills, 
+    endorseSkill, 
+    setEmail
+  } = useEndorsement()
+  
+  const [filter, setFilter] = useState<string>('all')
   const [sort, setSort] = useState<'endorsements' | 'rating'>('endorsements')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
-  const [expandedCategories, setExpandedCategories] = useState<string[]>(['Technical Skills', 'Tools & Platforms', 'Soft Skills'])
-  const [userEmail, setUserEmail] = useState('')
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([])
   const [showEmailInput, setShowEmailInput] = useState(false)
   const [endorsementSuccess, setEndorsementSuccess] = useState<string | null>(null)
+  const [endorsingSkill, setEndorsingSkill] = useState<string | null>(null)
 
-  const categories = Array.from(new Set(skills.map(skill => skill.category)))
+  const categories = apiCategories.length > 0 ? apiCategories : []
 
   const filteredSkills = skills.filter(skill => {
     if (filter === 'all') return true
@@ -66,31 +60,38 @@ export default function SkillsEndorsement() {
     }
   }
 
-  const handleEndorse = (skillName: string) => {
+  const handleEndorse = async (skill: Skill) => {
     if (!userEmail.trim()) {
       setShowEmailInput(true)
       return
     }
     
-    // In a real implementation, this would call an API to record the endorsement
-    setSkills(skills.map(skill => {
-      if (skill.name === skillName && !skill.endorsed) {
-        return {
-          ...skill,
-          endorsements: skill.endorsements + 1,
-          endorsed: true
-        }
-      }
-      return skill
-    }))
+    // Track which skill we're currently endorsing for UI feedback
+    setEndorsingSkill(skill.id)
     
-    setEndorsementSuccess(skillName)
-    setTimeout(() => setEndorsementSuccess(null), 3000)
+    try {
+      // Call API to record the endorsement
+      const result = await endorseSkill(skill.id)
+      
+      if (result.success) {
+        // Show success message
+        setEndorsementSuccess(skill.name)
+        setTimeout(() => setEndorsementSuccess(null), 3000)
+      } else {
+        // Handle error
+        console.error('Endorsement failed:', result.message)
+      }
+    } catch (err) {
+      console.error('Endorsement error:', err)
+    } finally {
+      setEndorsingSkill(null)
+    }
   }
 
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (userEmail.trim()) {
+      setEmail(userEmail.trim())
       setShowEmailInput(false)
     }
   }
@@ -111,6 +112,27 @@ export default function SkillsEndorsement() {
         Skills Endorsement
       </h3>
       
+      {isLoading && skills.length === 0 && (
+        <div className="flex items-center justify-center py-10">
+          <Loader2 className="h-6 w-6 animate-spin text-blue-600 mr-2" />
+          <span>Loading skills...</span>
+        </div>
+      )}
+      
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg mb-6">
+          <p>Error: {error}</p>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="mt-2" 
+            onClick={() => loadSkills()}
+          >
+            Retry
+          </Button>
+        </div>
+      )}
+      
       {showEmailInput ? (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -124,7 +146,7 @@ export default function SkillsEndorsement() {
               placeholder="Your email address"
               className="flex-1 p-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={userEmail}
-              onChange={(e) => setUserEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
             <Button type="submit" size="sm">Continue</Button>
@@ -217,7 +239,9 @@ export default function SkillsEndorsement() {
                       <SkillCard 
                         key={skill.name} 
                         skill={skill} 
-                        onEndorse={handleEndorse} 
+                        onEndorse={handleEndorse}
+                        endorsedSkills={endorsedSkills}
+                        endorsingSkillId={endorsingSkill}
                       />
                     ))}
                 </div>
@@ -230,7 +254,9 @@ export default function SkillsEndorsement() {
               <SkillCard 
                 key={skill.name} 
                 skill={skill} 
-                onEndorse={handleEndorse} 
+                onEndorse={handleEndorse}
+                endorsedSkills={endorsedSkills}
+                endorsingSkillId={endorsingSkill}
               />
             ))}
           </div>
@@ -242,10 +268,12 @@ export default function SkillsEndorsement() {
 
 interface SkillCardProps {
   skill: Skill
-  onEndorse: (skillName: string) => void
+  onEndorse: (skill: Skill) => void
+  endorsedSkills: Set<string>
+  endorsingSkillId: string | null
 }
 
-function SkillCard({ skill, onEndorse }: SkillCardProps) {
+function SkillCard({ skill, onEndorse, endorsedSkills, endorsingSkillId }: SkillCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   
   return (
@@ -273,17 +301,17 @@ function SkillCard({ skill, onEndorse }: SkillCardProps) {
       <motion.div 
         className="flex justify-end"
         initial={{ opacity: 0 }}
-        animate={{ opacity: isHovered || skill.endorsed ? 1 : 0 }}
+        animate={{ opacity: isHovered || endorsedSkills?.has(skill.id) ? 1 : 0 }}
         transition={{ duration: 0.2 }}
       >
         <Button 
           variant={skill.endorsed ? "secondary" : "outline"}
           size="sm"
-          className={`text-xs ${skill.endorsed ? 'bg-green-100 text-green-800 hover:bg-green-100' : ''}`}
-          onClick={() => !skill.endorsed && onEndorse(skill.name)}
-          disabled={skill.endorsed}
+          className={`text-xs ${endorsedSkills?.has(skill.id) ? 'bg-green-100 text-green-800 hover:bg-green-100' : ''}`}
+          onClick={() => !endorsedSkills?.has(skill.id) && onEndorse(skill)}
+          disabled={endorsedSkills?.has(skill.id) || endorsingSkillId === skill.id}
         >
-          {skill.endorsed ? (
+          {endorsedSkills?.has(skill.id) ? (
             <>
               <ThumbsUp className="h-3 w-3 mr-1" />
               Endorsed

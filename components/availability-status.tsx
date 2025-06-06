@@ -7,111 +7,29 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-
-interface TimeSlot {
-  day: string
-  date: string
-  slots: {
-    time: string
-    available: boolean
-  }[]
-}
+import { useCalendar } from '@/hooks/use-calendar'
+import { format } from 'date-fns'
 
 interface AvailabilityProps {
   onScheduleMeeting?: () => void
 }
 
-const availabilityData: TimeSlot[] = [
-  {
-    day: 'Monday',
-    date: '2023-11-20',
-    slots: [
-      { time: '09:00 AM', available: true },
-      { time: '10:00 AM', available: false },
-      { time: '11:00 AM', available: true },
-      { time: '01:00 PM', available: true },
-      { time: '02:00 PM', available: false },
-      { time: '03:00 PM', available: true },
-      { time: '04:00 PM', available: false },
-    ]
-  },
-  {
-    day: 'Tuesday',
-    date: '2023-11-21',
-    slots: [
-      { time: '09:00 AM', available: false },
-      { time: '10:00 AM', available: true },
-      { time: '11:00 AM', available: true },
-      { time: '01:00 PM', available: false },
-      { time: '02:00 PM', available: true },
-      { time: '03:00 PM', available: false },
-      { time: '04:00 PM', available: true },
-    ]
-  },
-  {
-    day: 'Wednesday',
-    date: '2023-11-22',
-    slots: [
-      { time: '09:00 AM', available: true },
-      { time: '10:00 AM', available: true },
-      { time: '11:00 AM', available: false },
-      { time: '01:00 PM', available: false },
-      { time: '02:00 PM', available: true },
-      { time: '03:00 PM', available: true },
-      { time: '04:00 PM', available: false },
-    ]
-  },
-  {
-    day: 'Thursday',
-    date: '2023-11-23',
-    slots: [
-      { time: '09:00 AM', available: false },
-      { time: '10:00 AM', available: false },
-      { time: '11:00 AM', available: true },
-      { time: '01:00 PM', available: true },
-      { time: '02:00 PM', available: false },
-      { time: '03:00 PM', available: true },
-      { time: '04:00 PM', available: true },
-    ]
-  },
-  {
-    day: 'Friday',
-    date: '2023-11-24',
-    slots: [
-      { time: '09:00 AM', available: true },
-      { time: '10:00 AM', available: false },
-      { time: '11:00 AM', available: false },
-      { time: '01:00 PM', available: true },
-      { time: '02:00 PM', available: true },
-      { time: '03:00 PM', available: false },
-      { time: '04:00 PM', available: true },
-    ]
-  },
-]
+interface CalendarDay {
+  day: string
+  date: string
+  slots: {
+    id: string
+    time: string
+    available: boolean
+  }[]
+}
 
 export default function AvailabilityStatus({ onScheduleMeeting }: AvailabilityProps) {
-  const [currentStatus, setCurrentStatus] = useState<'available' | 'busy' | 'away'>('available')
-  const [selectedDay, setSelectedDay] = useState<string>(availabilityData[0].day)
+  const { status, timeSlots, availableDays, fetchTimeSlotsForDate, isLoading, error } = useCalendar()
   const [openDialog, setOpenDialog] = useState(false)
   const [currentTime, setCurrentTime] = useState('')
-  
-  // Simulate real-time status changes
-  useEffect(() => {
-    const statusOptions: Array<'available' | 'busy' | 'away'> = ['available', 'busy', 'away']
-    const interval = setInterval(() => {
-      // In a real implementation, this would fetch the current status from an API
-      const randomIndex = Math.floor(Math.random() * 10)
-      if (randomIndex < 7) { // 70% chance to be available
-        setCurrentStatus('available')
-      } else if (randomIndex < 9) { // 20% chance to be busy
-        setCurrentStatus('busy')
-      } else { // 10% chance to be away
-        setCurrentStatus('away')
-      }
-    }, 30000) // Update every 30 seconds
-    
-    return () => clearInterval(interval)
-  }, [])
+  const [calendarData, setCalendarData] = useState<CalendarDay[]>([])
+  const [selectedDay, setSelectedDay] = useState<string>('')
   
   // Update current time
   useEffect(() => {
@@ -130,8 +48,43 @@ export default function AvailabilityStatus({ onScheduleMeeting }: AvailabilityPr
     return () => clearInterval(interval)
   }, [])
   
+  // Transform time slots into calendar days when available days are loaded
+  useEffect(() => {
+    const fetchTimeSlots = async () => {
+      if (availableDays.length > 0) {
+        const days: CalendarDay[] = [];
+        
+        for (const dateStr of availableDays) {
+          const date = new Date(dateStr);
+          const dayOfWeek = format(date, 'EEEE'); // Monday, Tuesday, etc.
+          
+          const daySlots = await fetchTimeSlotsForDate(dateStr);
+          
+          days.push({
+            day: dayOfWeek,
+            date: dateStr,
+            slots: daySlots.map((slot: {id: string, time: string, available: boolean}) => ({
+              id: slot.id,
+              time: slot.time,
+              available: slot.available
+            }))
+          });
+        }
+        
+        setCalendarData(days);
+        
+        // Select the first day by default
+        if (days.length > 0 && !selectedDay) {
+          setSelectedDay(days[0].day);
+        }
+      }
+    };
+    
+    fetchTimeSlots();
+  }, [availableDays]);
+  
   const getStatusColor = () => {
-    switch (currentStatus) {
+    switch (status) {
       case 'available':
         return 'bg-green-500'
       case 'busy':
@@ -144,7 +97,7 @@ export default function AvailabilityStatus({ onScheduleMeeting }: AvailabilityPr
   }
   
   const getStatusText = () => {
-    switch (currentStatus) {
+    switch (status) {
       case 'available':
         return 'Available for meetings'
       case 'busy':
@@ -156,8 +109,8 @@ export default function AvailabilityStatus({ onScheduleMeeting }: AvailabilityPr
     }
   }
   
-  const selectedDayData = availabilityData.find(day => day.day === selectedDay) || availabilityData[0]
-  const availableSlots = selectedDayData.slots.filter(slot => slot.available).length
+  const selectedDayData = calendarData.find(day => day.day === selectedDay) || calendarData[0]
+  const availableSlots = selectedDayData?.slots.filter(slot => slot.available).length || 0
   
   return (
     <Card className="overflow-hidden border border-gray-200 rounded-xl shadow-sm">
@@ -185,20 +138,29 @@ export default function AvailabilityStatus({ onScheduleMeeting }: AvailabilityPr
               <DialogHeader>
                 <DialogTitle>Weekly Availability</DialogTitle>
               </DialogHeader>
-              <Tabs defaultValue={availabilityData[0].day} className="w-full">
-                <TabsList className="grid grid-cols-5 mb-4">
-                  {availabilityData.map((day) => (
-                    <TabsTrigger 
-                      key={day.day} 
-                      value={day.day}
-                      onClick={() => setSelectedDay(day.day)}
-                    >
-                      {day.day.substring(0, 3)}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-                
-                {availabilityData.map((day) => (
+              {isLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-700"></div>
+                </div>
+              ) : error ? (
+                <div className="text-center py-8 text-red-500">{error}</div>
+              ) : calendarData.length === 0 ? (
+                <div className="text-center py-8">No availability found.</div>
+              ) : (
+                <Tabs defaultValue={calendarData[0]?.day || ''} className="w-full">
+                  <TabsList className="grid grid-cols-5 mb-4">
+                    {calendarData.map((day) => (
+                      <TabsTrigger 
+                        key={day.day} 
+                        value={day.day}
+                        onClick={() => setSelectedDay(day.day)}
+                      >
+                        {day.day.substring(0, 3)}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                  
+                  {calendarData.map((day) => (
                   <TabsContent key={day.day} value={day.day} className="space-y-4">
                     <div className="flex items-center mb-2">
                       <Calendar className="h-4 w-4 mr-2" />
@@ -242,17 +204,21 @@ export default function AvailabilityStatus({ onScheduleMeeting }: AvailabilityPr
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <Calendar className="h-4 w-4 mr-2" />
-              <span className="text-sm font-medium">{selectedDay}</span>
+              <span className="text-sm font-medium">{selectedDay || 'Loading...'}</span>
             </div>
             <div className="text-sm text-gray-500">
-              {availableSlots} slots available
+              {isLoading ? 'Loading...' : `${availableSlots} slots available`}
             </div>
           </div>
           
           <div className="grid grid-cols-4 gap-2">
-            {selectedDayData.slots.slice(0, 4).map((slot, index) => (
+            {isLoading ? (
+              Array(4).fill(0).map((_, index) => (
+                <div key={index} className="p-2 text-center rounded-md text-xs bg-gray-100 animate-pulse h-6"></div>
+              ))
+            ) : selectedDayData?.slots.slice(0, 4).map((slot: {id: string, time: string, available: boolean}, index) => (
               <motion.div 
-                key={index}
+                key={slot.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}

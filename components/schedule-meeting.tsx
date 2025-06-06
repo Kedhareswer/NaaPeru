@@ -1,32 +1,31 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Calendar as CalendarIcon, Clock, MapPin, User, Mail, MessageSquare, Check, X } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { format } from 'date-fns'
+import { format, addDays, isAfter, isBefore, startOfDay } from 'date-fns'
+import { useCalendar } from '@/hooks/use-calendar'
 
 interface TimeSlot {
   id: string
   time: string
   available: boolean
+  date?: string
 }
 
-const timeSlots: TimeSlot[] = [
-  { id: '1', time: '09:00 AM', available: true },
-  { id: '2', time: '10:00 AM', available: true },
-  { id: '3', time: '11:00 AM', available: false },
-  { id: '4', time: '12:00 PM', available: true },
-  { id: '5', time: '01:00 PM', available: true },
-  { id: '6', time: '02:00 PM', available: false },
-  { id: '7', time: '03:00 PM', available: true },
-  { id: '8', time: '04:00 PM', available: true },
-  { id: '9', time: '05:00 PM', available: false }
-]
+// Interface for API meeting type
+interface ApiMeetingType {
+  id: string
+  name: string
+  duration: string
+  icon: string
+}
 
+// Interface for component meeting type with React.ElementType for icon
 interface MeetingType {
   id: string
   name: string
@@ -41,17 +40,52 @@ const meetingTypes: MeetingType[] = [
 ]
 
 export default function ScheduleMeeting() {
+  const { availableDays, timeSlots, fetchTimeSlotsForDate, meetingTypes, bookAppointment, isLoading, error } = useCalendar()
+  // Convert API meeting types to component format with proper React icons
+  const formattedMeetingTypes: MeetingType[] = meetingTypes.map(type => {
+    // Map string icon names to React components
+    let IconComponent: React.ElementType = MessageSquare;
+    if (type.icon === 'User') IconComponent = User;
+    if (type.icon === 'MessageSquare') IconComponent = MessageSquare;
+    
+    return {
+      id: type.id,
+      name: type.name,
+      duration: type.duration,
+      icon: IconComponent
+    };
+  })
   const [date, setDate] = useState<Date | undefined>(undefined)
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(null)
   const [selectedMeetingType, setSelectedMeetingType] = useState<MeetingType | null>(null)
+  const [availableTimeSlots, setAvailableTimeSlots] = useState<TimeSlot[]>([])
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [topic, setTopic] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
   const [step, setStep] = useState(1)
+  
+  // Set min/max date constraints for date picker
+  const minDate = startOfDay(new Date())
+  const maxDate = addDays(minDate, 30) // Allow booking up to 30 days ahead
 
+  // Fetch available time slots when date changes
+  useEffect(() => {
+    const loadTimeSlots = async () => {
+      if (date) {
+        const dateString = format(date, 'yyyy-MM-dd')
+        const slots = await fetchTimeSlotsForDate(dateString)
+        setAvailableTimeSlots(slots.filter((slot: {id: string, time: string, available: boolean}) => slot.available))
+        setSelectedTimeSlot(null) // Reset selection when date changes
+      }
+    }
+    
+    loadTimeSlots()
+  }, [date, fetchTimeSlotsForDate])
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
@@ -62,15 +96,22 @@ export default function ScheduleMeeting() {
     setIsSubmitting(true)
     
     try {
-      // In a real implementation, this would call an API to schedule the meeting
-      // For demo purposes, we're simulating an API call
-      await new Promise(resolve => setTimeout(resolve, 1500))
+      await bookAppointment({
+        date: format(date, 'yyyy-MM-dd'),
+        timeSlot: selectedTimeSlot.id,
+        name,
+        email,
+        meetingType: selectedMeetingType.id,
+        topic
+      })
+
       
       setIsSuccess(true)
       setIsError(false)
     } catch (error) {
       setIsSuccess(false)
       setIsError(true)
+      setErrorMessage(error instanceof Error ? error.message : 'Failed to book appointment')
     } finally {
       setIsSubmitting(false)
     }
@@ -148,7 +189,7 @@ export default function ScheduleMeeting() {
           </div>
           <h4 className="text-xl font-medium text-gray-900 mb-2">Something went wrong</h4>
           <p className="text-gray-600 mb-6">
-            We couldn't schedule your meeting. Please try again or contact directly via email.
+            {errorMessage || "We couldn't schedule your meeting. Please try again or contact directly via email."}
           </p>
           <Button onClick={resetForm}>Try Again</Button>
         </motion.div>
@@ -203,14 +244,12 @@ export default function ScheduleMeeting() {
                           mode="single"
                           selected={date}
                           onSelect={setDate}
-                          initialFocus
                           disabled={(date) => {
-                            // Disable past dates and weekends
-                            const today = new Date()
-                            today.setHours(0, 0, 0, 0)
-                            const day = date.getDay()
-                            return date < today || day === 0 || day === 6
+                            return isAfter(new Date(date), maxDate) || 
+                            isBefore(new Date(date), minDate) ||
+                            !availableDays.includes(format(new Date(date), 'yyyy-MM-dd'))
                           }}
+                          className="rounded-md border"
                         />
                       </PopoverContent>
                     </Popover>
@@ -218,20 +257,31 @@ export default function ScheduleMeeting() {
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Select Time</label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {timeSlots.map((slot) => (
-                        <Button
-                          key={slot.id}
-                          type="button"
-                          variant={selectedTimeSlot?.id === slot.id ? 'default' : 'outline'}
-                          className={`${!slot.available ? 'opacity-50 cursor-not-allowed' : ''}`}
-                          disabled={!slot.available}
-                          onClick={() => setSelectedTimeSlot(slot)}
-                        >
-                          {slot.time}
-                        </Button>
-                      ))}
-                    </div>
+                    {isLoading ? (
+                      <div className="flex items-center justify-center py-6">
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-700"></div>
+                      </div>
+                    ) : availableTimeSlots.length === 0 ? (
+                      <div className="text-center py-4 text-gray-500">
+                        {date ? 'No available times for selected date' : 'Select a date to view available times'}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-2 gap-2 mt-1">
+                        {availableTimeSlots.map((slot) => (
+                          <Button
+                            key={slot.id}
+                            type="button"
+                            variant="outline"
+                            onClick={() => setSelectedTimeSlot(slot)}
+                            disabled={!slot.available}
+                            className={`justify-start h-auto py-2 px-3 ${selectedTimeSlot?.id === slot.id ? 'border-blue-500 bg-blue-50' : ''}`}
+                          >
+                            <Clock className="mr-2 h-4 w-4 shrink-0" />
+                            <span className="truncate">{slot.time}</span>
+                          </Button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
                 
@@ -257,26 +307,38 @@ export default function ScheduleMeeting() {
               >
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Meeting Type</label>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {meetingTypes.map((type) => {
-                      const Icon = type.icon
-                      return (
-                        <Card 
-                          key={type.id}
-                          className={`p-4 cursor-pointer transition-all ${selectedMeetingType?.id === type.id ? 'ring-2 ring-blue-500 shadow-md' : 'hover:shadow-md'}`}
-                          onClick={() => setSelectedMeetingType(type)}
-                        >
-                          <div className="flex flex-col items-center text-center">
-                            <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-3">
-                              <Icon className="h-6 w-6 text-blue-600" />
+                  {isLoading ? (
+                    <div className="flex items-center justify-center py-6">
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-700"></div>
+                    </div>
+                  ) : meetingTypes.length === 0 ? (
+                    <div className="text-center py-4 text-gray-500">No meeting types available</div>
+                  ) : (
+                    <div className="space-y-2">
+                      {formattedMeetingTypes.map((type) => {
+                        // Use the icon component directly
+                        const Icon = type.icon
+                        
+                        return (
+                          <Card 
+                            key={type.id}
+                            className={`p-3 cursor-pointer ${selectedMeetingType?.id === type.id ? 'border-blue-500 bg-blue-50' : ''}`}
+                            onClick={() => setSelectedMeetingType(type)}
+                          >
+                            <div className="flex items-center">
+                              <div className="shrink-0 h-9 w-9 bg-gray-100 rounded-full flex items-center justify-center mr-3">
+                                <Icon className="h-5 w-5 text-gray-600" />
+                              </div>
+                              <div>
+                                <h4 className="text-sm font-medium">{type.name}</h4>
+                                <p className="text-xs text-gray-500">{type.duration}</p>
+                              </div>
                             </div>
-                            <h4 className="font-medium">{type.name}</h4>
-                            <p className="text-sm text-gray-500">{type.duration}</p>
-                          </div>
-                        </Card>
-                      )
-                    })}
-                  </div>
+                          </Card>
+                        )
+                      })}
+                    </div>
+                  )}
                 </div>
                 
                 <div className="mt-6 flex justify-between">
