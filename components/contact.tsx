@@ -71,17 +71,17 @@ export default function Contact() {
   ]
 
   return (
-    <section id="contact" className="py-24 md:py-32 bg-white" ref={ref}>
-      <div className="container mx-auto px-6">
+    <section id="contact" className="py-16 sm:py-20 md:py-24 lg:py-32 bg-white" ref={ref}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-16 lg:mb-20"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
         >
           <motion.h2
-            className="text-4xl md:text-5xl font-light mb-6 text-black"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-4 sm:mb-6 text-black leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -90,14 +90,14 @@ export default function Contact() {
           </motion.h2>
 
           <motion.div
-            className="w-16 h-px bg-black mx-auto mb-8"
+            className="w-12 sm:w-16 h-px bg-black mx-auto mb-6 sm:mb-8"
             initial={{ width: 0 }}
-            animate={isInView ? { width: 64 } : { width: 0 }}
+            animate={isInView ? { width: isMobile ? 48 : 64 } : { width: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           />
 
           <motion.p
-            className="text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed"
+            className="text-base sm:text-lg lg:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed px-4 sm:px-0"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -109,30 +109,32 @@ export default function Contact() {
 
         {/* Collaboration Types */}
         <motion.div
-          className="mb-20"
+          className="mb-12 sm:mb-16 lg:mb-20"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {collaborationTypes.map((type, index) => (
               <motion.div
                 key={index}
-                className="bg-white border border-gray-200 rounded-2xl p-8 text-center hover:border-black transition-all duration-300 group"
+                className="bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 text-center hover:border-black transition-all duration-300 group min-h-[280px] sm:min-h-[320px] flex flex-col justify-between"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                 whileHover={{ y: -5 }}
               >
-                <div className="w-12 h-12 bg-black text-white rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <type.icon className="w-6 h-6" />
+                <div>
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-black text-white rounded-xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <type.icon className="w-6 h-6 sm:w-7 sm:h-7" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-medium mb-3 text-black">{type.title}</h3>
+                  <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed">{type.description}</p>
                 </div>
-                <h3 className="text-xl font-medium mb-3 text-black">{type.title}</h3>
-                <p className="text-gray-600 mb-6">{type.description}</p>
                 <ul className="space-y-2">
                   {type.features.map((feature, idx) => (
-                    <li key={idx} className="text-sm text-gray-500 flex items-center justify-center">
-                      <div className="w-1 h-1 bg-gray-400 rounded-full mr-2" />
+                    <li key={idx} className="text-xs sm:text-sm text-gray-500 flex items-center justify-center">
+                      <div className="w-1 h-1 bg-gray-400 rounded-full mr-2 flex-shrink-0" />
                       {feature}
                     </li>
                   ))}
@@ -144,28 +146,28 @@ export default function Contact() {
 
         {/* Contact Information Cards */}
         <motion.div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16 lg:mb-20"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.7 }}
         >
           {/* Direct Contact */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-8">
-            <h3 className="text-xl font-medium mb-6 text-black flex items-center gap-3">
-              <Mail className="w-5 h-5" />
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 sm:p-8">
+            <h3 className="text-lg sm:text-xl font-medium mb-6 text-black flex items-center gap-3">
+              <Mail className="w-5 h-5 flex-shrink-0" />
               Direct Contact
             </h3>
 
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <Mail className="w-5 h-5 text-gray-600" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="font-medium text-black mb-1">Email</p>
                   <a
                     href="mailto:Kedhareswer.12110626@gmail.com"
-                    className="text-gray-600 hover:text-black transition-colors"
+                    className="text-gray-600 hover:text-black transition-colors break-all sm:break-normal text-sm sm:text-base"
                   >
                     Kedhareswer.12110626@gmail.com
                   </a>
@@ -173,44 +175,44 @@ export default function Contact() {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <MapPin className="w-5 h-5 text-gray-600" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="font-medium text-black mb-1">Location</p>
-                  <p className="text-gray-600">Madanapalle, Andhra Pradesh, India</p>
+                  <p className="text-gray-600 text-sm sm:text-base">Madanapalle, Andhra Pradesh, India</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <Clock className="w-5 h-5 text-gray-600" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="font-medium text-black mb-1">Response Time</p>
-                  <p className="text-gray-600">Usually within 24 hours</p>
+                  <p className="text-gray-600 text-sm sm:text-base">Usually within 24 hours</p>
                 </div>
               </div>
             </div>
 
             <div className="mt-8 pt-6 border-t border-gray-100">
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <a
                   href="https://www.linkedin.com/in/kedhareswernaidu/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 sm:py-4 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors font-medium text-sm sm:text-base min-h-[48px]"
                 >
-                  <Linkedin className="w-4 h-4" />
+                  <Linkedin className="w-4 h-4 flex-shrink-0" />
                   LinkedIn
                 </a>
                 <a
                   href="https://github.com/Kedhareswer"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 border border-gray-200 rounded-lg hover:border-black hover:bg-gray-50 transition-colors"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 sm:py-4 border border-gray-200 rounded-lg hover:border-black hover:bg-gray-50 transition-colors font-medium text-sm sm:text-base min-h-[48px]"
                 >
-                  <Github className="w-4 h-4" />
+                  <Github className="w-4 h-4 flex-shrink-0" />
                   GitHub
                 </a>
               </div>
@@ -218,34 +220,36 @@ export default function Contact() {
           </div>
 
           {/* AI Assistant */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-8">
-            <h3 className="text-xl font-medium mb-6 text-black flex items-center gap-3">
-              <MessageSquare className="w-5 h-5" />
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 sm:p-8">
+            <h3 className="text-lg sm:text-xl font-medium mb-6 text-black flex items-center gap-3">
+              <MessageSquare className="w-5 h-5 flex-shrink-0" />
               AI Assistant
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 mb-6 text-sm sm:text-base leading-relaxed">
               Get instant answers about my experience, projects, or technical expertise through the AI assistant.
             </p>
 
             <div className="bg-gray-50 rounded-lg p-4 mb-6">
-              <p className="text-sm text-gray-600 mb-3">Try asking:</p>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-center gap-2">
-                  <div className="w-1 h-1 bg-gray-400 rounded-full" />
-                  "Tell me about your machine learning projects"
+              <p className="text-sm text-gray-600 mb-3 font-medium">Try asking:</p>
+              <ul className="space-y-2 text-xs sm:text-sm">
+                <li className="flex items-start gap-2">
+                  <div className="w-1 h-1 bg-gray-400 rounded-full mt-2 flex-shrink-0" />
+                  <span className="leading-relaxed">"Tell me about your machine learning projects"</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <div className="w-1 h-1 bg-gray-400 rounded-full" />
-                  "What are your technical skills?"
+                <li className="flex items-start gap-2">
+                  <div className="w-1 h-1 bg-gray-400 rounded-full mt-2 flex-shrink-0" />
+                  <span className="leading-relaxed">"What are your technical skills?"</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <div className="w-1 h-1 bg-gray-400 rounded-full" />
-                  "Schedule an appointment"
+                <li className="flex items-start gap-2">
+                  <div className="w-1 h-1 bg-gray-400 rounded-full mt-2 flex-shrink-0" />
+                  <span className="leading-relaxed">"Schedule an appointment"</span>
                 </li>
               </ul>
             </div>
 
-            <ChatInterface />
+            <div className="h-[300px] sm:h-[350px]">
+              <ChatInterface />
+            </div>
           </div>
         </motion.div>
 
@@ -255,56 +259,56 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 1.0 }}
-          className="bg-white border border-gray-200 rounded-2xl p-8"
+          className="bg-white border border-gray-200 rounded-2xl p-6 sm:p-8"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             {/* Meeting Info */}
             <div>
-              <h3 className="text-xl font-medium mb-6 text-black flex items-center gap-3">
-                <Calendar className="w-5 h-5" />
+              <h3 className="text-lg sm:text-xl font-medium mb-6 text-black flex items-center gap-3">
+                <Calendar className="w-5 h-5 flex-shrink-0" />
                 Schedule a Meeting
               </h3>
 
               <div className="space-y-6">
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
                   Ready to discuss your project or explore collaboration opportunities? Schedule a meeting that fits
                   your needs.
                 </p>
 
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
                       <MessageSquare className="w-4 h-4 text-gray-600" />
                     </div>
-                    <div>
-                      <p className="font-medium text-black">Quick Chat</p>
-                      <p className="text-sm text-gray-600">15 minutes • General discussion</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium text-black text-sm sm:text-base">Quick Chat</p>
+                      <p className="text-xs sm:text-sm text-gray-600">15 minutes • General discussion</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
                       <Briefcase className="w-4 h-4 text-gray-600" />
                     </div>
-                    <div>
-                      <p className="font-medium text-black">Project Consultation</p>
-                      <p className="text-sm text-gray-600">30 minutes • Technical discussion</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium text-black text-sm sm:text-base">Project Consultation</p>
+                      <p className="text-xs sm:text-sm text-gray-600">30 minutes • Technical discussion</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
                       <User className="w-4 h-4 text-gray-600" />
                     </div>
-                    <div>
-                      <p className="font-medium text-black">Interview Discussion</p>
-                      <p className="text-sm text-gray-600">45 minutes • Career opportunities</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium text-black text-sm sm:text-base">Interview Discussion</p>
+                      <p className="text-xs sm:text-sm text-gray-600">45 minutes • Career opportunities</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="pt-4 border-t border-gray-100">
-                  <p className="text-sm text-gray-500">
+                  <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
                     All meetings are conducted via Google Meet or Zoom. You'll receive a calendar invitation with the
                     meeting link.
                   </p>
@@ -313,7 +317,7 @@ export default function Contact() {
             </div>
 
             {/* Availability Status */}
-            <div>
+            <div className="order-first lg:order-last">
               <AvailabilityStatus
                 onScheduleMeeting={() =>
                   document.getElementById("schedule-meeting")?.scrollIntoView({ behavior: "smooth" })
@@ -323,28 +327,28 @@ export default function Contact() {
           </div>
 
           {/* Schedule Meeting Component */}
-          <div className="mt-8 pt-8 border-t border-gray-100">
+          <div className="mt-8 pt-6 sm:pt-8 border-t border-gray-100">
             <ScheduleMeeting />
           </div>
         </motion.div>
 
         {/* Call to Action */}
         <motion.div
-          className="text-center mt-16"
+          className="text-center mt-12 sm:mt-16"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 1.2 }}
         >
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-6 text-sm sm:text-base leading-relaxed px-4 sm:px-0">
             Prefer a different way to connect? I'm always open to new opportunities and collaborations.
           </p>
           <a
             href="mailto:Kedhareswer.12110626@gmail.com"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors font-medium"
+            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors font-medium text-sm sm:text-base min-h-[48px]"
           >
-            <Send className="w-4 h-4" />
+            <Send className="w-4 h-4 flex-shrink-0" />
             Send Direct Email
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 flex-shrink-0" />
           </a>
         </motion.div>
       </div>
