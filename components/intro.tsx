@@ -26,7 +26,7 @@ export default function Intro() {
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95])
 
-  const words = ["Data Scientist", "ML Engineer", "AI Specialist", "Problem Solver"]
+  const words = ["Data Scientist", "ML Engineer", "AI Specialist", "Problem Solver", "Vibe Coder"]
 
   useEffect(() => {
     const interval = setInterval(() => {
