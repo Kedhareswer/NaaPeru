@@ -2,7 +2,7 @@
 
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { Mail, Phone, MapPin, Github, Linkedin, MessageSquare } from "lucide-react"
+import { Mail, Phone, MapPin, Github, Linkedin, MessageSquare, BarChart2 } from "lucide-react"
 import ChatInterface from "./chat-interface"
 import { useIsMobile } from "@/hooks/use-mobile"
 
@@ -107,10 +107,10 @@ export default function Contact() {
                     <div>
                       <p className="font-medium text-black mb-1">Phone</p>
                       <a
-                        href="tel:+919876543210"
+                        href="tel:+919398911432"
                         className="text-gray-600 hover:text-black transition-colors text-sm sm:text-base"
                       >
-                        +91 98765 43210
+                        +91 9398911432
                       </a>
                     </div>
                   </div>
@@ -148,6 +148,15 @@ export default function Contact() {
                   >
                     <Github className="w-4 h-4" />
                     <span className="sr-only">GitHub Profile</span>
+                  </a>
+                  <a
+                    href="https://www.kaggle.com/kedhareswernaidu"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
+                  >
+                    <BarChart2 className="w-4 h-4" />
+                    <span className="sr-only">Kaggle Profile</span>
                   </a>
                 </div>
               </div>

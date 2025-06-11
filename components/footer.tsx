@@ -1,6 +1,6 @@
 "use client"
 
-import { Github, Linkedin, Mail, MapPin } from "lucide-react"
+import { Github, Linkedin, Mail, MapPin, BarChart2 } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 
@@ -96,6 +96,15 @@ export default function Footer() {
               >
                 <Linkedin className="w-5 h-5" />
                 LinkedIn
+              </a>
+              <a
+                href="https://www.kaggle.com/kedhareswernaidu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors duration-200 font-light"
+              >
+                <BarChart2 className="w-5 h-5" />
+                Kaggle
               </a>
             </div>
           </motion.div>
