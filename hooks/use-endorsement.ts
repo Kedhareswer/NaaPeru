@@ -37,7 +37,7 @@ export function useEndorsement() {
       const data = await response.json();
       
       // Extract unique categories
-      const uniqueCategories = Array.from(
+      const uniqueCategories: string[] = Array.from(
         new Set(data.skills.map((skill: Skill) => skill.category))
       );
       

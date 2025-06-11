@@ -17,11 +17,8 @@ import {
   Zap,
   ArrowRight,
   MapPin,
-  Calendar,
 } from "lucide-react"
 import ChatInterface from "./chat-interface"
-import ScheduleMeeting from "./schedule-meeting"
-import AvailabilityStatus from "./availability-status"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 export default function Contact() {
@@ -240,10 +237,7 @@ export default function Contact() {
                   <div className="w-1 h-1 bg-gray-400 rounded-full mt-2 flex-shrink-0" />
                   <span className="leading-relaxed">"What are your technical skills?"</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1 h-1 bg-gray-400 rounded-full mt-2 flex-shrink-0" />
-                  <span className="leading-relaxed">"Schedule an appointment"</span>
-                </li>
+
               </ul>
             </div>
 
@@ -253,84 +247,7 @@ export default function Contact() {
           </div>
         </motion.div>
 
-        {/* Schedule Meeting Section */}
-        <motion.div
-          id="schedule-meeting"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 1.0 }}
-          className="bg-white border border-gray-200 rounded-2xl p-6 sm:p-8"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-            {/* Meeting Info */}
-            <div>
-              <h3 className="text-lg sm:text-xl font-medium mb-6 text-black flex items-center gap-3">
-                <Calendar className="w-5 h-5 flex-shrink-0" />
-                Schedule a Meeting
-              </h3>
 
-              <div className="space-y-6">
-                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-                  Ready to discuss your project or explore collaboration opportunities? Schedule a meeting that fits
-                  your needs.
-                </p>
-
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <MessageSquare className="w-4 h-4 text-gray-600" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="font-medium text-black text-sm sm:text-base">Quick Chat</p>
-                      <p className="text-xs sm:text-sm text-gray-600">15 minutes • General discussion</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Briefcase className="w-4 h-4 text-gray-600" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="font-medium text-black text-sm sm:text-base">Project Consultation</p>
-                      <p className="text-xs sm:text-sm text-gray-600">30 minutes • Technical discussion</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <User className="w-4 h-4 text-gray-600" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="font-medium text-black text-sm sm:text-base">Interview Discussion</p>
-                      <p className="text-xs sm:text-sm text-gray-600">45 minutes • Career opportunities</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-gray-100">
-                  <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
-                    All meetings are conducted via Google Meet or Zoom. You'll receive a calendar invitation with the
-                    meeting link.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Availability Status */}
-            <div className="order-first lg:order-last">
-              <AvailabilityStatus
-                onScheduleMeeting={() =>
-                  document.getElementById("schedule-meeting")?.scrollIntoView({ behavior: "smooth" })
-                }
-              />
-            </div>
-          </div>
-
-          {/* Schedule Meeting Component */}
-          <div className="mt-8 pt-6 sm:pt-8 border-t border-gray-100">
-            <ScheduleMeeting />
-          </div>
-        </motion.div>
 
         {/* Call to Action */}
         <motion.div
