@@ -144,42 +144,11 @@ export default function LatestInsights() {
   const [githubUsername, setGithubUsername] = useState<string>("Kedhareswer")
   const [linkedinUsername, setLinkedinUsername] = useState<string>("kedhareswernaidu")
 
-  // Fetch GitHub contribution data using GraphQL API
+  // Fetch GitHub contribution data using our secure API endpoint
   const fetchGitHubContributions = async () => {
     try {
-      // GitHub GraphQL API endpoint
-      const endpoint = "https://api.github.com/graphql";
-      
-      // GraphQL query to fetch contribution data
-      const query = `
-        query {
-          user(login: "${githubUsername}") {
-            contributionsCollection {
-              contributionCalendar {
-                totalContributions
-                weeks {
-                  contributionDays {
-                    contributionCount
-                    date
-                  }
-                }
-              }
-            }
-          }
-        }
-      `;
-      
-      // Make the API request
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // Note: In a production environment, you should use environment variables for tokens
-          // and implement proper authentication
-          "Authorization": `bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN || ""}`
-        },
-        body: JSON.stringify({ query })
-      });
+      // Use our secure server-side endpoint
+      const response = await fetch('/api/github/activity');
       
       if (!response.ok) {
         throw new Error(`GitHub API error: ${response.status}`);
@@ -187,35 +156,18 @@ export default function LatestInsights() {
       
       const data = await response.json();
       
-      if (data.errors) {
-        throw new Error(data.errors[0].message);
+      if (data.error) {
+        throw new Error(data.error);
       }
       
-      // Process the contribution data
-      const calendarData = data.data.user.contributionsCollection.contributionCalendar;
-      const processedContributions: GitHubContribution[] = [];
+      // Use the contributions data from the API response
+      if (data.contributions) {
+        setContributions(data.contributions);
+      } else {
+        // Fall back to mock data if the format is unexpected
+        throw new Error('Unexpected response format');
+      }
       
-      calendarData.weeks.forEach((week: { contributionDays: any[] }) => {
-        week.contributionDays.forEach(day => {
-          // Determine level based on contribution count
-          let level: 0 | 1 | 2 | 3 | 4 = 0;
-          const count = day.contributionCount;
-          
-          if (count === 0) level = 0;
-          else if (count < 3) level = 1;
-          else if (count < 5) level = 2;
-          else if (count < 8) level = 3;
-          else level = 4;
-          
-          processedContributions.push({
-            date: day.date,
-            count: count,
-            level: level
-          });
-        });
-      });
-      
-      setContributions(processedContributions);
       return true;
     } catch (err) {
       console.error("Error fetching GitHub contributions:", err);
@@ -258,212 +210,127 @@ export default function LatestInsights() {
     setContributions(mockData)
   }
 
-  // Fetch GitHub user data, repositories, and events
+  // Fetch GitHub user data, repositories, and events using our secure API endpoint
   const fetchGitHubData = async () => {
     try {
       setLoading(true)
 
-      // Fetch user data
-      const userResponse = await fetch(`https://api.github.com/users/${githubUsername}`, {
-        headers: {
-          "Authorization": `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN || ""}`
-        }
-      })
-
-      if (!userResponse.ok) {
-        throw new Error(`GitHub API error: ${userResponse.status}`)
-      }
-
-      const userData = await userResponse.json()
-      setUserStats({
-        login: userData.login,
-        public_repos: userData.public_repos,
-        followers: userData.followers,
-        following: userData.following,
-        created_at: userData.created_at
-      })
-
-      // Fetch repositories
-      const reposResponse = await fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=3`, {
-        headers: {
-          "Authorization": `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN || ""}`
-        }
-      })
-
-      if (!reposResponse.ok) {
-        throw new Error(`GitHub API error: ${reposResponse.status}`)
-      }
-
-      const reposData = await reposResponse.json()
-      setRepos(reposData)
-
-      // Fetch events
-      const eventsResponse = await fetch(`https://api.github.com/users/${githubUsername}/events?per_page=5`, {
-        headers: {
-          "Authorization": `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN || ""}`
-        }
-      })
-
-      if (!eventsResponse.ok) {
-        throw new Error(`GitHub API error: ${eventsResponse.status}`)
-      }
-
-      const eventsData = await eventsResponse.json()
-      setEvents(eventsData)
-
-      // Fetch contributions
-      await fetchGitHubContributions()
-
-      setLastUpdated(new Date())
-      setLoading(false)
-      return true
-    } catch (err) {
-      console.error("Error fetching GitHub data:", err)
-      setError(err instanceof Error ? err.message : "Failed to fetch GitHub data")
-      setLoading(false)
+      // Use our secure server-side endpoint
+      const response = await fetch('/api/github/activity');
       
-      // Fallback to mock data if API fails
-      const mockUserData = {
-        login: githubUsername,
-        public_repos: 15,
-        followers: 42,
-        following: 38,
-        created_at: "2020-01-15T00:00:00Z"
+      if (!response.ok) {
+        throw new Error(`GitHub API error: ${response.status}`);
       }
-      setUserStats(mockUserData)
+      
+      const data = await response.json();
+      
+      if (data.error) {
+        throw new Error(data.error);
+      }
 
-      const mockReposData = [
-        {
-          id: 1,
-          name: "MLGeneFunction",
-          full_name: `${githubUsername}/MLGeneFunction`,
-          description: "Machine learning approach to predict gene functions",
-          html_url: `https://github.com/${githubUsername}/MLGeneFunction`,
-          stargazers_count: 25,
-          forks_count: 8,
-          language: "Python",
-          updated_at: "2023-05-15T00:00:00Z",
-          topics: ["machine-learning", "bioinformatics", "gene-prediction"],
-          watchers_count: 25
-        },
-        {
-          id: 2,
-          name: "endoscopy-enhancement",
-          full_name: `${githubUsername}/endoscopy-enhancement`,
-          description: "Image enhancement techniques for endoscopy images",
-          html_url: `https://github.com/${githubUsername}/endoscopy-enhancement`,
-          stargazers_count: 18,
-          forks_count: 5,
-          language: "Python",
-          updated_at: "2023-05-10T00:00:00Z",
-          topics: ["computer-vision", "medical-imaging", "image-processing"],
-          watchers_count: 18
-        },
-        {
-          id: 3,
-          name: "Digit_Classifier_DeepLearning",
-          full_name: `${githubUsername}/Digit_Classifier_DeepLearning`,
-          description: "Deep learning model for digit classification",
-          html_url: `https://github.com/${githubUsername}/Digit_Classifier_DeepLearning`,
-          stargazers_count: 12,
-          forks_count: 3,
-          language: "Python",
-          updated_at: "2023-05-05T00:00:00Z",
-          topics: ["deep-learning", "neural-networks", "digit-recognition"],
-          watchers_count: 12
-        }
-      ]
-      setRepos(mockReposData)
+      // Update user stats if available
+      if (data.user) {
+        setUserStats({
+          login: data.user.login || githubUsername,
+          public_repos: data.user.public_repos || 0,
+          followers: data.user.followers || 0,
+          following: data.user.following || 0,
+          created_at: data.user.created_at || new Date().toISOString()
+        });
+      }
 
-      const mockEventsData = [
-        {
-          id: "e1",
-          type: "PushEvent",
+      // Update repositories if available
+      if (data.repos) {
+        setRepos(data.repos);
+      }
+
+      // Update events if available
+      if (data.activities) {
+        setEvents(data.activities.map((activity: any) => ({
+          id: activity.id || Math.random().toString(36).substr(2, 9),
+          type: activity.type || 'PushEvent',
           repo: {
-            name: `${githubUsername}/MLGeneFunction`,
-            url: `https://github.com/${githubUsername}/MLGeneFunction`
-          },
-          payload: {
-            commits: [
-              { message: "Add new image processing algorithm" },
-              { message: "Fix bug in data preprocessing" }
-            ]
-          },
-          created_at: "2023-05-15T00:00:00Z"
-        },
-        {
-          id: "e2",
-          type: "PullRequestEvent",
-          repo: {
-            name: `${githubUsername}/endoscopy-enhancement`,
-            url: `https://github.com/${githubUsername}/endoscopy-enhancement`
-          },
-          payload: {
-            action: "opened",
-            pull_request: {
-              title: "Implement contrast enhancement feature"
-            }
-          },
-          created_at: "2023-05-10T00:00:00Z"
-        },
-        {
-          id: "e3",
-          type: "CreateEvent",
-          repo: {
-            name: `${githubUsername}/Digit_Classifier_DeepLearning`,
-            url: `https://github.com/${githubUsername}/Digit_Classifier_DeepLearning`
-          },
-          payload: {
-            ref_type: "branch",
-            ref: "feature/model-optimization"
-          },
-          created_at: "2023-05-05T00:00:00Z"
-        },
-        {
-          id: "e4",
-          type: "WatchEvent",
-          repo: {
-            name: "tensorflow/tensorflow",
-            url: "https://github.com/tensorflow/tensorflow"
+            name: activity.repo || `${githubUsername}/unknown-repo`,
+            url: activity.url || `https://github.com/${githubUsername}/unknown-repo`
           },
           payload: {},
-          created_at: "2023-05-01T00:00:00Z"
-        }
-      ]
-      setEvents(mockEventsData)
+          created_at: activity.date || new Date().toISOString()
+        })));
+      }
+
+      // Update contributions if available
+      if (data.contributions) {
+        setContributions(data.contributions);
+      } else {
+        // Fall back to mock data if contributions are not in the expected format
+        generateMockContributions();
+      }
+
+      return true;
+    } catch (err) {
+      console.error("Error fetching GitHub data:", err);
+      setError("Failed to load GitHub data. Using sample data instead.");
       
-      return false
+      // Fallback to sample data
+      setUserStats({
+        login: githubUsername,
+        public_repos: 12,
+        followers: 24,
+        following: 8,
+        created_at: "2021-01-01T00:00:00Z"
+      });
+
+      // Generate mock data as fallback
+      generateMockContributions();
+      
+      return false;
+    } finally {
+      setLoading(false);
     }
   }
 
-  // Fetch LinkedIn data
-  // Note: LinkedIn's API has strict limitations and requires OAuth 2.0 authentication
-  // This is a simplified implementation that would need to be expanded in a real application
+  // Fetch LinkedIn data using our secure server-side API endpoint
   const fetchLinkedInData = async () => {
     try {
-      // In a real implementation, you would use the LinkedIn API with proper authentication
-      // For example:
-      // const response = await fetch(`https://api.linkedin.com/v2/me/activities`, {
-      //   headers: {
-      //     'Authorization': `Bearer ${linkedInAccessToken}`
-      //   }
-      // });
+      // Fetch from our secure API route
+      const response = await fetch('/api/linkedin/activity');
       
-      // Since direct API access requires OAuth and user authentication,
-      // we're using the fallback data for this implementation
-      // In a production environment, you would implement the full OAuth flow
+      if (!response.ok) {
+        throw new Error(`LinkedIn API error: ${response.status}`);
+      }
       
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      const data = await response.json();
       
-      // Use the fallback data
-      setPosts(linkedInPosts)
-      return true
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      
+      // If we have real data from LinkedIn API, process it
+      if (data.data && Array.isArray(data.data)) {
+        const processedPosts = data.data.map((post: any) => ({
+          id: post.id || Math.random().toString(36).substr(2, 9),
+          content: post.commentary?.text || 'New activity on LinkedIn',
+          date: post.created?.time || new Date().toISOString(),
+          likes: post.socialDetail?.totalLikes || 0,
+          comments: post.socialDetail?.comments?.total || 0,
+          shares: post.socialDetail?.shares?.total || 0,
+          url: post.permalink || '#',
+          type: 'post',
+          category: 'professional'
+        }));
+        
+        setPosts(processedPosts);
+      } else {
+        // Fall back to mock data if no real data is available
+        setPosts(linkedInPosts);
+      }
+      
+      return true;
     } catch (err) {
-      console.error("Error fetching LinkedIn data:", err)
-      // Use fallback data if API fails
-      setPosts(linkedInPosts)
-      return false
+      console.error("Error fetching LinkedIn data:", err);
+      // Fall back to mock data if API fails
+      setPosts(linkedInPosts);
+      return false;
     }
   }
 

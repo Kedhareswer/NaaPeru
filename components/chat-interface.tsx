@@ -29,12 +29,21 @@ export default function ChatInterface() {
   // Add welcome message when component mounts
   useEffect(() => {
     if (messages.length === 0) {
-      const welcomeMessage = {
-        role: "assistant" as const,
-        content:
-          "👋 Hi there! I'm Kedhareswer's virtual assistant. How can I help you today? You can ask me about his projects, skills, or schedule an appointment.",
-      }
-      setMessages([welcomeMessage])
+      const welcomeMessage = [
+        {
+          role: "assistant" as const,
+          content: "👋 Hi there! I'm Kedhareswer's virtual assistant. How can I help you today?"
+        },
+        {
+          role: "assistant" as const,
+          content: "Here are some things you can ask me about:\n" +
+                  "• Kedhareswer's skills and expertise\n" +
+                  "• His projects and experience\n" +
+                  "• Technical background and technologies he works with\n" +
+                  "• How to get in touch or schedule a meeting"
+        }
+      ]
+      setMessages(welcomeMessage)
     }
   }, [])
 
@@ -43,11 +52,18 @@ export default function ChatInterface() {
     if (!input.trim() || loading) return
 
     const userMessage = { role: "user" as const, content: input }
-    setMessages((prev) => [...prev, userMessage])
+    const updatedMessages = [...messages, userMessage]
+    setMessages(updatedMessages)
     setInput("")
     setLoading(true)
 
     try {
+      // Convert messages to the format expected by the API
+      const conversation = updatedMessages
+        .filter((msg): msg is { role: 'user' | 'assistant'; content: string } => 
+          msg.role === 'user' || msg.role === 'assistant'
+        )
+        .map(({ role, content }) => ({ role, content }))
       // Check if the message is about booking an appointment
       if (
         input.toLowerCase().includes("appointment") ||
@@ -62,41 +78,49 @@ export default function ChatInterface() {
         }
         setMessages((prev) => [...prev, assistantMessage])
       } else {
-        // Process with AIML API
-        const response = await fetch("https://api.aimlapi.com/v1/chat/completions", {
-          method: "POST",
+        // Process with our secure API endpoint
+        const response = await fetch('/api/chat', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_AIML_API_KEY}`,
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            model: "google/gemma-3-27b-it",
-            messages: [
-              {
-                role: "user",
-                content: input,
-              },
-            ],
+          body: JSON.stringify({ 
+            message: input,
+            conversation: conversation.slice(0, -1) // Exclude the current user message
           }),
         })
 
         if (!response.ok) {
-          throw new Error("Failed to get response")
+          const errorData = await response.json();
+          console.error("Groq API Error:", errorData);
+          throw new Error(`Failed to get response: ${response.status} ${response.statusText}`);
         }
 
         const data = await response.json()
-        const assistantMessage = { role: "assistant" as const, content: data.choices[0].message.content }
+        const assistantMessage = { 
+          role: "assistant" as const, 
+          content: data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response. Please try again." 
+        }
         setMessages((prev) => [...prev, assistantMessage])
       }
     } catch (error) {
-      console.error("Error:", error)
-      const errorMessage = {
-        role: "assistant" as const,
-        content: "sorry, I encountered an error processing your request. Maybe due to expired API.",
+      console.error("Chat Error:", error);
+      let errorMessage = "I'm sorry, I'm currently unable to process your request. "
+        + "The AI assistant feature is temporarily unavailable. "
+        + "Please try again later or contact me directly through other means.";
+      
+      // More specific error message for API key issues
+      if (error instanceof Error && error.message.includes('GROQ_API_KEY')) {
+        errorMessage = "I'm sorry, the AI assistant feature is not properly configured. "
+          + "Please contact the website administrator to enable this feature.";
       }
-      setMessages((prev) => [...prev, errorMessage])
+      
+      setMessages(prev => [...prev, { 
+        role: "assistant" as const, 
+        content: errorMessage 
+      }]);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 

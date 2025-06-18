@@ -26,9 +26,16 @@ export function useEndorsement() {
       let url = '/api/endorsement/skills';
       if (category && category !== 'all') {
         url += `?category=${encodeURIComponent(category)}`;
+        // Add a timestamp to prevent caching
+        url += `${url.includes('?') ? '&' : '?'}_t=${Date.now()}`;
+      } else {
+        // Add a timestamp to prevent caching
+        url += `?_t=${Date.now()}`;
       }
       
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        cache: 'no-store', // Prevent caching
+      });
       
       if (!response.ok) {
         throw new Error('Failed to fetch skills');
@@ -37,9 +44,15 @@ export function useEndorsement() {
       const data = await response.json();
       
       // Extract unique categories
-      const uniqueCategories: string[] = Array.from(
-        new Set(data.skills.map((skill: Skill) => skill.category))
-      );
+      const uniqueCategories: string[] = [];
+      const categorySet = new Set<string>();
+      
+      data.skills.forEach((skill: Skill) => {
+        if (!categorySet.has(skill.category)) {
+          categorySet.add(skill.category);
+          uniqueCategories.push(skill.category);
+        }
+      });
       
       setSkills(data.skills);
       setCategories(uniqueCategories);
@@ -70,8 +83,15 @@ export function useEndorsement() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
         },
-        body: JSON.stringify({ skillId, email: userEmail }),
+        body: JSON.stringify({ 
+          skillId, 
+          email: userEmail,
+          // Add a timestamp to prevent caching
+          _t: Date.now()
+        }),
       });
       
       const data = await response.json();
@@ -82,13 +102,8 @@ export function useEndorsement() {
       
       // Update the skills list with the updated skill
       if (data.success && data.skill) {
-        setSkills(prevSkills => 
-          prevSkills.map(skill => 
-            skill.id === data.skill.id 
-              ? { ...data.skill, endorsed: true } 
-              : skill
-          )
-        );
+        // Force a refresh of the skills list to get the latest data
+        await loadSkills();
         
         // Add to endorsed skills set
         setEndorsedSkills(prev => new Set([...prev, skillId]));
@@ -102,7 +117,7 @@ export function useEndorsement() {
     } finally {
       setIsLoading(false);
     }
-  }, [userEmail]);
+  }, [userEmail, loadSkills]);
   
   // Set user email for endorsements
   const setEmail = useCallback((email: string) => {

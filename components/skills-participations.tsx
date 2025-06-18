@@ -85,13 +85,18 @@ const participations = [
     title: "Certifications",
     items: [
       {
-        name: "AWS Machine Learning Specialty",
-        description: "Advanced certification in cloud-based ML solutions",
+        name: "AWS APAC - Solutions Architecture Job Simulation",
+        description: "Forage - December 2024",
         icon: Medal,
       },
       {
-        name: "Google Data Analytics",
-        description: "Professional certification in data analytics",
+        name: "Certified Data Science Essentials",
+        description: "RF Skilling Academy - December 2024",
+        icon: Medal,
+      },
+      {
+        name: "Introduction to Responsible AI",
+        description: "Google - November 2024",
         icon: Medal,
       },
     ],
@@ -101,7 +106,7 @@ const participations = [
 export default function SkillsParticipations() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
-  const [isHoveredSkills, setIsHoveredSkills] = useState({})
+  const [isHoveredSkills, setIsHoveredSkills] = useState<Record<string, boolean>>({})
 
   return (
     <section ref={ref} className="py-16 bg-gray-50">

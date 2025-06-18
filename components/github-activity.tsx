@@ -19,7 +19,7 @@ interface GitHubActivity {
   date: string
 }
 
-// Mock data - would be replaced with actual GitHub API data
+// Fallback mock data in case API is not available
 const mockContributions: GitHubContribution[] = Array.from({ length: 365 }, (_, i) => {
   const date = new Date()
   date.setDate(date.getDate() - 365 + i)
@@ -62,17 +62,37 @@ const mockActivities: GitHubActivity[] = [
 ]
 
 export default function GitHubActivity() {
-  const [contributions, setContributions] = useState<GitHubContribution[]>(mockContributions)
-  const [activities, setActivities] = useState<GitHubActivity[]>(mockActivities)
-  const [loading, setLoading] = useState(false)
+  const [contributions, setContributions] = useState<GitHubContribution[]>([])
+  const [activities, setActivities] = useState<GitHubActivity[]>([])
+  const [loading, setLoading] = useState(true)
 
-  // In a real implementation, this would fetch data from GitHub API
+  // Fetch GitHub activity data from our secure API
   useEffect(() => {
-    // Simulating API call
-    setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
-    }, 1000)
+    const fetchGitHubData = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('/api/github/activity');
+        if (response.ok) {
+          const data = await response.json();
+          setContributions(data.contributions || mockContributions);
+          setActivities(data.activities || mockActivities);
+        } else {
+          console.error('Failed to fetch GitHub activity');
+          // Fall back to mock data if API fails
+          setContributions(mockContributions);
+          setActivities(mockActivities);
+        }
+      } catch (error) {
+        console.error('Error fetching GitHub data:', error);
+        // Fall back to mock data on error
+        setContributions(mockContributions);
+        setActivities(mockActivities);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGitHubData();
   }, [])
 
   const getActivityIcon = (type: GitHubActivity['type']) => {

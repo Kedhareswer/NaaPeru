@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import endorsementService from '@/lib/endorsement-service';
 
+export const dynamic = 'force-dynamic'; // Ensure we get fresh data on every request
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -22,7 +24,8 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    const result = endorsementService.endorseSkill(skillId, email);
+    // Use await since the service method is now async
+    const result = await endorsementService.endorseSkill(skillId, email);
     
     if (result.success) {
       return NextResponse.json(result, { status: 200 });
