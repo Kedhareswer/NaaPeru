@@ -1,0 +1,143 @@
+{
+  "personalInfo": {
+    "name": "Marlakunta Kedhareswer Naidu",
+    "title": "AI/ML & Data Science Enthusiast",
+    "location": "Punjab, India",
+    "email": "kedhareswer.12110626@gmail.com",
+    "phone": "+91-9398911432",
+    "linkedin": "www.linkedin.com/in/kedhareswernaidu",
+    "github": "https://github.com/Kedhareswer"
+  },
+  "summary": "Passionate AI/ML and Data Science enthusiast with hands-on experience in machine learning, data analysis, and web development. Skilled in Python, SQL, and various AI tools with a strong foundation in data visualization and predictive modeling.",
+  
+  "skills": {
+    "programmingLanguages": ["Python", "SQL", "HTML", "CSS"],
+    "aiMlTools": ["TensorFlow", "Scikit-learn", "Pandas", "NumPy"],
+    "databases": ["MySQL"],
+    "dataVisualization": ["Tableau", "Power BI"],
+    "aiTools": ["Vercel", "Lovable", "Cursor", "Trea", "Firebase Studio", "Windsurf", "ChatGPT", "Claude"],
+    "softSkills": ["Leadership", "Team Player", "Communication", "Adaptability"]
+  },
+  
+  "experience": [
+    {
+      "role": "AI Evaluator, AI Trainer - Individual Contractor",
+      "company": "Outlier.AI, Data Annotation, Soul.AI",
+      "duration": "November 2024 - January 2025",
+      "achievements": [
+        "Contributed to the training and improvement of generative AI models by evaluating mathematical content.",
+        "Assessed the factuality, relevance, and quality of AI-generated text within the mathematics domain.",
+        "Crafted and answered subject-specific questions to enhance the accuracy of AI outputs.",
+        "Evaluated and ranked AI-generated responses to ensure consistency and precision."
+      ]
+    },
+    {
+      "role": "AWS Solutions Architecture Intern",
+      "company": "The Forage (Virtual Experience)",
+      "duration": "December 2024 - January 2025",
+      "achievements": [
+        "Designed a simple and scalable hosting architecture based on Elastic Beanstalk for a client experiencing significant growth and slow response times.",
+        "Designed architecture in plain language ensuring client understanding of functionality and cost calculations."
+      ]
+    },
+    {
+      "role": "Data Analyst Intern",
+      "company": "PSYLIQ",
+      "duration": "January 2024 - February 2024",
+      "achievements": [
+        "Worked on Employees HR Data - cleaned, stored and gathered insightful information made compelling visualizations using MySQL, Python and Power BI.",
+        "Developed data visualizations using Power BI to interpret complex datasets, enhancing decision-making processes and improving data comprehension by 25% within a month."
+      ]
+    }
+  ],
+  
+  "education": [
+    {
+      "degree": "Bachelor of Technology - Computer Science and Engineering (Data Science - AI & ML)",
+      "institution": "Lovely Professional University",
+      "duration": "September 2021 - Present",
+      "location": "Punjab, India",
+      "cgpa": "7.55"
+    },
+    {
+      "degree": "Intermediate",
+      "institution": "Sri Siddhartha Junior College",
+      "duration": "July 2019 - June 2021",
+      "location": "Madanapalli, India",
+      "marks": "889"
+    },
+    {
+      "degree": "Matriculation",
+      "institution": "Vijaya Bharathi English Medium High School",
+      "duration": "June 2018 - March 2019",
+      "location": "Madanapalli, India",
+      "gpa": "9.5"
+    }
+  ],
+  
+  "projects": [
+    {
+      "title": "Image to Sketch using Deep Neural Network and ML",
+      "description": "Developed a deep learning model using the CUHK Face Sketch Database, achieving an 85% quality enhancement through a CNN in TensorFlow. Integrated GANs and Autoencoders for 90% accuracy, maintaining details via Residual Blocks and Batch Normalization. Used transfer learning and adaptive optimization to improve processing speed by 30%.",
+      "technologies": ["Python", "TensorFlow", "Deep Learning", "CNN", "GANs", "Autoencoders"],
+      "github": "https://github.com/Kedhareswer/MLGeneFunction",
+      "demo": "https://image-to-sketch-wine.vercel.app/"
+    },
+    {
+      "title": "Predictive Maintenance with Machine Learning",
+      "description": "Developed an interactive machine learning education platform that integrates structured learning paths, engaging demonstrations, and real-time parameter adjustments to enhance user engagement. Introduced dynamic model comparison and visualization features, allowing learners to evaluate different machine learning techniques side by side while modifying parameters.",
+      "technologies": ["Python", "Machine Learning", "Next.js", "React", "Tailwind CSS"],
+      "github": "https://github.com/Kedhareswer/ML_Notebook",
+      "demo": "https://ml-notebook.vercel.app/"
+    }
+  ],
+  
+  "githubStats": {
+    "username": "Kedhareswer",
+    "repos": 58,
+    "stars": 17,
+    "followers": 4,
+    "following": 2,
+    "pullRequests": 32,
+    "issues": 11,
+    "commits": 509,
+    "forks": 5,
+    "topLanguages": [
+      { "name": "Jupyter Notebook", "percentage": 94.05 },
+      { "name": "TypeScript", "percentage": 5.17 }
+    ]
+  },
+
+  "certifications": [
+    {
+      "name": "AWS APAC - Solutions Architecture Job Simulation",
+      "issuer": "Forage",
+      "date": "December 2024"
+    },
+    {
+      "name": "Certified Data Science Essentials",
+      "issuer": "RF Skilling Academy",
+      "date": "December 2024"
+    },
+    {
+      "name": "Introduction to Responsible AI",
+      "issuer": "Google",
+      "date": "November 2024"
+    }
+  ],
+  
+  "languages": [
+    {
+      "name": "English",
+      "proficiency": "Professional Working Proficiency"
+    },
+    {
+      "name": "Telugu",
+      "proficiency": "Native or Bilingual Proficiency"
+    },
+    {
+      "name": "Hindi",
+      "proficiency": "Limited Working Proficiency"
+    }
+  ]
+}

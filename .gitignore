@@ -30,7 +30,7 @@ yarn-error.log*
 next-env.d.ts
 
 # data files (exclude actual data but keep sample files)
-/data/*
+!/data/*
 !/data/README.md
 !/data/endorsements.sample.json
 
