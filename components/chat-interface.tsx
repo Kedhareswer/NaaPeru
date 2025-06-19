@@ -1,13 +1,16 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Send, X, Calendar, ArrowRight, MessageSquare, Sparkles } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { useToast } from "@/components/ui/use-toast"
 import { useIsMobile } from "@/hooks/use-mobile"
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 export default function ChatInterface() {
   const [messages, setMessages] = useState<{ role: "user" | "assistant"; content: string }[]>([])
@@ -33,14 +36,6 @@ export default function ChatInterface() {
         {
           role: "assistant" as const,
           content: "👋 Hi there! I'm Kedhareswer's virtual assistant. How can I help you today?"
-        },
-        {
-          role: "assistant" as const,
-          content: "Here are some things you can ask me about:\n" +
-                  "• Kedhareswer's skills and expertise\n" +
-                  "• His projects and experience\n" +
-                  "• Technical background and technologies he works with\n" +
-                  "• How to get in touch or schedule a meeting"
         }
       ]
       setMessages(welcomeMessage)
@@ -261,18 +256,34 @@ export default function ChatInterface() {
   }
 
   const quickReplies = [
-    "Book an appointment",
-    "Tell me about your experience",
-    "What are your skills?",
-    "Show me your projects",
+    "Book an appointment with Kedhareswer",
+    "Tell me about his experience",
+    "What are his skills?",
+    "Explain me his projects",
+    "Why is he a suitable candidate for any opportunity"
   ]
 
   // Chat toggle animation variants
   const chatButtonVariants = {
     initial: { scale: 0.8, opacity: 0 },
-    animate: { scale: 1, opacity: 1, transition: { type: "spring", stiffness: 300, damping: 20 } },
-    hover: { scale: 1.05, transition: { duration: 0.2 } },
-    tap: { scale: 0.95 },
+    animate: { 
+      scale: 1, 
+      opacity: 1, 
+      transition: { 
+        type: "spring" as const, 
+        stiffness: 300, 
+        damping: 20 
+      } 
+    },
+    hover: { 
+      scale: 1.05, 
+      transition: { 
+        duration: 0.2 
+      } 
+    },
+    tap: { 
+      scale: 0.95 
+    },
   }
 
   const chatContainerVariants = {
@@ -282,7 +293,7 @@ export default function ChatInterface() {
       scale: 1,
       y: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 300,
         damping: 25,
         delayChildren: 0.2,
@@ -293,13 +304,23 @@ export default function ChatInterface() {
       opacity: 0,
       scale: 0.95,
       y: 20,
-      transition: { duration: 0.2 },
+      transition: { 
+        duration: 0.2 
+      },
     },
   }
 
   const messageVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 25 } },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        type: "spring" as const, 
+        stiffness: 300, 
+        damping: 25 
+      } 
+    },
   }
 
   return (
@@ -429,7 +450,55 @@ export default function ChatInterface() {
                             : "bg-zinc-100/90 border border-zinc-200 text-zinc-800 shadow-sm"
                         }`}
                       >
-                        <p className="text-[15px] leading-relaxed whitespace-pre-line">{message.content}</p>
+                        <div className="prose prose-sm max-w-none prose-p:my-1.5 prose-ul:my-1.5 prose-ol:my-1.5 prose-headings:my-2 prose-headings:font-medium prose-code:bg-zinc-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-pre:bg-zinc-100 prose-pre:p-3 prose-pre:rounded-lg prose-pre:overflow-x-auto prose-blockquote:border-l-4 prose-blockquote:border-zinc-300 prose-blockquote:pl-3 prose-blockquote:italic prose-blockquote:text-zinc-600 prose-blockquote:my-2">
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                              code({node, className, children, ...props}: any) {
+                                const match = className ? /language-(\w+)/.exec(className) : null;
+                                const inline = props.inline;
+                                
+                                if (inline || !match) {
+                                  return (
+                                    <code className={className} {...props}>
+                                      {children}
+                                    </code>
+                                  );
+                                }
+                                
+                                return (
+                                  <SyntaxHighlighter
+                                    style={oneDark as any}
+                                    language={match[1]}
+                                    PreTag="div"
+                                    customStyle={{
+                                      margin: 0,
+                                      backgroundColor: 'rgb(244, 244, 245)',
+                                      fontSize: '0.875rem',
+                                      lineHeight: '1.25rem',
+                                      borderRadius: '0.5rem'
+                                    }}
+                                  >
+                                    {String(children).replace(/\n$/, '')}
+                                  </SyntaxHighlighter>
+                                )
+                              },
+                              ul: ({node, ...props}) => <ul className="list-disc pl-5 space-y-1" {...props} />,
+                              ol: ({node, ...props}) => <ol className="list-decimal pl-5 space-y-1" {...props} />,
+                              li: ({node, ...props}) => <li className="pl-1" {...props} />,
+                              a: ({node, ...props}) => <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
+                              h1: ({node, ...props}) => <h3 className="text-xl font-semibold" {...props} />,
+                              h2: ({node, ...props}) => <h4 className="text-lg font-semibold" {...props} />,
+                              h3: ({node, ...props}) => <h5 className="text-base font-semibold" {...props} />,
+                              blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-zinc-300 pl-3 italic text-zinc-600 my-2" {...props} />,
+                              table: ({node, ...props}) => <div className="overflow-x-auto"><table className="min-w-full border-collapse border border-zinc-200" {...props} /></div>,
+                              th: ({node, ...props}) => <th className="border border-zinc-200 px-3 py-2 text-left bg-zinc-50 font-semibold" {...props} />,
+                              td: ({node, ...props}) => <td className="border border-zinc-200 px-3 py-2" {...props} />,
+                            }}
+                          >
+                            {message.content}
+                          </ReactMarkdown>
+                        </div>
                       </motion.div>
                       {message.role === "user" && (
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-zinc-700 to-black flex items-center justify-center text-white ml-2 shadow-sm">

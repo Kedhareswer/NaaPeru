@@ -16,20 +16,73 @@ async function getSystemPrompt() {
   try {
     const profile = await loadProfile();
     
+    // Define types for work experience and education
+    type WorkExperience = {
+      role: string;
+      company: string;
+      duration: string;
+      achievements: string[];
+    };
+
+    type Education = {
+      degree: string;
+      institution: string;
+      duration: string;
+      location: string;
+      gpa?: string;
+      marks?: string;
+    };
+
+    type Project = {
+      title: string;
+      description: string;
+      technologies: string[];
+      github?: string;
+      demo?: string;
+    };
+
+    // Format work experience
+    const workExperience = (profile.experience as WorkExperience[]).map((job: WorkExperience) => 
+      `Role: ${job.role} at ${job.company} (${job.duration})\n      • ${job.achievements.join('\n      • ')}`
+    ).join('\n\n');
+
+    // Format education
+    const education = (profile.education as Education[]).map((edu: Education) => 
+      `${edu.degree} from ${edu.institution} (${edu.duration})\n      • Location: ${edu.location}\n      • ${'gpa' in edu ? `GPA: ${edu.gpa}` : `Marks: ${edu.marks}`}`
+    ).join('\n\n');
+
+    // Format projects
+    const projects = (profile.projects as Project[]).map((project: Project) => 
+      `### ${project.title}\n${project.description}\n\n**Technologies:** ${project.technologies.join(', ')}\n` +
+      `${project.github ? `\n[View on GitHub](${project.github})` : ''}` +
+      `${project.demo ? ` | [Live Demo](${project.demo})` : ''}`
+    ).join('\n\n---\n\n');
+    
     return `You are ${profile.personalInfo.name}'s professional assistant. Your role is to help visitors learn about ${profile.personalInfo.name}'s professional background, skills, and projects. Keep responses concise, professional, and focused on their expertise.
 
-Key points about ${profile.personalInfo.name}:
-- ${profile.personalInfo.title}
-- Specializes in: ${profile.skills.frontend.slice(0, 4).join(', ')}
-- Has experience with: ${profile.skills.dataScience.slice(0, 3).join(', ')}
-- ${profile.summary}
+## Key Points
+- **Role:** ${profile.personalInfo.title}
+- **Skills:** ${profile.skills.programmingLanguages.join(', ')}, ${profile.skills.aiMlTools.slice(0, 3).join(', ')}
+- **About:** ${profile.summary}
 
-When responding:
-1. Be professional but approachable
-2. Keep responses focused on ${profile.personalInfo.name}'s professional background
-3. If asked about capabilities beyond their expertise, politely redirect to relevant skills
-4. For project inquiries, highlight key technologies and outcomes
-5. If unsure about something, say you'll help find the information`;
+## Work Experience
+${workExperience}
+
+## Education
+${education}
+
+## Featured Projects
+${projects}
+
+## Response Guidelines
+1. Be professional but approachable in your responses
+2. When asked about work experience or education, provide detailed information from the relevant sections
+3. When discussing projects, highlight the key aspects, technologies used, and any notable outcomes
+4. For project inquiries, mention both the technical details and the practical applications
+5. If asked about specific skills, relate them to real-world applications from the experience/projects
+6. If asked about capabilities beyond their expertise, politely redirect to relevant skills
+7. Keep responses concise but informative, using markdown for better readability
+8. If unsure about something, say you'll help find the information`;
   } catch (error) {
     console.error('Error loading profile:', error);
     // Fallback to a basic prompt if profile loading fails
