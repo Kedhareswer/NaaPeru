@@ -3,7 +3,7 @@
     "id": "1",
     "name": "Python",
     "category": "Technical Skills",
-    "endorsements": 42,
+    "endorsements": 1,
     "rating": 4.8,
     "endorsed": []
   },
@@ -11,7 +11,7 @@
     "id": "2",
     "name": "Machine Learning",
     "category": "Technical Skills",
-    "endorsements": 38,
+    "endorsements": 1,
     "rating": 4.7,
     "endorsed": []
   },
@@ -19,7 +19,7 @@
     "id": "3",
     "name": "Deep Learning",
     "category": "Technical Skills",
-    "endorsements": 35,
+    "endorsements": 1,
     "rating": 4.6,
     "endorsed": []
   },
@@ -27,7 +27,7 @@
     "id": "4",
     "name": "Computer Vision",
     "category": "Technical Skills",
-    "endorsements": 31,
+    "endorsements": 1,
     "rating": 4.5,
     "endorsed": []
   },
@@ -35,7 +35,7 @@
     "id": "5",
     "name": "NLP",
     "category": "Technical Skills",
-    "endorsements": 29,
+    "endorsements": 1,
     "rating": 4.4,
     "endorsed": []
   },
@@ -43,7 +43,7 @@
     "id": "6",
     "name": "Data Analysis",
     "category": "Technical Skills",
-    "endorsements": 36,
+    "endorsements": 1,
     "rating": 4.6,
     "endorsed": []
   },
@@ -51,7 +51,7 @@
     "id": "7",
     "name": "Statistical Modeling",
     "category": "Technical Skills",
-    "endorsements": 27,
+    "endorsements": 1,
     "rating": 4.3,
     "endorsed": []
   },
@@ -59,7 +59,7 @@
     "id": "8",
     "name": "SQL",
     "category": "Technical Skills",
-    "endorsements": 33,
+    "endorsements": 1,
     "rating": 4.5,
     "endorsed": []
   },
@@ -67,7 +67,7 @@
     "id": "9",
     "name": "Power BI",
     "category": "Tools & Platforms",
-    "endorsements": 25,
+    "endorsements": 1,
     "rating": 4.2,
     "endorsed": []
   },
@@ -75,7 +75,7 @@
     "id": "10",
     "name": "Tableau",
     "category": "Tools & Platforms",
-    "endorsements": 24,
+    "endorsements": 1,
     "rating": 4.1,
     "endorsed": []
   },
@@ -83,7 +83,7 @@
     "id": "11",
     "name": "Hugging Face",
     "category": "Tools & Platforms",
-    "endorsements": 22,
+    "endorsements": 1,
     "rating": 4,
     "endorsed": []
   },
@@ -91,7 +91,7 @@
     "id": "12",
     "name": "Git",
     "category": "Tools & Platforms",
-    "endorsements": 30,
+    "endorsements": 1,
     "rating": 4.4,
     "endorsed": []
   },
@@ -99,7 +99,7 @@
     "id": "13",
     "name": "Problem Solving",
     "category": "Soft Skills",
-    "endorsements": 40,
+    "endorsements": 1,
     "rating": 4.8,
     "endorsed": []
   },
@@ -107,7 +107,7 @@
     "id": "14",
     "name": "Team Leadership",
     "category": "Soft Skills",
-    "endorsements": 32,
+    "endorsements": 1,
     "rating": 4.5,
     "endorsed": []
   },
@@ -115,7 +115,7 @@
     "id": "15",
     "name": "Project Management",
     "category": "Soft Skills",
-    "endorsements": 28,
+    "endorsements": 1,
     "rating": 4.3,
     "endorsed": []
   },
@@ -123,7 +123,7 @@
     "id": "16",
     "name": "Communication",
     "category": "Soft Skills",
-    "endorsements": 34,
+    "endorsements": 1,
     "rating": 4.6,
     "endorsed": []
   }

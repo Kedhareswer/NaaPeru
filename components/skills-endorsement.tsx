@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Star, ThumbsUp, Award, Users, TrendingUp, ChevronDown, ChevronUp, Loader2 } from 'lucide-react'
-// Remove Card import to fix build error
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { useEndorsement } from '@/hooks/use-endorsement'
@@ -31,7 +30,7 @@ export default function SkillsEndorsement() {
   } = useEndorsement()
   
   const [filter, setFilter] = useState<string>('all')
-  const [sort, setSort] = useState<'endorsements' | 'rating'>('endorsements')
+  const [sort, setSort] = useState<'endorsements'>('endorsements')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
   const [expandedCategories, setExpandedCategories] = useState<string[]>([])
   const [showEmailInput, setShowEmailInput] = useState(false)
@@ -96,7 +95,7 @@ export default function SkillsEndorsement() {
     }
   }
 
-  const toggleSort = (sortType: 'endorsements' | 'rating') => {
+  const toggleSort = (sortType: 'endorsements') => {
     if (sort === sortType) {
       setSortDirection(sortDirection === 'desc' ? 'asc' : 'desc')
     } else {
@@ -198,18 +197,7 @@ export default function SkillsEndorsement() {
               sortDirection === 'desc' ? <ChevronDown className="h-4 w-4 ml-1" /> : <ChevronUp className="h-4 w-4 ml-1" />
             )}
           </Button>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            className={`flex items-center ${sort === 'rating' ? 'text-blue-600' : 'text-gray-600'}`}
-            onClick={() => toggleSort('rating')}
-          >
-            <Star className="h-4 w-4 mr-1" />
-            Rating
-            {sort === 'rating' && (
-              sortDirection === 'desc' ? <ChevronDown className="h-4 w-4 ml-1" /> : <ChevronUp className="h-4 w-4 ml-1" />
-            )}
-          </Button>
+
         </div>
       </div>
       
@@ -284,10 +272,6 @@ function SkillCard({ skill, onEndorse, endorsedSkills, endorsingSkillId }: Skill
     >
       <div className="flex justify-between items-start mb-2">
         <h5 className="font-medium">{skill.name}</h5>
-        <div className="flex items-center">
-          <Star className="h-4 w-4 text-yellow-500 mr-1" />
-          <span className="text-sm">{skill.rating.toFixed(1)}</span>
-        </div>
       </div>
       
       <div className="mb-3">
