@@ -92,19 +92,39 @@ ${projects}
 
 export async function POST(request: NextRequest) {
   try {
-    const { message, conversation = [] } = await request.json();
+    const { message, conversation = [], mode = 'standard' } = await request.json();
     
     if (!process.env.GROQ_API_KEY) {
       throw new Error('GROQ_API_KEY is not configured');
     }
 
-    // Prepare messages with system prompt
-    const systemPrompt = await getSystemPrompt();
+    // Prepare messages with enhanced system prompt based on mode
+    const baseSystemPrompt = await getSystemPrompt();
+    
+    // Enhance system prompt based on conversation mode
+    let enhancedPrompt = baseSystemPrompt;
+    if (mode === 'detailed') {
+      enhancedPrompt += "\n\nIMPORTANT: Provide detailed, comprehensive responses with specific examples and thorough explanations.";
+    } else if (mode === 'creative') {
+      enhancedPrompt += "\n\nIMPORTANT: Be more conversational, creative, and engaging in your responses while maintaining professionalism.";
+    } else {
+      enhancedPrompt += "\n\nIMPORTANT: Keep responses concise but informative, focusing on the most relevant information.";
+    }
+
     const messages = [
-      { role: 'system', content: systemPrompt },
+      { role: 'system', content: enhancedPrompt },
       ...conversation,
       { role: 'user', content: message }
     ];
+
+    // Adjust parameters based on mode
+    const modeParams = {
+      standard: { temperature: 0.7, max_tokens: 1024 },
+      detailed: { temperature: 0.6, max_tokens: 1500 },
+      creative: { temperature: 0.8, max_tokens: 1200 }
+    };
+
+    const params = modeParams[mode as keyof typeof modeParams] || modeParams.standard;
 
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
@@ -115,8 +135,7 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({
         model: 'llama-3.1-8b-instant',
         messages,
-        temperature: 0.7,
-        max_tokens: 1024,
+        ...params,
       }),
     });
 

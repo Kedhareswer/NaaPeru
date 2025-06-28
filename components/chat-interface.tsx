@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Send, X, Calendar, ArrowRight, MessageSquare, Sparkles } from "lucide-react"
+import { Send, X, Calendar, ArrowRight, MessageSquare, Sparkles, Search, ThumbsUp, ThumbsDown, Copy, MoreVertical, Settings } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { useToast } from "@/components/ui/use-toast"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -11,34 +11,118 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { initEmailJS } from "@/lib/email-service"
+
+// Enhanced message interface with metadata
+interface EnhancedMessage {
+  role: "user" | "assistant"
+  content: string
+  id?: string
+  timestamp?: Date
+  feedback?: 'positive' | 'negative' | null
+  responseTime?: number
+}
 
 export default function ChatInterface() {
-  const [messages, setMessages] = useState<{ role: "user" | "assistant"; content: string }[]>([])
+  const [messages, setMessages] = useState<EnhancedMessage[]>([])
   const [input, setInput] = useState("")
   const [loading, setLoading] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [pendingAppointment, setPendingAppointment] = useState<any>(null)
   const [showChat, setShowChat] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [showSearch, setShowSearch] = useState(false)
+  const [conversationMode, setConversationMode] = useState<'standard' | 'detailed' | 'creative'>('standard')
   const chatRef = useRef<HTMLDivElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const { toast } = useToast()
   const isMobile = useIsMobile()
+
+  // Generate unique ID for messages
+  const generateMessageId = () => `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 
   // Scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
-  // Add welcome message when component mounts
+  // Message feedback handling
+  const handleMessageFeedback = (messageId: string, feedback: 'positive' | 'negative') => {
+    setMessages(prev => prev.map(msg => 
+      msg.id === messageId 
+        ? { ...msg, feedback }
+        : msg
+    ))
+    
+    toast({
+      title: "Feedback Received",
+      description: `Thank you for your ${feedback} feedback! This helps improve responses.`,
+    })
+  }
+
+  // Copy message content
+  const copyMessage = (content: string) => {
+    navigator.clipboard.writeText(content)
+    toast({
+      title: "Copied",
+      description: "Message copied to clipboard",
+    })
+  }
+
+  // Search functionality
+  const filteredMessages = searchQuery 
+    ? messages.filter(msg => 
+        msg.content.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : messages
+
+  // Export conversation functionality
+  const exportConversation = () => {
+    const exportData = {
+      timestamp: new Date().toISOString(),
+      totalMessages: messages.length,
+      messages: messages.map(msg => ({
+        role: msg.role,
+        content: msg.content,
+        timestamp: msg.timestamp,
+        feedback: msg.feedback,
+        responseTime: msg.responseTime
+      }))
+    }
+    
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `kedhareswer_conversation_${new Date().toISOString().split('T')[0]}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+    
+    toast({
+      title: "Conversation Exported",
+      description: "Your conversation has been downloaded as a JSON file.",
+    })
+  }
+
+  // Initialize EmailJS and add welcome message when component mounts
   useEffect(() => {
+    // Initialize EmailJS
+    try {
+      initEmailJS();
+      console.log('EmailJS initialized successfully');
+    } catch (error) {
+      console.error('Failed to initialize EmailJS:', error);
+    }
+
     if (messages.length === 0) {
-      const welcomeMessage = [
-        {
-          role: "assistant" as const,
-          content: "👋 Hi there! I'm Kedhareswer's virtual assistant. How can I help you today?"
-        }
-      ]
-      setMessages(welcomeMessage)
+      const welcomeMessage: EnhancedMessage = {
+        role: "assistant" as const,
+        content: "👋 Hi there! I'm Kedhareswer's enhanced virtual assistant. I can help you learn about his background, schedule appointments, and answer any questions. How can I assist you today?",
+        id: generateMessageId(),
+        timestamp: new Date(),
+        feedback: null
+      }
+      setMessages([welcomeMessage])
     }
   }, [])
 
@@ -46,7 +130,14 @@ export default function ChatInterface() {
     e.preventDefault()
     if (!input.trim() || loading) return
 
-    const userMessage = { role: "user" as const, content: input }
+    const startTime = Date.now()
+    const userMessage: EnhancedMessage = { 
+      role: "user" as const, 
+      content: input,
+      id: generateMessageId(),
+      timestamp: new Date(),
+      feedback: null
+    }
     const updatedMessages = [...messages, userMessage]
     setMessages(updatedMessages)
     setInput("")
@@ -55,7 +146,7 @@ export default function ChatInterface() {
     try {
       // Convert messages to the format expected by the API
       const conversation = updatedMessages
-        .filter((msg): msg is { role: 'user' | 'assistant'; content: string } => 
+        .filter((msg): msg is EnhancedMessage => 
           msg.role === 'user' || msg.role === 'assistant'
         )
         .map(({ role, content }) => ({ role, content }))
@@ -66,10 +157,15 @@ export default function ChatInterface() {
         input.toLowerCase().includes("schedule") ||
         input.toLowerCase().includes("meet")
       ) {
-        const assistantMessage = {
+        const responseTime = Date.now() - startTime
+        const assistantMessage: EnhancedMessage = {
           role: "assistant" as const,
           content:
             "I'd be happy to help you schedule an appointment with Kedhareswer. Please provide the following details:\n\n1. Your name\n2. Contact information (email or phone)\n3. Subject or purpose of the meeting\n4. Preferred date (YYYY-MM-DD)\n5. Preferred time\n6. Your timezone",
+          id: generateMessageId(),
+          timestamp: new Date(),
+          feedback: null,
+          responseTime
         }
         setMessages((prev) => [...prev, assistantMessage])
       } else {
@@ -81,7 +177,8 @@ export default function ChatInterface() {
           },
           body: JSON.stringify({ 
             message: input,
-            conversation: conversation.slice(0, -1) // Exclude the current user message
+            conversation: conversation.slice(0, -1), // Exclude the current user message
+            mode: conversationMode
           }),
         })
 
@@ -92,14 +189,21 @@ export default function ChatInterface() {
         }
 
         const data = await response.json()
-        const assistantMessage = { 
+        const responseTime = Date.now() - startTime
+        const assistantMessage: EnhancedMessage = { 
           role: "assistant" as const, 
-          content: data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response. Please try again." 
+          content: data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response. Please try again.",
+          id: generateMessageId(),
+          timestamp: new Date(),
+          feedback: null,
+          responseTime
         }
         setMessages((prev) => [...prev, assistantMessage])
       }
     } catch (error) {
       console.error("Chat Error:", error);
+      const responseTime = Date.now() - startTime
+      
       let errorMessage = "I'm sorry, I'm currently unable to process your request. "
         + "The AI assistant feature is temporarily unavailable. "
         + "Please try again later or contact me directly through other means.";
@@ -110,10 +214,15 @@ export default function ChatInterface() {
           + "Please contact the website administrator to enable this feature.";
       }
       
-      setMessages(prev => [...prev, { 
+      const errorAssistantMessage: EnhancedMessage = { 
         role: "assistant" as const, 
-        content: errorMessage 
-      }]);
+        content: errorMessage,
+        id: generateMessageId(),
+        timestamp: new Date(),
+        feedback: null,
+        responseTime
+      }
+      setMessages(prev => [...prev, errorAssistantMessage]);
     } finally {
       setLoading(false);
     }
@@ -220,34 +329,59 @@ export default function ChatInterface() {
 
       const result = await response.json()
 
-      if (!response.ok) {
+      if (response.ok && result.success) {
+        // Successful appointment with emails sent
+        const confirmationMessage: EnhancedMessage = {
+          role: "assistant" as const,
+          content: `Great! Your appointment has been scheduled successfully. Here are the details:\n\n📅 **Appointment Details:**\n• **Name:** ${pendingAppointment.name}\n• **Contact:** ${pendingAppointment.contact}\n• **Subject:** ${pendingAppointment.subject}\n• **Date:** ${pendingAppointment.date}\n• **Time:** ${pendingAppointment.time}\n• **Timezone:** ${pendingAppointment.timezone}\n\n✅ **Confirmation emails have been sent to:**\n• You (${pendingAppointment.contact})\n• Kedhareswer (kedhareswer.12110626@gmail.com)\n\nI'll respond to you within 24-48 hours to confirm the appointment time. Thank you!`,
+          id: generateMessageId(),
+          timestamp: new Date(),
+          feedback: null
+        }
+        setMessages((prev) => [...prev, confirmationMessage])
+
         toast({
-          title: "Error",
-          description: result.error || "Failed to schedule appointment",
-          variant: "destructive",
+          title: "Success",
+          description: "Appointment scheduled and confirmation emails sent!",
+          variant: "default",
         })
-        throw new Error(result.error || "Failed to schedule appointment")
-      }
+      } else if (response.status === 207 && result.data) {
+        // Partial success - appointment received but email issues
+        const { emailStatus } = result.data;
+        const confirmationMessage: EnhancedMessage = {
+          role: "assistant" as const,
+          content: `Your appointment request has been received! Here are the details:\n\n📅 **Appointment Details:**\n• **Name:** ${pendingAppointment.name}\n• **Contact:** ${pendingAppointment.contact}\n• **Subject:** ${pendingAppointment.subject}\n• **Date:** ${pendingAppointment.date}\n• **Time:** ${pendingAppointment.time}\n• **Timezone:** ${pendingAppointment.timezone}\n\n📧 **Email Status:**\n• Your confirmation: ${emailStatus.userEmail ? '✅ Sent' : '❌ Failed'}\n• Owner notification: ${emailStatus.ownerEmail ? '✅ Sent' : '❌ Failed'}\n\n${result.message}\n\nFor direct contact: kedhareswer.12110626@gmail.com`,
+          id: generateMessageId(),
+          timestamp: new Date(),
+          feedback: null
+        }
+        setMessages((prev) => [...prev, confirmationMessage])
 
-      const confirmationMessage = {
-        role: "assistant" as const,
-        content: `Great! Your appointment has been scheduled. Here are the details:\n\nName: ${pendingAppointment.name}\nContact: ${pendingAppointment.contact}\nSubject: ${pendingAppointment.subject}\nDate: ${pendingAppointment.date}\nTime: ${pendingAppointment.time}\nTimezone: ${pendingAppointment.timezone}\n\nYou will receive a confirmation email shortly.`,
+        toast({
+          title: "Appointment Received",
+          description: result.message,
+          variant: "default",
+        })
+      } else {
+        // Error case
+        throw new Error(result.message || result.error || "Failed to schedule appointment")
       }
-      setMessages((prev) => [...prev, confirmationMessage])
-
-      toast({
-        title: "Success",
-        description: "Appointment scheduled successfully!",
-        variant: "default",
-      })
     } catch (error) {
       console.error("Error scheduling appointment:", error)
-      const errorMessage = {
+      const errorMessage: EnhancedMessage = {
         role: "assistant" as const,
-        content:
-          "Sorry, there was an error scheduling your appointment. Please try again or contact directly via email. Thank You",
+        content: `Sorry, there was an error processing your appointment request. Please try one of these alternatives:\n\n📧 **Direct Email:** kedhareswer.12110626@gmail.com\n📞 **Phone:** +91-9398911432\n\nPlease include the following details in your direct message:\n• Your name and contact information\n• Subject: ${pendingAppointment.subject}\n• Preferred date and time: ${pendingAppointment.date} at ${pendingAppointment.time} (${pendingAppointment.timezone})\n\nThank you for your understanding!`,
+        id: generateMessageId(),
+        timestamp: new Date(),
+        feedback: null
       }
       setMessages((prev) => [...prev, errorMessage])
+
+      toast({
+        title: "Error",
+        description: "Failed to schedule appointment. Please contact directly.",
+        variant: "destructive",
+      })
     }
 
     setShowConfirmation(false)
@@ -414,22 +548,86 @@ export default function ChatInterface() {
               className="w-full h-full flex flex-col bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-zinc-100 overflow-hidden"
             >
               {/* Chat Header */}
-              <div className="p-4 border-b border-zinc-100 bg-gradient-to-r from-zinc-50 to-white flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-black to-zinc-700 flex items-center justify-center text-white">
-                    <Sparkles className="w-4 h-4" />
+              <div className="p-4 border-b border-zinc-100 bg-gradient-to-r from-zinc-50 to-white">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-black to-zinc-700 flex items-center justify-center text-white">
+                      <Sparkles className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-zinc-900">Enhanced Assistant</h3>
+                      <p className="text-xs text-zinc-500">
+                        {messages.length > 1 ? `${messages.length - 1} messages` : 'Ask me anything about Kedhareswer'}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-medium text-zinc-900">Virtual Assistant</h3>
-                    <p className="text-xs text-zinc-500">Ask me anything about Kedhareswer</p>
+                  
+                  {/* Header Actions */}
+                  <div className="flex items-center gap-2">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setShowSearch(!showSearch)}
+                      className="p-2 hover:bg-zinc-100 rounded-lg transition-colors"
+                      title="Search conversation"
+                    >
+                      <Search className="w-4 h-4 text-zinc-600" />
+                    </motion.button>
+                    
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={exportConversation}
+                      className="p-2 hover:bg-zinc-100 rounded-lg transition-colors"
+                      title="Export conversation"
+                      disabled={messages.length <= 1}
+                    >
+                      <MoreVertical className="w-4 h-4 text-zinc-600" />
+                    </motion.button>
                   </div>
                 </div>
+
+                {/* Search Bar */}
+                <AnimatePresence>
+                  {showSearch && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="mt-3 pt-3 border-t border-zinc-100"
+                    >
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-zinc-400" />
+                        <input
+                          type="text"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          placeholder="Search messages..."
+                          className="w-full pl-10 pr-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg text-sm focus:outline-none focus:border-zinc-400 focus:ring-2 focus:ring-zinc-200"
+                        />
+                        {searchQuery && (
+                          <button
+                            onClick={() => setSearchQuery("")}
+                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        )}
+                      </div>
+                      {searchQuery && (
+                        <p className="text-xs text-zinc-500 mt-2">
+                          {filteredMessages.length} of {messages.length} messages match
+                        </p>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Messages Container */}
               <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-zinc-200 scrollbar-track-transparent hover:scrollbar-thumb-zinc-300 transition-colors">
                 <AnimatePresence initial={false}>
-                  {messages.map((message, index) => (
+                  {filteredMessages.map((message, index) => (
                     <motion.div
                       key={index}
                       variants={messageVariants}
@@ -442,64 +640,122 @@ export default function ChatInterface() {
                           <Sparkles className="w-4 h-4" />
                         </div>
                       )}
-                      <motion.div
-                        whileHover={{ scale: 1.01 }}
-                        className={`max-w-[80%] rounded-2xl p-4 min-h-[44px] ${
-                          message.role === "user"
-                            ? "bg-gradient-to-br from-black to-zinc-800 text-white shadow-lg"
-                            : "bg-zinc-100/90 border border-zinc-200 text-zinc-800 shadow-sm"
-                        }`}
-                      >
-                        <div className="prose prose-sm max-w-none prose-p:my-1.5 prose-ul:my-1.5 prose-ol:my-1.5 prose-headings:my-2 prose-headings:font-medium prose-code:bg-zinc-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-pre:bg-zinc-100 prose-pre:p-3 prose-pre:rounded-lg prose-pre:overflow-x-auto prose-blockquote:border-l-4 prose-blockquote:border-zinc-300 prose-blockquote:pl-3 prose-blockquote:italic prose-blockquote:text-zinc-600 prose-blockquote:my-2">
-                          <ReactMarkdown
-                            remarkPlugins={[remarkGfm]}
-                            components={{
-                              code({node, className, children, ...props}: any) {
-                                const match = className ? /language-(\w+)/.exec(className) : null;
-                                const inline = props.inline;
-                                
-                                if (inline || !match) {
+                      <div className="relative group max-w-[80%]">
+                        <motion.div
+                          whileHover={{ scale: 1.01 }}
+                          className={`rounded-2xl p-4 min-h-[44px] ${
+                            message.role === "user"
+                              ? "bg-gradient-to-br from-black to-zinc-800 text-white shadow-lg"
+                              : "bg-zinc-100/90 border border-zinc-200 text-zinc-800 shadow-sm"
+                          }`}
+                        >
+                          <div className="prose prose-sm max-w-none prose-p:my-1.5 prose-ul:my-1.5 prose-ol:my-1.5 prose-headings:my-2 prose-headings:font-medium prose-code:bg-zinc-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-pre:bg-zinc-100 prose-pre:p-3 prose-pre:rounded-lg prose-pre:overflow-x-auto prose-blockquote:border-l-4 prose-blockquote:border-zinc-300 prose-blockquote:pl-3 prose-blockquote:italic prose-blockquote:text-zinc-600 prose-blockquote:my-2">
+                            <ReactMarkdown
+                              remarkPlugins={[remarkGfm]}
+                              components={{
+                                code({node, className, children, ...props}: any) {
+                                  const match = className ? /language-(\w+)/.exec(className) : null;
+                                  const inline = props.inline;
+                                  
+                                  if (inline || !match) {
+                                    return (
+                                      <code className={className} {...props}>
+                                        {children}
+                                      </code>
+                                    );
+                                  }
+                                  
                                   return (
-                                    <code className={className} {...props}>
-                                      {children}
-                                    </code>
-                                  );
-                                }
-                                
-                                return (
-                                  <SyntaxHighlighter
-                                    style={oneDark as any}
-                                    language={match[1]}
-                                    PreTag="div"
-                                    customStyle={{
-                                      margin: 0,
-                                      backgroundColor: 'rgb(244, 244, 245)',
-                                      fontSize: '0.875rem',
-                                      lineHeight: '1.25rem',
-                                      borderRadius: '0.5rem'
-                                    }}
-                                  >
-                                    {String(children).replace(/\n$/, '')}
-                                  </SyntaxHighlighter>
-                                )
-                              },
-                              ul: ({node, ...props}) => <ul className="list-disc pl-5 space-y-1" {...props} />,
-                              ol: ({node, ...props}) => <ol className="list-decimal pl-5 space-y-1" {...props} />,
-                              li: ({node, ...props}) => <li className="pl-1" {...props} />,
-                              a: ({node, ...props}) => <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
-                              h1: ({node, ...props}) => <h3 className="text-xl font-semibold" {...props} />,
-                              h2: ({node, ...props}) => <h4 className="text-lg font-semibold" {...props} />,
-                              h3: ({node, ...props}) => <h5 className="text-base font-semibold" {...props} />,
-                              blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-zinc-300 pl-3 italic text-zinc-600 my-2" {...props} />,
-                              table: ({node, ...props}) => <div className="overflow-x-auto"><table className="min-w-full border-collapse border border-zinc-200" {...props} /></div>,
-                              th: ({node, ...props}) => <th className="border border-zinc-200 px-3 py-2 text-left bg-zinc-50 font-semibold" {...props} />,
-                              td: ({node, ...props}) => <td className="border border-zinc-200 px-3 py-2" {...props} />,
-                            }}
+                                    <SyntaxHighlighter
+                                      style={oneDark as any}
+                                      language={match[1]}
+                                      PreTag="div"
+                                      customStyle={{
+                                        margin: 0,
+                                        backgroundColor: 'rgb(244, 244, 245)',
+                                        fontSize: '0.875rem',
+                                        lineHeight: '1.25rem',
+                                        borderRadius: '0.5rem'
+                                      }}
+                                    >
+                                      {String(children).replace(/\n$/, '')}
+                                    </SyntaxHighlighter>
+                                  )
+                                },
+                                ul: ({node, ...props}) => <ul className="list-disc pl-5 space-y-1" {...props} />,
+                                ol: ({node, ...props}) => <ol className="list-decimal pl-5 space-y-1" {...props} />,
+                                li: ({node, ...props}) => <li className="pl-1" {...props} />,
+                                a: ({node, ...props}) => <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
+                                h1: ({node, ...props}) => <h3 className="text-xl font-semibold" {...props} />,
+                                h2: ({node, ...props}) => <h4 className="text-lg font-semibold" {...props} />,
+                                h3: ({node, ...props}) => <h5 className="text-base font-semibold" {...props} />,
+                                blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-zinc-300 pl-3 italic text-zinc-600 my-2" {...props} />,
+                                table: ({node, ...props}) => <div className="overflow-x-auto"><table className="min-w-full border-collapse border border-zinc-200" {...props} /></div>,
+                                th: ({node, ...props}) => <th className="border border-zinc-200 px-3 py-2 text-left bg-zinc-50 font-semibold" {...props} />,
+                                td: ({node, ...props}) => <td className="border border-zinc-200 px-3 py-2" {...props} />,
+                              }}
+                            >
+                              {message.content}
+                            </ReactMarkdown>
+                          </div>
+                        </motion.div>
+
+                        {/* Message Actions */}
+                        {message.id && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className={`absolute ${
+                              message.role === "user" ? "left-0" : "right-0"
+                            } -bottom-8 flex items-center gap-1 bg-white border border-zinc-200 rounded-lg px-2 py-1 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200`}
                           >
-                            {message.content}
-                          </ReactMarkdown>
-                        </div>
-                      </motion.div>
+                            <motion.button
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.9 }}
+                              onClick={() => copyMessage(message.content)}
+                              className="p-1 hover:bg-zinc-100 rounded transition-colors"
+                              title="Copy message"
+                            >
+                              <Copy className="w-3 h-3 text-zinc-500" />
+                            </motion.button>
+                            
+                            {message.role === "assistant" && (
+                              <>
+                                <motion.button
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  onClick={() => handleMessageFeedback(message.id!, 'positive')}
+                                  className={`p-1 hover:bg-zinc-100 rounded transition-colors ${
+                                    message.feedback === 'positive' ? 'text-green-600' : 'text-zinc-500'
+                                  }`}
+                                  title="Good response"
+                                >
+                                  <ThumbsUp className="w-3 h-3" />
+                                </motion.button>
+                                
+                                <motion.button
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  onClick={() => handleMessageFeedback(message.id!, 'negative')}
+                                  className={`p-1 hover:bg-zinc-100 rounded transition-colors ${
+                                    message.feedback === 'negative' ? 'text-red-600' : 'text-zinc-500'
+                                  }`}
+                                  title="Poor response"
+                                >
+                                  <ThumbsDown className="w-3 h-3" />
+                                </motion.button>
+                              </>
+                            )}
+                            
+                            {/* Response time indicator */}
+                            {message.responseTime && (
+                              <span className="text-[10px] text-zinc-400 ml-1">
+                                {message.responseTime}ms
+                              </span>
+                            )}
+                          </motion.div>
+                        )}
+                      </div>
                       {message.role === "user" && (
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-zinc-700 to-black flex items-center justify-center text-white ml-2 shadow-sm">
                           <span className="text-xs font-medium">You</span>
