@@ -1,4 +1,5 @@
 import emailjs from '@emailjs/browser';
+import { createMeetingWithCalendar, type MeetingDetails, type AppointmentMeetingData } from './meeting-service';
 
 // EmailJS configuration
 const EMAILJS_CONFIG = {
@@ -22,6 +23,8 @@ export interface AppointmentEmailData {
   preferred_date: string;
   preferred_time: string;
   timezone: string;
+  duration?: number; // in minutes, defaults to 60
+  meeting_platform?: 'google-meet' | 'zoom'; // defaults to google-meet
   message?: string;
   owner_name: string;
   owner_email: string;
@@ -30,6 +33,20 @@ export interface AppointmentEmailData {
 // Send confirmation email to user
 export const sendUserConfirmationEmail = async (data: AppointmentEmailData) => {
   try {
+    // Create meeting link
+    const meetingData: AppointmentMeetingData = {
+      subject: data.subject,
+      date: data.preferred_date,
+      time: data.preferred_time,
+      timezone: data.timezone,
+      duration: data.duration || 60,
+      hostEmail: data.owner_email,
+      attendeeEmail: data.user_email,
+      attendeeName: data.user_name,
+    };
+    
+    const meetingDetails = createMeetingWithCalendar(meetingData, data.meeting_platform || 'google-meet');
+    
     const templateParams = {
       to_name: data.user_name,
       to_email: data.user_email,
@@ -42,8 +59,17 @@ export const sendUserConfirmationEmail = async (data: AppointmentEmailData) => {
       preferred_date: data.preferred_date,
       preferred_time: data.preferred_time,
       timezone: data.timezone,
+      duration: data.duration || 60,
       message: data.message || '',
       reply_to: data.owner_email,
+      // Meeting details
+      meeting_platform: meetingDetails.platform,
+      meeting_url: meetingDetails.meetingUrl,
+      meeting_id: meetingDetails.meetingId,
+      meeting_passcode: meetingDetails.passcode || '',
+      meeting_instructions: meetingDetails.instructions,
+      calendar_url: meetingDetails.calendarUrl,
+      calendar_instructions: meetingDetails.calendarInstructions,
     };
 
     const response = await emailjs.send(
@@ -62,6 +88,20 @@ export const sendUserConfirmationEmail = async (data: AppointmentEmailData) => {
 // Send notification email to owner
 export const sendOwnerNotificationEmail = async (data: AppointmentEmailData) => {
   try {
+    // Create meeting link (same as user email)
+    const meetingData: AppointmentMeetingData = {
+      subject: data.subject,
+      date: data.preferred_date,
+      time: data.preferred_time,
+      timezone: data.timezone,
+      duration: data.duration || 60,
+      hostEmail: data.owner_email,
+      attendeeEmail: data.user_email,
+      attendeeName: data.user_name,
+    };
+    
+    const meetingDetails = createMeetingWithCalendar(meetingData, data.meeting_platform || 'google-meet');
+    
     const templateParams = {
       to_name: data.owner_name,
       to_email: data.owner_email,
@@ -74,8 +114,17 @@ export const sendOwnerNotificationEmail = async (data: AppointmentEmailData) => 
       preferred_date: data.preferred_date,
       preferred_time: data.preferred_time,
       timezone: data.timezone,
+      duration: data.duration || 60,
       message: data.message || '',
       reply_to: data.user_email,
+      // Meeting details
+      meeting_platform: meetingDetails.platform,
+      meeting_url: meetingDetails.meetingUrl,
+      meeting_id: meetingDetails.meetingId,
+      meeting_passcode: meetingDetails.passcode || '',
+      meeting_instructions: meetingDetails.instructions,
+      calendar_url: meetingDetails.calendarUrl,
+      calendar_instructions: meetingDetails.calendarInstructions,
     };
 
     const response = await emailjs.send(

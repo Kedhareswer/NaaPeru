@@ -14,6 +14,8 @@ export async function POST(request: NextRequest) {
       preferred_date: body.date || body.preferred_date || '',
       preferred_time: body.time || body.preferred_time || '',
       timezone: body.timezone || '',
+      duration: body.duration || 60, // Default 60 minutes
+      meeting_platform: body.meeting_platform || 'google-meet', // Default Google Meet
       message: body.message || body.additional_message || '',
       owner_name: 'Kedhareswer Naidu',
       owner_email: 'kedhareswer.12110626@gmail.com'

@@ -161,7 +161,7 @@ export default function ChatInterface() {
         const assistantMessage: EnhancedMessage = {
           role: "assistant" as const,
           content:
-            "I'd be happy to help you schedule an appointment with Kedhareswer. Please provide the following details:\n\n1. Your name\n2. Contact information (email or phone)\n3. Subject or purpose of the meeting\n4. Preferred date (YYYY-MM-DD)\n5. Preferred time\n6. Your timezone",
+            "I'd be happy to help you schedule an appointment with Kedhareswer! 🎥 I'll automatically create a video meeting link for your convenience.\n\n**Required Information:**\n1. **Your name**\n2. **Contact information** (email or phone)\n3. **Subject or purpose** of the meeting\n4. **Preferred date** (YYYY-MM-DD)\n5. **Preferred time**\n6. **Your timezone**\n\n**Optional Information:**\n7. **Meeting duration** (default: 60 minutes)\n8. **Video platform preference** (Google Meet or Zoom - default: Google Meet)\n\n💡 **What I'll provide:**\n• Video meeting link (Google Meet or Zoom)\n• Calendar invitation link\n• Email confirmations to both parties\n• Meeting agenda and instructions\n\nPlease share your details, and I'll take care of everything!",
           id: generateMessageId(),
           timestamp: new Date(),
           feedback: null,
@@ -286,6 +286,24 @@ export default function ChatInterface() {
                 newestMessage.content.match(/(GMT[+-]\d+|[A-Z]{3,4})/i)
               if (timezoneMatch) appointmentData.timezone = timezoneMatch[1].trim()
 
+              // Extract duration (optional)
+              const durationMatch =
+                newestMessage.content.match(/duration:?\s*(\d+)\s*minutes?/i) ||
+                newestMessage.content.match(/(\d+)\s*minutes?\s*meeting/i) ||
+                newestMessage.content.match(/(\d+)\s*mins?/i)
+              if (durationMatch) appointmentData.duration = parseInt(durationMatch[1])
+
+              // Extract meeting platform preference (optional)
+              const platformMatch =
+                newestMessage.content.match(/platform:?\s*(google\s*meet|zoom)/i) ||
+                newestMessage.content.match(/(google\s*meet|zoom)/i)
+              if (platformMatch) {
+                const platform = platformMatch[1].toLowerCase().replace(/\s+/g, '-')
+                if (platform === 'google-meet' || platform === 'zoom') {
+                  appointmentData.meeting_platform = platform
+                }
+              }
+
               // Validate appointment data
               if (appointmentData.name && appointmentData.contact && appointmentData.subject && appointmentData.date) {
                 setPendingAppointment(appointmentData)
@@ -298,7 +316,7 @@ export default function ChatInterface() {
             const followUpMessage = {
               role: "assistant" as const,
               content:
-                "I couldn't fully understand the appointment details. Please provide your information in this format:\n\nName: Your Name\nContact: your.email@example.com or phone number\nSubject: Brief description of meeting purpose\nDate: YYYY-MM-DD\nTime: HH:MM AM/PM\nTimezone: Your timezone (e.g., EST, GMT+1)",
+                "I couldn't fully understand the appointment details. Please provide your information in this format:\n\n**Required:**\nName: Your Name\nContact: your.email@example.com or phone number\nSubject: Brief description of meeting purpose\nDate: YYYY-MM-DD\nTime: HH:MM AM/PM\nTimezone: Your timezone (e.g., EST, GMT+1)\n\n**Optional:**\nDuration: 60 minutes (or your preference)\nPlatform: Google Meet or Zoom\n\n💡 I'll create the video meeting link and send invitations automatically!",
             }
             setMessages((prev) => [...prev, followUpMessage])
           } catch (error) {
@@ -333,7 +351,7 @@ export default function ChatInterface() {
         // Successful appointment with emails sent
         const confirmationMessage: EnhancedMessage = {
           role: "assistant" as const,
-          content: `Great! Your appointment has been scheduled successfully. Here are the details:\n\n📅 **Appointment Details:**\n• **Name:** ${pendingAppointment.name}\n• **Contact:** ${pendingAppointment.contact}\n• **Subject:** ${pendingAppointment.subject}\n• **Date:** ${pendingAppointment.date}\n• **Time:** ${pendingAppointment.time}\n• **Timezone:** ${pendingAppointment.timezone}\n\n✅ **Confirmation emails have been sent to:**\n• You (${pendingAppointment.contact})\n• Kedhareswer (kedhareswer.12110626@gmail.com)\n\nI'll respond to you within 24-48 hours to confirm the appointment time. Thank you!`,
+          content: `Great! Your appointment has been scheduled successfully. Here are the details:\n\n📅 **Appointment Details:**\n• **Name:** ${pendingAppointment.name}\n• **Contact:** ${pendingAppointment.contact}\n• **Subject:** ${pendingAppointment.subject}\n• **Date:** ${pendingAppointment.date}\n• **Time:** ${pendingAppointment.time}\n• **Timezone:** ${pendingAppointment.timezone}\n• **Duration:** ${pendingAppointment.duration || 60} minutes\n• **Platform:** ${pendingAppointment.meeting_platform === 'zoom' ? 'Zoom' : 'Google Meet'}\n\n🎥 **Video Meeting:**\n• Meeting link and details included in your email\n• Calendar invitation available\n• Join instructions provided\n\n✅ **Confirmation emails sent to:**\n• You (${pendingAppointment.contact})\n• Kedhareswer (kedhareswer.12110626@gmail.com)\n\n📧 **Check your email for:**\n• Video meeting link\n• Calendar invitation\n• Meeting agenda\n• Join instructions\n\nKedhareswer will respond within 24-48 hours to confirm. Thank you!`,
           id: generateMessageId(),
           timestamp: new Date(),
           feedback: null
