@@ -17,12 +17,12 @@ export default function ProjectsPage() {
   }, [])
 
   if (loading) {
-    return (
+  return (
       <div className="flex items-center justify-center h-screen">
         <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    )
-  }
+    </div>
+  )
+}
 
   return (
     <div className="container mx-auto px-6 py-20">
@@ -30,7 +30,7 @@ export default function ProjectsPage() {
         <a href="/" className="flex items-center text-gray-600 hover:text-black transition-colors">
           <ArrowLeft className="w-5 h-5 mr-2" /> Back to Home
         </a>
-      </div>
+          </div>
       <h1 className="text-3xl font-light mb-10 text-center">All Projects</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {projects.map((p, i) => (
