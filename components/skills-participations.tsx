@@ -16,18 +16,13 @@ const hobbies = [
   {
     name: "Reading",
     icon: Book,
-    description: "Science fiction and technical literature enthusiast",
+    description: "Science fiction and Fantasy literature enthusiast",
   },
   {
     name: "Music",
     icon: Music,
-    description: "Listening to music and exploring new genres",
-  },
-  {
-    name: "Traveling",
-    icon: Plane,
-    description: "Exploring new cultures and destinations",
-  },
+    description: "Listening to music",
+  }
 ]
 
 const skills = [
@@ -70,14 +65,19 @@ const participations = [
     title: "Hackathons & Competitions",
     items: [
       {
-        name: "AI/ML Hackathon 2023",
-        description: "Developed an innovative solution for real-time emotion recognition",
+        name: "World's Largest Hackathon",
+        description: "Bolt.new - June 2025",
         icon: Trophy,
       },
       {
-        name: "Data Science Challenge",
-        description: "Created predictive models for business optimization",
-        icon: Award,
+        name: "Red-Bus Data Decode Hackathon 2025",
+        description: "Analytics Vidhya - June 2025",
+        icon: Trophy,
+      },
+      {
+        name: "Predicting Optimal Fertilizers",
+        description: "Kaggle - May 2025",
+        icon: Trophy,
       },
     ],
   },
@@ -97,6 +97,16 @@ const participations = [
       {
         name: "Introduction to Responsible AI",
         description: "Google - November 2024",
+        icon: Medal,
+      },
+      {
+        name: "Neo4j Certified Professional",
+        description: "Neo4j - July 2025",
+        icon: Medal,
+      },
+      {
+        name: "Python for Data Science",
+        description: "Infosys - May 2025",
         icon: Medal,
       },
     ],

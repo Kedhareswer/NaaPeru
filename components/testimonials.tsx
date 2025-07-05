@@ -34,11 +34,11 @@ const testimonials = [
     linkedin: "https://www.linkedin.com/in/mahamad-suhail/",
   },
   {
-    name: "David Wilson",
-    role: "Data Engineering Director",
+    name: "Aman Kumar",
+    role: "Assistant Manager at upGrad",
     text: "Exceptional talent in both technical implementation and strategic thinking. Their contributions to our data infrastructure have been foundational to our success in AI initiatives.",
-    image: "/testimonials/david.svg",
-    linkedin: "https://www.linkedin.com/in/david-wilson-data/",
+    image: "/testimonials/aman.jpg",
+    linkedin: "https://www.linkedin.com/in/aman-kumar-27073b249/",
   },
 ]
 

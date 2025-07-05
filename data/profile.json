@@ -245,6 +245,18 @@
       "issuer": "Google",
       "date": "November 2024",
       "description": "Understanding ethical considerations and responsible practices in AI development."
+    },
+    {
+      "name": "Neo4j Certified Professional",
+      "issuer": "Neo4j",
+      "date": "July 2025",
+      "description": "Demonstrated proficiency in graph databases, Cypher querying, and Neo4j data modeling."
+    },
+    {
+      "name": "Python for Data Science",
+      "issuer": "Infosys",
+      "date": "May 2025",
+      "description": "Completed comprehensive coursework covering Python programming, data analysis, and visualization for data science applications."
     }
   ],
   
@@ -274,10 +286,10 @@
       "linkedin": "https://www.linkedin.com/in/mahamad-suhail/"
     },
     {
-      "name": "David Wilson",
-      "role": "Data Engineering Director",
+      "name": "Aman Kumar",
+      "role": "Assistant Manager at upGrad",
       "text": "Exceptional talent in both technical implementation and strategic thinking. Their contributions to our data infrastructure have been foundational to our success in AI initiatives.",
-      "linkedin": "https://www.linkedin.com/in/david-wilson-data/"
+      "linkedin": "https://www.linkedin.com/in/aman-kumar-27073b249/"
     }
   ],
   
