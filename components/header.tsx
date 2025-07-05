@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion"
+import { motion, AnimatePresence, useScroll, useMotionValueEvent, type Variants } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import { useRouter, usePathname } from "next/navigation"
 
@@ -12,7 +12,7 @@ const navItems = [
   { name: "Contact", href: "/#contact" },
 ]
 
-const variants = {
+const variants: Variants = {
   hidden: { opacity: 0, y: -20 },
   visible: (i: number) => ({
     opacity: 1,
@@ -20,7 +20,7 @@ const variants = {
     transition: {
       delay: 0.1 * i,
       duration: 0.4,
-      ease: [0.22, 1, 0.36, 1],
+      ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
     },
   }),
 }

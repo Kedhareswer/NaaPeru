@@ -10,8 +10,8 @@ const education = [
     location: "Phagwara, Punjab, India",
     degree: "Bachelor of Technology - Computer Science and Engineering",
     specialization: "Data Science (AI & ML)",
-    cgpa: 7.55,
-    period: "Since September 2021",
+    cgpa: 7.71,
+    period: "September 2021 - July 2025",
     icon: GraduationCap,
   },
   {
@@ -36,7 +36,7 @@ const experiences = [
   {
     title: "AI Evaluator & Trainer",
     company: "Outlier.AI, Data Annotation, Soul.AI",
-    period: "Nov 2024 - Present",
+    period: "Nov 2024 - Jun 2025",
     description:
       "Contributing to AI model improvement by evaluating mathematical content, assessing factuality and quality of AI-generated text, and crafting subject-specific questions to enhance accuracy.",
     icon: Briefcase,
