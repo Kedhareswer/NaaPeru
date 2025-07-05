@@ -5,6 +5,28 @@ import { createMeetingLink, type AppointmentMeetingData } from '@/lib/meeting-se
 
 export async function POST(request: NextRequest) {
   try {
+    // Check database connection first
+    if (!process.env.NEON_DATABASE_URL) {
+      console.error('NEON_DATABASE_URL environment variable is not set');
+      return NextResponse.json({
+        success: false,
+        error: 'Database configuration error',
+        message: 'Database connection is not properly configured. Please contact the administrator.'
+      }, { status: 500 });
+    }
+
+    // Test database connection
+    try {
+      await sql`SELECT 1`;
+    } catch (dbTestError) {
+      console.error('Database connection test failed:', dbTestError);
+      return NextResponse.json({
+        success: false,
+        error: 'Database connection error',
+        message: 'Cannot connect to database. Please try again later.'
+      }, { status: 500 });
+    }
+
     const body = await request.json();
     
     // Extract appointment data from request
@@ -77,9 +99,31 @@ export async function POST(request: NextRequest) {
         ${meetingPlatform},
         ${meetingLink}
       )`;
+      console.log('Appointment saved to database successfully');
     } catch (dbError) {
       console.error('Failed to save appointment to database', dbError);
-      // Continue even if DB fails
+      
+      // Log the error details for debugging
+      console.error('Database error details:', {
+        error: dbError,
+        appointmentData: {
+          user_name: appointmentData.user_name,
+          user_email: appointmentData.user_email,
+          subject: appointmentData.subject,
+          preferred_date: appointmentData.preferred_date,
+          preferred_time: appointmentData.preferred_time,
+          timezone: appointmentData.timezone,
+          meeting_platform: meetingPlatform,
+          meeting_link: meetingLink
+        }
+      });
+      
+      // Return early if database save fails
+      return NextResponse.json({
+        success: false,
+        error: 'Database error',
+        message: 'Failed to save appointment to database. Please try again or contact directly via email.'
+      }, { status: 500 });
     }
 
     // Send emails using EmailJS
