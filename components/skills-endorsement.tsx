@@ -12,7 +12,6 @@ interface Skill {
   name: string
   category: string
   endorsements: number
-  rating: number
   endorsed?: boolean
 }
 
@@ -46,9 +45,7 @@ export default function SkillsEndorsement() {
 
   const sortedSkills = [...filteredSkills].sort((a, b) => {
     const factor = sortDirection === 'desc' ? -1 : 1
-    return sort === 'endorsements' 
-      ? (a.endorsements - b.endorsements) * factor
-      : (a.rating - b.rating) * factor
+    return (a.endorsements - b.endorsements) * factor
   })
 
   const toggleCategory = (category: string) => {

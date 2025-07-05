@@ -15,6 +15,7 @@ interface Project {
   image: string
   demoUrl?: string
   featured?: boolean
+  technologies?: string[]
 }
 
 interface ProjectCardProps {
@@ -25,6 +26,12 @@ interface ProjectCardProps {
 
 export function EnhancedProjectCard({ project, index, onViewDetails }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false)
+
+  const techPreview = Array.isArray(project.technologies)
+    ? project.technologies.slice(0, 3)
+    : [];
+
+  const catArr = Array.isArray(project.categories) ? project.categories : [];
 
   return (
     <motion.div
@@ -105,7 +112,7 @@ export function EnhancedProjectCard({ project, index, onViewDetails }: ProjectCa
 
           {/* Categories */}
           <div className="flex flex-wrap gap-2 mb-4">
-            {project.categories.slice(0, 3).map((category, idx) => (
+            {catArr.slice(0, 3).map((category, idx) => (
               <span
                 key={idx}
                 className="text-xs font-medium bg-gray-100 text-gray-700 px-3 py-1 rounded-full hover:bg-gray-200 transition-colors"
@@ -113,8 +120,8 @@ export function EnhancedProjectCard({ project, index, onViewDetails }: ProjectCa
                 {category}
               </span>
             ))}
-            {project.categories.length > 3 && (
-              <span className="text-xs text-gray-500 px-2 py-1">+{project.categories.length - 3} more</span>
+            {catArr.length > 3 && (
+              <span className="text-xs text-gray-500 px-2 py-1">+{catArr.length - 3} more</span>
             )}
           </div>
 

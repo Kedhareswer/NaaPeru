@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ChevronRight } from "lucide-react"
@@ -22,109 +22,27 @@ interface Project {
   gallery?: string[]
 }
 
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "Image to Sketch",
-    description:
-      "Developed a deep learning model to convert images into sketches, achieving 90% accuracy in sketch rendering and optimizing processing speed by 30%.",
-    categories: ["Deep Learning", "Machine Learning"],
-    date: "April 2025",
-    image: "/projects/image-to-sketch.png",
-    demoUrl: "https://image-to-sketch-wine.vercel.app/",
-    githubUrl: "https://github.com/Kedhareswer/MLGeneFunction",
-    technologies: ["Deep Learning", "Python", "TensorFlow", "OpenCV"],
-    objectives: ["Convert images into sketches", "Optimize processing speed", "Maintain image quality"],
-    outcomes: [
-      "90% accuracy in sketch rendering",
-      "30% optimization in processing speed",
-      "Real-time processing capability",
-    ],
-    gallery: [
-      "/projects/image-to-sketch.png",
-      "/projects/image-to-sketch-dark.png",
-      "/projects/image-to-sketch-convert.png",
-    ],
-  },
-  {
-    id: 2,
-    title: "Endoscopy Image Enhancement",
-    description:
-      "Advanced medical imaging enhancement system using deep learning for improved endoscopic visualization and diagnosis accuracy.",
-    categories: ["Deep Learning", "Machine Learning"],
-    date: "May 2025",
-    image: "/projects/endoscopy-image-enhancement.png",
-    githubUrl: "https://github.com/Kedhareswer/endoscopy-enhancement",
-    technologies: ["Deep Learning", "Computer Vision", "Python", "Medical Imaging"],
-    objectives: ["Enhance endoscopic image quality", "Improve diagnostic accuracy", "Reduce noise and artifacts"],
-    outcomes: ["Improved image clarity by 40%", "Enhanced diagnostic capabilities", "Reduced processing time"],
-    gallery: ["/projects/endoscopy-image-enhancement.png", "/projects/endoscopy-image-enhancement-2.png"],
-  },
-  {
-    id: 3,
-    title: "Digit Classifier",
-    description:
-      "A modern web-based digit recognition application that uses Deep Learning to classify handwritten digits. Built with Next.js, FastAPI, and TensorFlow.",
-    categories: ["Deep Learning", "Machine Learning"],
-    date: "May 2025",
-    image: "/projects/digit.png",
-    githubUrl: "https://github.com/Kedhareswer/Digit_Classifier_DeepLearning",
-    technologies: ["Deep Learning", "Next.js", "FastAPI", "TensorFlow"],
-    objectives: ["Classify handwritten digits", "Create web interface", "Implement real-time prediction"],
-    outcomes: ["99% accuracy on test dataset", "Real-time digit recognition", "User-friendly web interface"],
-    gallery: ["/projects/digit.png", "/projects/digit-2.png", "/projects/digit-interface.jpeg"],
-  },
-  {
-    id: 4,
-    title: "Collaborative Research Hub",
-    description:
-      "A comprehensive real-time collaborative workspace designed for research teams, integrating advanced AI capabilities with robust team collaboration features.",
-    categories: ["Machine Learning", "Data Science"],
-    date: "March 2025",
-    image: "/projects/research-bolt.png",
-    githubUrl: "https://github.com/Kedhareswer/ai-project-planner",
-    technologies: ["Machine Learning", "React", "Node.js", "WebSocket"],
-    objectives: ["Create collaborative workspace", "Integrate AI capabilities", "Enable real-time collaboration"],
-    outcomes: ["Seamless team collaboration", "AI-powered research assistance", "Real-time document editing"],
-    gallery: ["/projects/research-bolt.png", "/projects/research-bolt-2.png"],
-  },
-  {
-    id: 5,
-    title: "Artify AI - Image to Oil Paint",
-    description:
-      "AI-powered art transformation system that converts photographs into stunning oil painting style artworks.",
-    categories: ["Deep Learning", "Machine Learning"],
-    date: "February 2025",
-    image: "/projects/image-to-sketch-dark.png",
-    githubUrl: "https://github.com/Kedhareswer/Image-to-Oil_Paint",
-    technologies: ["Deep Learning", "Python", "Neural Style Transfer", "Computer Vision"],
-    objectives: ["Transform photos to oil paintings", "Preserve artistic quality", "Optimize processing speed"],
-    outcomes: ["High-quality artistic transformations", "Fast processing pipeline", "Multiple artistic styles"],
-    gallery: ["/projects/image-to-sketch-dark.png", "/projects/image-to-sketch.png"],
-  },
-  {
-    id: 6,
-    title: "Web Development - 100 Mini Projects",
-    description:
-      "A comprehensive collection of 100 web development projects showcasing modern frontend technologies, responsive design patterns, and interactive user interfaces.",
-    categories: ["Other Projects"],
-    date: "March 2023",
-    image: "/projects/web-dev-projects.png",
-    demoUrl: "https://v0-vintage-web-development-app.vercel.app/",
-    githubUrl: "https://github.com/Kedhareswer/web-dev-projects",
-    technologies: ["HTML", "CSS", "JavaScript", "React", "Vue.js"],
-    objectives: ["Create diverse web projects", "Showcase frontend skills", "Implement responsive designs"],
-    outcomes: ["100 completed projects", "Modern UI/UX patterns", "Cross-browser compatibility"],
-    gallery: ["/projects/web-dev-projects.png", "/projects/web-dev-projects-1.png"],
-  },
-]
-
-const categories = ["All", "Machine Learning", "Deep Learning", "Data Science", "Other Projects"]
+const staticProjects: Project[] = []
 
 export default function CaseStudies() {
+  const [projects, setProjects] = useState<Project[]>(staticProjects)
+  const [loading, setLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [selectedProject, setSelectedProject] = useState<any>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const categories = [
+    'All',
+    ...Array.from(new Set(projects.flatMap(p => p.categories || [])))
+  ]
+
+  useEffect(() => {
+    fetch('/api/projects?featured=true', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => setProjects(data.projects || []))
+      .catch(console.error)
+      .finally(() => setLoading(false))
+  }, [])
 
   const filteredProjects =
     selectedCategory === "All" ? projects : projects.filter((project) => project.categories.includes(selectedCategory))
@@ -138,6 +56,8 @@ export default function CaseStudies() {
     setIsModalOpen(false)
     setSelectedProject(null)
   }
+
+  if (loading) return null
 
   return (
     <section id="case-studies" className="py-20 bg-white">

@@ -5,7 +5,6 @@ interface Skill {
   name: string;
   category: string;
   endorsements: number;
-  rating: number;
   endorsed?: boolean;
 }
 

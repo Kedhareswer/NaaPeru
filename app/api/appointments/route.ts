@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendAppointmentEmails, validateAppointmentData, type AppointmentEmailData } from '@/lib/email-service';
+import sql from '@/lib/db';
+import { createMeetingLink, type AppointmentMeetingData } from '@/lib/meeting-service';
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,7 +16,7 @@ export async function POST(request: NextRequest) {
       preferred_date: body.date || body.preferred_date || '',
       preferred_time: body.time || body.preferred_time || '',
       timezone: body.timezone || '',
-      duration: body.duration || 60, // Default 60 minutes
+      duration: body.duration || 20, // Default 20 minutes
       meeting_platform: body.meeting_platform || 'google-meet', // Default Google Meet
       message: body.message || body.additional_message || '',
       owner_name: 'Kedhareswer Naidu',
@@ -40,6 +42,44 @@ export async function POST(request: NextRequest) {
         success: false,
         error: 'Email service is not properly configured. Please contact the administrator.'
       }, { status: 500 });
+    }
+
+    // Generate meeting link/details
+    let meetingPlatform = appointmentData.meeting_platform || 'google-meet';
+    let meetingLink = '';
+    try {
+      const meetingData: AppointmentMeetingData = {
+        subject: appointmentData.subject,
+        date: appointmentData.preferred_date,
+        time: appointmentData.preferred_time,
+        timezone: appointmentData.timezone,
+        duration: appointmentData.duration || 60,
+        hostEmail: appointmentData.owner_email,
+        attendeeEmail: appointmentData.user_email,
+        attendeeName: appointmentData.user_name,
+      };
+      const meetingDetails = createMeetingLink(meetingData, meetingPlatform);
+      meetingPlatform = meetingDetails.platform;
+      meetingLink = meetingDetails.meetingUrl;
+    } catch (linkErr) {
+      console.error('Failed to generate meeting link', linkErr);
+    }
+
+    // Persist appointment to database (includes platform & link)
+    try {
+      await sql`INSERT INTO appointments (user_name, user_email, subject, preferred_date, preferred_time, timezone, meeting_platform, meeting_link) VALUES (
+        ${appointmentData.user_name},
+        ${appointmentData.user_email},
+        ${appointmentData.subject},
+        ${appointmentData.preferred_date},
+        ${appointmentData.preferred_time},
+        ${appointmentData.timezone},
+        ${meetingPlatform},
+        ${meetingLink}
+      )`;
+    } catch (dbError) {
+      console.error('Failed to save appointment to database', dbError);
+      // Continue even if DB fails
     }
 
     // Send emails using EmailJS

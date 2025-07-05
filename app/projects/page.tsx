@@ -1,42 +1,42 @@
-import { Suspense } from "react"
+"use client"
 
-// Create a loading fallback component
-function ProjectsLoading() {
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="animate-pulse">
-        <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="h-64 bg-gray-200 rounded-lg"></div>
-          ))}
-        </div>
+import { useEffect, useState } from 'react'
+import { EnhancedProjectCard } from '@/components/enhanced-project-card'
+import { Loader2, ArrowLeft } from 'lucide-react'
+
+export default function ProjectsPage() {
+  const [projects, setProjects] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/projects', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => setProjects(data.projects || []))
+      .catch(console.error)
+      .finally(() => setLoading(false))
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader2 className="h-8 w-8 animate-spin" />
       </div>
-    </div>
-  )
-}
+    )
+  }
 
-// Assume ProjectsList is a component that uses useSearchParams
-function ProjectsList() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-4">Projects</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[...Array(9)].map((_, i) => (
-          <div key={i} className="bg-white rounded-lg shadow-md p-4">
-            <h2 className="text-lg font-semibold mb-2">Project {i + 1}</h2>
-            <p className="text-gray-700">Description of project {i + 1}.</p>
-          </div>
+    <div className="container mx-auto px-6 py-20">
+      <div className="flex items-center mb-6">
+        <a href="/" className="flex items-center text-gray-600 hover:text-black transition-colors">
+          <ArrowLeft className="w-5 h-5 mr-2" /> Back to Home
+        </a>
+      </div>
+      <h1 className="text-3xl font-light mb-10 text-center">All Projects</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {projects.map((p, i) => (
+          <EnhancedProjectCard key={p.id} project={{ ...p, featured: false }} index={i} onViewDetails={() => {}} />
         ))}
       </div>
     </div>
-  )
-}
-
-export default function ProjectsPage() {
-  return (
-    <Suspense fallback={<ProjectsLoading />}>
-      <ProjectsList />
-    </Suspense>
   )
 }

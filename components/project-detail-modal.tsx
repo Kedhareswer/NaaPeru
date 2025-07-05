@@ -57,6 +57,11 @@ export function ProjectDetailModal({ project, isOpen, onClose }: ProjectDetailMo
 
   if (!project) return null
 
+  const catArr = Array.isArray(project.categories) ? project.categories : [];
+  const techArr = Array.isArray(project.technologies) ? project.technologies : [];
+  const objArr = Array.isArray(project.objectives) ? project.objectives : [];
+  const outArr = Array.isArray(project.outcomes) ? project.outcomes : [];
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -92,7 +97,7 @@ export function ProjectDetailModal({ project, isOpen, onClose }: ProjectDetailMo
               <div className="pr-12">
                 {/* Categories */}
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {project.categories.map((category) => (
+                  {catArr.map((category) => (
                     <span
                       key={category}
                       className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium"
@@ -133,7 +138,7 @@ export function ProjectDetailModal({ project, isOpen, onClose }: ProjectDetailMo
                     </h3>
                     <div className="w-16 h-px bg-gray-300 mb-6"></div>
                     <div className="flex flex-wrap gap-3">
-                      {project.technologies.map((tech, index) => (
+                      {techArr.map((tech, index) => (
                         <motion.span
                           key={tech}
                           className="px-4 py-2 bg-gray-50 border border-gray-200 text-gray-800 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors"
@@ -157,7 +162,7 @@ export function ProjectDetailModal({ project, isOpen, onClose }: ProjectDetailMo
                       </h3>
                       <div className="w-16 h-px bg-gray-300 mb-6"></div>
                       <ul className="space-y-4">
-                        {project.objectives.map((objective, index) => (
+                        {objArr.map((objective, index) => (
                           <motion.li
                             key={index}
                             className="flex items-start gap-4 text-gray-700"
@@ -180,7 +185,7 @@ export function ProjectDetailModal({ project, isOpen, onClose }: ProjectDetailMo
                       </h3>
                       <div className="w-16 h-px bg-gray-300 mb-6"></div>
                       <ul className="space-y-4">
-                        {project.outcomes.map((outcome, index) => (
+                        {outArr.map((outcome, index) => (
                           <motion.li
                             key={index}
                             className="flex items-start gap-4 text-gray-700"
@@ -219,9 +224,9 @@ export function ProjectDetailModal({ project, isOpen, onClose }: ProjectDetailMo
                     <h3 className="text-xl font-light mb-4 text-gray-900">Quick Actions</h3>
                     <div className="w-16 h-px bg-gray-300 mb-6"></div>
                     <div className="space-y-3">
-                      {project.liveDemo && (
+                      {(project as any).demoUrl && (
                         <Button className="w-full bg-black hover:bg-gray-800 text-white" asChild>
-                          <a href={project.liveDemo} target="_blank" rel="noopener noreferrer">
+                          <a href={(project as any).demoUrl} target="_blank" rel="noopener noreferrer">
                             <ExternalLink className="w-4 h-4 mr-2" />
                             Live Demo
                           </a>

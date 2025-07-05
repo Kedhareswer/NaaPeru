@@ -2,13 +2,11 @@ import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
 import path from 'path';
 import { promises as fs } from 'fs';
+import profileData from '@/data/profile.json';
 
 // Load profile data
 async function loadProfile() {
-  const dataDirectory = path.join(process.cwd(), 'data');
-  const filePath = path.join(dataDirectory, 'profile.json');
-  const jsonData = await fs.readFile(filePath, 'utf8');
-  return JSON.parse(jsonData);
+  return profileData;
 }
 
 // Generate dynamic system prompt with profile data
@@ -62,7 +60,7 @@ async function getSystemPrompt() {
 
 ## Key Points
 - **Role:** ${profile.personalInfo.title}
-- **Skills:** ${profile.skills.programmingLanguages.join(', ')}, ${profile.skills.aiMlTools.slice(0, 3).join(', ')}
+- **Skills:** ${profile.skills.programmingLanguages.join(', ')}, ${profile.skills.aiTools.slice(0, 3).join(', ')}
 - **About:** ${profile.summary}
 
 ## Work Experience
@@ -104,11 +102,11 @@ export async function POST(request: NextRequest) {
     // Enhance system prompt based on conversation mode
     let enhancedPrompt = baseSystemPrompt;
     if (mode === 'detailed') {
-      enhancedPrompt += "\n\nIMPORTANT: Provide detailed, comprehensive responses with specific examples and thorough explanations.";
+      enhancedPrompt += "\n\nIMPORTANT: Provide detailed, factually accurate responses. If you are unsure about any fact, state that uncertainty.";
     } else if (mode === 'creative') {
-      enhancedPrompt += "\n\nIMPORTANT: Be more conversational, creative, and engaging in your responses while maintaining professionalism.";
+      enhancedPrompt += "\n\nIMPORTANT: Be conversational and engaging, but do NOT invent facts. If unsure, respond that you do not have that information.";
     } else {
-      enhancedPrompt += "\n\nIMPORTANT: Keep responses concise but informative, focusing on the most relevant information.";
+      enhancedPrompt += "\n\nIMPORTANT: Keep responses concise and fact-based. If you don't know something, say so explicitly.";
     }
 
     const messages = [
@@ -119,9 +117,9 @@ export async function POST(request: NextRequest) {
 
     // Adjust parameters based on mode
     const modeParams = {
-      standard: { temperature: 0.7, max_tokens: 1024 },
-      detailed: { temperature: 0.6, max_tokens: 1500 },
-      creative: { temperature: 0.8, max_tokens: 1200 }
+      standard: { temperature: 0.2, max_tokens: 1024 },
+      detailed: { temperature: 0.25, max_tokens: 1500 },
+      creative: { temperature: 0.3, max_tokens: 1200 }
     };
 
     const params = modeParams[mode as keyof typeof modeParams] || modeParams.standard;

@@ -11,7 +11,7 @@ export default function Contact() {
   const isInView = useInView(ref, { once: true, amount: 0.2 })
   const isMobile = useIsMobile()
 
-  const fadeIn = {
+  const fadeIn: any = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
@@ -20,7 +20,7 @@ export default function Contact() {
     },
   }
 
-  const staggerChildren = {
+  const staggerChildren: any = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -31,7 +31,7 @@ export default function Contact() {
     },
   }
 
-  const childVariants = {
+  const childVariants: any = {
     hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
