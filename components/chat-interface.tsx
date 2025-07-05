@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Send, X, Calendar, ArrowRight, MessageSquare, Sparkles, Search, ThumbsUp, ThumbsDown, Copy, MoreVertical, Settings } from "lucide-react"
+import { Send, X, Calendar, MessageSquare, Sparkles } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { useToast } from "@/components/ui/use-toast"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -13,26 +13,20 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { initEmailJS } from "@/lib/email-service"
 
-// Enhanced message interface with metadata
-interface EnhancedMessage {
+interface Message {
   role: "user" | "assistant"
   content: string
   id?: string
   timestamp?: Date
-  feedback?: 'positive' | 'negative' | null
-  responseTime?: number
 }
 
 export default function ChatInterface() {
-  const [messages, setMessages] = useState<EnhancedMessage[]>([])
+  const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
   const [loading, setLoading] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [pendingAppointment, setPendingAppointment] = useState<any>(null)
   const [showChat, setShowChat] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [showSearch, setShowSearch] = useState(false)
-  const [conversationMode, setConversationMode] = useState<'standard' | 'detailed' | 'creative'>('standard')
   const chatRef = useRef<HTMLDivElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const { toast } = useToast()
@@ -46,64 +40,6 @@ export default function ChatInterface() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
-  // Message feedback handling
-  const handleMessageFeedback = (messageId: string, feedback: 'positive' | 'negative') => {
-    setMessages(prev => prev.map(msg => 
-      msg.id === messageId 
-        ? { ...msg, feedback }
-        : msg
-    ))
-    
-    toast({
-      title: "Feedback Received",
-      description: `Thank you for your ${feedback} feedback! This helps improve responses.`,
-    })
-  }
-
-  // Copy message content
-  const copyMessage = (content: string) => {
-    navigator.clipboard.writeText(content)
-    toast({
-      title: "Copied",
-      description: "Message copied to clipboard",
-    })
-  }
-
-  // Search functionality
-  const filteredMessages = searchQuery 
-    ? messages.filter(msg => 
-        msg.content.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : messages
-
-  // Export conversation functionality
-  const exportConversation = () => {
-    const exportData = {
-      timestamp: new Date().toISOString(),
-      totalMessages: messages.length,
-      messages: messages.map(msg => ({
-        role: msg.role,
-        content: msg.content,
-        timestamp: msg.timestamp,
-        feedback: msg.feedback,
-        responseTime: msg.responseTime
-      }))
-    }
-    
-    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `kedhareswer_conversation_${new Date().toISOString().split('T')[0]}.json`
-    a.click()
-    URL.revokeObjectURL(url)
-    
-    toast({
-      title: "Conversation Exported",
-      description: "Your conversation has been downloaded as a JSON file.",
-    })
-  }
-
   // Initialize EmailJS and add welcome message when component mounts
   useEffect(() => {
     // Initialize EmailJS
@@ -115,12 +51,11 @@ export default function ChatInterface() {
     }
 
     if (messages.length === 0) {
-      const welcomeMessage: EnhancedMessage = {
+      const welcomeMessage: Message = {
         role: "assistant" as const,
         content: "👋 Hi there! I'm Kedhareswer's enhanced virtual assistant. I can help you learn about his background, schedule appointments, and answer any questions. How can I assist you today?",
         id: generateMessageId(),
-        timestamp: new Date(),
-        feedback: null
+        timestamp: new Date()
       }
       setMessages([welcomeMessage])
     }
@@ -131,12 +66,11 @@ export default function ChatInterface() {
     if (!input.trim() || loading) return
 
     const startTime = Date.now()
-    const userMessage: EnhancedMessage = { 
+    const userMessage: Message = { 
       role: "user" as const, 
       content: input,
       id: generateMessageId(),
-      timestamp: new Date(),
-      feedback: null
+      timestamp: new Date()
     }
     const updatedMessages = [...messages, userMessage]
     setMessages(updatedMessages)
@@ -146,7 +80,7 @@ export default function ChatInterface() {
     try {
       // Convert messages to the format expected by the API
       const conversation = updatedMessages
-        .filter((msg): msg is EnhancedMessage => 
+        .filter((msg): msg is Message => 
           msg.role === 'user' || msg.role === 'assistant'
         )
         .map(({ role, content }) => ({ role, content }))
@@ -158,14 +92,12 @@ export default function ChatInterface() {
         input.toLowerCase().includes("meet")
       ) {
         const responseTime = Date.now() - startTime
-        const assistantMessage: EnhancedMessage = {
+        const assistantMessage: Message = {
           role: "assistant" as const,
           content:
-            "I'd be happy to help you schedule an appointment with Kedhareswer! 🎥 I'll automatically create a video meeting link for your convenience.\n\n**Required Information:**\n1. **Your name**\n2. **Contact information** (email or phone)\n3. **Subject or purpose** of the meeting\n4. **Preferred date** (YYYY-MM-DD)\n5. **Preferred time**\n6. **Your timezone**\n\n**Optional Information:**\n7. **Meeting duration** (default: 60 minutes)\n8. **Video platform preference** (Google Meet or Zoom - default: Google Meet)\n\n💡 **What I'll provide:**\n• Video meeting link (Google Meet or Zoom)\n• Calendar invitation link\n• Email confirmations to both parties\n• Meeting agenda and instructions\n\nPlease share your details, and I'll take care of everything!",
+            "I'd be happy to help you schedule an appointment with Kedhareswer! 🎥\n\n**Required Information:**\n1. Your name\n2. Contact information (email or phone)\n3. Subject or purpose of the meeting\n4. Preferred date (YYYY-MM-DD)\n5. Preferred time\n6. Your timezone\n\nPlease share your details, and I'll take care of everything!",
           id: generateMessageId(),
-          timestamp: new Date(),
-          feedback: null,
-          responseTime
+          timestamp: new Date()
         }
         setMessages((prev) => [...prev, assistantMessage])
       } else {
@@ -178,7 +110,6 @@ export default function ChatInterface() {
           body: JSON.stringify({ 
             message: input,
             conversation: conversation.slice(0, -1), // Exclude the current user message
-            mode: conversationMode
           }),
         })
 
@@ -190,13 +121,11 @@ export default function ChatInterface() {
 
         const data = await response.json()
         const responseTime = Date.now() - startTime
-        const assistantMessage: EnhancedMessage = { 
+        const assistantMessage: Message = { 
           role: "assistant" as const, 
           content: data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response. Please try again.",
           id: generateMessageId(),
-          timestamp: new Date(),
-          feedback: null,
-          responseTime
+          timestamp: new Date()
         }
         setMessages((prev) => [...prev, assistantMessage])
       }
@@ -214,13 +143,11 @@ export default function ChatInterface() {
           + "Please contact the website administrator to enable this feature.";
       }
       
-      const errorAssistantMessage: EnhancedMessage = { 
+      const errorAssistantMessage: Message = { 
         role: "assistant" as const, 
         content: errorMessage,
         id: generateMessageId(),
-        timestamp: new Date(),
-        feedback: null,
-        responseTime
+        timestamp: new Date()
       }
       setMessages(prev => [...prev, errorAssistantMessage]);
     } finally {
@@ -293,17 +220,6 @@ export default function ChatInterface() {
                 newestMessage.content.match(/(\d+)\s*mins?/i)
               if (durationMatch) appointmentData.duration = parseInt(durationMatch[1])
 
-              // Extract meeting platform preference (optional)
-              const platformMatch =
-                newestMessage.content.match(/platform:?\s*(google\s*meet|zoom)/i) ||
-                newestMessage.content.match(/(google\s*meet|zoom)/i)
-              if (platformMatch) {
-                const platform = platformMatch[1].toLowerCase().replace(/\s+/g, '-')
-                if (platform === 'google-meet' || platform === 'zoom') {
-                  appointmentData.meeting_platform = platform
-                }
-              }
-
               // Validate appointment data
               if (appointmentData.name && appointmentData.contact && appointmentData.subject && appointmentData.date) {
                 setPendingAppointment(appointmentData)
@@ -313,10 +229,12 @@ export default function ChatInterface() {
             }
 
             // If we couldn't parse the appointment details
-            const followUpMessage = {
+            const followUpMessage: Message = {
               role: "assistant" as const,
               content:
-                "I couldn't fully understand the appointment details. Please provide your information in this format:\n\n**Required:**\nName: Your Name\nContact: your.email@example.com or phone number\nSubject: Brief description of meeting purpose\nDate: YYYY-MM-DD\nTime: HH:MM AM/PM\nTimezone: Your timezone (e.g., EST, GMT+1)\n\n**Optional:**\nDuration: 60 minutes (or your preference)\nPlatform: Google Meet or Zoom\n\n💡 I'll create the video meeting link and send invitations automatically!",
+                "I couldn't fully understand the appointment details. Please provide your information in this format:\n\nName: Your Name\nContact: your.email@example.com\nSubject: Brief description\nDate: YYYY-MM-DD\nTime: HH:MM AM/PM\nTimezone: Your timezone (e.g., EST, GMT+1)",
+              id: generateMessageId(),
+              timestamp: new Date()
             }
             setMessages((prev) => [...prev, followUpMessage])
           } catch (error) {
@@ -349,12 +267,11 @@ export default function ChatInterface() {
 
       if (response.ok && result.success) {
         // Successful appointment with emails sent
-        const confirmationMessage: EnhancedMessage = {
+        const confirmationMessage: Message = {
           role: "assistant" as const,
           content: `Great! Your appointment has been scheduled successfully. Here are the details:\n\n📅 **Appointment Details:**\n• **Name:** ${pendingAppointment.name}\n• **Contact:** ${pendingAppointment.contact}\n• **Subject:** ${pendingAppointment.subject}\n• **Date:** ${pendingAppointment.date}\n• **Time:** ${pendingAppointment.time}\n• **Timezone:** ${pendingAppointment.timezone}\n• **Duration:** ${pendingAppointment.duration || 60} minutes\n• **Platform:** ${pendingAppointment.meeting_platform === 'zoom' ? 'Zoom' : 'Google Meet'}\n\n🎥 **Video Meeting:**\n• Meeting link and details included in your email\n• Calendar invitation available\n• Join instructions provided\n\n✅ **Confirmation emails sent to:**\n• You (${pendingAppointment.contact})\n• Kedhareswer (kedhareswer.12110626@gmail.com)\n\n📧 **Check your email for:**\n• Video meeting link\n• Calendar invitation\n• Meeting agenda\n• Join instructions\n\nKedhareswer will respond within 24-48 hours to confirm. Thank you!`,
           id: generateMessageId(),
-          timestamp: new Date(),
-          feedback: null
+          timestamp: new Date()
         }
         setMessages((prev) => [...prev, confirmationMessage])
 
@@ -366,12 +283,11 @@ export default function ChatInterface() {
       } else if (response.status === 207 && result.data) {
         // Partial success - appointment received but email issues
         const { emailStatus } = result.data;
-        const confirmationMessage: EnhancedMessage = {
+        const confirmationMessage: Message = {
           role: "assistant" as const,
           content: `Your appointment request has been received! Here are the details:\n\n📅 **Appointment Details:**\n• **Name:** ${pendingAppointment.name}\n• **Contact:** ${pendingAppointment.contact}\n• **Subject:** ${pendingAppointment.subject}\n• **Date:** ${pendingAppointment.date}\n• **Time:** ${pendingAppointment.time}\n• **Timezone:** ${pendingAppointment.timezone}\n\n📧 **Email Status:**\n• Your confirmation: ${emailStatus.userEmail ? '✅ Sent' : '❌ Failed'}\n• Owner notification: ${emailStatus.ownerEmail ? '✅ Sent' : '❌ Failed'}\n\n${result.message}\n\nFor direct contact: kedhareswer.12110626@gmail.com`,
           id: generateMessageId(),
-          timestamp: new Date(),
-          feedback: null
+          timestamp: new Date()
         }
         setMessages((prev) => [...prev, confirmationMessage])
 
@@ -386,12 +302,11 @@ export default function ChatInterface() {
       }
     } catch (error) {
       console.error("Error scheduling appointment:", error)
-      const errorMessage: EnhancedMessage = {
+      const errorMessage: Message = {
         role: "assistant" as const,
         content: `Sorry, there was an error processing your appointment request. Please try one of these alternatives:\n\n📧 **Direct Email:** kedhareswer.12110626@gmail.com\n📞 **Phone:** +91-9398911432\n\nPlease include the following details in your direct message:\n• Your name and contact information\n• Subject: ${pendingAppointment.subject}\n• Preferred date and time: ${pendingAppointment.date} at ${pendingAppointment.time} (${pendingAppointment.timezone})\n\nThank you for your understanding!`,
         id: generateMessageId(),
-        timestamp: new Date(),
-        feedback: null
+        timestamp: new Date()
       }
       setMessages((prev) => [...prev, errorMessage])
 
@@ -411,8 +326,7 @@ export default function ChatInterface() {
     "Book an appointment with Kedhareswer",
     "Tell me about his experience",
     "What are his skills?",
-    "Explain me his projects",
-    "Why is he a suitable candidate for any opportunity"
+    "Show me his projects"
   ]
 
   // Chat toggle animation variants
@@ -479,77 +393,67 @@ export default function ChatInterface() {
     <>
       {/* Appointment Confirmation Dialog */}
       <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
-        <DialogContent className="w-[95vw] max-w-md mx-auto bg-white/95 backdrop-blur-md border border-zinc-200 shadow-xl rounded-2xl">
+        <DialogContent className="w-[95vw] max-w-sm mx-auto bg-white border border-zinc-200 shadow-lg rounded-lg">
           <DialogHeader>
-            <DialogTitle className="text-xl font-medium">Confirm Appointment</DialogTitle>
+            <DialogTitle className="text-base font-medium">Confirm Appointment</DialogTitle>
           </DialogHeader>
-          <div className="p-4 md:p-6 space-y-4">
-            <p className="text-zinc-600">Please confirm your appointment details:</p>
+          <div className="p-4 space-y-3">
+            <p className="text-sm text-zinc-600">Please confirm your appointment details:</p>
             {pendingAppointment && (
-              <div className="space-y-2 bg-zinc-50/80 p-4 rounded-xl border border-zinc-100">
-                <p>
+              <div className="space-y-1 bg-zinc-50 p-3 rounded-lg border border-zinc-100">
+                <p className="text-sm">
                   <span className="font-medium text-zinc-800">Name:</span>{" "}
                   <span className="text-zinc-600">{pendingAppointment.name}</span>
                 </p>
-                <p>
+                <p className="text-sm">
                   <span className="font-medium text-zinc-800">Contact:</span>{" "}
                   <span className="text-zinc-600">{pendingAppointment.contact}</span>
                 </p>
-                <p>
+                <p className="text-sm">
                   <span className="font-medium text-zinc-800">Subject:</span>{" "}
                   <span className="text-zinc-600">{pendingAppointment.subject}</span>
                 </p>
-                <p>
+                <p className="text-sm">
                   <span className="font-medium text-zinc-800">Date:</span>{" "}
                   <span className="text-zinc-600">{pendingAppointment.date}</span>
                 </p>
-                <p>
+                <p className="text-sm">
                   <span className="font-medium text-zinc-800">Time:</span>{" "}
                   <span className="text-zinc-600">{pendingAppointment.time}</span>
                 </p>
-                <p>
+                <p className="text-sm">
                   <span className="font-medium text-zinc-800">Timezone:</span>{" "}
                   <span className="text-zinc-600">{pendingAppointment.timezone}</span>
                 </p>
               </div>
             )}
-            <div className="flex justify-end space-x-3 pt-4">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+            <div className="flex justify-end space-x-2 pt-3">
+              <button
                 onClick={() => setShowConfirmation(false)}
-                className="min-h-[44px] min-w-[80px] px-5 py-3 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-xl hover:bg-zinc-50 hover:border-zinc-300 transition-all duration-200 shadow-sm"
+                className="px-4 py-2 text-sm font-medium text-zinc-700 bg-white border border-zinc-200 rounded-lg hover:bg-zinc-50 transition-colors"
               >
                 Cancel
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+              </button>
+              <button
                 onClick={handleConfirmAppointment}
-                className="min-h-[44px] min-w-[80px] px-5 py-3 text-sm font-medium text-white bg-gradient-to-r from-black to-zinc-800 rounded-xl hover:from-zinc-900 hover:to-black transition-all duration-200 shadow-md flex items-center justify-center gap-2"
+                className="px-4 py-2 text-sm font-medium text-white bg-black rounded-lg hover:bg-zinc-800 transition-colors flex items-center gap-2"
               >
                 <span>Confirm</span>
-                <Calendar className="w-4 h-4" />
-              </motion.button>
+                <Calendar className="w-3 h-3" />
+              </button>
             </div>
           </div>
         </DialogContent>
       </Dialog>
 
       {/* Chat Toggle Button */}
-      <motion.button
-        variants={chatButtonVariants}
-        initial="initial"
-        animate="animate"
-        whileHover="hover"
-        whileTap="tap"
+      <button
         onClick={() => setShowChat(!showChat)}
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg ${showChat ? "bg-zinc-800 text-white" : "bg-black text-white"}`}
+        className={`fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-colors ${showChat ? "bg-zinc-800 text-white" : "bg-black text-white"}`}
         aria-label={showChat ? "Close chat" : "Open chat"}
       >
-        {showChat ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}
-        <span className="sr-only">{showChat ? "Close chat" : "Open chat"}</span>
-      </motion.button>
+        {showChat ? <X className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+      </button>
 
       {/* Chat Interface */}
       <AnimatePresence>
@@ -563,111 +467,40 @@ export default function ChatInterface() {
           >
             <div
               ref={chatRef}
-              className="w-full h-full flex flex-col bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-zinc-100 overflow-hidden"
+              className="w-full h-full flex flex-col bg-white rounded-lg shadow-lg border border-zinc-200 overflow-hidden"
             >
               {/* Chat Header */}
-              <div className="p-4 border-b border-zinc-100 bg-gradient-to-r from-zinc-50 to-white">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-black to-zinc-700 flex items-center justify-center text-white">
-                      <Sparkles className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-zinc-900">Enhanced Assistant</h3>
-                      <p className="text-xs text-zinc-500">
-                        {messages.length > 1 ? `${messages.length - 1} messages` : 'Ask me anything about Kedhareswer'}
-                      </p>
-                    </div>
+              <div className="p-3 border-b border-zinc-200 bg-zinc-50">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center text-white">
+                    <Sparkles className="w-3 h-3" />
                   </div>
-                  
-                  {/* Header Actions */}
-                  <div className="flex items-center gap-2">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => setShowSearch(!showSearch)}
-                      className="p-2 hover:bg-zinc-100 rounded-lg transition-colors"
-                      title="Search conversation"
-                    >
-                      <Search className="w-4 h-4 text-zinc-600" />
-                    </motion.button>
-                    
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={exportConversation}
-                      className="p-2 hover:bg-zinc-100 rounded-lg transition-colors"
-                      title="Export conversation"
-                      disabled={messages.length <= 1}
-                    >
-                      <MoreVertical className="w-4 h-4 text-zinc-600" />
-                    </motion.button>
+                  <div>
+                    <h3 className="text-sm font-medium text-zinc-900">Enhanced Assistant</h3>
+                    <p className="text-xs text-zinc-500">
+                      {messages.length > 1 ? `${messages.length - 1} messages` : 'Ask me anything about Kedhareswer'}
+                    </p>
                   </div>
                 </div>
-
-                {/* Search Bar */}
-                <AnimatePresence>
-                  {showSearch && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="mt-3 pt-3 border-t border-zinc-100"
-                    >
-                      <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-zinc-400" />
-                        <input
-                          type="text"
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          placeholder="Search messages..."
-                          className="w-full pl-10 pr-4 py-2 bg-zinc-50 border border-zinc-200 rounded-lg text-sm focus:outline-none focus:border-zinc-400 focus:ring-2 focus:ring-zinc-200"
-                        />
-                        {searchQuery && (
-                          <button
-                            onClick={() => setSearchQuery("")}
-                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
-                        )}
-                      </div>
-                      {searchQuery && (
-                        <p className="text-xs text-zinc-500 mt-2">
-                          {filteredMessages.length} of {messages.length} messages match
-                        </p>
-                      )}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
               </div>
 
               {/* Messages Container */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-zinc-200 scrollbar-track-transparent hover:scrollbar-thumb-zinc-300 transition-colors">
+              <div className="flex-1 overflow-y-auto p-3 space-y-3 max-h-[400px]">
                 <AnimatePresence initial={false}>
-                  {filteredMessages.map((message, index) => (
-                    <motion.div
-                      key={index}
-                      variants={messageVariants}
-                      initial="hidden"
-                      animate="visible"
-                      className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
-                    >
+                  {messages.map((message, index) => (
+                    <div key={index} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                       {message.role === "assistant" && (
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-zinc-700 mr-2 shadow-sm border border-zinc-100">
-                          <Sparkles className="w-4 h-4" />
+                        <div className="w-6 h-6 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-700 mr-2 border border-zinc-200">
+                          <Sparkles className="w-3 h-3" />
                         </div>
                       )}
-                      <div className="relative group max-w-[80%]">
-                        <motion.div
-                          whileHover={{ scale: 1.01 }}
-                          className={`rounded-2xl p-4 min-h-[44px] ${
-                            message.role === "user"
-                              ? "bg-gradient-to-br from-black to-zinc-800 text-white shadow-lg"
-                              : "bg-zinc-100/90 border border-zinc-200 text-zinc-800 shadow-sm"
-                          }`}
-                        >
-                          <div className="prose prose-sm max-w-none prose-p:my-1.5 prose-ul:my-1.5 prose-ol:my-1.5 prose-headings:my-2 prose-headings:font-medium prose-code:bg-zinc-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-pre:bg-zinc-100 prose-pre:p-3 prose-pre:rounded-lg prose-pre:overflow-x-auto prose-blockquote:border-l-4 prose-blockquote:border-zinc-300 prose-blockquote:pl-3 prose-blockquote:italic prose-blockquote:text-zinc-600 prose-blockquote:my-2">
+                      <div className="max-w-[80%]">
+                        <div className={`rounded-lg p-3 text-sm ${
+                          message.role === "user"
+                            ? "bg-black text-white"
+                            : "bg-zinc-100 border border-zinc-200 text-zinc-800"
+                        }`}>
+                          <div className="prose prose-xs max-w-none prose-p:my-1 prose-ul:my-1 prose-ol:my-1 prose-headings:my-1 prose-headings:font-medium prose-code:bg-zinc-200 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-xs">
                             <ReactMarkdown
                               remarkPlugins={[remarkGfm]}
                               components={{
@@ -685,16 +518,11 @@ export default function ChatInterface() {
                                   
                                   return (
                                     <SyntaxHighlighter
-                                      style={oneDark as any}
+                                      style={oneDark}
                                       language={match[1]}
                                       PreTag="div"
-                                      customStyle={{
-                                        margin: 0,
-                                        backgroundColor: 'rgb(244, 244, 245)',
-                                        fontSize: '0.875rem',
-                                        lineHeight: '1.25rem',
-                                        borderRadius: '0.5rem'
-                                      }}
+                                      className="text-sm rounded-lg"
+                                      {...props}
                                     >
                                       {String(children).replace(/\n$/, '')}
                                     </SyntaxHighlighter>
@@ -716,99 +544,33 @@ export default function ChatInterface() {
                               {message.content}
                             </ReactMarkdown>
                           </div>
-                        </motion.div>
-
-                        {/* Message Actions */}
-                        {message.id && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className={`absolute ${
-                              message.role === "user" ? "left-0" : "right-0"
-                            } -bottom-8 flex items-center gap-1 bg-white border border-zinc-200 rounded-lg px-2 py-1 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200`}
-                          >
-                            <motion.button
-                              whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.9 }}
-                              onClick={() => copyMessage(message.content)}
-                              className="p-1 hover:bg-zinc-100 rounded transition-colors"
-                              title="Copy message"
-                            >
-                              <Copy className="w-3 h-3 text-zinc-500" />
-                            </motion.button>
-                            
-                            {message.role === "assistant" && (
-                              <>
-                                <motion.button
-                                  whileHover={{ scale: 1.1 }}
-                                  whileTap={{ scale: 0.9 }}
-                                  onClick={() => handleMessageFeedback(message.id!, 'positive')}
-                                  className={`p-1 hover:bg-zinc-100 rounded transition-colors ${
-                                    message.feedback === 'positive' ? 'text-green-600' : 'text-zinc-500'
-                                  }`}
-                                  title="Good response"
-                                >
-                                  <ThumbsUp className="w-3 h-3" />
-                                </motion.button>
-                                
-                                <motion.button
-                                  whileHover={{ scale: 1.1 }}
-                                  whileTap={{ scale: 0.9 }}
-                                  onClick={() => handleMessageFeedback(message.id!, 'negative')}
-                                  className={`p-1 hover:bg-zinc-100 rounded transition-colors ${
-                                    message.feedback === 'negative' ? 'text-red-600' : 'text-zinc-500'
-                                  }`}
-                                  title="Poor response"
-                                >
-                                  <ThumbsDown className="w-3 h-3" />
-                                </motion.button>
-                              </>
-                            )}
-                            
-                            {/* Response time indicator */}
-                            {message.responseTime && (
-                              <span className="text-[10px] text-zinc-400 ml-1">
-                                {message.responseTime}ms
-                              </span>
-                            )}
-                          </motion.div>
-                        )}
+                        </div>
                       </div>
                       {message.role === "user" && (
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-zinc-700 to-black flex items-center justify-center text-white ml-2 shadow-sm">
-                          <span className="text-xs font-medium">You</span>
+                        <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center text-white ml-2">
+                          <span className="text-xs font-medium">U</span>
                         </div>
                       )}
-                    </motion.div>
+                    </div>
                   ))}
                 </AnimatePresence>
 
                 {/* Loading Indicator */}
                 {loading && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
-                    <div className="flex items-center space-x-2 bg-zinc-100 rounded-2xl p-4 border border-zinc-200 shadow-sm">
-                      <div className="flex space-x-1.5">
+                  <div className="flex justify-start">
+                    <div className="flex items-center space-x-2 bg-zinc-100 rounded-lg p-3 border border-zinc-200">
+                      <div className="flex space-x-1">
                         {[0, 1, 2].map((i) => (
-                          <motion.div
+                          <div
                             key={i}
-                            animate={{
-                              scale: [1, 1.2, 1],
-                              opacity: [0.4, 1, 0.4],
-                              y: [0, -3, 0],
-                            }}
-                            transition={{
-                              repeat: Number.POSITIVE_INFINITY,
-                              duration: 1.2,
-                              delay: i * 0.2,
-                              ease: "easeInOut",
-                            }}
-                            className="w-2.5 h-2.5 bg-zinc-400 rounded-full"
+                            className="w-2 h-2 bg-zinc-400 rounded-full animate-pulse"
+                            style={{ animationDelay: `${i * 0.2}s` }}
                           />
                         ))}
                       </div>
                       <span className="text-xs text-zinc-500">Thinking...</span>
                     </div>
-                  </motion.div>
+                  </div>
                 )}
 
                 {/* Invisible div for auto-scrolling */}
@@ -816,48 +578,40 @@ export default function ChatInterface() {
               </div>
 
               {/* Quick Replies */}
-              {messages.length < 3 && (
-                <div className="px-4 py-3 border-t border-zinc-100 bg-zinc-50/50">
-                  <p className="text-xs text-zinc-500 mb-2">Suggested questions:</p>
+              {messages.length <= 1 && (
+                <div className="px-3 py-2 border-t border-zinc-200 bg-zinc-50">
                   <div className="flex flex-wrap gap-2">
                     {quickReplies.map((reply, index) => (
-                      <motion.button
+                      <button
                         key={index}
-                        whileHover={{ scale: 1.03, y: -2 }}
-                        whileTap={{ scale: 0.97 }}
-                        type="button"
                         onClick={() => setInput(reply)}
-                        className="text-xs px-3 py-2 bg-white hover:bg-zinc-50 border border-zinc-200 rounded-full transition-all duration-200 shadow-sm hover:shadow text-zinc-700 flex items-center gap-1.5"
+                        className="text-xs bg-white border border-zinc-200 rounded-full px-3 py-1 text-zinc-700 hover:bg-zinc-50 transition-colors"
                       >
-                        <span>{reply}</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </motion.button>
+                        {reply}
+                      </button>
                     ))}
                   </div>
                 </div>
               )}
 
               {/* Input Form */}
-              <form onSubmit={handleSubmit} className="border-t border-zinc-100 p-3 bg-white">
+              <form onSubmit={handleSubmit} className="border-t border-zinc-200 p-3 bg-white">
                 <div className="flex space-x-2">
-                  <motion.input
+                  <input
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Type your message..."
-                    className="flex-1 bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 min-h-[48px] focus:outline-none focus:border-zinc-400 focus:ring-2 focus:ring-zinc-200 transition-all duration-200 text-[15px] shadow-sm"
+                    className="flex-1 bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-zinc-400 transition-colors"
                     disabled={loading}
-                    whileFocus={{ scale: 1.01 }}
                   />
-                  <motion.button
+                  <button
                     type="submit"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-gradient-to-r from-black to-zinc-800 text-white p-3 min-h-[48px] min-w-[48px] rounded-xl flex items-center justify-center hover:from-zinc-800 hover:to-black transition-all duration-200 shadow-md disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="bg-black text-white p-2 rounded-lg hover:bg-zinc-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={loading || !input.trim()}
                   >
-                    <Send className="w-5 h-5" />
-                  </motion.button>
+                    <Send className="w-4 h-4" />
+                  </button>
                 </div>
               </form>
             </div>
