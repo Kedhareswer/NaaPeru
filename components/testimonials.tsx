@@ -36,7 +36,7 @@ const testimonials = [
   {
     name: "Aman Kumar",
     role: "Assistant Manager at upGrad",
-    text: "Exceptional talent in both technical implementation and strategic thinking. Their contributions to our data infrastructure have been foundational to our success in AI initiatives.",
+    text: "A dedicated student with strong technical skills and eagerness to learn. His work ethic and attention to detail have been impressive throughout the course.",
     image: "/testimonials/aman.jpg",
     linkedin: "https://www.linkedin.com/in/aman-kumar-27073b249/",
   },
