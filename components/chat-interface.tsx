@@ -474,12 +474,12 @@ export default function ChatInterface() {
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center text-white">
                     <Sparkles className="w-3 h-3" />
-                  </div>
-                  <div>
+                    </div>
+                    <div>
                     <h3 className="text-sm font-medium text-zinc-900">Enhanced Assistant</h3>
-                    <p className="text-xs text-zinc-500">
-                      {messages.length > 1 ? `${messages.length - 1} messages` : 'Ask me anything about Kedhareswer'}
-                    </p>
+                      <p className="text-xs text-zinc-500">
+                        {messages.length > 1 ? `${messages.length - 1} messages` : 'Ask me anything about Kedhareswer'}
+                      </p>
                   </div>
                 </div>
               </div>
@@ -496,7 +496,7 @@ export default function ChatInterface() {
                       )}
                       <div className="max-w-[80%]">
                         <div className={`rounded-lg p-3 text-sm ${
-                          message.role === "user"
+                            message.role === "user"
                             ? "bg-black text-white"
                             : "bg-zinc-100 border border-zinc-200 text-zinc-800"
                         }`}>
