@@ -37,15 +37,45 @@ const skills = [
       "NLP",
       "Data Analysis",
       "Statistical Modeling",
+      "Agentic AI",
+      "Autonomous Agents",
+      "Medical Imaging",
+      "Image Processing",
     ],
   },
   {
     category: "Tools & Platforms",
-    items: ["Power BI", "Tableau", "Hugging Face", "Git"],
+    items: [
+      "Power BI",
+      "Tableau",
+      "Hugging Face",
+      "GitHub",
+      "LangChain",
+      "LlamaIndex",
+      "OpenCV",
+      "FastAPI",
+      "MySQL",
+      "Node.js",
+      "Next.js",
+      "React",
+    ],
   },
   {
     category: "AI Tools",
-    items: ["Vercel", "Lovable", "Bolt", "Jules", "Cursor", "Windsurf", "Wix Studio", "Relume", "Gemini Studio"],
+    items: [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Pandas",
+      "NumPy",
+      "ChatGPT",
+      "Claude",
+      "AutoGen",
+      "CrewAI",
+      "LangGraph",
+      "MetaGPT",
+      "OpenAgents",
+    ],
   },
   {
     category: "Soft Skills",
@@ -55,7 +85,7 @@ const skills = [
       "Project Management",
       "Communication",
       "Critical Thinking",
-      "Time Management",
+      "Adaptability",
     ],
   },
 ]
@@ -81,37 +111,39 @@ const participations = [
       },
     ],
   },
+]
+
+// Separate certifications from participations
+const certifications = [
   {
-    title: "Certifications",
-    items: [
-      {
-        name: "AWS APAC - Solutions Architecture Job Simulation",
-        description: "Forage - December 2024",
-        icon: Medal,
-      },
-      {
-        name: "Certified Data Science Essentials",
-        description: "RF Skilling Academy - December 2024",
-        icon: Medal,
-      },
-      {
-        name: "Introduction to Responsible AI",
-        description: "Google - November 2024",
-        icon: Medal,
-      },
-      {
-        name: "Neo4j Certified Professional",
-        description: "Neo4j - July 2025",
-        icon: Medal,
-      },
-      {
-        name: "Python for Data Science",
-        description: "Infosys - May 2025",
-        icon: Medal,
-      },
-    ],
+    name: "Neo4j Certified Professional",
+    description: "Neo4j - July 2025",
+    icon: Medal,
+  },
+  {
+    name: "Python for Data Science",
+    description: "Infosys - May 2025",
+    icon: Medal,
+  },
+  {
+    name: "AWS APAC - Solutions Architecture Job Simulation",
+    description: "Forage - December 2024",
+    icon: Medal,
+  },
+  {
+    name: "Certified Data Science Essentials",
+    description: "RF Skilling Academy - December 2024",
+    icon: Medal,
+  },
+  {
+    name: "Introduction to Responsible AI",
+    description: "Google - November 2024",
+    icon: Medal,
   },
 ]
+
+// Remove Certifications from participations array
+const participationsOnly = [participations[0]]
 
 export default function SkillsParticipations() {
   const ref = useRef(null)
@@ -178,7 +210,7 @@ export default function SkillsParticipations() {
             </div>
           </motion.div>
 
-          {/* Participations Section */}
+          {/* Participations Section (center column) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -191,7 +223,8 @@ export default function SkillsParticipations() {
             </div>
 
             <div className="space-y-8">
-              {participations.map((section, sectionIndex) => (
+              {/* Only Hackathons & Competitions */}
+              {participationsOnly.map((section, sectionIndex) => (
                 <motion.div
                   key={section.title}
                   initial={{ opacity: 0, y: 20 }}
@@ -222,39 +255,71 @@ export default function SkillsParticipations() {
                   </div>
                 </motion.div>
               ))}
+
+              {/* Hobbies Section (now in center column) */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="space-y-8"
+              >
+                <div className="flex items-center space-x-4">
+                  <h2 className="text-2xl font-light text-gray-900">Hobbies</h2>
+                  <div className="h-px bg-black flex-grow" />
+                </div>
+                <div className="space-y-4">
+                  {hobbies.map((hobby, index) => (
+                    <motion.div
+                      key={hobby.name}
+                      className="p-4 bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                      transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+                      whileHover={{ scale: 1.02 }}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="p-2 bg-gray-50 rounded-full">
+                          <hobby.icon className="w-5 h-5 text-gray-600" />
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-gray-900">{hobby.name}</h4>
+                          <p className="text-sm text-gray-600 mt-1 leading-relaxed">{hobby.description}</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
             </div>
           </motion.div>
 
-          {/* Hobbies Section */}
+          {/* Certifications Section (now rightmost column) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
             className="space-y-8"
           >
             <div className="flex items-center space-x-4">
-              <h2 className="text-2xl font-light text-gray-900">Hobbies</h2>
+              <h2 className="text-2xl font-light text-gray-900">Certifications</h2>
               <div className="h-px bg-black flex-grow" />
             </div>
-
             <div className="space-y-4">
-              {hobbies.map((hobby, index) => (
+              {certifications.map((cert, index) => (
                 <motion.div
-                  key={hobby.name}
-                  className="p-4 bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300"
+                  key={cert.name}
+                  className="flex items-start space-x-4 p-4 bg-white border border-gray-200 rounded-lg"
                   initial={{ opacity: 0, x: -20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                  transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+                  transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
                   whileHover={{ scale: 1.02 }}
                 >
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-gray-50 rounded-full">
-                      <hobby.icon className="w-5 h-5 text-gray-600" />
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-gray-900">{hobby.name}</h4>
-                      <p className="text-sm text-gray-600 mt-1 leading-relaxed">{hobby.description}</p>
-                    </div>
+                  <div className="p-2 bg-gray-50 rounded-full">
+                    <cert.icon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-gray-900">{cert.name}</h4>
+                    <p className="text-sm text-gray-600 mt-1 leading-relaxed">{cert.description}</p>
                   </div>
                 </motion.div>
               ))}
