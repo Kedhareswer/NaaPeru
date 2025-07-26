@@ -9,17 +9,16 @@ export default function Footer() {
     <footer className="bg-gradient-to-b from-gray-50 to-gray-100 py-16 border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          {/* About Section */}
+          {/* Motivation Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="lg:col-span-2"
           >
-            <h3 className="text-xl font-light mb-4 text-gray-900">About Me</h3>
+            <h3 className="text-xl font-light mb-4 text-gray-900">Motivation</h3>
             <p className="text-gray-600 mb-6 leading-relaxed">
-              Data Scientist and ML Engineer passionate about creating innovative solutions. Specializing in machine
-              learning, deep learning, and data visualization to solve complex business challenges.
+              "AI is just the person dreaming bigger"
             </p>
             <div className="space-y-3">
               <a
