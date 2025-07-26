@@ -39,7 +39,6 @@ const skills = [
       "Statistical Modeling",
       "Agentic AI",
       "Autonomous Agents",
-      "Medical Imaging",
       "Image Processing",
     ],
   },
@@ -48,10 +47,12 @@ const skills = [
     items: [
       "Power BI",
       "Tableau",
-      "Hugging Face",
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Pandas",
+      "NumPy",
       "GitHub",
-      "LangChain",
-      "LlamaIndex",
       "OpenCV",
       "FastAPI",
       "MySQL",
@@ -63,18 +64,22 @@ const skills = [
   {
     category: "AI Tools",
     items: [
-      "TensorFlow",
-      "PyTorch",
-      "Scikit-learn",
-      "Pandas",
-      "NumPy",
+      "Gemini",
       "ChatGPT",
       "Claude",
       "AutoGen",
       "CrewAI",
+      "LangChain",
+      "LlamaIndex",
       "LangGraph",
       "MetaGPT",
       "OpenAgents",
+      "Hugging Face",
+      "Neo4j",
+      "Supabase",
+      "Neon",
+      "Vercel",
+      "AWS",
     ],
   },
   {
@@ -125,21 +130,21 @@ const certifications = [
     description: "Infosys - May 2025",
     icon: Medal,
   },
-  {
-    name: "AWS APAC - Solutions Architecture Job Simulation",
-    description: "Forage - December 2024",
-    icon: Medal,
-  },
-  {
-    name: "Certified Data Science Essentials",
-    description: "RF Skilling Academy - December 2024",
-    icon: Medal,
-  },
-  {
-    name: "Introduction to Responsible AI",
-    description: "Google - November 2024",
-    icon: Medal,
-  },
+      {
+        name: "AWS APAC - Solutions Architecture Job Simulation",
+        description: "Forage - December 2024",
+        icon: Medal,
+      },
+      {
+        name: "Certified Data Science Essentials",
+        description: "RF Skilling Academy - December 2024",
+        icon: Medal,
+      },
+      {
+        name: "Introduction to Responsible AI",
+        description: "Google - November 2024",
+        icon: Medal,
+      },
 ]
 
 // Remove Certifications from participations array
@@ -257,34 +262,34 @@ export default function SkillsParticipations() {
               ))}
 
               {/* Hobbies Section (now in center column) */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="space-y-8"
-              >
-                <div className="flex items-center space-x-4">
-                  <h2 className="text-2xl font-light text-gray-900">Hobbies</h2>
-                  <div className="h-px bg-black flex-grow" />
-                </div>
-                <div className="space-y-4">
-                  {hobbies.map((hobby, index) => (
-                    <motion.div
-                      key={hobby.name}
-                      className="p-4 bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                      transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
-                      whileHover={{ scale: 1.02 }}
-                    >
-                      <div className="flex items-center space-x-3">
-                        <div className="p-2 bg-gray-50 rounded-full">
-                          <hobby.icon className="w-5 h-5 text-gray-600" />
-                        </div>
-                        <div>
-                          <h4 className="font-medium text-gray-900">{hobby.name}</h4>
-                          <p className="text-sm text-gray-600 mt-1 leading-relaxed">{hobby.description}</p>
-                        </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="space-y-8"
+          >
+            <div className="flex items-center space-x-4">
+              <h2 className="text-2xl font-light text-gray-900">Hobbies</h2>
+              <div className="h-px bg-black flex-grow" />
+            </div>
+            <div className="space-y-4">
+              {hobbies.map((hobby, index) => (
+                <motion.div
+                  key={hobby.name}
+                  className="p-4 bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                  transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-gray-50 rounded-full">
+                      <hobby.icon className="w-5 h-5 text-gray-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-gray-900">{hobby.name}</h4>
+                      <p className="text-sm text-gray-600 mt-1 leading-relaxed">{hobby.description}</p>
+                    </div>
                       </div>
                     </motion.div>
                   ))}
