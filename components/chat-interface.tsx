@@ -53,7 +53,7 @@ export default function ChatInterface() {
     if (messages.length === 0) {
       const welcomeMessage: Message = {
         role: "assistant" as const,
-        content: "👋 Hi there! I'm Kedhareswer's enhanced virtual assistant. I can help you learn about his background, schedule appointments, and answer any questions. How can I assist you today?",
+        content: "👋 Hi there! I'm Kedhareswer's virtual assistant. How can I assist you today?",
         id: generateMessageId(),
         timestamp: new Date()
       }
