@@ -329,7 +329,7 @@ export default function EnhancedChatInterface() {
     if (messages.length === 0) {
       addMessage({
         role: "assistant",
-        content: "👋 Hi there! I'm Kedhareswer's enhanced virtual assistant. I can help you learn about his background, schedule appointments, and answer any questions you might have. How can I assist you today?",
+        content: "👋 Hi there! I'm Kedhareswer's enhanced virtual assistant. How can I assist you today?",
         metadata: { category: 'welcome' }
       })
     }
