@@ -323,10 +323,10 @@ export default function ChatInterface() {
   }
 
   const quickReplies = [
-    "Book an appointment with Kedhareswer",
     "Tell me about his experience",
     "What are his skills?",
     "Show me his projects"
+    
   ]
 
   // Chat toggle animation variants
