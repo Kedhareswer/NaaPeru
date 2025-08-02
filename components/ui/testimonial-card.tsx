@@ -7,6 +7,7 @@ import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import Link from "next/link";
 
 // --- Type Definitions for props ---
 export interface Stat {
@@ -37,7 +38,7 @@ export interface ClientsSectionProps {
 
 // StatCard using shadcn variables
 const StatCard = ({ value, label }: Stat) => (
-  <Card className="bg-muted/50 border-border text-center rounded-xl">
+  <Card className="bg-muted/50 border-border text-center">
     <CardContent className="p-4">
       <p className="text-3xl font-bold text-foreground">{value}</p>
       <p className="text-sm text-muted-foreground">{label}</p>
@@ -53,13 +54,13 @@ const StickyTestimonialCard = ({ testimonial, index }: { testimonial: Testimonia
       style={{ top: `${20 + index * 24}px` }} // Staggered top position for stacking
     >
       <div className={cn(
-        "p-6 rounded-2xl shadow-lg flex flex-col h-auto w-full",
+        "p-6 shadow-lg flex flex-col h-auto w-full",
         "bg-card border border-border"
       )}>
         {/* Top section: Image and Author */}
         <div className="flex items-center gap-4">
           <div
-            className="w-14 h-14 rounded-xl bg-cover bg-center flex-shrink-0"
+            className="w-14 h-14 bg-cover bg-center flex-shrink-0"
             style={{ backgroundImage: `url(${testimonial.avatarSrc})` }}
             aria-label={`Photo of ${testimonial.name}`}
           />
@@ -117,7 +118,7 @@ export const ClientsSection = ({
         
         {/* Left Column: Sticky Content */}
         <div className="flex flex-col gap-6 lg:sticky lg:top-20">
-          <div className="inline-flex items-center gap-2 self-start rounded-full border border-border bg-muted/50 px-3 py-1 text-sm">
+          <div className="inline-flex items-center gap-2 self-start border border-border bg-muted/50 px-3 py-1 text-sm">
             <div className="h-2 w-2 rounded-full bg-green-500" />
             <span className="text-muted-foreground">{tagLabel}</span>
           </div>
@@ -130,8 +131,12 @@ export const ClientsSection = ({
             ))}
           </div>
           <div className="flex items-center gap-4 mt-6">
-            <Button variant="outline" size="lg" className="rounded-full">{secondaryActionLabel}</Button>
-            <Button size="lg" className="rounded-full">{primaryActionLabel}</Button>
+            <Link href="/projects">
+              <Button variant="outline" size="lg">{secondaryActionLabel}</Button>
+            </Link>
+            <Link href="/#contact">
+              <Button size="lg">{primaryActionLabel}</Button>
+            </Link>
           </div>
         </div>
 
