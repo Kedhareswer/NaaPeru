@@ -4,7 +4,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ChevronRight, ExternalLink, Eye } from "lucide-react"
+import { ExternalLink, Eye } from "lucide-react"
 
 interface Project {
   id: number
@@ -125,37 +125,7 @@ export function EnhancedProjectCard({ project, index, onViewDetails }: ProjectCa
             )}
           </div>
 
-          {/* Footer */}
-          <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
-            <div className="flex gap-2">
-              {project.demoUrl && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-gray-600 hover:text-black hover:bg-gray-50 p-2"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    window.open(project.demoUrl, "_blank")
-                  }}
-                >
-                  <ExternalLink className="w-4 h-4" />
-                </Button>
-              )}
-            </div>
 
-            <Button
-              variant="ghost"
-              size="sm"
-              className="group/btn text-gray-600 hover:text-black hover:bg-gray-50"
-              onClick={(e) => {
-                e.stopPropagation()
-                onViewDetails(project)
-              }}
-            >
-              View Details
-              <ChevronRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
-            </Button>
-          </div>
         </div>
       </Card>
     </motion.div>
