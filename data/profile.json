@@ -21,14 +21,17 @@
   "summary": "Passionate AI/ML and Data Science enthusiast with hands-on experience in machine learning, data analysis, and web development. Currently a final year student with expertise in building intelligent systems and optimizing machine learning workflows, with a focus on computer vision, NLP, and AI-driven automation. Skilled in transforming complex data challenges into clear, actionable insights that drive meaningful business results through innovative AI solutions and cutting-edge machine learning techniques.",
   
   "skills": {
-    "programmingLanguages": ["Python", "SQL", "HTML", "CSS", "JavaScript", "R"],
+    "programmingLanguages": ["Python", "SQL", "HTML", "CSS", "JavaScript", "R", "TypeScript"],
     "aiMlFrameworks": ["TensorFlow", "PyTorch", "Scikit-learn", "Pandas", "NumPy", "OpenCV"],
-    "webTechnologies": ["React", "Next.js", "Tailwind CSS", "FastAPI", "Node.js", "Vue.js", "WebSocket"],
-    "databases": ["MySQL"],
-    "dataVisualization": ["Tableau", "Power BI"],
+    "webTechnologies": ["React", "Next.js", "Tailwind CSS", "FastAPI", "Node.js", "Vue.js", "WebSocket", "Express.js", "Svelte", "SvelteKit", "Remix"],
+    "databases": ["MySQL", "Neon"],
+    "dataVisualization": ["Tableau", "Power BI", "Recharts"],
     "cloudPlatforms": ["AWS", "Azure", "Vercel"],
     "aiTools": ["Vercel", "Lovable", "Bolt", "Jules", "Cursor", "Windsurf", "Wix Studio", "Relume", "Gemini Studio", "ChatGPT", "Claude", "Hugging Face"],
     "developerTools": ["Git", "GitHub"],
+    "libraries": [
+        "Radix UI", "shadcn/ui", "Framer Motion", "Lucide React", "Zod", "React Hook Form", "Tailwind CSS Animate", "date-fns", "Day.js", "clsx", "tailwind-merge"
+    ],
     "specializations": ["Computer Vision", "NLP", "Deep Learning", "Machine Learning", "Data Analysis", "Statistical Modeling", "Medical Imaging", "Neural Style Transfer"],
     "softSkills": ["Leadership", "Team Player", "Communication", "Adaptability", "Problem Solving", "Project Management", "Critical Thinking", "Time Management"]
   },
@@ -87,7 +90,7 @@
       "institution": "Lovely Professional University",
       "duration": "September 2021 - Present",
       "location": "Phagwara, Punjab, India",
-      "cgpa": "7.55",
+      "cgpa": "7.71",
       "specialization": "Data Science (AI & ML)",
       "status": "Final Year Student"
     },

@@ -326,7 +326,6 @@ export default function ChatInterface() {
     "Tell me about his experience",
     "What are his skills?",
     "Show me his projects"
-    
   ]
 
   // Chat toggle animation variants
