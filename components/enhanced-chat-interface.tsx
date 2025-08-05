@@ -80,6 +80,7 @@ export default function EnhancedChatInterface() {
   })
   const [showSettings, setShowSettings] = useState(false)
   const [conversationMode, setConversationMode] = useState<'standard' | 'detailed' | 'creative'>('standard')
+  const [suggestions, setSuggestions] = useState<string[]>([])
 
   // Refs
   const chatRef = useRef<HTMLDivElement>(null)
@@ -185,14 +186,16 @@ export default function EnhancedChatInterface() {
         })
       } else {
         // Enhanced API call with conversation mode and better prompting
-        const enhancedPrompt = `You are Kedhareswer's friendly AI assistant. Respond in a warm, conversational tone with these guidelines:
+        const enhancedPrompt = `You are Kedhareswer's AI assistant. Provide PRECISE and CONCISE responses with these strict guidelines:
 
-1. **Be friendly and engaging** - Use emojis and conversational language
-2. **Ask follow-up questions** - Show genuine interest in the user's needs
-3. **Avoid redundancy** - Don't repeat information unnecessarily
-4. **Be helpful and specific** - Provide actionable insights
-5. **Use markdown formatting** - Make responses visually appealing
-6. **Keep responses concise but informative** - Balance detail with readability
+1. **Be extremely concise** - Keep responses under 3-4 sentences maximum
+2. **Focus on key facts only** - No unnecessary details or fluff
+3. **Use bullet points when possible** - For lists and multiple points
+4. **Be direct and specific** - Answer the question directly without preamble
+5. **Use minimal emojis** - Only when absolutely necessary for clarity
+6. **Avoid repetition** - Don't restate information already mentioned
+7. **Prioritize accuracy** - Ensure all information is factually correct
+8. **Use simple language** - Avoid complex jargon unless specifically asked
 
 User question: ${input}
 
@@ -204,7 +207,7 @@ Context about Kedhareswer:
 - Current status: Final year student at Lovely Professional University
 - Available for: New opportunities and collaborations
 
-Respond as if you're having a friendly conversation with someone interested in Kedhareswer's work and background.`
+Provide a direct, concise answer to the user's question.`
 
         const response = await fetch('/api/chat', {
           method: 'POST',
@@ -238,6 +241,11 @@ Respond as if you're having a friendly conversation with someone interested in K
             category: data.category || 'general'
           }
         })
+
+        // Generate new suggestions based on the conversation
+        const conversationHistory = messages.map(msg => msg.content)
+        const newSuggestions = generateSuggestions(input, conversationHistory)
+        setSuggestions(newSuggestions)
 
         updateAnalytics(responseTime)
       }
@@ -346,15 +354,69 @@ Respond as if you're having a friendly conversation with someone interested in K
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
+  // Generate context-relevant suggestions based on conversation
+  const generateSuggestions = useCallback((lastMessage: string, conversationHistory: string[]) => {
+    const suggestionsMap = {
+      background: [
+        "Tell me about his education",
+        "What's his work experience?",
+        "Where is he located?"
+      ],
+      skills: [
+        "What programming languages does he know?",
+        "What AI/ML frameworks does he use?",
+        "What are his technical strengths?"
+      ],
+      projects: [
+        "Show me his data science projects",
+        "What are his most recent projects?",
+        "Tell me about his research work"
+      ],
+      contact: [
+        "How can I schedule a meeting?",
+        "What's his email address?",
+        "Is he available for opportunities?"
+      ],
+      general: [
+        "Tell me about his background",
+        "What makes him unique?",
+        "What are his current projects?"
+      ]
+    }
+
+    const lowerMessage = lastMessage.toLowerCase()
+    const lowerHistory = conversationHistory.join(' ').toLowerCase()
+
+    // Determine context based on message content
+    if (lowerMessage.includes('background') || lowerMessage.includes('education') || lowerMessage.includes('experience')) {
+      return suggestionsMap.background
+    } else if (lowerMessage.includes('skill') || lowerMessage.includes('technology') || lowerMessage.includes('programming')) {
+      return suggestionsMap.skills
+    } else if (lowerMessage.includes('project') || lowerMessage.includes('work') || lowerMessage.includes('research')) {
+      return suggestionsMap.projects
+    } else if (lowerMessage.includes('contact') || lowerMessage.includes('meet') || lowerMessage.includes('email')) {
+      return suggestionsMap.contact
+    } else {
+      return suggestionsMap.general
+    }
+  }, [])
+
   // Welcome message - only add once when component mounts
   useEffect(() => {
     if (messages.length === 0 && !welcomeMessageAdded.current) {
       welcomeMessageAdded.current = true
       addMessage({
         role: "assistant",
-        content: "👋 Hi there! I'm Kedhareswer's AI assistant, and I'm excited to help you learn more about him! \n\n**What would you like to know?** 🤔\n\n• His background and experience\n• Technical skills and expertise\n• Projects and achievements\n• How to get in touch\n• Or anything else you're curious about!\n\nJust ask away - I'm here to help! 😊",
+        content: "👋 Hi there! I'm Kedhareswer's AI assistant, and I'm excited to help you learn more about him! \n\nFeel free to ask me anything about his background, skills, projects, or how to get in touch. I'm here to help! 😊",
         metadata: { category: 'welcome' }
       })
+      // Set initial suggestions
+      setSuggestions([
+        "Tell me about his background",
+        "What are his technical skills?",
+        "Show me his projects",
+        "How can I contact him?"
+      ])
     }
   }, [messages.length])
 
@@ -457,6 +519,32 @@ Respond as if you're having a friendly conversation with someone interested in K
         
         <div ref={messagesEndRef} />
       </div>
+
+      {/* Suggestions */}
+      {suggestions.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="border-t border-gray-200 p-4 bg-gray-50"
+        >
+          <div className="flex flex-wrap gap-2">
+            {suggestions.map((suggestion, index) => (
+              <motion.button
+                key={index}
+                onClick={() => {
+                  setInput(suggestion)
+                  setSuggestions([]) // Hide suggestions when one is clicked
+                }}
+                className="px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                {suggestion}
+              </motion.button>
+            ))}
+          </div>
+        </motion.div>
+      )}
 
       {/* Input Area */}
       <div className="border-t border-gray-200 p-4">

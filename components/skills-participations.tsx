@@ -239,7 +239,7 @@ export default function SkillsParticipations() {
                   className="space-y-4"
                 >
                   <h3 className="text-lg font-medium text-gray-900">{section.title}</h3>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {section.items.map((item, itemIndex) => (
                       <motion.div
                         key={item.name}

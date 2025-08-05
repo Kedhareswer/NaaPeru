@@ -117,9 +117,9 @@ export async function POST(request: NextRequest) {
 
     // Adjust parameters based on mode
     const modeParams = {
-      standard: { temperature: 0.2, max_tokens: 1024 },
-      detailed: { temperature: 0.25, max_tokens: 1500 },
-      creative: { temperature: 0.3, max_tokens: 1200 }
+      standard: { temperature: 0.1, max_tokens: 300 },
+      detailed: { temperature: 0.15, max_tokens: 500 },
+      creative: { temperature: 0.2, max_tokens: 400 }
     };
 
     const params = modeParams[mode as keyof typeof modeParams] || modeParams.standard;

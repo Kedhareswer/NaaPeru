@@ -431,63 +431,14 @@ export default function Intro() {
                   results through innovative AI solutions and cutting-edge machine learning techniques.
                 </motion.p>
 
-                {/* Connect Online - Desktop */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.8, delay: 1 }}
-                  className="flex justify-center items-center gap-8 max-w-lg mx-auto"
-                >
-                  <a
-                    href="https://www.linkedin.com/in/kedhareswernaidu/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center gap-3 hover:scale-105 transition-transform duration-200"
-                  >
-                    <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
-                      <Linkedin className="w-6 h-6 text-gray-700" />
-                    </div>
-                    <div className="text-center">
-                      <p className="text-sm font-medium text-gray-900 uppercase tracking-wider">LinkedIn</p>
-                    </div>
-                  </a>
-
-                  <a
-                    href="https://github.com/Kedhareswer"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center gap-3 hover:scale-105 transition-transform duration-200"
-                  >
-                    <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
-                      <Github className="w-6 h-6 text-gray-700" />
-                    </div>
-                    <div className="text-center">
-                      <p className="text-sm font-medium text-gray-900 uppercase tracking-wider">GitHub</p>
-                    </div>
-                  </a>
-
-                  <a
-                    href="https://www.kaggle.com/kedhareswernaidu"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center gap-3 hover:scale-105 transition-transform duration-200"
-                  >
-                    <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
-                      <BarChart2 className="w-6 h-6 text-gray-700" />
-                    </div>
-                    <div className="text-center">
-                      <p className="text-sm font-medium text-gray-900 uppercase tracking-wider">Kaggle</p>
-                    </div>
-                  </a>
-                </motion.div>
-
                 {/* Action buttons */}
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.8, delay: 1.2 }}
-                  className="flex gap-4 xl:gap-6 pt-4"
+                  className="flex flex-col sm:flex-row gap-4 xl:gap-6 pt-4 items-center justify-start"
                 >
+                  {/* Download CV Button */}
                   <motion.a
                     href="/Kedhareswer_May_update.pdf"
                     download
@@ -508,6 +459,59 @@ export default function Intro() {
                       Download CV
                     </span>
                   </motion.a>
+                  {/* Social Links Row */}
+                  <div className="flex flex-row gap-4 xl:gap-6 items-center">
+                    <a
+                      href="https://www.linkedin.com/in/kedhareswernaidu/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col items-center gap-1 hover:scale-105 transition-transform duration-200"
+                    >
+                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
+                        <Linkedin className="w-6 h-6 text-gray-700" />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">LinkedIn</p>
+                      </div>
+                    </a>
+                    <a
+                      href="https://github.com/Kedhareswer"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col items-center gap-1 hover:scale-105 transition-transform duration-200"
+                    >
+                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
+                        <Github className="w-6 h-6 text-gray-700" />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">GitHub</p>
+                      </div>
+                    </a>
+                    <a
+                      href="https://www.kaggle.com/kedhareswernaidu"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col items-center gap-1 hover:scale-105 transition-transform duration-200"
+                    >
+                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
+                        <BarChart2 className="w-6 h-6 text-gray-700" />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">Kaggle</p>
+                      </div>
+                    </a>
+                    <a
+                      href="mailto:kedhareswer.12110626@gmail.com"
+                      className="flex flex-col items-center gap-1 hover:scale-105 transition-transform duration-200"
+                    >
+                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
+                        <Mail className="w-6 h-6 text-gray-700" />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">Email</p>
+                      </div>
+                    </a>
+                  </div>
                 </motion.div>
               </div>
 
