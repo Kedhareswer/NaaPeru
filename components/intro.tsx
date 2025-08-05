@@ -311,7 +311,7 @@ export default function Intro() {
                 className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center max-w-sm mx-auto"
               >
                 <motion.a
-                  href="/Kedhareswer_May_update.pdf"
+                  href="/Kedhar_July_DataAnalyst.pdf"
                   download
                   className="group relative inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-black text-white rounded-none overflow-hidden min-h-[44px]"
                   whileHover={{ scale: 1.02 }}
@@ -440,7 +440,7 @@ export default function Intro() {
                 >
                   {/* Download CV Button */}
                   <motion.a
-                    href="/Kedhareswer_May_update.pdf"
+                    href="/Kedhar_July_DataAnalyst.pdf"
                     download
                     className="group relative inline-flex items-center justify-center px-8 xl:px-10 py-4 xl:py-5 bg-black text-white rounded-none overflow-hidden"
                     whileHover={{ scale: 1.02 }}
