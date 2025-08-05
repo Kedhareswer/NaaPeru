@@ -122,6 +122,12 @@ const participations = [
 // Separate certifications from participations
 const certifications = [
   {
+    name: "Introduction to Model Context Protocol",
+    description: "Anthropic Education - August 05, 2025",
+    icon: Medal,
+    url: "http://verify.skilljar.com/c/fbb5tvjxnrw3"
+  },
+  {
     name: "Neo4j Certified Professional",
     description: "Neo4j - July 2025",
     icon: Medal,
@@ -131,21 +137,16 @@ const certifications = [
     description: "Infosys - May 2025",
     icon: Medal,
   },
-      {
-        name: "AWS APAC - Solutions Architecture Job Simulation",
-        description: "Forage - December 2024",
-        icon: Medal,
-      },
-      {
-        name: "Certified Data Science Essentials",
-        description: "RF Skilling Academy - December 2024",
-        icon: Medal,
-      },
-      {
-        name: "Introduction to Responsible AI",
-        description: "Google - November 2024",
-        icon: Medal,
-      },
+  {
+    name: "AWS APAC - Solutions Architecture Job Simulation",
+    description: "Forage - December 2024",
+    icon: Medal,
+  },
+  {
+    name: "Certified Data Science Essentials",
+    description: "RF Skilling Academy - December 2024",
+    icon: Medal,
+  }
 ]
 
 // Remove Certifications from participations array
@@ -326,6 +327,7 @@ export default function SkillsParticipations() {
                     subtitle={cert.description}
                     recipient="Kedhareswer"
                     date={cert.description.split(' - ')[1] || "2025"}
+                    url={cert.url}
                     className="transform hover:rotate-1 transition-transform duration-300"
                   />
                 </motion.div>

@@ -17,6 +17,7 @@ export interface AwardsComponentProps {
   className?: string
   showIcon?: boolean
   customIcon?: React.ReactNode
+  url?: string
 }
 
 const levelColors = {
@@ -36,6 +37,7 @@ export function Awards({
   level = "gold",
   className,
   showIcon = true,
+  url,
 }: AwardsComponentProps) {
   // Stamp Variant
   if (variant === "stamp") {
@@ -168,46 +170,65 @@ export function Awards({
         <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
       </svg>
     )
+    
+    const CertificateContent = () => (
+      <div className="bg-card z-10 rounded-sm border p-3 px-8 text-center w-full">
+        <Badge />
+        <h1
+          className={cn(
+            "mt-1 grid text-sm leading-4 font-bold tracking-tight uppercase"
+          )}
+        >
+          Certificate
+          <span className="text-xs font-light tracking-tight">
+            {" "}
+            of {title}
+          </span>
+        </h1>
+
+        <p className="text-muted-foreground mt-1 mb-1 text-xs">
+          This is to certify that
+        </p>
+        <h1
+          className={cn(
+            "text-primary mb-1 border-b text-xs font-semibold tracking-tight"
+          )}
+        >
+          {recipient}
+        </h1>
+
+        <p className="text-muted-foreground mb-1 text-xs">{subtitle}</p>
+        <div className="mt-1 flex justify-center">
+          <Award strokeWidth={1} className="h-2 w-2" />
+        </div>
+        <div className={cn("mt-1 text-xs")}>Awarded on: {date}</div>
+        {url && (
+          <div className="mt-2">
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-blue-600 hover:text-blue-800 underline"
+            >
+              Verify Certificate
+            </a>
+          </div>
+        )}
+      </div>
+    )
+    
     return (
       <div
         className={cn(
           "relative z-0",
           "flex flex-col items-center justify-center rounded-lg border-2 border-dotted p-1",
           "overflow-hidden w-full max-w-2xl",
+          url && "cursor-pointer hover:shadow-lg transition-shadow duration-200",
           className
         )}
+        onClick={url ? () => window.open(url, '_blank', 'noopener,noreferrer') : undefined}
       >
-        <div className="bg-card z-10 rounded-sm border p-3 px-8 text-center w-full">
-          <Badge />
-          <h1
-            className={cn(
-              "mt-1 grid text-sm leading-4 font-bold tracking-tight uppercase"
-            )}
-          >
-            Certificate
-            <span className="text-xs font-light tracking-tight">
-              {" "}
-              of {title}
-            </span>
-          </h1>
-
-          <p className="text-muted-foreground mt-1 mb-1 text-xs">
-            This is to certify that
-          </p>
-          <h1
-            className={cn(
-              "text-primary mb-1 border-b text-xs font-semibold tracking-tight"
-            )}
-          >
-            {recipient}
-          </h1>
-
-          <p className="text-muted-foreground mb-1 text-xs">{subtitle}</p>
-          <div className="mt-1 flex justify-center">
-            <Award strokeWidth={1} className="h-2 w-2" />
-          </div>
-          <div className={cn("mt-1 text-xs")}>Awarded on: {date}</div>
-        </div>
+        <CertificateContent />
       </div>
     )
   }
