@@ -37,11 +37,8 @@ const skills = [
       "Computer Vision",
       "NLP",
       "Data Analysis",
-      "Statistical Modeling",
       "Agentic AI",
       "Autonomous Agents",
-      "Medical Imaging",
-      "Image Processing",
     ],
   },
   {
@@ -71,11 +68,8 @@ const skills = [
       "NumPy",
       "ChatGPT",
       "Claude",
-      "AutoGen",
       "CrewAI",
       "LangGraph",
-      "MetaGPT",
-      "OpenAgents",
     ],
   },
   {
