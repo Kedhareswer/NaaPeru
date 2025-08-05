@@ -1,39 +1,35 @@
-import { NextRequest, NextResponse } from 'next/server';
-import sql from '@/lib/db';
+import { NextRequest, NextResponse } from 'next/server'
+import sql from '@/lib/db'
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
   try {
-    const featured = request.nextUrl.searchParams.get('featured');
-    const query = featured === 'true'
-      ? sql`SELECT * FROM projects WHERE featured = true ORDER BY project_date DESC LIMIT 6`
-      : sql`SELECT * FROM projects ORDER BY project_date DESC`;
-    const projects = await query;
-    const mapped = (projects as any).map((p: any) => {
-      // Format project_date to MM/YY
-      let formattedDate = p.project_date;
-      try {
-        const d = new Date(p.project_date);
-        if (!isNaN(d.getTime())) {
-          const month = String(d.getMonth() + 1).padStart(2, '0');
-          const year = d.getFullYear().toString().slice(-2);
-          formattedDate = `${month}/${year}`;
-        }
-      } catch (_) {
-        // keep original value if parsing fails
-      }
+    // Fetch all projects from the Neon database
+    const projects = await sql`SELECT * FROM projects ORDER BY id`
+    
+    // Format the projects to match the expected structure
+    const formattedProjects = projects.map((project: any) => ({
+      id: project.id,
+      title: project.title,
+      description: project.description,
+      technologies: project.technologies || [],
+      github_url: project.github,
+      demo_url: project.demo,
+      category: project.category,
+      date: project.project_date,
+      image_url: project.image,
+      featured: project.featured,
+      objectives: project.objectives || [],
+      outcomes: project.outcomes || []
+    }))
 
-      return {
-        ...p,
-        categories: p.category ? [p.category] : [],
-        date: formattedDate,
-        demoUrl: p.demo,
-      };
-    });
-    return NextResponse.json({ projects: mapped });
-  } catch (err) {
-    console.error('Projects API Error', err);
-    return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 });
+    return NextResponse.json({ projects: formattedProjects })
+  } catch (error) {
+    console.error('Error fetching projects:', error)
+    return NextResponse.json(
+      { error: 'Failed to fetch projects' },
+      { status: 500 }
+    )
   }
 } 

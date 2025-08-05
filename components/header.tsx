@@ -8,7 +8,7 @@ import { useRouter, usePathname } from "next/navigation"
 const navItems = [
   { name: "Home", href: "/" },
   { name: "About", href: "/#about" },
-  { name: "Projects", href: "/#case-studies" },
+  { name: "My Work", href: "/#featured-projects" },
   { name: "Kind Words", href: "/#testimonials" },
 ]
 
@@ -48,7 +48,7 @@ export default function Header() {
   const handleScroll = useCallback(() => {
     // Only update active section on home page
     if (pathname === "/") {
-      const sections = ["intro", "about", "case-studies", "testimonials"]
+      const sections = ["intro", "about", "featured-projects", "testimonials"]
       const scrollPosition = window.scrollY + window.innerHeight / 3
 
       for (const section of sections) {
