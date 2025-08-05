@@ -57,7 +57,7 @@ export default function Testimonials() {
         description="Trusted by colleagues and clients who appreciate my work ethic, technical skills, and dedication to delivering exceptional results."
         stats={statsData}
         testimonials={testimonialsData}
-        primaryActionLabel="Contact Me"
+        primaryActionLabel="Email Me"
         secondaryActionLabel="View Projects"
       />
     </section>

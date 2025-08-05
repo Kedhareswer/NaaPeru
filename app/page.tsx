@@ -7,13 +7,13 @@ import Intro from "@/components/intro"
 import About from "@/components/about"
 import SkillsParticipations from "@/components/skills-participations"
 import CaseStudies from "@/components/case-studies"
-import Contact from "@/components/contact"
 import CustomCursor from "@/components/custom-cursor"
 import LoadingScreen from "@/components/loading-screen"
 import Testimonials from "@/components/testimonials"
 import Footer from "@/components/footer"
 import SkillsEndorsement from "@/components/skills-endorsement"
 import LatestInsights from "@/components/latest-insights"
+import FloatingChatBot from "@/components/floating-chat-bot"
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
@@ -50,7 +50,7 @@ export default function Home() {
             <LatestInsights />
             <CaseStudies />
             <Testimonials />
-            <Contact />
+            <FloatingChatBot />
             <Footer />
           </motion.div>
         )}

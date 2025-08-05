@@ -23,10 +23,15 @@ export default function Footer() {
             <div className="space-y-3">
               <a
                 href="mailto:Kedhareswer.12110626@gmail.com"
-                className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
               >
-                <Mail className="w-4 h-4" />
-                <span className="font-light">Kedhareswer.12110626@gmail.com</span>
+                Email
+              </a>
+              <a
+                href="#"
+                className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+              >
+                Chat Bot
               </a>
               <div className="flex items-center gap-2 text-gray-600">
                 <MapPin className="w-4 h-4" />

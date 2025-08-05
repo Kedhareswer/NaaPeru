@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { Star, Mail } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -131,11 +131,11 @@ export const ClientsSection = ({
             ))}
           </div>
           <div className="flex items-center gap-4 mt-6">
-            <Link href="/projects">
-              <Button variant="outline" size="lg">{secondaryActionLabel}</Button>
-            </Link>
-            <Link href="/#contact">
-              <Button size="lg">{primaryActionLabel}</Button>
+            <Link href="mailto:Kedhareswer.12110626@gmail.com">
+              <Button className="w-full">
+                <Mail className="w-4 h-4 mr-2" />
+                Email
+              </Button>
             </Link>
           </div>
         </div>

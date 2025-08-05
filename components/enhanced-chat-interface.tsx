@@ -86,6 +86,7 @@ export default function EnhancedChatInterface() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const sessionStartTime = useRef<Date>(new Date())
+  const welcomeMessageAdded = useRef<boolean>(false)
   
   const { toast } = useToast()
   const isMobile = useIsMobile()
@@ -179,18 +180,39 @@ export default function EnhancedChatInterface() {
       ) {
         const assistantMessage = addMessage({
           role: "assistant",
-          content: "I'd be happy to help you schedule an appointment with Kedhareswer. Please provide the following details:\n\n1. Your name\n2. Contact information (email or phone)\n3. Subject or purpose of the meeting\n4. Preferred date (YYYY-MM-DD)\n5. Preferred time\n6. Your timezone",
+          content: "I'd be happy to help you schedule an appointment with Kedhareswer! 🎥\n\n**To get started, could you please share:**\n\n1. **Your name** - What should I call you?\n2. **Contact info** - Your email or phone number\n3. **Meeting purpose** - What would you like to discuss?\n4. **Preferred date** - When works best for you? (YYYY-MM-DD)\n5. **Preferred time** - Any specific time of day?\n6. **Your timezone** - So we can coordinate properly\n\nOnce you provide these details, I'll set everything up for you! 😊",
           metadata: { category: 'appointment' }
         })
       } else {
-        // Enhanced API call with conversation mode
+        // Enhanced API call with conversation mode and better prompting
+        const enhancedPrompt = `You are Kedhareswer's friendly AI assistant. Respond in a warm, conversational tone with these guidelines:
+
+1. **Be friendly and engaging** - Use emojis and conversational language
+2. **Ask follow-up questions** - Show genuine interest in the user's needs
+3. **Avoid redundancy** - Don't repeat information unnecessarily
+4. **Be helpful and specific** - Provide actionable insights
+5. **Use markdown formatting** - Make responses visually appealing
+6. **Keep responses concise but informative** - Balance detail with readability
+
+User question: ${input}
+
+Context about Kedhareswer:
+- Full name: Marlakunta Kedhareswer Naidu
+- Role: AI/ML & Data Science Enthusiast
+- Location: Madanapalle, India (currently studying in Punjab)
+- Expertise: Machine Learning, Data Science, Computer Vision, NLP
+- Current status: Final year student at Lovely Professional University
+- Available for: New opportunities and collaborations
+
+Respond as if you're having a friendly conversation with someone interested in Kedhareswer's work and background.`
+
         const response = await fetch('/api/chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ 
-            message: input,
+            message: enhancedPrompt,
             conversation: conversation.slice(0, -1),
             mode: conversationMode,
             settings: settings
@@ -208,7 +230,7 @@ export default function EnhancedChatInterface() {
         
         const assistantMessage = addMessage({ 
           role: "assistant", 
-          content: data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response. Please try again.",
+          content: data.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response right now. Could you try rephrasing your question? 🤔",
           metadata: {
             confidence: data.confidence || 0.8,
             sources: data.sources || [],
@@ -223,7 +245,7 @@ export default function EnhancedChatInterface() {
       console.error("Chat Error:", error)
       const errorMessage = addMessage({
         role: "assistant",
-        content: "I'm sorry, I'm currently unable to process your request. The AI assistant feature is temporarily unavailable. Please try again later or contact me directly through other means.",
+        content: "Oops! I'm having a bit of trouble right now. 😅 Could you try asking your question again, or maybe rephrase it slightly? I'm here to help! 🤖",
         metadata: { category: 'error' }
       })
     } finally {
@@ -303,19 +325,19 @@ export default function EnhancedChatInterface() {
   // Enhanced quick replies with categories
   const quickReplies = {
     general: [
-      "Tell me about Kedhareswer's experience",
-      "What are his technical skills?",
-      "Show me his projects"
+      "Tell me about Kedhareswer's background",
+      "What makes him unique as a candidate?",
+      "What are his current projects?"
     ],
     professional: [
-      "Book an appointment",
-      "What makes him a good candidate?",
-      "His leadership experience"
+      "How can I schedule a meeting?",
+      "What's his leadership experience?",
+      "What opportunities is he looking for?"
     ],
     technical: [
-      "His AI/ML expertise",
-      "Data science projects",
-      "Programming experience"
+      "What's his AI/ML expertise?",
+      "Can you show me his data science projects?",
+      "What programming languages does he know?"
     ]
   }
 
@@ -324,24 +346,157 @@ export default function EnhancedChatInterface() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
-  // Welcome message
+  // Welcome message - only add once when component mounts
   useEffect(() => {
-    if (messages.length === 0) {
+    if (messages.length === 0 && !welcomeMessageAdded.current) {
+      welcomeMessageAdded.current = true
       addMessage({
         role: "assistant",
-        content: "👋 Hi there! I'm Kedhareswer's enhanced virtual assistant. How can I assist you today?",
+        content: "👋 Hi there! I'm Kedhareswer's AI assistant, and I'm excited to help you learn more about him! \n\n**What would you like to know?** 🤔\n\n• His background and experience\n• Technical skills and expertise\n• Projects and achievements\n• How to get in touch\n• Or anything else you're curious about!\n\nJust ask away - I'm here to help! 😊",
         metadata: { category: 'welcome' }
       })
     }
-  }, [])
+  }, [messages.length])
 
   // Rest of the component would include the enhanced UI components...
   // This is a foundational structure for the enhanced chat interface
 
   return (
-    <div className="enhanced-chat-interface">
-      {/* The component would continue with enhanced UI elements */}
-      {/* Including settings panel, analytics dashboard, search functionality, etc. */}
+    <div className="h-full flex flex-col bg-white">
+      {/* Chat Messages */}
+      <div 
+        ref={chatRef}
+        className="flex-1 overflow-y-auto p-4 space-y-4"
+      >
+        {filteredMessages.map((message) => (
+          <motion.div
+            key={message.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+          >
+            <div
+              className={`max-w-[80%] rounded-lg p-3 ${
+                message.role === 'user'
+                  ? 'bg-black text-white'
+                  : 'bg-gray-100 text-gray-900'
+              }`}
+            >
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  code({ node, className, children, ...props }: any) {
+                    const match = /language-(\w+)/.exec(className || '')
+                    const isInline = !match
+                    return !isInline ? (
+                      <SyntaxHighlighter
+                        style={oneDark}
+                        language={match[1]}
+                        PreTag="div"
+                        {...props}
+                      >
+                        {String(children).replace(/\n$/, '')}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    )
+                  }
+                }}
+              >
+                {message.content}
+              </ReactMarkdown>
+              
+              {/* Message Actions */}
+              <div className="flex items-center gap-2 mt-2 opacity-0 hover:opacity-100 transition-opacity">
+                <button
+                  onClick={() => copyMessage(message.content)}
+                  className="p-1 hover:bg-white/10 rounded"
+                >
+                  <Copy className="w-3 h-3" />
+                </button>
+                <button
+                  onClick={() => handleMessageFeedback(message.id, 'positive')}
+                  className="p-1 hover:bg-white/10 rounded"
+                >
+                  <ThumbsUp className="w-3 h-3" />
+                </button>
+                <button
+                  onClick={() => handleMessageFeedback(message.id, 'negative')}
+                  className="p-1 hover:bg-white/10 rounded"
+                >
+                  <ThumbsDown className="w-3 h-3" />
+                </button>
+                <button
+                  onClick={() => toggleBookmark(message.id)}
+                  className="p-1 hover:bg-white/10 rounded"
+                >
+                  <Bookmark className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+        
+        {loading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex justify-start"
+          >
+            <div className="bg-gray-100 rounded-lg p-3">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+              </div>
+            </div>
+          </motion.div>
+        )}
+        
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Input Area */}
+      <div className="border-t border-gray-200 p-4">
+        <form onSubmit={handleSubmit} className="flex items-center gap-2">
+          <div className="flex-1 relative">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask me anything about Kedhareswer..."
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+              disabled={loading}
+            />
+            {isRecording && (
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+              </div>
+            )}
+          </div>
+          
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={isRecording ? stopRecording : startRecording}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              disabled={loading}
+            >
+              {isRecording ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+            </button>
+            
+            <button
+              type="submit"
+              disabled={loading || !input.trim()}
+              className="p-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Send className="w-4 h-4" />
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 } 

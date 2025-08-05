@@ -96,6 +96,11 @@ const participations = [
     title: "Hackathons & Competitions",
     items: [
       {
+        name: "Predict the Introverts from the Extroverts",
+        description: "Kaggle - August 2025",
+        icon: Trophy,
+      },
+      {
         name: "World's Largest Hackathon",
         description: "Bolt.new - June 2025",
         icon: Trophy,
@@ -109,7 +114,7 @@ const participations = [
         name: "Predicting Optimal Fertilizers",
         description: "Kaggle - May 2025",
         icon: Trophy,
-      },
+      }
     ],
   },
 ]

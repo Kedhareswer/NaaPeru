@@ -9,7 +9,6 @@ const navItems = [
   { name: "Home", href: "/" },
   { name: "About", href: "/#about" },
   { name: "Projects", href: "/#case-studies" },
-  { name: "Contact", href: "/#contact" },
 ]
 
 const variants: Variants = {
@@ -48,7 +47,7 @@ export default function Header() {
   const handleScroll = useCallback(() => {
     // Only update active section on home page
     if (pathname === "/") {
-      const sections = ["intro", "about", "case-studies", "contact"]
+      const sections = ["intro", "about", "case-studies"]
       const scrollPosition = window.scrollY + window.innerHeight / 3
 
       for (const section of sections) {

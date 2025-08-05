@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react"
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion"
-import { MapPin, Calendar, Download, Mail, ArrowDown } from "lucide-react"
+import { MapPin, Calendar, Download, Mail, ArrowDown, Linkedin, Github, BarChart2 } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 export default function Intro() {
@@ -49,11 +49,6 @@ export default function Intro() {
       opacity: 1,
       y: 0,
       rotateX: 0,
-      transition: {
-        delay: i * 0.05,
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
-      },
     }),
   }
 
@@ -67,10 +62,6 @@ export default function Intro() {
       scale: 1,
       opacity: 1,
       filter: "grayscale(100%) contrast(120%)",
-      transition: {
-        duration: 1.2,
-        ease: [0.22, 1, 0.36, 1],
-      },
     },
   }
 
@@ -181,6 +172,7 @@ export default function Intro() {
                         variants={letterVariants}
                         initial="hidden"
                         animate={isInView ? "visible" : "hidden"}
+                        transition={{ delay: i * 0.05, duration: 0.6, ease: "easeOut" }}
                         className="inline-block"
                       >
                         {letter === " " ? "\u00A0" : letter}
@@ -219,6 +211,7 @@ export default function Intro() {
                 variants={imageVariants}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
+                transition={{ duration: 1.2, ease: "easeOut" }}
                 className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 mx-auto"
                 onHoverStart={() => setIsHovering(true)}
                 onHoverEnd={() => setIsHovering(false)}
@@ -260,32 +253,54 @@ export default function Intro() {
                 results through innovative AI solutions.
               </motion.p>
 
-              {/* Contact info - Mobile */}
+              {/* Connect Online - Mobile */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.9 }}
-                className="grid grid-cols-1 xs:grid-cols-2 gap-4 max-w-sm mx-auto"
+                className="flex justify-center items-center gap-6 max-w-md mx-auto"
               >
-                <div className="flex items-center justify-center xs:justify-start gap-3">
-                  <div className="w-8 h-8 border border-black/20 flex items-center justify-center">
-                    <MapPin className="w-4 h-4 text-black/70" />
+                <a
+                  href="https://www.linkedin.com/in/kedhareswernaidu/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-2 hover:scale-105 transition-transform duration-200"
+                >
+                  <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
+                    <Linkedin className="w-5 h-5 text-gray-700" />
                   </div>
-                  <div className="text-left">
-                    <p className="text-xs font-medium text-black uppercase tracking-wider">Location</p>
-                    <p className="text-xs text-black/70">Madanapalle, India</p>
+                  <div className="text-center">
+                    <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">LinkedIn</p>
                   </div>
-                </div>
+                </a>
 
-                <div className="flex items-center justify-center xs:justify-start gap-3">
-                  <div className="w-8 h-8 border border-black/20 flex items-center justify-center">
-                    <Calendar className="w-4 h-4 text-black/70" />
+                <a
+                  href="https://github.com/Kedhareswer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-2 hover:scale-105 transition-transform duration-200"
+                >
+                  <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
+                    <Github className="w-5 h-5 text-gray-700" />
                   </div>
-                  <div className="text-left">
-                    <p className="text-xs font-medium text-black uppercase tracking-wider">Status</p>
-                    <p className="text-xs text-black/70">Open to opportunities</p>
+                  <div className="text-center">
+                    <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">GitHub</p>
                   </div>
-                </div>
+                </a>
+
+                <a
+                  href="https://www.kaggle.com/kedhareswernaidu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center gap-2 hover:scale-105 transition-transform duration-200"
+                >
+                  <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
+                    <BarChart2 className="w-5 h-5 text-gray-700" />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">Kaggle</p>
+                  </div>
+                </a>
               </motion.div>
 
               {/* Action buttons */}
@@ -313,26 +328,6 @@ export default function Intro() {
                   <span className="relative z-10 group-hover:text-black transition-colors duration-300 flex items-center gap-2 text-sm sm:text-base">
                     <Download className="w-4 h-4" />
                     Download CV
-                  </span>
-                </motion.a>
-
-                <motion.a
-                  href="#contact"
-                  className="group relative inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-black text-black rounded-none overflow-hidden min-h-[44px]"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onHoverStart={() => setIsHovering(true)}
-                  onHoverEnd={() => setIsHovering(false)}
-                >
-                  <motion.div
-                    className="absolute inset-0 bg-black"
-                    initial={{ y: "100%" }}
-                    whileHover={{ y: "0%" }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  <span className="relative z-10 group-hover:text-white transition-colors duration-300 flex items-center gap-2 text-sm sm:text-base">
-                    <Mail className="w-4 h-4" />
-                    Get in Touch
                   </span>
                 </motion.a>
               </motion.div>
@@ -378,6 +373,7 @@ export default function Intro() {
                           variants={letterVariants}
                           initial="hidden"
                           animate={isInView ? "visible" : "hidden"}
+                          transition={{ delay: i * 0.05, duration: 0.6, ease: "easeOut" }}
                           className="inline-block"
                         >
                           {letter === " " ? "\u00A0" : letter}
@@ -435,32 +431,54 @@ export default function Intro() {
                   results through innovative AI solutions and cutting-edge machine learning techniques.
                 </motion.p>
 
-                {/* Contact info */}
+                {/* Connect Online - Desktop */}
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.8, delay: 1 }}
-                  className="grid grid-cols-2 gap-6 xl:gap-8"
+                  className="flex justify-center items-center gap-8 max-w-lg mx-auto"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 border border-black/20 flex items-center justify-center">
-                      <MapPin className="w-5 h-5 text-black/70" />
+                  <a
+                    href="https://www.linkedin.com/in/kedhareswernaidu/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-3 hover:scale-105 transition-transform duration-200"
+                  >
+                    <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
+                      <Linkedin className="w-6 h-6 text-gray-700" />
                     </div>
-                    <div>
-                      <p className="text-sm font-medium text-black uppercase tracking-wider">Location</p>
-                      <p className="text-sm text-black/70">Madanapalle, India</p>
+                    <div className="text-center">
+                      <p className="text-sm font-medium text-gray-900 uppercase tracking-wider">LinkedIn</p>
                     </div>
-                  </div>
+                  </a>
 
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 border border-black/20 flex items-center justify-center">
-                      <Calendar className="w-5 h-5 text-black/70" />
+                  <a
+                    href="https://github.com/Kedhareswer"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-3 hover:scale-105 transition-transform duration-200"
+                  >
+                    <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
+                      <Github className="w-6 h-6 text-gray-700" />
                     </div>
-                    <div>
-                      <p className="text-sm font-medium text-black uppercase tracking-wider">Status</p>
-                      <p className="text-sm text-black/70">Open to opportunities</p>
+                    <div className="text-center">
+                      <p className="text-sm font-medium text-gray-900 uppercase tracking-wider">GitHub</p>
                     </div>
-                  </div>
+                  </a>
+
+                  <a
+                    href="https://www.kaggle.com/kedhareswernaidu"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-3 hover:scale-105 transition-transform duration-200"
+                  >
+                    <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
+                      <BarChart2 className="w-6 h-6 text-gray-700" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-medium text-gray-900 uppercase tracking-wider">Kaggle</p>
+                    </div>
+                  </a>
                 </motion.div>
 
                 {/* Action buttons */}
@@ -490,26 +508,6 @@ export default function Intro() {
                       Download CV
                     </span>
                   </motion.a>
-
-                  <motion.a
-                    href="#contact"
-                    className="group relative inline-flex items-center justify-center px-8 xl:px-10 py-4 xl:py-5 border-2 border-black text-black rounded-none overflow-hidden"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onHoverStart={() => setIsHovering(true)}
-                    onHoverEnd={() => setIsHovering(false)}
-                  >
-                    <motion.div
-                      className="absolute inset-0 bg-black"
-                      initial={{ y: "100%" }}
-                      whileHover={{ y: "0%" }}
-                      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    />
-                    <span className="relative z-10 group-hover:text-white transition-colors duration-400 flex items-center gap-3 font-medium">
-                      <Mail className="w-5 h-5" />
-                      Get in Touch
-                    </span>
-                  </motion.a>
                 </motion.div>
               </div>
 
@@ -520,6 +518,7 @@ export default function Intro() {
                   variants={imageVariants}
                   initial="hidden"
                   animate={isInView ? "visible" : "hidden"}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
                   className="relative"
                   onHoverStart={() => setIsHovering(true)}
                   onHoverEnd={() => setIsHovering(false)}
