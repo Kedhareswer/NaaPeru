@@ -74,7 +74,7 @@ export default function SafariSection() {
           <SafariWithTabs 
             initialTabs={projectTabs}
             className="w-full shadow-2xl"
-            height={600}
+            height={680}
           />
         </motion.div>
 

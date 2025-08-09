@@ -264,10 +264,11 @@ export default function Intro() {
                   href="https://www.linkedin.com/in/kedhareswernaidu/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col items-center gap-2 hover:scale-105 transition-transform duration-200"
+                  className="group flex flex-col items-center gap-2 hover:scale-105 transition-transform duration-200"
                 >
-                  <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
-                    <Linkedin className="w-5 h-5 text-gray-700" />
+                  <div className="relative w-10 h-10 rounded-lg flex items-center justify-center border border-gray-200 overflow-hidden bg-white">
+                    <span className="absolute inset-0 bg-[#0274b3] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
+                    <Linkedin className="relative z-10 w-5 h-5 text-gray-700 group-hover:text-white transition-colors duration-300" />
                   </div>
                   <div className="text-center">
                     <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">LinkedIn</p>
@@ -278,10 +279,11 @@ export default function Intro() {
                   href="https://github.com/Kedhareswer"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col items-center gap-2 hover:scale-105 transition-transform duration-200"
+                  className="group flex flex-col items-center gap-2 hover:scale-105 transition-transform duration-200"
                 >
-                  <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
-                    <Github className="w-5 h-5 text-gray-700" />
+                  <div className="relative w-10 h-10 rounded-lg flex items-center justify-center border border-gray-200 overflow-hidden bg-white">
+                    <span className="absolute inset-0 bg-[#181717] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
+                    <Github className="relative z-10 w-5 h-5 text-gray-700 group-hover:text-white transition-colors duration-300" />
                   </div>
                   <div className="text-center">
                     <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">GitHub</p>
@@ -292,10 +294,11 @@ export default function Intro() {
                   href="https://www.kaggle.com/kedhareswernaidu"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col items-center gap-2 hover:scale-105 transition-transform duration-200"
+                  className="group flex flex-col items-center gap-2 hover:scale-105 transition-transform duration-200"
                 >
-                  <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
-                    <BarChart2 className="w-5 h-5 text-gray-700" />
+                  <div className="relative w-10 h-10 rounded-lg flex items-center justify-center border border-gray-200 overflow-hidden bg-white">
+                    <span className="absolute inset-0 bg-[#20beff] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
+                    <BarChart2 className="relative z-10 w-5 h-5 text-gray-700 group-hover:text-white transition-colors duration-300" />
                   </div>
                   <div className="text-center">
                     <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">Kaggle</p>
@@ -465,10 +468,11 @@ export default function Intro() {
                       href="https://www.linkedin.com/in/kedhareswernaidu/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex flex-col items-center gap-1 hover:scale-105 transition-transform duration-200"
+                      className="group flex flex-col items-center gap-1 hover:scale-105 transition-transform duration-200"
                     >
-                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
-                        <Linkedin className="w-6 h-6 text-gray-700" />
+                      <div className="relative w-12 h-12 rounded-lg flex items-center justify-center border border-gray-200 overflow-hidden bg-white">
+                        <span className="absolute inset-0 bg-[#0274b3] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
+                        <Linkedin className="relative z-10 w-6 h-6 text-gray-700 group-hover:text-white transition-colors duration-300" />
                       </div>
                       <div className="text-center">
                         <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">LinkedIn</p>
@@ -478,10 +482,11 @@ export default function Intro() {
                       href="https://github.com/Kedhareswer"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex flex-col items-center gap-1 hover:scale-105 transition-transform duration-200"
+                      className="group flex flex-col items-center gap-1 hover:scale-105 transition-transform duration-200"
                     >
-                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
-                        <Github className="w-6 h-6 text-gray-700" />
+                      <div className="relative w-12 h-12 rounded-lg flex items-center justify-center border border-gray-200 overflow-hidden bg-white">
+                        <span className="absolute inset-0 bg-[#181717] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
+                        <Github className="relative z-10 w-6 h-6 text-gray-700 group-hover:text-white transition-colors duration-300" />
                       </div>
                       <div className="text-center">
                         <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">GitHub</p>
@@ -491,10 +496,11 @@ export default function Intro() {
                       href="https://www.kaggle.com/kedhareswernaidu"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex flex-col items-center gap-1 hover:scale-105 transition-transform duration-200"
+                      className="group flex flex-col items-center gap-1 hover:scale-105 transition-transform duration-200"
                     >
-                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
-                        <BarChart2 className="w-6 h-6 text-gray-700" />
+                      <div className="relative w-12 h-12 rounded-lg flex items-center justify-center border border-gray-200 overflow-hidden bg-white">
+                        <span className="absolute inset-0 bg-[#20beff] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
+                        <BarChart2 className="relative z-10 w-6 h-6 text-gray-700 group-hover:text-white transition-colors duration-300" />
                       </div>
                       <div className="text-center">
                         <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">Kaggle</p>
@@ -502,10 +508,11 @@ export default function Intro() {
                     </a>
                     <a
                       href="mailto:kedhareswer.12110626@gmail.com"
-                      className="flex flex-col items-center gap-1 hover:scale-105 transition-transform duration-200"
+                      className="group flex flex-col items-center gap-1 hover:scale-105 transition-transform duration-200"
                     >
-                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200">
-                        <Mail className="w-6 h-6 text-gray-700" />
+                      <div className="relative w-12 h-12 rounded-lg flex items-center justify-center border border-gray-200 overflow-hidden bg-white">
+                        <span className="absolute inset-0 bg-black scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
+                        <Mail className="relative z-10 w-6 h-6 text-gray-700 group-hover:text-white transition-colors duration-300" />
                       </div>
                       <div className="text-center">
                         <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">Email</p>
