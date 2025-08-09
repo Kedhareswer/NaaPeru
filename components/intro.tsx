@@ -511,7 +511,7 @@ export default function Intro() {
                       className="group flex flex-col items-center gap-1 hover:scale-105 transition-transform duration-200"
                     >
                       <div className="relative w-12 h-12 rounded-lg flex items-center justify-center border border-gray-200 overflow-hidden bg-white">
-                        <span className="absolute inset-0 bg-black scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
+                        <span className="absolute inset-0 bg-[#C5221F] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
                         <Mail className="relative z-10 w-6 h-6 text-gray-700 group-hover:text-white transition-colors duration-300" />
                       </div>
                       <div className="text-center">

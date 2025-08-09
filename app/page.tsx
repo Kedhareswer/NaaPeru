@@ -13,7 +13,7 @@ import Testimonials from "@/components/testimonials"
 import Footer from "@/components/footer"
 import SkillsEndorsement from "@/components/skills-endorsement"
 import LatestInsights from "@/components/latest-insights"
-import SafariSection from "@/components/safari-section"
+// Removed SafariSection; using CaseStudies for projects
 import FloatingChatBot from "@/components/floating-chat-bot"
 
 export default function Home() {
@@ -49,7 +49,7 @@ export default function Home() {
             <SkillsParticipations />
             <SkillsEndorsement />
             <LatestInsights />
-            <SafariSection />
+            <CaseStudies />
             <Testimonials />
             <FloatingChatBot />
             <Footer />

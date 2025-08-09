@@ -125,11 +125,7 @@ const certifications = [
     name: "Neo4j Certified Professional",
     description: "Neo4j - July 2025",
     icon: Medal,
-  },
-  {
-    name: "Python for Data Science",
-    description: "Infosys - May 2025",
-    icon: Medal,
+    url: "https://graphacademy.neo4j.com/c/88771331-1629-4cca-bd52-070ed66b89d4/"
   },
   {
     name: "AWS APAC - Solutions Architecture Job Simulation",
