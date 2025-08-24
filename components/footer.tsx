@@ -1,6 +1,6 @@
 "use client"
 
-import { Github, Linkedin, Mail, MapPin, BarChart2 } from "lucide-react"
+import { Github, Linkedin, MapPin, BarChart2 } from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 
@@ -102,17 +102,7 @@ export default function Footer() {
           </motion.div>
         </div>
 
-        {/* Copyright */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-12 pt-8 border-t border-gray-200 text-center"
-        >
-          <p className="text-gray-600 text-sm font-light">
-            © {new Date().getFullYear()} Kedhareswer Naidu. All rights reserved.
-          </p>
-        </motion.div>
+        
       </div>
     </footer>
   )

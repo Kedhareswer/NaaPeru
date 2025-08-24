@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Star, Mail, Github, Linkedin } from "lucide-react";
+import { Star, Mail, Github, Linkedin, Users, Smile } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -38,11 +38,28 @@ export interface ClientsSectionProps {
 
 // --- Internal Sub-Components ---
 
+// Small helper to choose an icon based on the stat label
+const getStatIcon = (label: string) => {
+  if (/happy\s*clients/i.test(label)) {
+    return <Users className="h-6 w-6 text-foreground" aria-hidden />;
+  }
+  if (/satisfaction/i.test(label)) {
+    return <Smile className="h-6 w-6 text-green-500" fill="currentColor" aria-hidden />;
+  }
+  if (/average\s*rating/i.test(label)) {
+    return <Star className="h-6 w-6 text-yellow-500" fill="currentColor" aria-hidden />;
+  }
+  return null;
+};
+
 // StatCard using shadcn variables
 const StatCard = ({ value, label }: Stat) => (
   <Card className="bg-muted/50 border-border text-center">
     <CardContent className="p-4">
-      <p className="text-3xl font-bold text-foreground">{value}</p>
+      <div className="flex items-center justify-center gap-2">
+        <p className="text-3xl font-bold text-foreground">{value}</p>
+        {getStatIcon(label)}
+      </div>
       <p className="text-sm text-muted-foreground">{label}</p>
     </CardContent>
   </Card>
