@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // --- Type Definitions for props ---
 export interface Stat {
@@ -50,35 +51,35 @@ const StatCard = ({ value, label }: Stat) => (
 const StickyTestimonialCard = ({ testimonial, index }: { testimonial: Testimonial; index: number }) => {
   return (
     <motion.div
-      className="sticky w-full"
+      className="w-full lg:sticky"
       style={{ top: `${20 + index * 24}px` }} // Staggered top position for stacking
     >
       <div className={cn(
-        "p-6 shadow-lg flex flex-col h-auto w-full",
+        "p-4 md:p-6 shadow-lg flex flex-col h-auto w-full",
         "bg-card border border-border"
       )}>
         {/* Top section: Image and Author */}
         <div className="flex items-center gap-4">
           <div
-            className="w-14 h-14 bg-cover bg-center flex-shrink-0"
+            className="w-12 h-12 md:w-14 md:h-14 bg-cover bg-center flex-shrink-0"
             style={{ backgroundImage: `url(${testimonial.avatarSrc})` }}
             aria-label={`Photo of ${testimonial.name}`}
           />
           <div className="flex-grow">
-            <p className="font-semibold text-lg text-foreground">{testimonial.name}</p>
+            <p className="font-semibold text-base md:text-lg text-foreground">{testimonial.name}</p>
             <p className="text-sm text-muted-foreground">{testimonial.title}</p>
           </div>
         </div>
 
         {/* Middle section: Rating */}
         <div className="flex items-center gap-2 my-4">
-          <span className="font-bold text-base text-foreground">{testimonial.rating.toFixed(1)}</span>
+          <span className="font-bold text-sm md:text-base text-foreground">{testimonial.rating.toFixed(1)}</span>
           <div className="flex">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
                 key={i}
                 className={cn(
-                  "h-4 w-4",
+                  "h-3 w-3 md:h-4 md:w-4",
                   i < Math.floor(testimonial.rating)
                     ? "text-yellow-400 fill-yellow-400"
                     : "text-muted-foreground/30"
@@ -90,7 +91,7 @@ const StickyTestimonialCard = ({ testimonial, index }: { testimonial: Testimonia
 
         {/* Bottom section: Quote */}
         {testimonial.quote && (
-          <p className="text-base text-muted-foreground">&ldquo;{testimonial.quote}&rdquo;</p>
+          <p className="text-sm md:text-base text-muted-foreground">&ldquo;{testimonial.quote}&rdquo;</p>
         )}
       </div>
     </motion.div>
@@ -109,8 +110,9 @@ export const ClientsSection = ({
   secondaryActionLabel,
   className,
 }: ClientsSectionProps) => {
+  const isMobile = useIsMobile();
   // Calculate a height for the scroll container to ensure all cards can stack
-  const scrollContainerHeight = `calc(100vh + ${testimonials.length * 100}px)`;
+  const scrollContainerHeight = isMobile ? "auto" : `calc(100vh + ${testimonials.length * 100}px)`;
 
   return (
     <section className={cn("w-full bg-background text-foreground py-20 md:py-28", className)}>
@@ -125,7 +127,7 @@ export const ClientsSection = ({
 
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">{title}</h2>
           <p className="text-lg text-muted-foreground">{description}</p>
-          <div className="grid grid-cols-3 gap-4 mt-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mt-4">
             {stats.map((stat) => (
               <StatCard key={stat.label} {...stat} />
             ))}
@@ -153,4 +155,4 @@ export const ClientsSection = ({
       </div>
     </section>
   );
-}; 
+};
