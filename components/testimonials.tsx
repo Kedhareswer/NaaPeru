@@ -39,13 +39,6 @@ const testimonialsData: Testimonial[] = [
     avatarSrc: "/testimonials/suhail.jpg",
     rating: 4.8,
   },
-  {
-    name: "Aman Kumar",
-    title: "Assistant Manager at upGrad",
-    quote: "A dedicated student with strong technical skills and eagerness to learn. His work ethic and attention to detail have been impressive throughout the course.",
-    avatarSrc: "/testimonials/aman.jpg",
-    rating: 4.7,
-  },
 ];
 
 export default function Testimonials() {

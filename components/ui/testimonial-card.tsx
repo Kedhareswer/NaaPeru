@@ -2,13 +2,14 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Star, Mail } from "lucide-react";
+import { Star, Mail, Github, Linkedin } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { useIsMobile } from "@/hooks/use-mobile";
+import profile from "@/data/profile.json";
 
 // --- Type Definitions for props ---
 export interface Stat {
@@ -132,11 +133,31 @@ export const ClientsSection = ({
               <StatCard key={stat.label} {...stat} />
             ))}
           </div>
-          <div className="flex items-center gap-4 mt-6">
+          <div className="flex flex-wrap items-center gap-3 mt-6">
             <Link href="mailto:Kedhareswer.12110626@gmail.com">
-              <Button className="w-full">
+              <Button className="w-full sm:w-auto">
                 <Mail className="w-4 h-4 mr-2" />
                 Email
+              </Button>
+            </Link>
+            <Link
+              href={(profile as any).personalInfo?.github ?? "https://github.com/Kedhareswer"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="outline" className="w-full sm:w-auto">
+                <Github className="w-4 h-4 mr-2" />
+                GitHub
+              </Button>
+            </Link>
+            <Link
+              href={(profile as any).personalInfo?.linkedin ?? "https://www.linkedin.com/in/kedhareswernaidu/"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="outline" className="w-full sm:w-auto">
+                <Linkedin className="w-4 h-4 mr-2" />
+                LinkedIn
               </Button>
             </Link>
           </div>

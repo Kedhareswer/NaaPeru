@@ -21,18 +21,6 @@ export default function Footer() {
               "AI is just the person dreaming bigger"
             </p>
             <div className="space-y-3">
-              <a
-                href="mailto:Kedhareswer.12110626@gmail.com"
-                className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
-              >
-                Email
-              </a>
-              <a
-                href="#"
-                className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
-              >
-                Chat Bot
-              </a>
               <div className="flex items-center gap-2 text-gray-600">
                 <MapPin className="w-4 h-4" />
                 <span className="font-light">Madanapalle, Andhra Pradesh, India</span>
