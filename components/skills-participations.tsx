@@ -301,7 +301,7 @@ export default function SkillsParticipations() {
               <h2 className="text-2xl font-light text-gray-900">Certifications</h2>
               <div className="h-px bg-black flex-grow" />
             </div>
-            <div className="grid grid-cols-1 2xl:grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 gap-12">
               {certifications.map((cert, index) => (
                 <motion.div
                   key={cert.name}
