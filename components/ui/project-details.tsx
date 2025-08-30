@@ -101,7 +101,7 @@ export default function ProjectDetails({ project }: Props) {
     <section className="py-8 px-4 bg-[#f9f9f9]" ref={heroRef}>
       <div className="max-w-6xl mx-auto">
         <div className="relative pb-20 lg:pb-28">
-          {/* Header with social icons (design preserved) */}
+          {/* Header with star and label */}
           <div className="flex justify-between items-center mb-8 w-full absolute top-8 sm:top-6 md:top-8 lg:top-10 z-20 px-2">
             <div className="flex items-center gap-2  text-xl">
               <span className="text-red-500 animate-spin">✱</span>
@@ -115,53 +115,7 @@ export default function ProjectDetails({ project }: Props) {
                 PROJECT
               </TimelineContent>
             </div>
-            <div className="flex gap-4">
-              {hasGithub && (
-                <TimelineContent
-                  as="a"
-                  animationNum={ghAnim}
-                  timelineRef={heroRef}
-                  customVariants={revealVariants}
-                  href={project.githubUrl!}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                  className="md:w-8 md:h-8 sm:w-6 w-5 sm:h-6 h-5 border border-gray-200 bg-gray-100  rounded-lg flex items-center justify-center  cursor-pointer"
-                >
-                  <img src="https://pro-section.ui-layouts.com/github.svg" alt="github" width={24} height={24} />
-                </TimelineContent>
-              )}
-              {project.kaggleUrl && (
-                <TimelineContent
-                  as="a"
-                  animationNum={kgAnim}
-                  timelineRef={heroRef}
-                  customVariants={revealVariants}
-                  href={project.kaggleUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Kaggle"
-                  className="md:w-8 md:h-8 sm:w-6 w-5 sm:h-6 h-5 border border-gray-200 bg-gray-100 rounded-lg flex items-center justify-center  cursor-pointer"
-                >
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kaggle/kaggle-original.svg" alt="kaggle" width={22} height={22} />
-                </TimelineContent>
-              )}
-              {project.demoUrl && (
-                <TimelineContent
-                  as="a"
-                  animationNum={dmAnim}
-                  timelineRef={heroRef}
-                  customVariants={revealVariants}
-                  href={project.demoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Live Demo"
-                  className="md:w-8 md:h-8 sm:w-6 w-5 sm:h-6 h-5 border border-gray-200 bg-gray-100 rounded-lg flex items-center justify-center  cursor-pointer"
-                >
-                  <img src="https://pro-section.ui-layouts.com/link.svg" alt="live" width={24} height={24} />
-                </TimelineContent>
-              )}
-            </div>
+            <div />
           </div>
 
           <TimelineContent
@@ -188,16 +142,59 @@ export default function ProjectDetails({ project }: Props) {
                 xlinkHref={heroImage}
               ></image>
             </svg>
-            {project.category && (
-              <div className="absolute left-2 top-2 z-10">
-                <span className="px-2 py-1 rounded-md border border-gray-200 bg-white/80 backdrop-blur text-[11px] font-medium text-gray-700">
-                  {project.category}
-                </span>
+            {/* Social icons inside image top-right */}
+            {(hasGithub || hasKaggle || hasDemo) && (
+              <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 flex gap-2">
+                {hasGithub && (
+                  <TimelineContent
+                    as="a"
+                    animationNum={5 + ghAnim}
+                    timelineRef={heroRef}
+                    customVariants={revealVariants}
+                    href={project.githubUrl!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub"
+                    className="md:w-8 md:h-8 sm:w-7 w-6 sm:h-7 h-6 border border-gray-200 bg-white/90 backdrop-blur rounded-md flex items-center justify-center shadow-sm hover:bg-white transition"
+                  >
+                    <img src="https://pro-section.ui-layouts.com/github.svg" alt="github" width={22} height={22} />
+                  </TimelineContent>
+                )}
+                {hasKaggle && (
+                  <TimelineContent
+                    as="a"
+                    animationNum={5 + kgAnim}
+                    timelineRef={heroRef}
+                    customVariants={revealVariants}
+                    href={project.kaggleUrl!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Kaggle"
+                    className="md:w-8 md:h-8 sm:w-7 w-6 sm:h-7 h-6 border border-gray-200 bg-white/90 backdrop-blur rounded-md flex items-center justify-center shadow-sm hover:bg-white transition"
+                  >
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kaggle/kaggle-original.svg" alt="kaggle" width={20} height={20} />
+                  </TimelineContent>
+                )}
+                {hasDemo && (
+                  <TimelineContent
+                    as="a"
+                    animationNum={5 + dmAnim}
+                    timelineRef={heroRef}
+                    customVariants={revealVariants}
+                    href={project.demoUrl!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Live Demo"
+                    className="md:w-8 md:h-8 sm:w-7 w-6 sm:h-7 h-6 border border-gray-200 bg-white/90 backdrop-blur rounded-md flex items-center justify-center shadow-sm hover:bg-white transition"
+                  >
+                    <img src="https://pro-section.ui-layouts.com/link.svg" alt="live" width={22} height={22} />
+                  </TimelineContent>
+                )}
               </div>
             )}
           </TimelineContent>
 
-          {/* Stats */}
+          {/* Stats (category beside SVG + stack) */}
           <div className="relative flex flex-wrap lg:justify-start justify-between items-center py-3 text-sm lg:pr-72 xl:pr-80">
             <TimelineContent
               as="div"
