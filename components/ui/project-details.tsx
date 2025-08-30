@@ -98,21 +98,23 @@ export default function ProjectDetails({ project }: Props) {
   const dmAnim = socialOrder.indexOf("demo");
 
   return (
-    <section className="py-8 px-4 bg-[#f9f9f9]" ref={heroRef}>
+    <section className="py-8 px-4 sm:px-6 md:px-8 bg-[#f9f9f9]" ref={heroRef}>
       <div className="max-w-6xl mx-auto">
         <div className="relative pb-20 lg:pb-28">
-          {/* Header with star and label */}
-          <div className="flex justify-between items-center mb-8 w-full absolute top-8 sm:top-6 md:top-8 lg:top-10 z-20 px-2">
-            <div className="flex items-center gap-2  text-xl">
+          {/* Header with star and category */}
+          <div className="flex justify-between items-center w-full absolute top-6 sm:top-6 md:top-8 lg:top-10 z-40 px-3">
+            <div className="flex items-center gap-2 text-xl">
               <span className="text-red-500 animate-spin">✱</span>
               <TimelineContent
-                as="span"
+                as="div"
                 animationNum={0}
                 timelineRef={heroRef}
                 customVariants={revealVariants}
-                className="text-sm font-medium text-gray-600"
+                className="flex items-center gap-2 sm:text-base text-xs font-medium"
               >
-                PROJECT
+                <span className="text-red-500 font-bold">{project.category || "Project"}</span>
+                <span className="text-gray-600">category</span>
+                <span className="text-gray-300">|</span>
               </TimelineContent>
             </div>
             <div />
@@ -144,7 +146,7 @@ export default function ProjectDetails({ project }: Props) {
             </svg>
             {/* Social icons inside image top-right */}
             {(hasGithub || hasKaggle || hasDemo) && (
-              <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 flex gap-2">
+              <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-30 flex gap-2 pointer-events-auto">
                 {hasGithub && (
                   <TimelineContent
                     as="a"
@@ -155,7 +157,7 @@ export default function ProjectDetails({ project }: Props) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="GitHub"
-                    className="md:w-8 md:h-8 sm:w-7 w-6 sm:h-7 h-6 border border-gray-200 bg-white/90 backdrop-blur rounded-md flex items-center justify-center shadow-sm hover:bg-white transition"
+                    className="md:w-8 md:h-8 sm:w-7 w-6 sm:h-7 h-6 border border-gray-200 bg-white/95 backdrop-blur-sm ring-1 ring-black/5 rounded-md flex items-center justify-center shadow-md hover:bg-white transition"
                   >
                     <img src="https://pro-section.ui-layouts.com/github.svg" alt="github" width={22} height={22} />
                   </TimelineContent>
@@ -170,7 +172,7 @@ export default function ProjectDetails({ project }: Props) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Kaggle"
-                    className="md:w-8 md:h-8 sm:w-7 w-6 sm:h-7 h-6 border border-gray-200 bg-white/90 backdrop-blur rounded-md flex items-center justify-center shadow-sm hover:bg-white transition"
+                    className="md:w-8 md:h-8 sm:w-7 w-6 sm:h-7 h-6 border border-gray-200 bg-white/95 backdrop-blur-sm ring-1 ring-black/5 rounded-md flex items-center justify-center shadow-md hover:bg-white transition"
                   >
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kaggle/kaggle-original.svg" alt="kaggle" width={20} height={20} />
                   </TimelineContent>
@@ -185,7 +187,7 @@ export default function ProjectDetails({ project }: Props) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Live Demo"
-                    className="md:w-8 md:h-8 sm:w-7 w-6 sm:h-7 h-6 border border-gray-200 bg-white/90 backdrop-blur rounded-md flex items-center justify-center shadow-sm hover:bg-white transition"
+                    className="md:w-8 md:h-8 sm:w-7 w-6 sm:h-7 h-6 border border-gray-200 bg-white/95 backdrop-blur-sm ring-1 ring-black/5 rounded-md flex items-center justify-center shadow-md hover:bg-white transition"
                   >
                     <img src="https://pro-section.ui-layouts.com/link.svg" alt="live" width={22} height={22} />
                   </TimelineContent>
@@ -194,7 +196,7 @@ export default function ProjectDetails({ project }: Props) {
             )}
           </TimelineContent>
 
-          {/* Stats (category beside SVG + stack) */}
+          {/* Stats (stack only; category shown in header) */}
           <div className="relative flex flex-wrap lg:justify-start justify-between items-center py-3 text-sm lg:pr-72 xl:pr-80">
             <TimelineContent
               as="div"
@@ -203,11 +205,6 @@ export default function ProjectDetails({ project }: Props) {
               customVariants={revealVariants}
               className="flex flex-wrap gap-4 min-w-0"
             >
-              <div className="flex items-center gap-2 mb-2 sm:text-base text-xs">
-                <span className="text-red-500 font-bold">{project.category || "Project"}</span>
-                <span className="text-gray-600">category</span>
-                <span className="text-gray-300">|</span>
-              </div>
               {techText && (
                 <div className="flex items-center gap-2 mb-2 sm:text-base text-xs max-w-full">
                   <span className="text-red-500 font-bold break-words whitespace-normal">{techText}</span>
