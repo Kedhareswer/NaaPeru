@@ -7,7 +7,6 @@ import Link from 'next/link'
 
 // Type aligned with /api/projects response
 type ProjectSlide = {
-  id: number | string
   title: string
   description: string
   image: string
@@ -36,7 +35,6 @@ export default function ScrollingProjectsShowcase() {
       .then((data) => {
         const projects = Array.isArray(data.projects) ? data.projects : []
         const mapped: ProjectSlide[] = projects.map((p: any) => ({
-          id: p.id,
           title: p.title,
           description: p.description,
           image: p.image,
@@ -172,7 +170,7 @@ export default function ScrollingProjectsShowcase() {
               {/* Action */}
               <div className="absolute bottom-16 left-16">
                 <Link
-                  href={`/projects/${active?.id}`}
+                  href="/demo"
                   target="_blank"
                   rel="noreferrer"
                   className="px-8 py-3 bg-black text-white font-semibold rounded-full uppercase tracking-wider hover:bg-gray-800 transition-colors"
