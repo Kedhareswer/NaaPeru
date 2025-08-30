@@ -5,7 +5,6 @@ import {
   analyzeUserInput,
   checkRateLimit,
   buildRefusalMessage,
-  buildOffTopicMessage,
   sanitizeConversation,
   moderateModelOutput,
 } from '@/lib/guardrails';
@@ -127,16 +126,7 @@ export async function POST(request: NextRequest) {
     // Analyze input for safety and scope (use raw user input when available)
     const analysis = analyzeUserInput(rawUserInput || message || '');
     if (!analysis.allowed) {
-      if (analysis.offTopic) {
-        const content = buildOffTopicMessage();
-        return NextResponse.json({
-          choices: [{ message: { role: 'assistant', content } }],
-          category: 'off_topic',
-          moderation: analysis,
-        }, { status: 200 });
-      }
-
-      // Determine refusal reason priority
+      // Severe issues only -> refusal
       const priority = ['prompt_injection', 'illegal', 'nsfw', 'hate_violence', 'self_harm', 'sensitive_pii'] as const;
       const found = priority.find(p => analysis.issues.some(i => i.category === p));
       const reason = (found === 'sensitive_pii' ? 'pii' : found) || 'prompt_injection';

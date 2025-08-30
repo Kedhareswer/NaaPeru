@@ -121,10 +121,12 @@ export function analyzeUserInput(input: string): AnalysisResult {
   // Off-topic heuristic: none of the allowed keywords present
   const offTopic = !ALLOWED_KEYWORDS.some((k) => lower.includes(k))
 
+  // Only treat HIGH severity categories as hard blocks. Off-topic is a SOFT signal.
   const severe = issues.some((i) => i.severity === 'high')
 
   return {
-    allowed: !severe && !offTopic,
+    // Do not block for off-topic alone; the API route can optionally nudge the user.
+    allowed: !severe,
     offTopic,
     promptInjection: inj.length > 0,
     issues,

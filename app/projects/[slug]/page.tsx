@@ -1,4 +1,4 @@
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import sql from '@/lib/db'
 import { slugify } from '@/lib/utils'
 
@@ -28,17 +28,14 @@ function formatDate(input?: string | null) {
   })
 }
 
-export default async function ProjectDetailsPage({ params }: { params: { id: string } }) {
-  const id = Number.parseInt(params.id, 10)
-  if (!Number.isFinite(id)) notFound()
+export default async function ProjectBySlugPage({ params }: { params: { slug: string } }) {
+  const { slug } = params
+  if (!slug || typeof slug !== 'string') notFound()
 
-  const rows = (await sql`SELECT * FROM projects WHERE id = ${id} LIMIT 1`) as unknown as ProjectRow[]
-  const p = rows?.[0]
+  // Without a persistent slug column, compute slug from title in JS
+  const rows = (await sql`SELECT * FROM projects`) as unknown as ProjectRow[]
+  const p = rows.find((r: ProjectRow) => slugify(r.title) === slug)
   if (!p) notFound()
-
-  // Canonical redirect to slug-based URL
-  const slug = slugify(p.title)
-  redirect(`/projects/${slug}`)
 
   const dateLabel = formatDate(p.project_date)
   const technologies: string[] = Array.isArray(p.technologies) ? (p.technologies as string[]) : []
