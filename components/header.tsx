@@ -166,7 +166,7 @@ export default function Header() {
                   const isActive = isActiveLink(item.href)
                   return (
                     <motion.button
-                      key={item.name}
+                      key={item.name} type="button" role="link" aria-current={isActive ? 'page' : undefined}
                       onClick={() => handleNavClick(item.href)}
                       custom={i}
                       variants={variants}
@@ -230,7 +230,7 @@ export default function Header() {
                 const isActive = isActiveLink(item.href)
                 return (
                   <motion.button
-                    key={item.name}
+                    key={item.name} type="button" role="link" aria-current={isActive ? 'page' : undefined}
                     onClick={() => handleNavClick(item.href)}
                     custom={i}
                     variants={variants}
@@ -297,7 +297,7 @@ export default function Header() {
                 const isActive = isActiveLink(item.href)
                 return (
                   <motion.button
-                    key={item.name}
+                    key={item.name} type="button" role="link" aria-current={isActive ? 'page' : undefined}
                     onClick={() => handleNavClick(item.href)}
                     className={`text-2xl md:text-3xl font-light tracking-[0.1em] uppercase cursor-pointer transition-all duration-200 ${
                       isActive ? "font-medium text-black" : "text-gray-700 hover:text-black hover:font-medium"

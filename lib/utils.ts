@@ -12,6 +12,8 @@ export function toSafeExternalHref(input?: unknown): string | null {
     if (typeof input !== 'string') return null;
     const raw = input.trim();
     if (!raw) return null;
+    // Reject any ASCII control characters (U+0000–U+001F, U+007F)
+    if (/[\u0000-\u001F\u007F]/.test(raw)) return null;
     const lower = raw.toLowerCase();
     // Quick reject of dangerous schemes
     if (lower.startsWith('javascript:') || lower.startsWith('data:') || lower.startsWith('vbscript:')) {
@@ -31,6 +33,9 @@ export function toSafeExternalHref(input?: unknown): string | null {
     }
 
     if (url.protocol !== 'http:' && url.protocol !== 'https:') return null;
+    // Reject missing hostname or any embedded credentials
+    if (!url.hostname) return null;
+    if (url.username || url.password) return null;
     return url.href;
   } catch {
     return null;

@@ -30,13 +30,26 @@ type Project = {
   demo?: string;
 };
 
+// Helper to ensure we only embed safe http(s) links
+function safeHttpUrl(input: unknown): string | null {
+  try {
+    if (typeof input !== 'string') return null;
+    const url = new URL(input.trim());
+    return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : null;
+  } catch {
+    return null;
+  }
+}
+
 // Load profile data
 async function loadProfile() {
   return profileData;
 }
 
 // Generate dynamic system prompt with profile data
+let cachedPrompt: string | null = null;
 async function getSystemPrompt(): Promise<string> {
+  if (cachedPrompt) return cachedPrompt;
   try {
     const profile = await loadProfile();
     
@@ -66,9 +79,11 @@ async function getSystemPrompt(): Promise<string> {
       : [];
     const projects = projArr.map((project: Project) => {
       const techs = Array.isArray(project.technologies) ? project.technologies.join(', ') : '';
+      const gh = safeHttpUrl(project.github);
+      const demo = safeHttpUrl(project.demo);
       const links = [
-        project.github && `[View on GitHub](${project.github})`,
-        project.demo && `[Live Demo](${project.demo})`
+        gh && `[View on GitHub](${gh})`,
+        demo && `[Live Demo](${demo})`
       ].filter(Boolean).join(' | ');
       return `### ${project.title}\n${project.description}\n\n**Technologies:** ${techs}${links ? `\n${links}` : ''}`;
     }).join('\n\n---\n\n');
@@ -99,7 +114,8 @@ ${projects}
 7. Keep responses concise but informative, using markdown for better readability
 8. If unsure about something, say you'll help find the information
 `;
-    return prompt.trim();
+    cachedPrompt = prompt.trim();
+    return cachedPrompt;
   } catch (error) {
     console.error('Error loading profile:', error);
     // Fallback to a basic prompt if profile loading fails
@@ -115,7 +131,7 @@ export async function POST(request: NextRequest) {
     } catch {
       return NextResponse.json(
         { error: 'Bad Request: body must be valid JSON.' },
-        { status: 400 }
+        { status: 400, headers: { 'Cache-Control': 'no-store' } }
       );
     }
 
@@ -128,7 +144,7 @@ export async function POST(request: NextRequest) {
     const MAX_MESSAGES = 20;
     const MAX_CHARS_PER_MESSAGE = 2000;
     const MAX_TOTAL_CHARS = 10000;
-    const HISTORY_MAX = 10;
+    const HISTORY_MAX = Math.min(10, MAX_MESSAGES - 1);
 
     const rawHistory: any[] = Array.isArray(payload?.messages)
       ? payload.messages
@@ -155,7 +171,7 @@ export async function POST(request: NextRequest) {
     if (!userContentCandidate) {
       return NextResponse.json(
         { error: 'Bad Request: a final user "message" (or "rawUserInput") is required and must be a non-empty string.' },
-        { status: 400 }
+        { status: 400, headers: { 'Cache-Control': 'no-store' } }
       );
     }
 
@@ -166,7 +182,7 @@ export async function POST(request: NextRequest) {
       if (c.length > MAX_CHARS_PER_MESSAGE) {
         return NextResponse.json(
           { error: `Bad Request: message at index ${i} exceeds ${MAX_CHARS_PER_MESSAGE} characters.` },
-          { status: 400 }
+          { status: 400, headers: { 'Cache-Control': 'no-store' } }
         );
       }
       totalChars += c.length;
@@ -175,26 +191,29 @@ export async function POST(request: NextRequest) {
     if (userContentCandidate.length > MAX_CHARS_PER_MESSAGE) {
       return NextResponse.json(
         { error: `Bad Request: final user message exceeds ${MAX_CHARS_PER_MESSAGE} characters.` },
-        { status: 400 }
+        { status: 400, headers: { 'Cache-Control': 'no-store' } }
       );
     }
 
     if ((validatedHistory.length + 1) > MAX_MESSAGES) {
       return NextResponse.json(
         { error: `Bad Request: too many messages. Max is ${MAX_MESSAGES} including the final user message.` },
-        { status: 400 }
+        { status: 400, headers: { 'Cache-Control': 'no-store' } }
       );
     }
 
     if ((totalChars + userContentCandidate.length) > MAX_TOTAL_CHARS) {
       return NextResponse.json(
         { error: `Bad Request: total payload too large. Max is ${MAX_TOTAL_CHARS} characters.` },
-        { status: 400 }
+        { status: 400, headers: { 'Cache-Control': 'no-store' } }
       );
     }
 
     if (!process.env.GROQ_API_KEY) {
-      throw new Error('GROQ_API_KEY is not configured');
+      return NextResponse.json(
+        { error: 'Server misconfiguration: GROQ_API_KEY is not set.' },
+        { status: 500, headers: { 'Cache-Control': 'no-store' } }
+      );
     }
 
     // No rate limiting or input moderation

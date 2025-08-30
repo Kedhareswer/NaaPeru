@@ -8,6 +8,14 @@ export default [
   ...next(),
   // Project-level ignores
   {
-    ignores: ['**/.next/**', '**/node_modules/**', '**/dist/**', '**/build/**'],
+    ignores: [
+      '**/.next/**',
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/build/**',
+      '**/.vercel/**',
+      '**/coverage/**',
+      '**/storybook-static/**'
+    ],
   },
 ];

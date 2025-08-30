@@ -32,17 +32,22 @@ export async function GET(request: NextRequest) {
       ? Math.min(12, Math.max(1, Math.trunc(Number(limitParam))))
       : 12
 
-    // Build query variations to avoid raw SQL injection
-    let projects
-    if (featuredOnly && category) {
-      projects = await sql`SELECT id, title, description, technologies, github, demo, category, project_date, image, featured, objectives, outcomes FROM projects WHERE featured = true AND LOWER(category) = LOWER(${category}) ORDER BY project_date DESC NULLS LAST, id DESC LIMIT ${limit}`
-    } else if (featuredOnly) {
-      projects = await sql`SELECT id, title, description, technologies, github, demo, category, project_date, image, featured, objectives, outcomes FROM projects WHERE featured = true ORDER BY project_date DESC NULLS LAST, id DESC LIMIT ${limit}`
-    } else if (category) {
-      projects = await sql`SELECT id, title, description, technologies, github, demo, category, project_date, image, featured, objectives, outcomes FROM projects WHERE LOWER(category) = LOWER(${category}) ORDER BY project_date DESC NULLS LAST, id DESC LIMIT ${limit}`
-    } else {
-      projects = await sql`SELECT id, title, description, technologies, github, demo, category, project_date, image, featured, objectives, outcomes FROM projects ORDER BY project_date DESC NULLS LAST, id DESC LIMIT ${limit}`
-    }
+    // Build WHERE clauses dynamically to avoid duplication & keep parameterization
+    const whereClauses = [
+      featuredOnly ? sql`featured = true` : null,
+      category ? sql`LOWER(category) = LOWER(${category})` : null,
+    ].filter(Boolean)
+
+        // Use sql.join via `any` cast to avoid type mismatch in Neon typings
+    const whereSql = whereClauses.length ? (sql as any).join(whereClauses, sql` AND `) : sql``;
+
+    const projects = await sql`
+      SELECT id, title, description, technologies, github, demo, category, project_date, image, featured, objectives, outcomes
+      FROM projects
+      ${whereClauses.length ? sql`WHERE ${whereSql}` : sql``}
+      ORDER BY project_date DESC NULLS LAST, id DESC
+      LIMIT ${limit}
+    `
 
     // Format the projects to match the expected structure
     const rows = projects as unknown as ProjectRow[]
