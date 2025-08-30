@@ -37,6 +37,7 @@ export async function GET(request: NextRequest) {
       const categories = project.category ? [project.category] : []
       return {
         id: project.id,
+        slug: project.slug,
         title: project.title,
         description: project.description,
         technologies: project.technologies || [],
