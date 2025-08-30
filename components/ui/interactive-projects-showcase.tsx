@@ -7,8 +7,7 @@ import Link from 'next/link'
 
 // Type aligned with /api/projects response
 type ProjectSlide = {
-  id?: string | number
-  slug?: string
+  id: number | string
   title: string
   description: string
   image: string
@@ -26,15 +25,6 @@ export default function ScrollingProjectsShowcase() {
   const sectionRef = useRef<HTMLDivElement | null>(null)
   const stickyPanelRef = useRef<HTMLDivElement | null>(null)
 
-  const slugify = (str: string | undefined): string | undefined =>
-    str
-      ?.toString()
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-
   useEffect(() => {
     setLoading(true)
     setError(null)
@@ -46,8 +36,7 @@ export default function ScrollingProjectsShowcase() {
       .then((data) => {
         const projects = Array.isArray(data.projects) ? data.projects : []
         const mapped: ProjectSlide[] = projects.map((p: any) => ({
-          id: p.id ?? p.project_id ?? p.uuid,
-          slug: p.slug ?? slugify(p.title),
+          id: p.id,
           title: p.title,
           description: p.description,
           image: p.image,
@@ -183,8 +172,9 @@ export default function ScrollingProjectsShowcase() {
               {/* Action */}
               <div className="absolute bottom-16 left-16">
                 <Link
-                  href={active?.id ? `/projects/${active.id}` : active?.slug ? `/projects/${active.slug}` : '/demo'}
-                  prefetch={false}
+                  href={`/projects/${active?.id}`}
+                  target="_blank"
+                  rel="noreferrer"
                   className="px-8 py-3 bg-black text-white font-semibold rounded-full uppercase tracking-wider hover:bg-gray-800 transition-colors"
                 >
                   View Project
