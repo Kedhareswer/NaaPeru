@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import IPhoneMockup from '@/components/ui/iphone-mockup'
+import Link from 'next/link'
 
 // Type aligned with /api/projects response
 type ProjectSlide = {
@@ -167,43 +168,64 @@ export default function ScrollingProjectsShowcase() {
 
               {/* Action */}
               <div className="absolute bottom-16 left-16">
-                {active?.demoUrl || active?.githubUrl ? (
-                  <a
-                    href={(active.demoUrl || active.githubUrl) as string}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="px-8 py-3 bg-black text-white font-semibold rounded-full uppercase tracking-wider hover:bg-gray-800 transition-colors"
-                  >
-                    View Project
-                  </a>
-                ) : null}
+                <Link
+                  href="/demo"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-8 py-3 bg-black text-white font-semibold rounded-full uppercase tracking-wider hover:bg-gray-800 transition-colors"
+                >
+                  View Project
+                </Link>
               </div>
             </div>
 
-            {/* Right Column: iPhone mockup with wallpaper */}
+            {/* Right Column: iPhone mockup showing the active website only */}
             <div className="hidden md:flex items-center justify-center p-8" style={gridPatternStyle}>
-              <div className="relative w-full h-[80vh]">
-                <div
-                  className="absolute inset-0 transition-transform duration-700 ease-in-out"
-                  style={{ transform: `translateY(-${activeIndex * 100}%)` }}
+              <div className="relative w-full h-[80vh] overflow-hidden flex items-center justify-center">
+                <IPhoneMockup
+                  model="14-pro"
+                  color="space-black"
+                  screenBg="#000"
+                  safeArea={false}
+                  scale={iphoneScale}
+                  className="drop-shadow-2xl"
                 >
-                  {slides.map((slide, index) => (
-                    <div key={index} className="w-full h-[80vh] flex items-center justify-center">
-                      <IPhoneMockup
-                        model="14-pro"
-                        color="space-black"
-                        wallpaper={
-                          slide.image ||
-                          'https://images.unsplash.com/photo-1527443154391-507e9dc6c5cc?auto=format&fit=crop&w=1200&q=80'
-                        }
-                        wallpaperFit="cover"
-                        safeArea={false}
-                        scale={iphoneScale}
-                        className="drop-shadow-2xl"
+                  {active?.demoUrl ? (
+                    <div className="relative w-full h-full">
+                      <iframe
+                        src={active.demoUrl}
+                        className="w-full h-full"
+                        style={{ border: '0' }}
+                        loading="lazy"
+                        sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                        referrerPolicy="no-referrer"
+                      />
+                      <div className="pointer-events-none absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-black/40 to-transparent" />
+                      <div className="absolute bottom-2 right-2">
+                        <a
+                          href={active.demoUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="pointer-events-auto px-3 py-1.5 text-xs rounded-full bg-black/70 text-white hover:bg-black/90"
+                        >
+                          Open Live
+                        </a>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="w-full h-full">
+                      <div
+                        className="w-full h-full"
+                        style={{
+                          backgroundImage:
+                            `url(${active?.image || 'https://images.unsplash.com/photo-1527443154391-507e9dc6c5cc?auto=format&fit=crop&w=1200&q=80'})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                        }}
                       />
                     </div>
-                  ))}
-                </div>
+                  )}
+                </IPhoneMockup>
               </div>
             </div>
           </div>
