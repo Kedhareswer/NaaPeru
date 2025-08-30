@@ -68,7 +68,7 @@ export default function FloatingChatBot() {
                 </div>
                 <div>
                   <h3 className="font-medium">AI Assistant</h3>
-                  <p className="text-xs text-gray-300">Ask me anything about Kedhareswer</p>
+                  <p className="text-xs text-gray-300">Ask me anything about Kedhar</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">

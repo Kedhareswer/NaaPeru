@@ -68,7 +68,7 @@ export default function EnhancedChatInterface() {
     fontSize: 'medium',
     soundEnabled: true,
     voiceEnabled: false,
-    suggestionsEnabled: true,
+    suggestionsEnabled: false,
     analyticsEnabled: true
   })
   const [analytics, setAnalytics] = useState<ConversationAnalytics>({
@@ -81,6 +81,14 @@ export default function EnhancedChatInterface() {
   const [showSettings, setShowSettings] = useState(false)
   const [conversationMode, setConversationMode] = useState<'standard' | 'detailed' | 'creative'>('standard')
   const [suggestions, setSuggestions] = useState<string[]>([])
+  // Rotating placeholder prompts
+  const placeholderPrompts = [
+    "Tell me about his background",
+    "What are his technical skills?",
+    "Show me his projects",
+    "How can I contact him?"
+  ]
+  const [placeholderIndex, setPlaceholderIndex] = useState(0)
 
   // Refs
   const chatRef = useRef<HTMLDivElement>(null)
@@ -165,8 +173,8 @@ export default function EnhancedChatInterface() {
     setLoading(true)
 
     try {
-      // Enhanced conversation context
-      const conversation = messages
+      // Enhanced conversation context (include the just-added userMessage to compute history)
+      const conversation = [...messages, userMessage]
         .filter((msg): msg is EnhancedMessage => 
           msg.role === 'user' || msg.role === 'assistant'
         )
@@ -216,14 +224,29 @@ Provide a direct, concise answer to the user's question.`
           },
           body: JSON.stringify({ 
             message: enhancedPrompt,
+            // Exclude the freshest user message; server will use rawUserInput as latest
             conversation: conversation.slice(0, -1),
             mode: conversationMode,
-            settings: settings
+            settings: settings,
+            rawUserInput: input
           }),
         })
 
         if (!response.ok) {
-          const errorData = await response.json()
+          // Try to surface server-provided safe message (e.g., rate limit or refusal)
+          let errorData: any = null
+          try { errorData = await response.json() } catch {}
+          const fallbackContent = errorData?.choices?.[0]?.message?.content
+          if (fallbackContent) {
+            const responseTime = Date.now() - startTime
+            addMessage({
+              role: "assistant",
+              content: fallbackContent,
+              metadata: { category: errorData?.category || 'system', responseTime }
+            })
+            updateAnalytics(responseTime)
+            return
+          }
           console.error("Chat API Error:", errorData)
           throw new Error(`Failed to get response: ${response.status} ${response.statusText}`)
         }
@@ -410,15 +433,17 @@ Provide a direct, concise answer to the user's question.`
         content: "👋 Hi there! I'm Kedhareswer's AI assistant, and I'm excited to help you learn more about him! \n\nFeel free to ask me anything about his background, skills, projects, or how to get in touch. I'm here to help! 😊",
         metadata: { category: 'welcome' }
       })
-      // Set initial suggestions
-      setSuggestions([
-        "Tell me about his background",
-        "What are his technical skills?",
-        "Show me his projects",
-        "How can I contact him?"
-      ])
     }
   }, [messages.length])
+
+  // Cycle placeholder every 3 seconds
+  useEffect(() => {
+    const id = setInterval(() => {
+      setPlaceholderIndex((prev) => (prev + 1) % placeholderPrompts.length)
+    }, 3000)
+    return () => clearInterval(id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Rest of the component would include the enhanced UI components...
   // This is a foundational structure for the enhanced chat interface
@@ -478,24 +503,6 @@ Provide a direct, concise answer to the user's question.`
                 >
                   <Copy className="w-3 h-3" />
                 </button>
-                <button
-                  onClick={() => handleMessageFeedback(message.id, 'positive')}
-                  className="p-1 hover:bg-white/10 rounded"
-                >
-                  <ThumbsUp className="w-3 h-3" />
-                </button>
-                <button
-                  onClick={() => handleMessageFeedback(message.id, 'negative')}
-                  className="p-1 hover:bg-white/10 rounded"
-                >
-                  <ThumbsDown className="w-3 h-3" />
-                </button>
-                <button
-                  onClick={() => toggleBookmark(message.id)}
-                  className="p-1 hover:bg-white/10 rounded"
-                >
-                  <Bookmark className="w-3 h-3" />
-                </button>
               </div>
             </div>
           </motion.div>
@@ -520,8 +527,8 @@ Provide a direct, concise answer to the user's question.`
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Suggestions */}
-      {suggestions.length > 0 && (
+      {/* Suggestions (disabled by default) */}
+      {settings.suggestionsEnabled && suggestions.length > 0 && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -554,7 +561,7 @@ Provide a direct, concise answer to the user's question.`
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask me anything about Kedhareswer..."
+              placeholder={`${placeholderPrompts[placeholderIndex]}...`}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
               disabled={loading}
             />
