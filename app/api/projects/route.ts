@@ -28,9 +28,14 @@ export async function GET(request: NextRequest) {
     const featuredOnly = featuredParam === 'true'
     const rawCategory = categoryParam?.trim()
     const category = rawCategory && rawCategory.toLowerCase() !== 'all' ? rawCategory : null
-    const limit = Number.isFinite(Number(limitParam))
-      ? Math.min(12, Math.max(1, Math.trunc(Number(limitParam))))
-      : 12
+    // Determine result limit (1‒12). Default to 12 when parameter absent or empty.
+    let limit = 12
+    if (limitParam !== null && limitParam.trim() !== '') {
+      const parsed = Number(limitParam)
+      if (Number.isFinite(parsed)) {
+        limit = Math.min(12, Math.max(1, Math.trunc(parsed)))
+      }
+    }
 
     // Build WHERE clauses dynamically to avoid duplication & keep parameterization
     const whereClauses = [

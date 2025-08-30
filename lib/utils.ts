@@ -13,7 +13,12 @@ export function toSafeExternalHref(input?: unknown): string | null {
     const raw = input.trim();
     if (!raw) return null;
     // Reject any ASCII control characters (U+0000–U+001F, U+007F)
-    if (/[\u0000-\u001F\u007F]/.test(raw)) return null;
+    for (let i = 0; i < raw.length; i++) {
+      const code = raw.charCodeAt(i)
+      if (code <= 0x1F || code === 0x7F) {
+        return null
+      }
+    }
     const lower = raw.toLowerCase();
     // Quick reject of dangerous schemes
     if (lower.startsWith('javascript:') || lower.startsWith('data:') || lower.startsWith('vbscript:')) {
