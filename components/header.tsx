@@ -30,7 +30,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [isSticky, setIsSticky] = useState(false)
   const [activeSection, setActiveSection] = useState("intro")
-  const { scrollY } = useScroll()
+  const { scrollY, scrollYProgress } = useScroll()
   const router = useRouter()
   const pathname = usePathname()
 
@@ -65,7 +65,7 @@ export default function Header() {
   }, [pathname])
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [handleScroll])
 
@@ -93,14 +93,7 @@ export default function Header() {
       const sectionId = href.substring(2)
 
       if (pathname !== "/") {
-        router.push("/")
-        setTimeout(() => {
-          const element = document.getElementById(sectionId)
-          if (element) {
-            element.scrollIntoView({ behavior: "smooth" })
-            setActiveSection(sectionId)
-          }
-        }, 300)
+        router.push(`/#${sectionId}`)
       } else {
         const element = document.getElementById(sectionId)
         if (element) {
@@ -126,8 +119,6 @@ export default function Header() {
     }
     return pathname === href
   }
-
-  const { scrollYProgress } = useScroll()
 
   // Determine if we should show the header based on page and scroll position
   const shouldShowHeader = pathname !== "/" || isSticky

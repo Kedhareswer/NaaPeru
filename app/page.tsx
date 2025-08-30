@@ -49,7 +49,8 @@ export default function Home() {
             <SkillsParticipations />
             <SkillsEndorsement />
             <LatestInsights />
-            <section id="featured-projects" className="relative">
+            <section id="featured-projects" className="relative" aria-labelledby="featured-projects-heading">
+              <h2 id="featured-projects-heading" className="sr-only">Featured projects</h2>
               <ScrollingProjectsShowcase />
             </section>
             <Testimonials />

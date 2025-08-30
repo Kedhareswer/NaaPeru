@@ -57,16 +57,18 @@ export function ScrollingFeatureShowcase() {
     if (!container) return
 
     const handleScroll = () => {
-      const scrollableHeight = container.scrollHeight - window.innerHeight
-      const stepHeight = scrollableHeight / slidesData.length
+      if (slidesData.length === 0) return;
+      const containerHeight = Math.max(1, container.clientHeight || container.offsetHeight || 1);
+      const scrollableHeight = container.scrollHeight - containerHeight;
+      const stepHeight = scrollableHeight / slidesData.length;
       const newActiveIndex = Math.min(
         slidesData.length - 1,
         Math.floor(container.scrollTop / stepHeight)
-      )
-      setActiveIndex(newActiveIndex)
+      );
+      setActiveIndex(newActiveIndex);
     }
 
-    container.addEventListener('scroll', handleScroll)
+    container.addEventListener('scroll', handleScroll, { passive: true })
     return () => container.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -112,9 +114,9 @@ export function ScrollingFeatureShowcase() {
                     onClick={() => {
                       const container = scrollContainerRef.current
                       if (container) {
-                        const scrollableHeight =
-                          container.scrollHeight - window.innerHeight
-                        const stepHeight = scrollableHeight / slidesData.length
+                        const containerHeight = Math.max(1, container.clientHeight || container.offsetHeight || 1);
+                          const scrollableHeight = container.scrollHeight - containerHeight;
+                          const stepHeight = scrollableHeight / Math.max(1, slidesData.length)
                         container.scrollTo({
                           top: stepHeight * index,
                           behavior: 'smooth',
@@ -173,9 +175,10 @@ export function ScrollingFeatureShowcase() {
                         src={slide.image}
                         alt={slide.title}
                         className="h-full w-full object-cover"
-                        onError={(e: any) => {
-                          e.target.onerror = null
-                          e.target.src = `https://placehold.co/800x1200/e2e8f0/4a5568?text=Image+Not+Found`
+                        onError={(e) => {
+                          const img = e.currentTarget as HTMLImageElement
+                          img.onerror = null
+                          img.src = 'https://placehold.co/800x1200/e2e8f0/4a5568?text=Image+Not+Found'
                         }}
                       />
                     </div>

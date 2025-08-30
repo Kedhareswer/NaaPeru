@@ -1,5 +1,7 @@
-import { notFound, redirect } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import sql from '@/lib/db'
+import Image from 'next/image'
+import { toSafeExternalHref } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
 
@@ -22,43 +24,61 @@ function formatDate(input?: string | null) {
   if (!input) return null
   const d = new Date(input)
   if (Number.isNaN(d.getTime())) return null
-  return d.toLocaleDateString(undefined, {
-    year: 'numeric', month: 'short', day: 'numeric'
-  })
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'UTC'
+  }).format(d)
 }
 
 function extractIdFromSlug(slug: string): number | null {
   // Expect format: `${id}-${slug-text}` but also support just numeric
   if (!slug) return null
   const first = slug.split('-')[0]
-  const id = Number.parseInt(first, 10)
-  return Number.isFinite(id) ? id : null
+  if (!/^\d+$/.test(first)) return null
+  return Number.parseInt(first, 10)
 }
 
 function slugify(s: string) {
   return s
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '')
 }
 
-export default async function ProjectDetailsBySlugPage({ params }: { params: { slug: string } }) {
+export default async function ProjectDetailsBySlugPage({
+  params,
+  searchParams
+}: { params: { slug: string }; searchParams?: { [key: string]: string | string[] | undefined } }) {
   const id = extractIdFromSlug(params.slug)
   if (id == null) notFound()
 
-  const rows = await sql`SELECT * FROM projects WHERE id = ${id} LIMIT 1`
+  const rows = await sql`
+    SELECT id, title, description, technologies, github, demo, category, project_date, image, featured, objectives, outcomes
+    FROM projects WHERE id = ${id} LIMIT 1
+  `
   const p = (rows as unknown as ProjectRow[])?.[0]
   if (!p) notFound()
   // Ensure canonical URL matches `/projects/{id}-{slugified-title}`
-  const canonical = `${p.id}-${slugify(p.title || String(p.id))}`
+  const canonical = p.title && p.title.trim() ? `${p.id}-${slugify(p.title)}` : `${p.id}`
   if (params.slug !== canonical) {
-    redirect(`/projects/${canonical}`)
+    const qs = new URLSearchParams(
+      Object.entries(searchParams ?? {}).flatMap(([k, v]) =>
+        Array.isArray(v) ? v.map(val => [k, val]) : v != null ? [[k, v]] : []
+      ) as [string, string][]
+    ).toString()
+    permanentRedirect(`/projects/${canonical}${qs ? `?${qs}` : ''}`)
   }
 
   const dateLabel = formatDate(p.project_date)
   const technologies = Array.isArray(p.technologies) ? p.technologies : []
   const objectives = Array.isArray(p.objectives) ? p.objectives : []
   const outcomes = Array.isArray(p.outcomes) ? p.outcomes : []
+  const demoHref = toSafeExternalHref(p.demo)
+  const githubHref = toSafeExternalHref(p.github)
 
   return (
     <main className="min-h-screen bg-white">
@@ -71,21 +91,21 @@ export default async function ProjectDetailsBySlugPage({ params }: { params: { s
             ) : null}
           </div>
           <div className="flex items-center gap-3">
-            {p.demo ? (
+            {demoHref ? (
               <a
-                href={p.demo}
+                href={demoHref}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="px-4 py-2 rounded-full bg-black text-white text-sm font-semibold hover:bg-gray-800"
               >
                 Open Live
               </a>
             ) : null}
-            {p.github ? (
+            {githubHref ? (
               <a
-                href={p.github}
+                href={githubHref}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="px-4 py-2 rounded-full border border-black/20 text-sm font-semibold hover:bg-black/5"
               >
                 GitHub
@@ -98,19 +118,23 @@ export default async function ProjectDetailsBySlugPage({ params }: { params: { s
 
         {p.image ? (
           <div className="mt-10">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={p.image}
-              alt={p.title}
-              className="w-full rounded-2xl border border-black/5 shadow-md object-cover max-h-[520px]"
-            />
+            <div className="relative w-full max-h-[520px]">
+              <Image
+                src={p.image}
+                alt={p.title || 'Project image'}
+                fill
+                sizes="(min-width: 1024px) 1024px, 100vw"
+                className="rounded-2xl border border-black/5 shadow-md object-cover"
+                priority
+              />
+            </div>
           </div>
         ) : null}
 
         {technologies.length > 0 ? (
           <div className="mt-6 flex flex-wrap gap-2">
             {technologies.map((t, i) => (
-              <span key={i} className="px-2.5 py-1 rounded-full bg-gray-100 text-gray-800 text-xs border border-gray-200">
+              <span key={`${t}-${i}`} className="px-2.5 py-1 rounded-full bg-gray-100 text-gray-800 text-xs border border-gray-200">
                 {t}
               </span>
             ))}
@@ -122,7 +146,7 @@ export default async function ProjectDetailsBySlugPage({ params }: { params: { s
             <h2 className="text-xl font-semibold">Objectives</h2>
             <ul className="mt-3 list-disc pl-6 space-y-1 text-gray-700">
               {objectives.map((o, i) => (
-                <li key={i}>{o}</li>
+                <li key={`${o}-${i}`}>{o}</li>
               ))}
             </ul>
           </div>
@@ -133,7 +157,7 @@ export default async function ProjectDetailsBySlugPage({ params }: { params: { s
             <h2 className="text-xl font-semibold">Outcomes</h2>
             <ul className="mt-3 list-disc pl-6 space-y-1 text-gray-700">
               {outcomes.map((o, i) => (
-                <li key={i}>{o}</li>
+                <li key={`${o}-${i}`}>{o}</li>
               ))}
             </ul>
           </div>

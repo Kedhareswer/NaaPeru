@@ -179,6 +179,7 @@ export const IPhoneMockup: React.FC<IPhoneMockupProps> = ({
   const outerWidth = screenWidth + resolvedBezel * 2;
   const outerHeight = screenHeight + resolvedBezel * 2;
   const outerRadius = resolvedRadius + resolvedBezel;
+  const clampedScale = Number.isFinite(scale) ? Math.min(2, Math.max(0.5, scale)) : 1;
 
   const colorHex = PRESET_COLORS[color] ?? color;
   const frameGradient = `linear-gradient(135deg, ${shade(colorHex, 8)} 0%, ${colorHex} 40%, ${shade(colorHex, -14)} 100%)`;
@@ -206,19 +207,23 @@ export const IPhoneMockup: React.FC<IPhoneMockupProps> = ({
   const finalIslandR = islandRadius ?? islandSpec?.r ?? 0;
 
   // Safe areas
-  const insets = {
+  const baseInsets = {
     top: safeAreaOverrides?.top ?? spec.topSafe,
     bottom: safeAreaOverrides?.bottom ?? spec.bottomSafe,
     left: safeAreaOverrides?.left ?? 0,
-    right: safeAreaOverrides?.right ?? 0
+    right: safeAreaOverrides?.right ?? 0,
   };
+  const insets = isLandscape
+    ? { top: baseInsets.left, bottom: baseInsets.right, left: baseInsets.top, right: baseInsets.bottom }
+    : baseInsets;
 
   const wrapperStyle: CSSProperties = {
     boxSizing: 'border-box',
     display: 'inline-block',
-    transform: `scale(${scale})`,
+    transform: `scale(${clampedScale})`,
     // Center-based scaling prevents apparent clipping when parents use flex centering
     transformOrigin: 'center center',
+    willChange: 'transform',
     overflow: 'visible',
     ...style
   };
