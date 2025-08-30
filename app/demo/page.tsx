@@ -1,7 +1,7 @@
 "use client"
 
-import ReplicaHero from "@/components/ui/replica-hero"
+import AboutSection3 from "@/components/ui/about-section"
 
 export default function DemoOne() {
-  return <ReplicaHero />
+  return <AboutSection3 />
 }
