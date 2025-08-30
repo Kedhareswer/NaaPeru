@@ -18,7 +18,7 @@ export default function ScrollingProjectsShowcase() {
   const [error, setError] = useState<string | null>(null)
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null)
+  const sectionRef = useRef<HTMLDivElement | null>(null)
   const stickyPanelRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -44,23 +44,28 @@ export default function ScrollingProjectsShowcase() {
       .finally(() => setLoading(false))
   }, [])
 
+  // Drive progress from window scroll so the section integrates into homepage flow
   useEffect(() => {
-    const container = scrollContainerRef.current
-    if (!container) return
-
-    const handleScroll = () => {
-      const scrollableHeight = container.scrollHeight - window.innerHeight
-      const steps = Math.max(slides.length, 1)
-      const stepHeight = scrollableHeight / steps
-      const newActiveIndex = Math.min(
-        Math.max(steps - 1, 0),
-        Math.floor(container.scrollTop / stepHeight)
-      )
-      if (!Number.isNaN(newActiveIndex)) setActiveIndex(newActiveIndex)
+    const onScroll = () => {
+      const el = sectionRef.current
+      if (!el || slides.length === 0) return
+      const rectTop = el.getBoundingClientRect().top + window.scrollY
+      const viewportH = window.innerHeight
+      const stepH = viewportH
+      const localScroll = window.scrollY - rectTop
+      const idx = Math.floor(localScroll / stepH)
+      const clamped = Math.min(slides.length - 1, Math.max(0, idx))
+      if (!Number.isNaN(clamped)) setActiveIndex(clamped)
     }
 
-    container.addEventListener('scroll', handleScroll)
-    return () => container.removeEventListener('scroll', handleScroll)
+    const onResize = () => onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onResize)
+    onScroll()
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onResize)
+    }
   }, [slides.length])
 
   // Fixed, neutral styling (ignore yellow background requirement)
@@ -102,17 +107,12 @@ export default function ScrollingProjectsShowcase() {
   const active = slides[Math.min(activeIndex, slides.length - 1)]
 
   return (
-    <div
-      ref={scrollContainerRef}
-      className="h-screen w-full overflow-y-auto"
-      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-    >
-      <div style={{ height: `${slides.length * 100}vh` }}>
-        <div
-          ref={stickyPanelRef}
-          className="sticky top-0 h-screen w-full flex flex-col items-center justify-center"
-          style={dynamicStyles}
-        >
+    <div ref={sectionRef} className="relative w-full" style={{ height: `${slides.length * 100}vh` }}>
+      <div
+        ref={stickyPanelRef}
+        className="sticky top-0 h-screen w-full flex flex-col items-center justify-center"
+        style={dynamicStyles}
+      >
           <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full max-w-7xl mx-auto">
             {/* Left Column */}
             <div className="relative flex flex-col justify-center p-8 md:p-16 border-r border-black/10">
@@ -122,12 +122,11 @@ export default function ScrollingProjectsShowcase() {
                   <button
                     key={index}
                     onClick={() => {
-                      const container = scrollContainerRef.current
-                      if (container) {
-                        const scrollableHeight = container.scrollHeight - window.innerHeight
-                        const stepHeight = scrollableHeight / slides.length
-                        container.scrollTo({ top: stepHeight * index, behavior: 'smooth' })
-                      }
+                      const el = sectionRef.current
+                      if (!el) return
+                      const rectTop = el.getBoundingClientRect().top + window.scrollY
+                      const viewportH = window.innerHeight
+                      window.scrollTo({ top: rectTop + viewportH * index, behavior: 'smooth' })
                     }}
                     className={`h-1 rounded-full transition-all duration-500 ease-in-out ${
                       index === activeIndex ? 'w-12 bg-black/80' : 'w-6 bg-black/20'
@@ -191,7 +190,6 @@ export default function ScrollingProjectsShowcase() {
               </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
   )

@@ -6,14 +6,14 @@ import Header from "@/components/header"
 import Intro from "@/components/intro"
 import About from "@/components/about"
 import SkillsParticipations from "@/components/skills-participations"
-import CaseStudies from "@/components/case-studies"
+import ScrollingProjectsShowcase from "@/components/ui/interactive-projects-showcase"
 import CustomCursor from "@/components/custom-cursor"
 import LoadingScreen from "@/components/loading-screen"
 import Testimonials from "@/components/testimonials"
 import Footer from "@/components/footer"
 import SkillsEndorsement from "@/components/skills-endorsement"
 import LatestInsights from "@/components/latest-insights"
-// Removed SafariSection; using CaseStudies for projects
+// Projects section uses ScrollingProjectsShowcase (window-scroll scroller)
 import FloatingChatBot from "@/components/floating-chat-bot"
 
 export default function Home() {
@@ -49,7 +49,9 @@ export default function Home() {
             <SkillsParticipations />
             <SkillsEndorsement />
             <LatestInsights />
-            <CaseStudies />
+            <section id="featured-projects" className="relative">
+              <ScrollingProjectsShowcase />
+            </section>
             <Testimonials />
             <FloatingChatBot />
             <Footer />
