@@ -12,6 +12,7 @@ export type ProjectDetailsModel = {
   image?: string | null;
   technologies?: string[] | null;
   githubUrl?: string | null;
+  kaggleUrl?: string | null;
   demoUrl?: string | null;
   category?: string | null;
   date?: string | null;
@@ -84,6 +85,18 @@ export default function ProjectDetails({ project }: Props) {
   const primaryCta = project.demoUrl || project.githubUrl || null;
   const primaryCtaLabel = project.demoUrl ? "Open Live" : project.githubUrl ? "View Code" : "";
 
+  // Social icon availability and animation order
+  const hasGithub = !!project.githubUrl;
+  const hasKaggle = !!project.kaggleUrl;
+  const hasDemo = !!project.demoUrl;
+  const socialOrder: Array<"github" | "kaggle" | "demo"> = [];
+  if (hasGithub) socialOrder.push("github");
+  if (hasKaggle) socialOrder.push("kaggle");
+  if (hasDemo) socialOrder.push("demo");
+  const ghAnim = socialOrder.indexOf("github");
+  const kgAnim = socialOrder.indexOf("kaggle");
+  const dmAnim = socialOrder.indexOf("demo");
+
   return (
     <section className="py-8 px-4 bg-[#f9f9f9]" ref={heroRef}>
       <div className="max-w-6xl mx-auto">
@@ -103,23 +116,40 @@ export default function ProjectDetails({ project }: Props) {
               </TimelineContent>
             </div>
             <div className="flex gap-4">
-              <TimelineContent
-                as="a"
-                animationNum={0}
-                timelineRef={heroRef}
-                customVariants={revealVariants}
-                href={project.githubUrl || "https://github.com/"}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                className="md:w-8 md:h-8 sm:w-6 w-5 sm:h-6 h-5 border border-gray-200 bg-gray-100  rounded-lg flex items-center justify-center  cursor-pointer"
-              >
-                <img src="https://pro-section.ui-layouts.com/github.svg" alt="github" width={24} height={24} />
-              </TimelineContent>
+              {hasGithub && (
+                <TimelineContent
+                  as="a"
+                  animationNum={ghAnim}
+                  timelineRef={heroRef}
+                  customVariants={revealVariants}
+                  href={project.githubUrl!}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  className="md:w-8 md:h-8 sm:w-6 w-5 sm:h-6 h-5 border border-gray-200 bg-gray-100  rounded-lg flex items-center justify-center  cursor-pointer"
+                >
+                  <img src="https://pro-section.ui-layouts.com/github.svg" alt="github" width={24} height={24} />
+                </TimelineContent>
+              )}
+              {project.kaggleUrl && (
+                <TimelineContent
+                  as="a"
+                  animationNum={kgAnim}
+                  timelineRef={heroRef}
+                  customVariants={revealVariants}
+                  href={project.kaggleUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Kaggle"
+                  className="md:w-8 md:h-8 sm:w-6 w-5 sm:h-6 h-5 border border-gray-200 bg-gray-100 rounded-lg flex items-center justify-center  cursor-pointer"
+                >
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kaggle/kaggle-original.svg" alt="kaggle" width={22} height={22} />
+                </TimelineContent>
+              )}
               {project.demoUrl && (
                 <TimelineContent
                   as="a"
-                  animationNum={1}
+                  animationNum={dmAnim}
                   timelineRef={heroRef}
                   customVariants={revealVariants}
                   href={project.demoUrl}
@@ -158,6 +188,13 @@ export default function ProjectDetails({ project }: Props) {
                 xlinkHref={heroImage}
               ></image>
             </svg>
+            {project.category && (
+              <div className="absolute left-2 top-2 z-10">
+                <span className="px-2 py-1 rounded-md border border-gray-200 bg-white/80 backdrop-blur text-[11px] font-medium text-gray-700">
+                  {project.category}
+                </span>
+              </div>
+            )}
           </TimelineContent>
 
           {/* Stats */}

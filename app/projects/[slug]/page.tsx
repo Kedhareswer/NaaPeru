@@ -30,6 +30,7 @@ function mapRowToModel(row: any): ProjectDetailsModel {
     image: row.image,
     technologies: row.technologies || [],
     githubUrl: row.github,
+    kaggleUrl: row.kaggle || row.kaggle_url || row.kaggleurl || null,
     demoUrl: row.demo,
     category: row.category,
     date: row.project_date ? String(row.project_date) : null,
