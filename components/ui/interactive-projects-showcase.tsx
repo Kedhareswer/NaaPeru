@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { Loader2 } from 'lucide-react'
+import IPhoneMockup from '@/components/ui/iphone-mockup'
 
 // Type aligned with /api/projects response
 type ProjectSlide = {
@@ -17,6 +18,7 @@ export default function ScrollingProjectsShowcase() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [activeIndex, setActiveIndex] = useState(0)
+  const [iphoneScale, setIphoneScale] = useState(0.85)
 
   const sectionRef = useRef<HTMLDivElement | null>(null)
   const stickyPanelRef = useRef<HTMLDivElement | null>(null)
@@ -67,6 +69,19 @@ export default function ScrollingProjectsShowcase() {
       window.removeEventListener('resize', onResize)
     }
   }, [slides.length])
+
+  // Responsive scaling for the iPhone mockup so it fits ~72% of viewport height
+  useEffect(() => {
+    const OUTER_HEIGHT_14PRO = 852 + 24 // screenHeight + 2*bezel for model "14-pro"
+    const computeScale = () => {
+      const target = Math.max(480, Math.min(window.innerHeight * 0.72, 1000))
+      const s = target / OUTER_HEIGHT_14PRO
+      setIphoneScale(Math.max(0.6, Math.min(1.2, s)))
+    }
+    computeScale()
+    window.addEventListener('resize', computeScale)
+    return () => window.removeEventListener('resize', computeScale)
+  }, [])
 
   // Fixed, neutral styling (ignore yellow background requirement)
   const dynamicStyles: React.CSSProperties = {
@@ -165,24 +180,26 @@ export default function ScrollingProjectsShowcase() {
               </div>
             </div>
 
-            {/* Right Column: Images */}
+            {/* Right Column: iPhone mockup with wallpaper */}
             <div className="hidden md:flex items-center justify-center p-8" style={gridPatternStyle}>
-              <div className="relative w-[50%] h-[80vh] rounded-2xl overflow-hidden shadow-2xl border-4 border-black/5">
+              <div className="relative w-full h-[80vh]">
                 <div
-                  className="absolute top-0 left-0 w-full h-full transition-transform duration-700 ease-in-out"
+                  className="absolute inset-0 transition-transform duration-700 ease-in-out"
                   style={{ transform: `translateY(-${activeIndex * 100}%)` }}
                 >
                   {slides.map((slide, index) => (
-                    <div key={index} className="w-full h-full">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={slide.image || 'https://placehold.co/800x1200/e2e8f0/4a5568?text=No+Image'}
-                        alt={slide.title}
-                        className="h-full w-full object-cover"
-                        onError={(e: any) => {
-                          e.target.onerror = null
-                          e.target.src = 'https://placehold.co/800x1200/e2e8f0/4a5568?text=Image+Not+Found'
-                        }}
+                    <div key={index} className="w-full h-[80vh] flex items-center justify-center">
+                      <IPhoneMockup
+                        model="14-pro"
+                        color="space-black"
+                        wallpaper={
+                          slide.image ||
+                          'https://images.unsplash.com/photo-1527443154391-507e9dc6c5cc?auto=format&fit=crop&w=1200&q=80'
+                        }
+                        wallpaperFit="cover"
+                        safeArea={false}
+                        scale={iphoneScale}
+                        className="drop-shadow-2xl"
                       />
                     </div>
                   ))}
