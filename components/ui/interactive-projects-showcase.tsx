@@ -3,11 +3,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import IPhoneMockup from '@/components/ui/iphone-mockup'
-import Link from 'next/link'
-import { createSlug } from '@/lib/utils'
 
 // Type aligned with /api/projects response
 type ProjectSlide = {
+  id?: number
   title: string
   description: string
   image: string
@@ -36,6 +35,7 @@ export default function ScrollingProjectsShowcase() {
       .then((data) => {
         const projects = Array.isArray(data.projects) ? data.projects : []
         const mapped: ProjectSlide[] = projects.map((p: any) => ({
+          id: p.id,
           title: p.title,
           description: p.description,
           image: p.image,
@@ -72,41 +72,18 @@ export default function ScrollingProjectsShowcase() {
     }
   }, [slides.length])
 
-  // Responsive scaling for the iPhone mockup with breakpoints
+  // Responsive scaling for the iPhone mockup so it fits within the viewport height safely
   useEffect(() => {
     const OUTER_HEIGHT_14PRO = 852 + 24 // screenHeight + 2*bezel for model "14-pro"
-    
     const computeScale = () => {
-      const viewportHeight = window.innerHeight
-      const viewportWidth = window.innerWidth
-      
-      // Base target height (60-75% of viewport, with min/max bounds)
-      let targetHeight = Math.min(viewportHeight * 0.75, 1000)
-      targetHeight = Math.max(480, targetHeight)
-      
-      // Adjust for wider screens (landscape or large monitors)
-      if (viewportWidth > 1200) {
-        targetHeight = Math.min(viewportHeight * 0.85, 1100)
-      }
-      
-      // Calculate scale based on target height
-      let scale = targetHeight / OUTER_HEIGHT_14PRO
-      
-      // Apply min/max scale limits
-      scale = Math.max(0.5, Math.min(1.4, scale))
-      
-      // Slightly reduce scale on mobile landscape
-      if (typeof window !== 'undefined' && window.matchMedia('(orientation: landscape)').matches && viewportWidth < 1000) {
-        scale *= 0.9
-      }
-      
-      setIphoneScale(scale)
+      // Aim a bit smaller (66% of viewport) to prevent header overlap/clipping
+      const target = Math.max(420, Math.min(window.innerHeight * 0.66, 900))
+      const s = target / OUTER_HEIGHT_14PRO
+      setIphoneScale(Math.max(0.55, Math.min(1.1, s)))
     }
-    
     computeScale()
-    const handleResize = () => requestAnimationFrame(computeScale)
-    window.addEventListener('resize', handleResize, { passive: true })
-    return () => window.removeEventListener('resize', handleResize)
+    window.addEventListener('resize', computeScale)
+    return () => window.removeEventListener('resize', computeScale)
   }, [])
 
   // Fixed, neutral styling (ignore yellow background requirement)
@@ -191,22 +168,35 @@ export default function ScrollingProjectsShowcase() {
                 ))}
               </div>
 
-              {/* Action */}
-              <div className="absolute bottom-16 left-16">
-                <Link
-                  href={`/projects/${createSlug(slides[activeIndex]?.title || '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-8 py-3 bg-black text-white font-semibold rounded-full uppercase tracking-wider hover:bg-gray-800 transition-colors"
-                >
-                  View Project Details
-                </Link>
+              {/* Actions */}
+              <div className="absolute bottom-16 left-16 flex items-center gap-3 flex-wrap">
+                {active?.demoUrl || active?.githubUrl ? (
+                  <a
+                    href={(active.demoUrl || active.githubUrl) as string}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-2.5 bg-black text-white font-semibold rounded-full uppercase tracking-wider hover:bg-gray-800 transition-colors text-sm"
+                  >
+                    View Project
+                  </a>
+                ) : null}
+                {active?.id ? (
+                  <a
+                    href={`/projects/${active.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-2.5 border border-black/20 text-black font-semibold rounded-full uppercase tracking-wider hover:bg-black/5 transition-colors text-sm"
+                  >
+                    View Project Details
+                  </a>
+                ) : null}
               </div>
             </div>
 
             {/* Right Column: iPhone mockup showing the active website only */}
-            <div className="hidden md:flex items-center justify-center p-4 md:p-6 lg:p-8" style={gridPatternStyle}>
-              <div className="relative w-full max-w-3xl mx-auto h-[70vh] md:h-[75vh] lg:h-[80vh] overflow-hidden flex items-center justify-center">
+            <div className="hidden md:flex items-center justify-center p-8 overflow-visible isolate" style={gridPatternStyle}>
+              {/* Use overflow-visible so CSS transforms inside the mockup don't get clipped */}
+              <div className="relative w-full h-[80vh] overflow-visible flex items-center justify-center">
                 <IPhoneMockup
                   model="14-pro"
                   color="space-black"
@@ -230,7 +220,7 @@ export default function ScrollingProjectsShowcase() {
                         <a
                           href={active.demoUrl}
                           target="_blank"
-                          rel="noreferrer"
+                          rel="noopener noreferrer"
                           className="pointer-events-auto px-3 py-1.5 text-xs rounded-full bg-black/70 text-white hover:bg-black/90"
                         >
                           Open Live

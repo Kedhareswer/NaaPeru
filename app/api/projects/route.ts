@@ -1,57 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import sql from '@/lib/db'
-import { createSlug } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url)
-  const slug = searchParams.get('slug')
-  
-  // Handle single project request by slug
-  if (slug) {
-    try {
-      const projects = await sql`
-        SELECT * FROM projects 
-        WHERE LOWER(REPLACE(title, ' ', '-')) = LOWER(${slug})
-        LIMIT 1
-      `
-      
-      if (!projects || projects.length === 0) {
-        return NextResponse.json(
-          { error: 'Project not found' },
-          { status: 404 }
-        )
-      }
-      
-      const project = projects[0]
-      const formattedProject = {
-        id: project.id,
-        slug: createSlug(project.title),
-        title: project.title,
-        description: project.description,
-        longDescription: project.long_description || project.description,
-        technologies: project.technologies || [],
-        githubUrl: project.github,
-        demoUrl: project.demo,
-        image: project.image,
-        featured: project.featured,
-        features: project.features || [],
-        objectives: project.objectives || [],
-        outcomes: project.outcomes || [],
-        category: project.category,
-        date: project.project_date,
-      }
-      
-      return NextResponse.json({ projects: [formattedProject] })
-    } catch (error) {
-      console.error('Error fetching project:', error)
-      return NextResponse.json(
-        { error: 'Failed to fetch project' },
-        { status: 500 }
-      )
-    }
-  }
   try {
     const { searchParams } = new URL(request.url)
     const featuredParam = searchParams.get('featured')
@@ -85,7 +37,6 @@ export async function GET(request: NextRequest) {
       const categories = project.category ? [project.category] : []
       return {
         id: project.id,
-        slug: createSlug(project.title),
         title: project.title,
         description: project.description,
         technologies: project.technologies || [],
@@ -95,7 +46,6 @@ export async function GET(request: NextRequest) {
         date: project.project_date,
         image: project.image,
         featured: project.featured,
-        features: project.features || [],
         objectives: project.objectives || [],
         outcomes: project.outcomes || []
       }
