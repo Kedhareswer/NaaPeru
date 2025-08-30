@@ -71,13 +71,14 @@ export default function ScrollingProjectsShowcase() {
     }
   }, [slides.length])
 
-  // Responsive scaling for the iPhone mockup so it fits ~72% of viewport height
+  // Responsive scaling for the iPhone mockup so it fits within the viewport height safely
   useEffect(() => {
     const OUTER_HEIGHT_14PRO = 852 + 24 // screenHeight + 2*bezel for model "14-pro"
     const computeScale = () => {
-      const target = Math.max(480, Math.min(window.innerHeight * 0.72, 1000))
+      // Aim a bit smaller (66% of viewport) to prevent header overlap/clipping
+      const target = Math.max(420, Math.min(window.innerHeight * 0.66, 900))
       const s = target / OUTER_HEIGHT_14PRO
-      setIphoneScale(Math.max(0.6, Math.min(1.2, s)))
+      setIphoneScale(Math.max(0.55, Math.min(1.1, s)))
     }
     computeScale()
     window.addEventListener('resize', computeScale)
@@ -180,15 +181,16 @@ export default function ScrollingProjectsShowcase() {
             </div>
 
             {/* Right Column: iPhone mockup showing the active website only */}
-            <div className="hidden md:flex items-center justify-center p-8" style={gridPatternStyle}>
-              <div className="relative w-full h-[80vh] overflow-hidden flex items-center justify-center">
+            <div className="hidden md:flex items-center justify-center p-8 overflow-visible isolate" style={gridPatternStyle}>
+              {/* Use overflow-visible so CSS transforms inside the mockup don't get clipped */}
+              <div className="relative w-full h-[80vh] overflow-visible flex items-center justify-center">
                 <IPhoneMockup
                   model="14-pro"
                   color="space-black"
                   screenBg="#000"
                   safeArea={false}
                   scale={iphoneScale}
-                  className="drop-shadow-2xl"
+                  className="relative z-10 drop-shadow-2xl"
                 >
                   {active?.demoUrl ? (
                     <div className="relative w-full h-full">

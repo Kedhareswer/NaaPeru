@@ -217,7 +217,9 @@ export const IPhoneMockup: React.FC<IPhoneMockupProps> = ({
     boxSizing: 'border-box',
     display: 'inline-block',
     transform: `scale(${scale})`,
-    transformOrigin: 'top left',
+    // Center-based scaling prevents apparent clipping when parents use flex centering
+    transformOrigin: 'center center',
+    overflow: 'visible',
     ...style
   };
 
