@@ -41,7 +41,7 @@ export default function AboutSection3() {
       <div className="max-w-6xl mx-auto">
         <div className="relative">
           {/* Header with social icons */}
-          <div className="flex justify-between items-center mb-8 w-[85%] absolute lg:top-4 md:top-0 sm:-top-2 -top-3 z-10">
+          <div className="flex justify-between items-center mb-8 w-full absolute top-8 sm:top-6 md:top-8 lg:top-10 z-20 px-2">
             <div className="flex items-center gap-2  text-xl">
               <span className="text-red-500 animate-spin">✱</span>
               <TimelineContent
@@ -63,6 +63,7 @@ export default function AboutSection3() {
                 href="https://www.facebook.com/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Facebook"
                 className="md:w-8 md:h-8 sm:w-6 w-5 sm:h-6 h-5 border border-gray-200 bg-gray-100  rounded-lg flex items-center justify-center  cursor-pointer"
               >
                 <img src="https://pro-section.ui-layouts.com/facebook.svg" alt="fb" width={24} height={24} />
@@ -75,6 +76,7 @@ export default function AboutSection3() {
                 href="https://www.instagram.com/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Instagram"
                 className="md:w-8 md:h-8 sm:w-6 w-5 sm:h-6 h-5 border border-gray-200 bg-gray-100 rounded-lg flex items-center justify-center  cursor-pointer"
               >
                 <img src="https://pro-section.ui-layouts.com/instagram.svg" alt="insta" width={24} height={24} />
@@ -87,6 +89,7 @@ export default function AboutSection3() {
                 href="https://www.linkedin.com/naymur-rahman"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="LinkedIn"
                 className="md:w-8 md:h-8 sm:w-6 w-5 sm:h-6 h-5 border border-gray-200 bg-gray-100 rounded-lg flex items-center justify-center  cursor-pointer"
               >
                 <img src="https://pro-section.ui-layouts.com/linkedin.svg" alt="linkedin" width={24} height={24} />
@@ -99,6 +102,7 @@ export default function AboutSection3() {
                 href="https://www.youtube.com/naymurweb"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="YouTube"
                 className="md:w-8 md:h-8 sm:w-6 w-5 sm:h-6 h-5 border border-gray-200 bg-gray-100 rounded-lg flex items-center justify-center  cursor-pointer"
               >
                 <img src="https://pro-section.ui-layouts.com/youtube.svg" alt="youtube" width={24} height={24} />
