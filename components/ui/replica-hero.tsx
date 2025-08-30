@@ -14,11 +14,64 @@ export default function ReplicaHero() {
   const profile: any = profileData as any;
 
   const socials = {
-    linkedin: profile?.personalInfo?.linkedin || "#",
-    github: profile?.personalInfo?.github || "#",
-    portfolio: profile?.personalInfo?.portfolio || "#",
-    kaggle: profile?.personalInfo?.kaggle || "#",
+    linkedin: profile?.personalInfo?.linkedin,
+    github: profile?.personalInfo?.github,
+    portfolio: profile?.personalInfo?.portfolio,
+    kaggle: profile?.personalInfo?.kaggle,
   };
+
+  const iconLinks = (
+    [
+      {
+        key: "portfolio",
+        href: socials.portfolio,
+        className:
+          "w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-[#1877F2] flex items-center justify-center shadow text-white",
+        label: "Portfolio",
+        svg: (
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M22 12.06C22 6.48 17.52 2 11.94 2S2 6.48 2 12.06c0 4.99 3.66 9.13 8.44 9.94v-7.03H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.45h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34v7.03C18.34 21.19 22 17.05 22 12.06z"/>
+          </svg>
+        ),
+      },
+      {
+        key: "kaggle",
+        href: socials.kaggle,
+        className:
+          "w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] flex items-center justify-center shadow text-white",
+        label: "Kaggle",
+        svg: (
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5zm6.5-2a1 1 0 1 0 1 1 1 1 0 0 0-1-1z"/>
+          </svg>
+        ),
+      },
+      {
+        key: "linkedin",
+        href: socials.linkedin,
+        className:
+          "w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-[#0A66C2] flex items-center justify-center shadow text-white",
+        label: "LinkedIn",
+        svg: (
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M20.45 20.45h-3.55v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.07 1.4-2.07 2.86v5.49H9.48V9h3.41v1.56h.05c.48-.9 1.66-1.85 3.42-1.85 3.66 0 4.33 2.41 4.33 5.54v6.2zM5.34 7.43a2.06 2.06 0 1 1 2.06-2.06 2.06 2.06 0 0 1-2.06 2.06zM7.12 20.45H3.57V9h3.55z"/>
+          </svg>
+        ),
+      },
+      {
+        key: "github",
+        href: socials.github,
+        className:
+          "w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-[#FF0000] flex items-center justify-center shadow text-white",
+        label: "GitHub",
+        svg: (
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.2 3.5 12 3.5 12 3.5s-7.2 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c2.2.6 9.4.6 9.4.6s7.2 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8zM9.75 15.5V8.5l6.5 3.5z"/>
+          </svg>
+        ),
+      },
+    ] as const
+  ).filter((x) => Boolean(x.href));
 
   const revealVariants = {
     visible: (i: number) => ({
@@ -53,58 +106,21 @@ export default function ReplicaHero() {
             {/* Social bubble top-right */}
             <div className="absolute -top-3 right-3 sm:-top-4 sm:right-4">
               <div className="bg-white rounded-bl-[24px] rounded-tr-[24px] px-2.5 py-2 shadow-md ring-1 ring-black/5 flex items-center gap-2">
-                {/* Facebook mimic (use portfolio) */}
-                <TimelineContent
-                  as="a"
-                  animationNum={1}
-                  timelineRef={heroRef}
-                  customVariants={revealVariants}
-                  href={socials.portfolio}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-[#1877F2] flex items-center justify-center shadow text-white"
-                >
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M22 12.06C22 6.48 17.52 2 11.94 2S2 6.48 2 12.06c0 4.99 3.66 9.13 8.44 9.94v-7.03H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.45h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34v7.03C18.34 21.19 22 17.05 22 12.06z"/></svg>
-                </TimelineContent>
-                {/* Instagram mimic (use kaggle) */}
-                <TimelineContent
-                  as="a"
-                  animationNum={2}
-                  timelineRef={heroRef}
-                  customVariants={revealVariants}
-                  href={socials.kaggle}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] flex items-center justify-center shadow text-white"
-                >
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5zm6.5-2a1 1 0 1 0 1 1 1 1 0 0 0-1-1z"/></svg>
-                </TimelineContent>
-                {/* LinkedIn */}
-                <TimelineContent
-                  as="a"
-                  animationNum={3}
-                  timelineRef={heroRef}
-                  customVariants={revealVariants}
-                  href={socials.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-[#0A66C2] flex items-center justify-center shadow text-white"
-                >
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.07 1.4-2.07 2.86v5.49H9.48V9h3.41v1.56h.05c.48-.9 1.66-1.85 3.42-1.85 3.66 0 4.33 2.41 4.33 5.54v6.2zM5.34 7.43a2.06 2.06 0 1 1 2.06-2.06 2.06 2.06 0 0 1-2.06 2.06zM7.12 20.45H3.57V9h3.55z"/></svg>
-                </TimelineContent>
-                {/* YouTube mimic (use github) */}
-                <TimelineContent
-                  as="a"
-                  animationNum={4}
-                  timelineRef={heroRef}
-                  customVariants={revealVariants}
-                  href={socials.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-[#FF0000] flex items-center justify-center shadow text-white"
-                >
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.2 3.5 12 3.5 12 3.5s-7.2 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c2.2.6 9.4.6 9.4.6s7.2 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8zM9.75 15.5V8.5l6.5 3.5z"/></svg>
-                </TimelineContent>
+                {iconLinks.map((item, idx) => (
+                  <TimelineContent
+                    key={item.key}
+                    as="a"
+                    animationNum={idx + 1}
+                    customVariants={revealVariants}
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={item.label}
+                    className={item.className}
+                  >
+                    {item.svg}
+                  </TimelineContent>
+                ))}
               </div>
             </div>
 

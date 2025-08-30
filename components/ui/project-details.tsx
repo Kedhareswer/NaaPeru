@@ -31,7 +31,7 @@ export default function ProjectDetails({ project }: Props) {
       opacity: 1,
       filter: "blur(0px)",
       transition: {
-        delay: i * 0.4,
+        delay: i * 0.3,
         duration: 0.5,
       },
     }),
@@ -47,7 +47,7 @@ export default function ProjectDetails({ project }: Props) {
       opacity: 1,
       filter: "blur(0px)",
       transition: {
-        delay: i * 0.4,
+        delay: i * 0.3,
         duration: 0.5,
       },
     }),
@@ -98,19 +98,19 @@ export default function ProjectDetails({ project }: Props) {
   const dmAnim = socialOrder.indexOf("demo");
 
   return (
-    <section className="py-8 px-4 sm:px-6 md:px-8 bg-[#f9f9f9]" ref={heroRef}>
+    <section className="py-8 px-4 sm:px-6 md:px-8 bg-[#f5f5f7]" ref={heroRef}>
       <div className="max-w-6xl mx-auto">
         <div className="relative pb-20 lg:pb-28">
           {/* Header with star and category */}
           <div className="flex justify-between items-center w-full absolute top-6 sm:top-6 md:top-8 lg:top-10 z-40 px-3">
-            <div className="flex items-center gap-2 text-xl">
+            <div className="flex items-center gap-2 text-[11px] sm:text-xs font-semibold tracking-wide text-gray-700">
               <span className="text-red-500 animate-spin">✱</span>
               <TimelineContent
                 as="div"
                 animationNum={0}
                 timelineRef={heroRef}
                 customVariants={revealVariants}
-                className="flex items-center gap-2 sm:text-base text-xs font-medium"
+                className="flex items-center gap-2 text-[11px] sm:text-xs font-semibold tracking-wide text-gray-700"
               >
                 <span className="text-red-500 font-bold">{project.category || "Project"}</span>
                 <span className="text-gray-600">category</span>
@@ -144,54 +144,56 @@ export default function ProjectDetails({ project }: Props) {
                 xlinkHref={heroImage}
               ></image>
             </svg>
-            {/* Social icons inside image top-right */}
+            {/* Social bubble top-right (staggered icons) */}
             {(hasGithub || hasKaggle || hasDemo) && (
-              <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-30 flex gap-2 pointer-events-auto">
-                {hasGithub && (
-                  <TimelineContent
-                    as="a"
-                    animationNum={5 + ghAnim}
-                    timelineRef={heroRef}
-                    customVariants={revealVariants}
-                    href={project.githubUrl!}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="GitHub"
-                    className="md:w-8 md:h-8 sm:w-7 w-6 sm:h-7 h-6 border border-gray-200 bg-white/95 backdrop-blur-sm ring-1 ring-black/5 rounded-md flex items-center justify-center shadow-md hover:bg-white transition"
-                  >
-                    <img src="https://pro-section.ui-layouts.com/github.svg" alt="github" width={22} height={22} />
-                  </TimelineContent>
-                )}
-                {hasKaggle && (
-                  <TimelineContent
-                    as="a"
-                    animationNum={5 + kgAnim}
-                    timelineRef={heroRef}
-                    customVariants={revealVariants}
-                    href={project.kaggleUrl!}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Kaggle"
-                    className="md:w-8 md:h-8 sm:w-7 w-6 sm:h-7 h-6 border border-gray-200 bg-white/95 backdrop-blur-sm ring-1 ring-black/5 rounded-md flex items-center justify-center shadow-md hover:bg-white transition"
-                  >
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kaggle/kaggle-original.svg" alt="kaggle" width={20} height={20} />
-                  </TimelineContent>
-                )}
-                {hasDemo && (
-                  <TimelineContent
-                    as="a"
-                    animationNum={5 + dmAnim}
-                    timelineRef={heroRef}
-                    customVariants={revealVariants}
-                    href={project.demoUrl!}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Live Demo"
-                    className="md:w-8 md:h-8 sm:w-7 w-6 sm:h-7 h-6 border border-gray-200 bg-white/95 backdrop-blur-sm ring-1 ring-black/5 rounded-md flex items-center justify-center shadow-md hover:bg-white transition"
-                  >
-                    <img src="https://pro-section.ui-layouts.com/link.svg" alt="live" width={22} height={22} />
-                  </TimelineContent>
-                )}
+              <div className="absolute -top-3 right-3 sm:-top-4 sm:right-4 z-30">
+                <div className="bg-white rounded-bl-[24px] rounded-tr-[24px] px-2.5 py-2 shadow-md ring-1 ring-black/5 flex items-center gap-2">
+                  {hasGithub && (
+                    <TimelineContent
+                      as="a"
+                      animationNum={5 + ghAnim}
+                      timelineRef={heroRef}
+                      customVariants={revealVariants}
+                      href={project.githubUrl!}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="GitHub"
+                      className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-md bg-[#FF0000] flex items-center justify-center shadow text-white"
+                    >
+                      <img src="https://pro-section.ui-layouts.com/github.svg" alt="github" width={16} height={16} />
+                    </TimelineContent>
+                  )}
+                  {hasKaggle && (
+                    <TimelineContent
+                      as="a"
+                      animationNum={5 + kgAnim}
+                      timelineRef={heroRef}
+                      customVariants={revealVariants}
+                      href={project.kaggleUrl!}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Kaggle"
+                      className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-md bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] flex items-center justify-center shadow text-white"
+                    >
+                      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kaggle/kaggle-original.svg" alt="kaggle" width={16} height={16} />
+                    </TimelineContent>
+                  )}
+                  {hasDemo && (
+                    <TimelineContent
+                      as="a"
+                      animationNum={5 + dmAnim}
+                      timelineRef={heroRef}
+                      customVariants={revealVariants}
+                      href={project.demoUrl!}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Live Demo"
+                      className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-md bg-[#1877F2] flex items-center justify-center shadow text-white"
+                    >
+                      <img src="https://pro-section.ui-layouts.com/link.svg" alt="live" width={16} height={16} />
+                    </TimelineContent>
+                  )}
+                </div>
               </div>
             )}
           </TimelineContent>
@@ -246,14 +248,14 @@ export default function ProjectDetails({ project }: Props) {
             <h1 className="sm:text-4xl md:text-5xl text-2xl !leading-[110%] font-semibold text-gray-900 mb-8">
               <VerticalCutReveal
                 splitBy="words"
-                staggerDuration={0.1}
+                staggerDuration={0.08}
                 staggerFrom="first"
-                reverse={true}
+                reverse={false}
                 transition={{
                   type: "spring",
-                  stiffness: 250,
-                  damping: 30,
-                  delay: 3,
+                  stiffness: 230,
+                  damping: 28,
+                  delay: 0.6,
                 }}
               >
                 {project.title}
@@ -321,9 +323,9 @@ export default function ProjectDetails({ project }: Props) {
                       rel: "noreferrer",
                     }
                   : {})}
-                className="bg-neutral-900 hover:bg-neutral-950 shadow-lg shadow-neutral-900 border border-neutral-700 flex w-fit ml-auto gap-2 hover:gap-4 transition-all duration-300 ease-in-out text-white px-5 py-3 rounded-lg cursor-pointer font-semibold"
+                className="bg-neutral-900 hover:bg-black text-white px-5 py-3 rounded-xl shadow-lg shadow-neutral-400/20 flex w-fit ml-auto gap-2 hover:gap-3 transition-all duration-300 ease-in-out cursor-pointer font-semibold"
               >
-                {primaryCtaLabel || ""} {primaryCtaLabel && <ArrowRight className="" />}
+                {primaryCtaLabel || ""} {primaryCtaLabel && <ArrowRight className="w-4 h-4" />}
               </TimelineContent>
             </div>
           </div>

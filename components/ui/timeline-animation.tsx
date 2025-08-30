@@ -21,6 +21,7 @@ type TimelineContentProps = {
 export function TimelineContent({
   as,
   animationNum = 0,
+  timelineRef,
   customVariants,
   className,
   children,
