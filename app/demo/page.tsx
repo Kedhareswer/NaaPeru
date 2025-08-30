@@ -1,7 +1,7 @@
 "use client"
 
-import AboutSection3 from "@/components/ui/about-section"
+import { ScrollingFeatureShowcase } from "@/components/ui/interactive-scrolling-story-component"
 
 export default function DemoOne() {
-  return <AboutSection3 />
+  return <ScrollingFeatureShowcase />
 }
