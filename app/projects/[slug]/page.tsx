@@ -1,6 +1,5 @@
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import sql from '@/lib/db'
-import { slugify } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
 
@@ -28,19 +27,38 @@ function formatDate(input?: string | null) {
   })
 }
 
-export default async function ProjectBySlugPage({ params }: { params: { slug: string } }) {
-  const { slug } = params
-  if (!slug || typeof slug !== 'string') notFound()
+function extractIdFromSlug(slug: string): number | null {
+  // Expect format: `${id}-${slug-text}` but also support just numeric
+  if (!slug) return null
+  const first = slug.split('-')[0]
+  const id = Number.parseInt(first, 10)
+  return Number.isFinite(id) ? id : null
+}
 
-  // Without a persistent slug column, compute slug from title in JS
-  const rows = (await sql`SELECT * FROM projects`) as unknown as ProjectRow[]
-  const p = rows.find((r: ProjectRow) => slugify(r.title) === slug)
+function slugify(s: string) {
+  return s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+}
+
+export default async function ProjectDetailsBySlugPage({ params }: { params: { slug: string } }) {
+  const id = extractIdFromSlug(params.slug)
+  if (id == null) notFound()
+
+  const rows = await sql`SELECT * FROM projects WHERE id = ${id} LIMIT 1`
+  const p = (rows as unknown as ProjectRow[])?.[0]
   if (!p) notFound()
+  // Ensure canonical URL matches `/projects/{id}-{slugified-title}`
+  const canonical = `${p.id}-${slugify(p.title || String(p.id))}`
+  if (params.slug !== canonical) {
+    redirect(`/projects/${canonical}`)
+  }
 
   const dateLabel = formatDate(p.project_date)
-  const technologies: string[] = Array.isArray(p.technologies) ? (p.technologies as string[]) : []
-  const objectives: string[] = Array.isArray(p.objectives) ? (p.objectives as string[]) : []
-  const outcomes: string[] = Array.isArray(p.outcomes) ? (p.outcomes as string[]) : []
+  const technologies = Array.isArray(p.technologies) ? p.technologies : []
+  const objectives = Array.isArray(p.objectives) ? p.objectives : []
+  const outcomes = Array.isArray(p.outcomes) ? p.outcomes : []
 
   return (
     <main className="min-h-screen bg-white">
@@ -57,7 +75,7 @@ export default async function ProjectBySlugPage({ params }: { params: { slug: st
               <a
                 href={p.demo}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noreferrer"
                 className="px-4 py-2 rounded-full bg-black text-white text-sm font-semibold hover:bg-gray-800"
               >
                 Open Live
@@ -67,7 +85,7 @@ export default async function ProjectBySlugPage({ params }: { params: { slug: st
               <a
                 href={p.github}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noreferrer"
                 className="px-4 py-2 rounded-full border border-black/20 text-sm font-semibold hover:bg-black/5"
               >
                 GitHub
@@ -78,9 +96,20 @@ export default async function ProjectBySlugPage({ params }: { params: { slug: st
 
         <p className="mt-6 text-gray-700 max-w-3xl">{p.description}</p>
 
+        {p.image ? (
+          <div className="mt-10">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={p.image}
+              alt={p.title}
+              className="w-full rounded-2xl border border-black/5 shadow-md object-cover max-h-[520px]"
+            />
+          </div>
+        ) : null}
+
         {technologies.length > 0 ? (
           <div className="mt-6 flex flex-wrap gap-2">
-            {technologies.map((t: string, i: number) => (
+            {technologies.map((t, i) => (
               <span key={i} className="px-2.5 py-1 rounded-full bg-gray-100 text-gray-800 text-xs border border-gray-200">
                 {t}
               </span>
@@ -88,22 +117,11 @@ export default async function ProjectBySlugPage({ params }: { params: { slug: st
           </div>
         ) : null}
 
-        {p.image ? (
-          <div className="mt-10">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={p.image || ''}
-              alt={p.title}
-              className="w-full rounded-2xl border border-black/5 shadow-md object-cover max-h-[520px]"
-            />
-          </div>
-        ) : null}
-
         {objectives.length > 0 ? (
           <div className="mt-10">
             <h2 className="text-xl font-semibold">Objectives</h2>
             <ul className="mt-3 list-disc pl-6 space-y-1 text-gray-700">
-              {objectives.map((o: string, i: number) => (
+              {objectives.map((o, i) => (
                 <li key={i}>{o}</li>
               ))}
             </ul>
@@ -114,7 +132,7 @@ export default async function ProjectBySlugPage({ params }: { params: { slug: st
           <div className="mt-8">
             <h2 className="text-xl font-semibold">Outcomes</h2>
             <ul className="mt-3 list-disc pl-6 space-y-1 text-gray-700">
-              {outcomes.map((o: string, i: number) => (
+              {outcomes.map((o, i) => (
                 <li key={i}>{o}</li>
               ))}
             </ul>

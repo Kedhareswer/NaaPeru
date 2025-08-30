@@ -104,6 +104,12 @@ export default function ScrollingProjectsShowcase() {
     backgroundSize: '3.5rem 3.5rem',
   }
 
+  const slugify = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -182,7 +188,7 @@ export default function ScrollingProjectsShowcase() {
                 ) : null}
                 {active?.id ? (
                   <a
-                    href={`/projects/${active.id}`}
+                    href={`/projects/${active.id}-${slugify(active.title)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-6 py-2.5 border border-black/20 text-black font-semibold rounded-full uppercase tracking-wider hover:bg-black/5 transition-colors text-sm"
