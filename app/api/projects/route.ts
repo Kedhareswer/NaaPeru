@@ -43,8 +43,14 @@ export async function GET(request: NextRequest) {
       category ? sql`LOWER(category) = LOWER(${category})` : null,
     ].filter(Boolean)
 
-        // Use sql.join via `any` cast to avoid type mismatch in Neon typings
-    const whereSql = whereClauses.length ? (sql as any).join(whereClauses, sql` AND `) : sql``;
+    // Build WHERE SQL fragment without relying on optional helper to avoid runtime issues
+    let whereSql = sql`` as any;
+    if (whereClauses.length) {
+      whereSql = whereClauses[0];
+      for (let i = 1; i < whereClauses.length; i++) {
+        whereSql = sql`${whereSql} AND ${whereClauses[i]}`;
+      }
+    }
 
     const projects = await sql`
       SELECT id, title, description, technologies, github, demo, category, project_date, image, featured, objectives, outcomes
