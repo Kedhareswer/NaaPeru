@@ -28,6 +28,8 @@ type Project = {
   technologies: string[];
   github?: string;
   demo?: string;
+  category?: string;
+  date?: string;
 };
 
 type Certification = {
@@ -253,12 +255,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Fast-path answers for certifications and hobbies with guaranteed Markdown table formatting
+    // Fast-path answers for certifications, hobbies, and projects with guaranteed Markdown table formatting
     const lowerQ = userContentCandidate.toLowerCase();
     const wantsCerts = /(certificate|certifications|certs|course|courses)/i.test(lowerQ);
     const wantsHobbies = /(hobby|hobbies|interest|interests)/i.test(lowerQ);
+    const wantsProjects = /(project|projects|portfolio|work\s?samples|case\s?stud(y|ies))/i.test(lowerQ);
 
-    if (wantsCerts || wantsHobbies) {
+    if (wantsCerts || wantsHobbies || wantsProjects) {
       const profile = await loadProfile();
 
       // Build certifications table
@@ -285,14 +288,43 @@ export async function POST(request: NextRequest) {
           ].join('\n')
         : 'No hobbies listed.';
 
-      let content = '';
-      if (wantsCerts && wantsHobbies) {
-        content = `## Certifications\n${certificationsTable}\n\n## Hobbies\n${hobbiesTable}`;
-      } else if (wantsCerts) {
-        content = `## Certifications\n${certificationsTable}`;
-      } else {
-        content = `## Hobbies\n${hobbiesTable}`;
-      }
+      // Build projects table
+      const projArr = Array.isArray((profile as { projects?: Project[] }).projects)
+        ? (profile.projects as Project[])
+        : [];
+      const projectsTable = projArr.length
+        ? [
+            `| Title | Category | Technologies | GitHub | Demo | Date |`,
+            `| --- | --- | --- | --- | --- | --- |`,
+            ...projArr.map((p) => {
+              const techs = Array.isArray(p.technologies) ? p.technologies.join(', ') : '';
+              const gh = safeHttpUrl(p.github);
+              const demo = safeHttpUrl(p.demo);
+              const ghLink = gh ? `[Repo](${gh})` : '';
+              const demoLink = demo ? `[Live](${demo})` : '';
+              const category = p.category || '';
+              const date = p.date || '';
+              return `| ${p.title || ''} | ${category} | ${techs} | ${ghLink} | ${demoLink} | ${date} |`;
+            })
+          ].join('\n')
+        : 'No projects listed.';
+
+      let sections: string[] = [];
+      if (wantsProjects) sections.push(`## Projects\n${projectsTable}`);
+      if (wantsCerts) sections.push(`## Certifications\n${certificationsTable}`);
+      if (wantsHobbies) sections.push(`## Hobbies\n${hobbiesTable}`);
+
+      // Short, witty, humble intro for fast-path responses
+      const wantedCount = [wantsProjects, wantsCerts, wantsHobbies].filter(Boolean).length;
+      const intro = wantedCount > 1
+        ? "Quick rundown—no fluff, no ego:"
+        : wantsProjects
+          ? "Projects at a glance—short and honest:"
+          : wantsCerts
+            ? "Certs without the victory lap:"
+            : "Hobbies, straight to the point:";
+
+      const content = `${intro}\n\n${sections.join('\n\n')}`;
 
       return NextResponse.json(
         {
@@ -331,7 +363,7 @@ export async function POST(request: NextRequest) {
     } else if (mode === 'creative') {
       enhancedPrompt += "\n\nIMPORTANT: Be conversational and engaging, but do NOT invent facts. If unsure, respond that you do not have that information.";
     } else {
-      enhancedPrompt += "\n\nIMPORTANT: Keep responses concise and fact-based. If you don't know something, say so explicitly.";
+      enhancedPrompt += "\n\nIMPORTANT: Keep responses short but complete (aim for 2–4 sentences). Tone: witty, lightly sarcastic, and humble—never rude or arrogant. Use dry humor sparingly, avoid fluff, and include at most one tasteful emoji. If you don't know something, say so briefly.";
     }
 
     // Use normalized, clamped history and ensure system-first and user-last ordering

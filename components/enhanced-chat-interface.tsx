@@ -204,7 +204,8 @@ export default function EnhancedChatInterface() {
 6. **Avoid repetition** - Don't restate information already mentioned
 7. **Prioritize accuracy** - Ensure all information is factually correct
 8. **Use simple language** - Avoid complex jargon unless specifically asked
-9. **When listing multiple items** (certifications, hobbies, skills, education), format them as a Markdown table when it improves clarity
+9. **When listing multiple items** (projects, certifications, hobbies, skills, education), format them as a Markdown table when it improves clarity. For multiple projects, prefer columns: Title, Category, Technologies, GitHub, Demo, Date
+10. **Tone** - Short but complete, witty and lightly sarcastic yet humble. Dry humor allowed. At most one tasteful emoji.
 
 User question: ${input}
 
@@ -216,7 +217,7 @@ Context about Kedhareswer:
 - Current status: Developing Thesis Flow Platform
 - Available for: New opportunities and collaborations
 
-Provide a direct, concise answer to the user's question.`
+Respond in 2–4 sentences max, following the tone guidelines above.`
 
         const response = await fetch('/api/chat', {
           method: 'POST',
@@ -277,7 +278,7 @@ Provide a direct, concise answer to the user's question.`
       console.error("Chat Error:", error)
       const errorMessage = addMessage({
         role: "assistant",
-        content: "Oops! I'm having a bit of trouble right now. 😅 Could you try asking your question again, or maybe rephrase it slightly? I'm here to help! 🤖",
+        content: "Tiny hiccup on my end—love that for us. Could you try again or rephrase? I’ll keep it crisp. 🙂",
         metadata: { category: 'error' }
       })
     } finally {
@@ -431,7 +432,7 @@ Provide a direct, concise answer to the user's question.`
       welcomeMessageAdded.current = true
       addMessage({
         role: "assistant",
-        content: "👋 Hi there! I'm Kedhareswer's AI assistant, and I'm excited to help you learn more about him! \n\nFeel free to ask me anything about his background, skills, projects, or how to get in touch. I'm here to help! 😊",
+        content: "👋 Hey! I'm Kedhareswer's AI assistant—short, helpful. Ask about his background, skills, projects, or how to reach him; I'll keep it crisp.",
         metadata: { category: 'welcome' }
       })
     }
