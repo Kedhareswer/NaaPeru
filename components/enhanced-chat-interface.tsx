@@ -94,6 +94,7 @@ export default function EnhancedChatInterface() {
   const chatRef = useRef<HTMLDivElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
+  const recognitionRef = useRef<any>(null)
   const sessionStartTime = useRef<Date>(new Date())
   const welcomeMessageAdded = useRef<boolean>(false)
   
@@ -127,34 +128,67 @@ export default function EnhancedChatInterface() {
   // Voice recording functionality
   const startRecording = async () => {
     try {
+      if (typeof window !== 'undefined') {
+        const SpeechRecognition: any = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition
+        if (SpeechRecognition) {
+          const recognition = new SpeechRecognition()
+          recognition.continuous = true
+          recognition.interimResults = true
+          recognition.lang = 'en-US'
+          recognition.onresult = (event: any) => {
+            let transcript = ''
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+              transcript += event.results[i][0].transcript
+            }
+            setInput(transcript.trim())
+          }
+          recognition.onerror = () => {
+            toast({ title: 'Speech Error', description: 'Voice recognition failed. Falling back to basic mic.', variant: 'destructive' })
+          }
+          recognition.onend = () => {
+            setIsRecording(false)
+          }
+          recognitionRef.current = recognition
+          recognition.start()
+          setIsRecording(true)
+          return
+        }
+      }
+
+      // Fallback to MediaRecorder if SpeechRecognition is not available
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
       const mediaRecorder = new MediaRecorder(stream)
       mediaRecorderRef.current = mediaRecorder
-      
+
       const audioChunks: Blob[] = []
       mediaRecorder.ondataavailable = (event) => {
         audioChunks.push(event.data)
       }
-      
+
       mediaRecorder.onstop = async () => {
         const audioBlob = new Blob(audioChunks, { type: 'audio/wav' })
-        // Here you would typically send to speech-to-text API
-        // For now, we'll just set a placeholder
-        setInput("Voice message transcription would go here...")
+        // TODO: Send audioBlob to a speech-to-text API
+        setInput('Voice message captured. Add a speech-to-text API to transcribe.')
       }
-      
+
       mediaRecorder.start()
       setIsRecording(true)
     } catch (error) {
       toast({
-        title: "Microphone Error",
-        description: "Could not access microphone. Please check permissions.",
-        variant: "destructive"
+        title: 'Microphone Error',
+        description: 'Could not access microphone. Please check permissions.',
+        variant: 'destructive'
       })
     }
   }
 
   const stopRecording = () => {
+    if (recognitionRef.current) {
+      try { recognitionRef.current.stop() } catch {}
+      recognitionRef.current = null
+      setIsRecording(false)
+      return
+    }
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop()
       mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop())
@@ -455,7 +489,7 @@ Respond in 2–4 sentences max, following the tone guidelines above.`
       {/* Chat Messages */}
       <div 
         ref={chatRef}
-        className="flex-1 overflow-y-auto p-4 space-y-4"
+        className="flex-1 overflow-y-auto p-3 space-y-3"
       >
         {filteredMessages.map((message) => (
           <motion.div
@@ -465,7 +499,7 @@ Respond in 2–4 sentences max, following the tone guidelines above.`
             className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`max-w-[80%] rounded-lg p-3 ${
+              className={`max-w-[80%] rounded-lg p-2 text-sm leading-snug ${
                 message.role === 'user'
                   ? 'bg-black text-white'
                   : 'bg-gray-100 text-gray-900'
@@ -496,17 +530,17 @@ Respond in 2–4 sentences max, following the tone guidelines above.`
                   ol: ({ node, ...props }) => <ol className="list-decimal pl-5 space-y-1" {...props} />,
                   li: ({ node, ...props }) => <li className="pl-1" {...props} />,
                   a: ({ node, ...props }) => <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
-                  h1: ({ node, ...props }) => <h3 className="text-xl font-semibold" {...props} />,
-                  h2: ({ node, ...props }) => <h4 className="text-lg font-semibold" {...props} />,
-                  h3: ({ node, ...props }) => <h5 className="text-base font-semibold" {...props} />,
+                  h1: ({ node, ...props }) => <h3 className="text-lg font-semibold" {...props} />,
+                  h2: ({ node, ...props }) => <h4 className="text-base font-semibold" {...props} />,
+                  h3: ({ node, ...props }) => <h5 className="text-sm font-semibold" {...props} />,
                   blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-gray-300 pl-3 italic text-gray-600 my-2" {...props} />,
                   table: ({ node, ...props }) => (
                     <div className="overflow-x-auto">
                       <table className="min-w-full border-collapse border border-gray-200" {...props} />
                     </div>
                   ),
-                  th: ({ node, ...props }) => <th className="border border-gray-200 px-3 py-2 text-left bg-gray-50 font-semibold" {...props} />, 
-                  td: ({ node, ...props }) => <td className="border border-gray-200 px-3 py-2" {...props} />,
+                  th: ({ node, ...props }) => <th className="border border-gray-200 px-2 py-1 text-left bg-gray-50 font-semibold text-sm" {...props} />, 
+                  td: ({ node, ...props }) => <td className="border border-gray-200 px-2 py-1 text-sm" {...props} />,
                 }}
               >
                 {message.content}
@@ -531,7 +565,7 @@ Respond in 2–4 sentences max, following the tone guidelines above.`
             animate={{ opacity: 1 }}
             className="flex justify-start"
           >
-            <div className="bg-gray-100 rounded-lg p-3">
+            <div className="bg-gray-100 rounded-lg p-2 text-sm">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
@@ -579,7 +613,7 @@ Respond in 2–4 sentences max, following the tone guidelines above.`
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder={`${placeholderPrompts[placeholderIndex]}...`}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent text-sm"
               disabled={loading}
             />
             {isRecording && (
