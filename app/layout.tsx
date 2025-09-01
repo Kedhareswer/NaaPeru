@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/react"
 import ScrollToTop from "@/components/scroll-to-top"
 import StickyNavIndicator from "@/components/sticky-nav-indicator"
 import { Suspense } from "react"
+import FloatingChatBot from "@/components/floating-chat-bot"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -74,6 +75,8 @@ export default function RootLayout({
           <StickyNavIndicator />
           {children}
           <ScrollToTop />
+          {/* Site-wide AI Assistant */}
+          <FloatingChatBot />
         </Suspense>
         <Analytics />
       </body>

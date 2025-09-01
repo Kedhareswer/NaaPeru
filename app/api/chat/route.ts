@@ -30,6 +30,19 @@ type Project = {
   demo?: string;
 };
 
+type Certification = {
+  name: string;
+  issuer?: string;
+  date?: string;
+  description?: string;
+};
+
+type Hobby = {
+  name: string;
+  description?: string;
+  icon?: string;
+};
+
 // Helper to ensure we only embed safe http(s) links
 function safeHttpUrl(input: unknown): string | null {
   try {
@@ -87,8 +100,32 @@ async function getSystemPrompt(): Promise<string> {
       ].filter(Boolean).join(' | ');
       return `### ${project.title}\n${project.description}\n\n**Technologies:** ${techs}${links ? `\n${links}` : ''}`;
     }).join('\n\n---\n\n');
+
+    // Format certifications as a Markdown table
+    const certArr = Array.isArray((profile as { certifications?: Certification[] }).certifications)
+      ? (profile.certifications as Certification[])
+      : [];
+    const certificationsTable = certArr.length
+      ? [
+          `| Name | Issuer | Date | Description |`,
+          `| --- | --- | --- | --- |`,
+          ...certArr.map((c) => `| ${c.name || ''} | ${c.issuer || ''} | ${c.date || ''} | ${c.description || ''} |`)
+        ].join('\n')
+      : 'No certifications listed.';
+
+    // Format hobbies as a Markdown table
+    const hobArr = Array.isArray((profile as { hobbies?: Hobby[] }).hobbies)
+      ? (profile.hobbies as Hobby[])
+      : [];
+    const hobbiesTable = hobArr.length
+      ? [
+          `| Name | Description |`,
+          `| --- | --- |`,
+          ...hobArr.map((h) => `| ${h.name || ''} | ${h.description || ''} |`)
+        ].join('\n')
+      : 'No hobbies listed.';
     
-    const prompt = `You are ${profile.personalInfo.name}'s professional assistant. Your role is to help visitors learn about ${profile.personalInfo.name}'s professional background, skills, and projects. Keep responses concise, professional, and focused on their expertise.
+    const prompt = `You are ${profile.personalInfo.name}'s professional assistant. Your role is to help visitors learn about ${profile.personalInfo.name}'s professional background, skills, projects, certifications, and hobbies. Keep responses concise, professional, and focused on their expertise.
 
 ## Key Points
 - **Role:** ${profile.personalInfo.title}
@@ -104,6 +141,12 @@ ${education}
 ## Featured Projects
 ${projects}
 
+## Certifications
+${certificationsTable}
+
+## Hobbies
+${hobbiesTable}
+
 ## Response Guidelines
 1. Be professional but approachable in your responses
 2. When asked about work experience or education, provide detailed information from the relevant sections
@@ -112,7 +155,8 @@ ${projects}
 5. If asked about specific skills, relate them to real-world applications from the experience/projects
 6. If asked about capabilities beyond their expertise, politely redirect to relevant skills
 7. Keep responses concise but informative, using markdown for better readability
-8. If unsure about something, say you'll help find the information
+8. Use Markdown tables for structured lists (e.g., certifications, hobbies, skills) when appropriate
+9. If unsure about something, say you'll help find the information
 `;
     cachedPrompt = prompt.trim();
     return cachedPrompt;
@@ -206,6 +250,65 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: `Bad Request: total payload too large. Max is ${MAX_TOTAL_CHARS} characters.` },
         { status: 400, headers: { 'Cache-Control': 'no-store' } }
+      );
+    }
+
+    // Fast-path answers for certifications and hobbies with guaranteed Markdown table formatting
+    const lowerQ = userContentCandidate.toLowerCase();
+    const wantsCerts = /(certificate|certifications|certs|course|courses)/i.test(lowerQ);
+    const wantsHobbies = /(hobby|hobbies|interest|interests)/i.test(lowerQ);
+
+    if (wantsCerts || wantsHobbies) {
+      const profile = await loadProfile();
+
+      // Build certifications table
+      const certArr = Array.isArray((profile as { certifications?: Certification[] }).certifications)
+        ? (profile.certifications as Certification[])
+        : [];
+      const certificationsTable = certArr.length
+        ? [
+            `| Name | Issuer | Date | Description |`,
+            `| --- | --- | --- | --- |`,
+            ...certArr.map((c) => `| ${c.name || ''} | ${c.issuer || ''} | ${c.date || ''} | ${c.description || ''} |`)
+          ].join('\n')
+        : 'No certifications listed.';
+
+      // Build hobbies table
+      const hobArr = Array.isArray((profile as { hobbies?: Hobby[] }).hobbies)
+        ? (profile.hobbies as Hobby[])
+        : [];
+      const hobbiesTable = hobArr.length
+        ? [
+            `| Name | Description |`,
+            `| --- | --- |`,
+            ...hobArr.map((h) => `| ${h.name || ''} | ${h.description || ''} |`)
+          ].join('\n')
+        : 'No hobbies listed.';
+
+      let content = '';
+      if (wantsCerts && wantsHobbies) {
+        content = `## Certifications\n${certificationsTable}\n\n## Hobbies\n${hobbiesTable}`;
+      } else if (wantsCerts) {
+        content = `## Certifications\n${certificationsTable}`;
+      } else {
+        content = `## Hobbies\n${hobbiesTable}`;
+      }
+
+      return NextResponse.json(
+        {
+          id: 'local-answer',
+          object: 'chat.completion',
+          created: Math.floor(Date.now() / 1000),
+          model: 'local-rule-based',
+          choices: [
+            {
+              index: 0,
+              finish_reason: 'stop',
+              message: { role: 'assistant', content },
+            },
+          ],
+        },
+        { headers: { 'Cache-Control': 'no-store' } }
       );
     }
 

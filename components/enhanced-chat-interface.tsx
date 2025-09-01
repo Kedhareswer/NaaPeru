@@ -204,15 +204,16 @@ export default function EnhancedChatInterface() {
 6. **Avoid repetition** - Don't restate information already mentioned
 7. **Prioritize accuracy** - Ensure all information is factually correct
 8. **Use simple language** - Avoid complex jargon unless specifically asked
+9. **When listing multiple items** (certifications, hobbies, skills, education), format them as a Markdown table when it improves clarity
 
 User question: ${input}
 
 Context about Kedhareswer:
 - Full name: Marlakunta Kedhareswer Naidu
 - Role: AI/ML & Data Science Enthusiast
-- Location: Madanapalle, India (currently studying in Punjab)
+- Location: Madanapalle, India
 - Expertise: Machine Learning, Data Science, Computer Vision, NLP
-- Current status: Final year student at Lovely Professional University
+- Current status: Developing Thesis Flow Platform
 - Available for: New opportunities and collaborations
 
 Provide a direct, concise answer to the user's question.`
@@ -489,7 +490,22 @@ Provide a direct, concise answer to the user's question.`
                         {children}
                       </code>
                     )
-                  }
+                  },
+                  ul: ({ node, ...props }) => <ul className="list-disc pl-5 space-y-1" {...props} />,
+                  ol: ({ node, ...props }) => <ol className="list-decimal pl-5 space-y-1" {...props} />,
+                  li: ({ node, ...props }) => <li className="pl-1" {...props} />,
+                  a: ({ node, ...props }) => <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
+                  h1: ({ node, ...props }) => <h3 className="text-xl font-semibold" {...props} />,
+                  h2: ({ node, ...props }) => <h4 className="text-lg font-semibold" {...props} />,
+                  h3: ({ node, ...props }) => <h5 className="text-base font-semibold" {...props} />,
+                  blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-gray-300 pl-3 italic text-gray-600 my-2" {...props} />,
+                  table: ({ node, ...props }) => (
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full border-collapse border border-gray-200" {...props} />
+                    </div>
+                  ),
+                  th: ({ node, ...props }) => <th className="border border-gray-200 px-3 py-2 text-left bg-gray-50 font-semibold" {...props} />, 
+                  td: ({ node, ...props }) => <td className="border border-gray-200 px-3 py-2" {...props} />,
                 }}
               >
                 {message.content}
