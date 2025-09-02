@@ -108,7 +108,7 @@ export function ExperienceItem({
           )}
         </div>
 
-        <h3 className="text-lg leading-snug font-medium">
+        <h3 className="text-xl md:text-2xl leading-snug font-semibold tracking-tight">
           {experience.companyName}
         </h3>
 
@@ -162,25 +162,24 @@ export function ExperiencePositionItem({
             </div>
           </div>
 
-          <div className="flex items-center gap-2 pl-9 text-sm text-muted-foreground">
+          <div className="flex items-center pl-9 text-sm text-muted-foreground">
             {position.employmentType && (
-              <>
-                <dl>
-                  <dt className="sr-only">Employment Type</dt>
-                  <dd>{position.employmentType}</dd>
-                </dl>
-
-                <Separator
-                  className="data-[orientation=vertical]:h-4"
-                  orientation="vertical"
-                />
-              </>
+              <dl className="flex items-center">
+                <dt className="sr-only">Employment Type</dt>
+                <dd>{position.employmentType}</dd>
+              </dl>
             )}
 
-            <dl>
-              <dt className="sr-only">Employment Period</dt>
-              <dd>{position.employmentPeriod}</dd>
-            </dl>
+            {position.employmentType && position.employmentPeriod && (
+              <span className="mx-2 select-none">|</span>
+            )}
+
+            {position.employmentPeriod && (
+              <dl className="flex items-center">
+                <dt className="sr-only">Employment Period</dt>
+                <dd>{position.employmentPeriod}</dd>
+              </dl>
+            )}
           </div>
         </CollapsibleTrigger>
 
@@ -192,13 +191,16 @@ export function ExperiencePositionItem({
           )}
 
           {Array.isArray(position.skills) && position.skills.length > 0 && (
-            <ul className="not-prose flex flex-wrap gap-1.5 pt-2 pl-9">
-              {position.skills.map((skill, index) => (
-                <li key={index} className="flex">
-                  <Skill>{skill}</Skill>
-                </li>
-              ))}
-            </ul>
+            <div className="not-prose pt-2 pl-9">
+              <span className="sr-only">Key technologies:</span>
+              <ul className="flex flex-wrap gap-1.5">
+                {position.skills.map((skill, index) => (
+                  <li key={index} className="flex">
+                    <Skill>{skill}</Skill>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
         </CollapsibleContent>
       </div>
