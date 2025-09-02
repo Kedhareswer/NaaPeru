@@ -64,6 +64,12 @@ const EDUCATION_EXPERIENCE: ExperienceItemType[] = education.map((edu, idx) => (
       ]
         .filter(Boolean)
         .join("\n"),
+      skills: [
+        (edu as any).specialization || undefined,
+        typeof (edu as any).cgpa !== "undefined" ? `CGPA ${(edu as any).cgpa}` : undefined,
+        typeof (edu as any).marks !== "undefined" ? `Marks ${(edu as any).marks}` : undefined,
+        (edu as any).status || undefined,
+      ].filter(Boolean) as string[],
       isExpanded: idx === 0,
     },
   ],
@@ -83,6 +89,13 @@ const WORK_EXPERIENCE: ExperienceItemType[] = [
         description:
           "Contributing to AI model improvement by evaluating mathematical content, assessing factuality and quality of AI-generated text, and crafting subject-specific questions to enhance accuracy.",
         icon: "business",
+        skills: [
+          "AI Evaluation",
+          "Factuality",
+          "Quality",
+          "Mathematics",
+          "Prompt Engineering",
+        ],
         isExpanded: true,
       },
     ],
@@ -100,6 +113,13 @@ const WORK_EXPERIENCE: ExperienceItemType[] = [
         description:
           "Designed scalable hosting architecture using Elastic Beanstalk for high-growth clients, focusing on performance optimization and clear cost communication.",
         icon: "business",
+        skills: [
+          "AWS",
+          "Elastic Beanstalk",
+          "Architecture",
+          "Performance",
+          "Cost Optimization",
+        ],
       },
     ],
   },
@@ -116,6 +136,7 @@ const WORK_EXPERIENCE: ExperienceItemType[] = [
         description:
           "Analyzed HR data using MySQL, Python, and Power BI to create compelling visualizations, improving data comprehension by 25% and enhancing decision-making processes.",
         icon: "code",
+        skills: ["MySQL", "Python", "Power BI", "Data Visualization"],
       },
     ],
   },
@@ -132,6 +153,7 @@ const WORK_EXPERIENCE: ExperienceItemType[] = [
         description:
           "Managed outbound professional exchange programs and led team interactions, demonstrating strong leadership in program execution and team building through collaborative projects.",
         icon: "business",
+        skills: ["Leadership", "Team Management", "Program Management"],
       },
     ],
   },
