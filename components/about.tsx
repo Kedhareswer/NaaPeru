@@ -38,6 +38,37 @@ const education = [
   },
 ]
 
+// Map Education into the WorkExperience structure for a consistent UI
+const EDUCATION_LOGOS = [
+  "https://images.unsplash.com/photo-1460518451285-97b6aa326961?q=80&w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=200&h=200&fit=crop",
+]
+
+const EDUCATION_EXPERIENCE: ExperienceItemType[] = education.map((edu, idx) => ({
+  id: `edu-${idx}`,
+  companyName: edu.institution,
+  companyLogo: EDUCATION_LOGOS[idx] || EDUCATION_LOGOS[0],
+  positions: [
+    {
+      id: `edu-pos-${idx}`,
+      title: edu.degree,
+      employmentPeriod: edu.period,
+      icon: "education",
+      description: [
+        edu.specialization ? `- Specialization: ${edu.specialization}` : null,
+        typeof (edu as any).cgpa !== "undefined" ? `- CGPA: ${(edu as any).cgpa}` : null,
+        typeof (edu as any).marks !== "undefined" ? `- Marks: ${(edu as any).marks}` : null,
+        edu.location ? `- Location: ${edu.location}` : null,
+        edu.status ? `- Status: ${edu.status}` : null,
+      ]
+        .filter(Boolean)
+        .join("\n"),
+      isExpanded: idx === 0,
+    },
+  ],
+}))
+
 const WORK_EXPERIENCE: ExperienceItemType[] = [
   {
     id: "outlier-ai",
@@ -251,49 +282,7 @@ export default function About() {
                   transition={{ duration: 1, delay: 0.5 }}
                 />
               </div>
-              <div className="space-y-8">
-                {education.map((edu, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex gap-6"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                    transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                  >
-                    <div className="mt-1 flex-shrink-0">
-                      <div className="p-2 border border-black rounded-full">
-                        <edu.icon className="w-5 h-5" />
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between mb-1">
-                        <h4 className="text-lg font-medium">
-                          {edu.institution}
-                        </h4>
-                        {edu.status && (
-                          <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full font-medium">
-                            {edu.status}
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-gray-600 text-sm mb-2">{edu.location}</p>
-                      <div className="flex flex-col md:flex-row md:items-center md:justify-between text-sm mb-3">
-                        <span className="text-gray-700 font-medium">{edu.degree}</span>
-                        <span className="text-gray-500 mt-1 md:mt-0">{edu.period}</span>
-                      </div>
-                      {edu.specialization && (
-                        <p className="text-gray-600 leading-relaxed mb-2">Specialization: {edu.specialization}</p>
-                      )}
-                      {edu.cgpa && (
-                        <p className="text-gray-600 leading-relaxed">CGPA: {edu.cgpa}</p>
-                      )}
-                      {edu.marks && (
-                        <p className="text-gray-600 leading-relaxed">Marks: {edu.marks}</p>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+              <WorkExperience className="rounded-lg border" experiences={EDUCATION_EXPERIENCE} />
             </motion.div>
 
             {/* Experience Section */}
