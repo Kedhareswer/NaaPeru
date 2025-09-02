@@ -2,8 +2,10 @@
 
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { Briefcase, GraduationCap } from "lucide-react"
+import { GraduationCap } from "lucide-react"
 import { HoverCard, HoverCardTrigger, HoverCardContent } from '@/components/ui/hover-card'
+import type { ExperienceItemType } from "@/components/ui/work-experience"
+import { WorkExperience } from "@/components/ui/work-experience"
 
 const education = [
   {
@@ -36,38 +38,71 @@ const education = [
   },
 ]
 
-const experiences = [
+const WORK_EXPERIENCE: ExperienceItemType[] = [
   {
-    title: "AI Evaluator & Trainer",
-    company: "Outlier.AI, Data Annotation, Soul.AI",
-    period: "Nov 2024 - Jun 2025",
-    description:
-      "Contributing to AI model improvement by evaluating mathematical content, assessing factuality and quality of AI-generated text, and crafting subject-specific questions to enhance accuracy.",
-    icon: Briefcase,
+    id: "outlier-ai",
+    companyName: "Outlier.AI, Data Annotation, Soul.AI",
+    companyLogo:
+      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=200&h=200&fit=crop",
+    positions: [
+      {
+        id: "role-outlier-ai",
+        title: "AI Evaluator & Trainer",
+        employmentPeriod: "Nov 2024 - Jun 2025",
+        description:
+          "Contributing to AI model improvement by evaluating mathematical content, assessing factuality and quality of AI-generated text, and crafting subject-specific questions to enhance accuracy.",
+        icon: "business",
+        isExpanded: true,
+      },
+    ],
   },
   {
-    title: "Solutions Architecture Virtual Experience",
-    company: "AWS APAC (The Forage)",
-    period: "Dec 2024 - Jan 2025",
-    description:
-      "Designed scalable hosting architecture using Elastic Beanstalk for high-growth clients, focusing on performance optimization and clear cost communication.",
-    icon: Briefcase,
+    id: "aws-forage",
+    companyName: "AWS APAC (The Forage)",
+    companyLogo:
+      "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=200&h=200&fit=crop",
+    positions: [
+      {
+        id: "role-aws-forage",
+        title: "Solutions Architecture Virtual Experience",
+        employmentPeriod: "Dec 2024 - Jan 2025",
+        description:
+          "Designed scalable hosting architecture using Elastic Beanstalk for high-growth clients, focusing on performance optimization and clear cost communication.",
+        icon: "business",
+      },
+    ],
   },
   {
-    title: "Data Analyst Intern",
-    company: "PSYLIQ",
-    period: "Jan 2024 - Feb 2024",
-    description:
-      "Analyzed HR data using MySQL, Python, and Power BI to create compelling visualizations, improving data comprehension by 25% and enhancing decision-making processes.",
-    icon: Briefcase,
+    id: "psyliq",
+    companyName: "PSYLIQ",
+    companyLogo:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=200&h=200&fit=crop",
+    positions: [
+      {
+        id: "role-psyliq",
+        title: "Data Analyst Intern",
+        employmentPeriod: "Jan 2024 - Feb 2024",
+        description:
+          "Analyzed HR data using MySQL, Python, and Power BI to create compelling visualizations, improving data comprehension by 25% and enhancing decision-making processes.",
+        icon: "code",
+      },
+    ],
   },
   {
-    title: "Senior & Junior Manager",
-    company: "AIESEC in Jalandhar",
-    period: "Jul 2022 - Jan 2023",
-    description:
-      "Managed outbound professional exchange programs and led team interactions, demonstrating strong leadership in program execution and team building through collaborative projects.",
-    icon: Briefcase,
+    id: "aiesec-jalandhar",
+    companyName: "AIESEC in Jalandhar",
+    companyLogo:
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=200&h=200&fit=crop",
+    positions: [
+      {
+        id: "role-aiesec",
+        title: "Senior & Junior Manager",
+        employmentPeriod: "Jul 2022 - Jan 2023",
+        description:
+          "Managed outbound professional exchange programs and led team interactions, demonstrating strong leadership in program execution and team building through collaborative projects.",
+        icon: "business",
+      },
+    ],
   },
 ]
 
@@ -269,7 +304,7 @@ export default function About() {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-light">Relevant Experience</h3>
+                <h3 className="text-xl font-light">Experience</h3>
                 <motion.div 
                   className="h-px bg-black" 
                   style={{ width: 0 }}
@@ -277,31 +312,7 @@ export default function About() {
                   transition={{ duration: 1, delay: 0.5 }}
                 />
               </div>
-              <div className="space-y-8">
-                {experiences.map((exp, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex gap-6"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                    transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                  >
-                    <div className="mt-1 flex-shrink-0">
-                      <div className="p-2 border border-black rounded-full">
-                        <exp.icon className="w-5 h-5" />
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-lg font-medium mb-2">{exp.title}</h4>
-                      <div className="flex flex-col md:flex-row md:items-center md:justify-between text-sm mb-3">
-                        <span className="text-gray-700 font-medium">{exp.company}</span>
-                        <span className="text-gray-500 mt-1 md:mt-0">{exp.period}</span>
-                      </div>
-                      <p className="text-gray-600 leading-relaxed">{exp.description}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+              <WorkExperience className="rounded-lg border" experiences={WORK_EXPERIENCE} />
             </motion.div>
           </div>
         </div>
