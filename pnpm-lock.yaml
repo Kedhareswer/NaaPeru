@@ -20,6 +20,9 @@ importers:
       '@neondatabase/serverless':
         specifier: ^1.0.1
         version: 1.0.1
+      '@paper-design/shaders-react':
+        specifier: ^0.0.52
+        version: 0.0.52(@types/react@19.1.8)(react@19.1.0)
       '@radix-ui/react-accordion':
         specifier: latest
         version: 1.2.11(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -731,6 +734,18 @@ packages:
   '@nolyfill/is-core-module@1.0.39':
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
+
+  '@paper-design/shaders-react@0.0.52':
+    resolution: {integrity: sha512-C+9RzOeubBwsGxPZpouf5tFgLfRN38+7TYxg6oMW15OendqFraZn1/YIVWLRjgQVfuv2AkJjZelzCcHfq7uk/w==}
+    peerDependencies:
+      '@types/react': ^18 || ^19
+      react: ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  '@paper-design/shaders@0.0.52':
+    resolution: {integrity: sha512-it+wjb8QQpKCVH0UvzuqY7MYL6Hcqvu1xN9akMt8hGHlW5W2LkC4Ljpwcp3mrlx3oKuex+O3WUhzNtu6ONpvIQ==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -4658,6 +4673,15 @@ snapshots:
       fastq: 1.19.1
 
   '@nolyfill/is-core-module@1.0.39': {}
+
+  '@paper-design/shaders-react@0.0.52(@types/react@19.1.8)(react@19.1.0)':
+    dependencies:
+      '@paper-design/shaders': 0.0.52
+      react: 19.1.0
+    optionalDependencies:
+      '@types/react': 19.1.8
+
+  '@paper-design/shaders@0.0.52': {}
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
