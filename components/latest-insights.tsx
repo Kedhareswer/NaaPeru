@@ -24,6 +24,7 @@ import {
   Calendar,
 } from "lucide-react"
 import { Card } from "@/components/ui/card"
+import { GitHubCalendar } from "@/components/ui/git-hub-calendar"
 
 interface GitHubRepo {
   id: number
@@ -490,7 +491,7 @@ export default function LatestInsights() {
           </motion.p>
         </motion.div>
 
-        {/* GitHub Contribution Graph */}
+        {/* Github Calender */}
         <motion.div
           className="mb-12"
           initial={{ opacity: 0, y: 20 }}
@@ -500,7 +501,7 @@ export default function LatestInsights() {
           <Card className="p-6 bg-white border-zinc-200">
             <h3 className="text-lg font-medium mb-4 flex items-center">
               <Calendar className="mr-2 h-5 w-5 text-zinc-600" />
-              GitHub Contribution Graph
+              Github Calender
             </h3>
             
             {loading ? (
@@ -509,18 +510,9 @@ export default function LatestInsights() {
               </div>
             ) : (
               <div className="overflow-x-auto pb-2">
-                <div className="grid grid-cols-53 gap-1" style={{ gridTemplateColumns: 'repeat(53, minmax(10px, 1fr))' }}>
-                  {contributions.map((contribution, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.2, delay: i * 0.001 }}
-                      className={`w-3 h-3 rounded-sm ${getLevelColor(contribution.level)} cursor-pointer transition-colors`}
-                      title={`${contribution.date}: ${contribution.count} contributions`}
-                    />
-                  ))}
-                </div>
+                <GitHubCalendar
+                  data={contributions.map((c) => ({ date: c.date, count: c.count }))}
+                />
               </div>
             )}
           </Card>
