@@ -1,7 +1,8 @@
 "use client"
 
 import { useRef, useState, useEffect } from "react"
-import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion"
+import { motion, useInView, AnimatePresence } from "framer-motion"
+import { GradientBackground } from "@/components/ui/paper-design-shader-background"
 import { MapPin, Calendar, Download, Mail, ArrowDown, Linkedin, Github, BarChart2 } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 
@@ -17,14 +18,7 @@ export default function Intro() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  })
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"])
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95])
+  // Parallax removed
 
   const words = ["Data Scientist", "ML Engineer", "AI Specialist", "Problem Solver", "Vibe Coder"]
 
@@ -77,15 +71,16 @@ export default function Intro() {
     <motion.section
       id="intro"
       ref={containerRef}
-      className="relative w-full bg-white overflow-hidden"
+      className="relative w-full overflow-hidden"
       style={{
-        y,
-        opacity,
-        // Proper spacing to avoid navbar collision
         paddingTop: "clamp(80px, 12vh, 120px)",
         minHeight: "100vh",
       }}
     >
+      {/* Shader gradient background */}
+      <GradientBackground />
+      {/* Light overlay to preserve text readability on colorful shader */}
+      <div className="absolute inset-0 -z-10 bg-black/20" />
       {/* Floating geometric elements */}
       <div className="absolute inset-0 pointer-events-none">
         {floatingElements.map((element) => (
@@ -143,7 +138,7 @@ export default function Intro() {
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Mobile Layout */}
           <div className="block lg:hidden">
-            <motion.div className="text-center space-y-6 sm:space-y-8 py-8" style={{ scale }}>
+            <motion.div className="text-center space-y-6 sm:space-y-8 py-8">
               {/* Status indicator */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -333,7 +328,6 @@ export default function Intro() {
             <motion.div
               className="grid grid-cols-12 gap-8 xl:gap-12 items-center py-12"
               style={{
-                scale,
                 minHeight: "calc(100vh - 200px)",
               }}
             >
