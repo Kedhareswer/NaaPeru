@@ -71,7 +71,7 @@ export default function Intro() {
     <motion.section
       id="intro"
       ref={containerRef}
-      className="relative w-full bg-white overflow-hidden min-h-screen"
+      className="relative w-full overflow-hidden min-h-screen"
       style={{
         // Proper spacing to avoid navbar collision
         paddingTop: "clamp(80px, 12vh, 120px)",
@@ -79,7 +79,6 @@ export default function Intro() {
     >
       {/* Shader gradient background */}
       <GradientBackground />
-      <div className="absolute inset-0 -z-10 bg-white/10" />
       {/* Parallax decorations removed to avoid conflicts with background */}
 
       {/* Custom cursor follower */}

@@ -29,7 +29,7 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="relative bg-white text-black">
+    <main className="relative text-black">
       <CustomCursor />
 
       <AnimatePresence mode="wait">
