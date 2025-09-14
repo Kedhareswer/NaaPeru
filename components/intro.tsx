@@ -1,10 +1,9 @@
 "use client"
 
 import { useRef, useState, useEffect } from "react"
-import { motion, useInView, AnimatePresence } from "framer-motion"
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion"
 import { MapPin, Calendar, Download, Mail, ArrowDown, Linkedin, Github, BarChart2 } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
-import { GradientBackground } from "@/components/ui/paper-design-shader-background"
 
 export default function Intro() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -18,7 +17,14 @@ export default function Intro() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
 
-  // Parallax removed
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  })
+
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"])
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95])
 
   const words = ["Data Scientist", "ML Engineer", "AI Specialist", "Problem Solver", "Vibe Coder"]
 
@@ -71,15 +77,54 @@ export default function Intro() {
     <motion.section
       id="intro"
       ref={containerRef}
-      className="relative w-full overflow-hidden min-h-screen"
+      className="relative w-full bg-white overflow-hidden"
       style={{
+        y,
+        opacity,
         // Proper spacing to avoid navbar collision
         paddingTop: "clamp(80px, 12vh, 120px)",
+        minHeight: "100vh",
       }}
     >
-      {/* Shader gradient background */}
-      <GradientBackground />
-      {/* Parallax decorations removed to avoid conflicts with background */}
+      {/* Floating geometric elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        {floatingElements.map((element) => (
+          <motion.div
+            key={element.id}
+            className="absolute border border-black/10"
+            style={{
+              left: `${element.x}%`,
+              top: `${element.y}%`,
+              width: `${element.size}px`,
+              height: `${element.size}px`,
+            }}
+            animate={{
+              y: [-20, 20, -20],
+              rotate: [0, 180, 360],
+              opacity: [0.1, 0.3, 0.1],
+            }}
+            transition={{
+              duration: element.duration,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "linear",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Grid overlay */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        <div
+          className="w-full h-full"
+          style={{
+            backgroundImage: `
+            linear-gradient(to right, black 1px, transparent 1px),
+            linear-gradient(to bottom, black 1px, transparent 1px)
+          `,
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
 
       {/* Custom cursor follower */}
       {!isMobile && (
@@ -98,7 +143,7 @@ export default function Intro() {
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Mobile Layout */}
           <div className="block lg:hidden">
-            <motion.div className="text-center space-y-6 sm:space-y-8 py-8">
+            <motion.div className="text-center space-y-6 sm:space-y-8 py-8" style={{ scale }}>
               {/* Status indicator */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -288,6 +333,7 @@ export default function Intro() {
             <motion.div
               className="grid grid-cols-12 gap-8 xl:gap-12 items-center py-12"
               style={{
+                scale,
                 minHeight: "calc(100vh - 200px)",
               }}
             >
