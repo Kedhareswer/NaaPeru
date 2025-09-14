@@ -2,8 +2,8 @@
 
 import { useRef, useState, useEffect } from "react"
 import { motion, useInView, AnimatePresence } from "framer-motion"
-import { GradientBackground } from "@/components/ui/paper-design-shader-background"
 import { MapPin, Calendar, Download, Mail, ArrowDown, Linkedin, Github, BarChart2 } from "lucide-react"
+import { GradientBackground } from "@/components/ui/paper-design-shader-background"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 export default function Intro() {
@@ -18,7 +18,7 @@ export default function Intro() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
 
-  // Parallax removed
+  // Removed parallax scroll transforms for a static hero
 
   const words = ["Data Scientist", "ML Engineer", "AI Specialist", "Problem Solver", "Vibe Coder"]
 
@@ -59,13 +59,7 @@ export default function Intro() {
     },
   }
 
-  const floatingElements = Array.from({ length: 6 }, (_, i) => ({
-    id: i,
-    size: Math.random() * 4 + 2,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    duration: Math.random() * 20 + 10,
-  }))
+  // Parallax and floating elements removed
 
   return (
     <motion.section
@@ -73,53 +67,15 @@ export default function Intro() {
       ref={containerRef}
       className="relative w-full overflow-hidden"
       style={{
+        // Proper spacing to avoid navbar collision
         paddingTop: "clamp(80px, 12vh, 120px)",
         minHeight: "100vh",
       }}
     >
-      {/* Shader gradient background */}
+      {/* Background shader and subtle overlay for readability */}
       <GradientBackground />
-      {/* Light overlay to preserve text readability on colorful shader */}
-      <div className="absolute inset-0 -z-10 bg-black/20" />
-      {/* Floating geometric elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        {floatingElements.map((element) => (
-          <motion.div
-            key={element.id}
-            className="absolute border border-black/10"
-            style={{
-              left: `${element.x}%`,
-              top: `${element.y}%`,
-              width: `${element.size}px`,
-              height: `${element.size}px`,
-            }}
-            animate={{
-              y: [-20, 20, -20],
-              rotate: [0, 180, 360],
-              opacity: [0.1, 0.3, 0.1],
-            }}
-            transition={{
-              duration: element.duration,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "linear",
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Grid overlay */}
-      <div className="absolute inset-0 opacity-[0.02]">
-        <div
-          className="w-full h-full"
-          style={{
-            backgroundImage: `
-            linear-gradient(to right, black 1px, transparent 1px),
-            linear-gradient(to bottom, black 1px, transparent 1px)
-          `,
-            backgroundSize: "40px 40px",
-          }}
-        />
-      </div>
+      <div className="absolute inset-0 -z-10 bg-white/60" />
+      {/* Removed floating elements and grid overlay to showcase the background */}
 
       {/* Custom cursor follower */}
       {!isMobile && (
