@@ -122,10 +122,10 @@ const certifications = [
     url: "http://verify.skilljar.com/c/fbb5tvjxnrw3"
   },
   {
-    name: "Neo4j Certified Professional",
-    description: "Neo4j - July 2025",
+    name: "Project: Deep Research with LangGraph",
+    description: "LangChain Academy - August 24, 2025",
     icon: Medal,
-    url: "https://graphacademy.neo4j.com/c/88771331-1629-4cca-bd52-070ed66b89d4/"
+    url: "https://academy.langchain.com/certificates/j8qn77c4vt"
   },
   {
     name: "AWS APAC - Solutions Architecture Job Simulation",

@@ -270,9 +270,6 @@ export default function Intro() {
                     <span className="absolute inset-0 bg-[#0274b3] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
                     <Linkedin className="relative z-10 w-5 h-5 text-gray-700 group-hover:text-white transition-colors duration-300" />
                   </div>
-                  <div className="text-center">
-                    <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">LinkedIn</p>
-                  </div>
                 </a>
 
                 <a
@@ -285,9 +282,6 @@ export default function Intro() {
                     <span className="absolute inset-0 bg-[#181717] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
                     <Github className="relative z-10 w-5 h-5 text-gray-700 group-hover:text-white transition-colors duration-300" />
                   </div>
-                  <div className="text-center">
-                    <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">GitHub</p>
-                  </div>
                 </a>
 
                 <a
@@ -299,9 +293,6 @@ export default function Intro() {
                   <div className="relative w-10 h-10 rounded-lg flex items-center justify-center border border-gray-200 overflow-hidden bg-white">
                     <span className="absolute inset-0 bg-[#20beff] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
                     <BarChart2 className="relative z-10 w-5 h-5 text-gray-700 group-hover:text-white transition-colors duration-300" />
-                  </div>
-                  <div className="text-center">
-                    <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">Kaggle</p>
                   </div>
                 </a>
               </motion.div>
@@ -474,9 +465,6 @@ export default function Intro() {
                         <span className="absolute inset-0 bg-[#0274b3] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
                         <Linkedin className="relative z-10 w-6 h-6 text-gray-700 group-hover:text-white transition-colors duration-300" />
                       </div>
-                      <div className="text-center">
-                        <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">LinkedIn</p>
-                      </div>
                     </a>
                     <a
                       href="https://github.com/Kedhareswer"
@@ -487,9 +475,6 @@ export default function Intro() {
                       <div className="relative w-12 h-12 rounded-lg flex items-center justify-center border border-gray-200 overflow-hidden bg-white">
                         <span className="absolute inset-0 bg-[#181717] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
                         <Github className="relative z-10 w-6 h-6 text-gray-700 group-hover:text-white transition-colors duration-300" />
-                      </div>
-                      <div className="text-center">
-                        <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">GitHub</p>
                       </div>
                     </a>
                     <a
@@ -502,9 +487,6 @@ export default function Intro() {
                         <span className="absolute inset-0 bg-[#20beff] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
                         <BarChart2 className="relative z-10 w-6 h-6 text-gray-700 group-hover:text-white transition-colors duration-300" />
                       </div>
-                      <div className="text-center">
-                        <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">Kaggle</p>
-                      </div>
                     </a>
                     <a
                       href="mailto:kedhareswer.12110626@gmail.com"
@@ -513,9 +495,6 @@ export default function Intro() {
                       <div className="relative w-12 h-12 rounded-lg flex items-center justify-center border border-gray-200 overflow-hidden bg-white">
                         <span className="absolute inset-0 bg-[#C5221F] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300" />
                         <Mail className="relative z-10 w-6 h-6 text-gray-700 group-hover:text-white transition-colors duration-300" />
-                      </div>
-                      <div className="text-center">
-                        <p className="text-xs font-medium text-gray-900 uppercase tracking-wider">Email</p>
                       </div>
                     </a>
                   </div>
