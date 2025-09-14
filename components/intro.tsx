@@ -3,8 +3,8 @@
 import { useRef, useState, useEffect } from "react"
 import { motion, useInView, AnimatePresence } from "framer-motion"
 import { MapPin, Calendar, Download, Mail, ArrowDown, Linkedin, Github, BarChart2 } from "lucide-react"
-import { GradientBackground } from "@/components/ui/paper-design-shader-background"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { GradientBackground } from "@/components/ui/paper-design-shader-background"
 
 export default function Intro() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -18,7 +18,7 @@ export default function Intro() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
 
-  // Removed parallax scroll transforms for a static hero
+  // Parallax removed
 
   const words = ["Data Scientist", "ML Engineer", "AI Specialist", "Problem Solver", "Vibe Coder"]
 
@@ -59,23 +59,28 @@ export default function Intro() {
     },
   }
 
-  // Parallax and floating elements removed
+  const floatingElements = Array.from({ length: 6 }, (_, i) => ({
+    id: i,
+    size: Math.random() * 4 + 2,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    duration: Math.random() * 20 + 10,
+  }))
 
   return (
     <motion.section
       id="intro"
       ref={containerRef}
-      className="relative w-full overflow-hidden"
+      className="relative w-full bg-white overflow-hidden min-h-screen"
       style={{
         // Proper spacing to avoid navbar collision
         paddingTop: "clamp(80px, 12vh, 120px)",
-        minHeight: "100vh",
       }}
     >
-      {/* Background shader and subtle overlay for readability */}
+      {/* Shader gradient background */}
       <GradientBackground />
-      <div className="absolute inset-0 -z-10 bg-white/60" />
-      {/* Removed floating elements and grid overlay to showcase the background */}
+      <div className="absolute inset-0 -z-10 bg-white/10" />
+      {/* Parallax decorations removed to avoid conflicts with background */}
 
       {/* Custom cursor follower */}
       {!isMobile && (
