@@ -1,7 +1,9 @@
 import { notFound, permanentRedirect } from 'next/navigation'
 import sql from '@/lib/db'
 import Image from 'next/image'
+import Link from 'next/link'
 import { toSafeExternalHref } from '@/lib/utils'
+import { ArrowLeft, Home } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
 
@@ -52,8 +54,9 @@ function slugify(s: string) {
 export default async function ProjectDetailsBySlugPage({
   params,
   searchParams
-}: { params: { slug: string }; searchParams?: { [key: string]: string | string[] | undefined } }) {
-  const id = extractIdFromSlug(params.slug)
+}: { params: Promise<{ slug: string }>; searchParams?: { [key: string]: string | string[] | undefined } }) {
+  const { slug } = await params
+  const id = extractIdFromSlug(slug)
   if (id == null) notFound()
 
   const rows = await sql`
@@ -64,7 +67,7 @@ export default async function ProjectDetailsBySlugPage({
   if (!p) notFound()
   // Ensure canonical URL matches `/projects/{id}-{slugified-title}`
   const canonical = p.title && p.title.trim() ? `${p.id}-${slugify(p.title)}` : `${p.id}`
-  if (params.slug !== canonical) {
+  if (slug !== canonical) {
     const qs = new URLSearchParams(
       Object.entries(searchParams ?? {}).flatMap(([k, v]) =>
         Array.isArray(v) ? v.map(val => [k, val]) : v != null ? [[k, v]] : []
@@ -83,6 +86,37 @@ export default async function ProjectDetailsBySlugPage({
   return (
     <main className="min-h-screen bg-white">
       <section className="max-w-5xl mx-auto px-6 md:px-10 py-12 md:py-16">
+        {/* Breadcrumb Navigation */}
+        <nav className="flex items-center space-x-2 text-sm text-gray-500 mb-6">
+          <Link 
+            href="/" 
+            className="flex items-center hover:text-gray-700 transition-colors"
+          >
+            <Home className="w-4 h-4 mr-1" />
+            Home
+          </Link>
+          <span>/</span>
+          <Link 
+            href="/projects" 
+            className="hover:text-gray-700 transition-colors"
+          >
+            Projects
+          </Link>
+          <span>/</span>
+          <span className="text-gray-900 font-medium truncate max-w-xs">{p.title}</span>
+        </nav>
+
+        {/* Back Button */}
+        <div className="mb-8">
+          <Link 
+            href="/projects"
+            className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Projects
+          </Link>
+        </div>
+
         <div className="flex items-start justify-between gap-6 flex-wrap">
           <div>
             <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-gray-900">{p.title}</h1>
