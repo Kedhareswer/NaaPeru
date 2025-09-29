@@ -98,8 +98,7 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
       return splitBy === "words"
         ? currentText.split(" ")
         : splitBy === "lines"
-          ? currentText.split("
-")
+          ? currentText.split("\n")
           : currentText.split(splitBy)
     }, [texts, currentTextIndex, splitBy])
 
@@ -116,7 +115,7 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
           const randomIndex = Math.floor(Math.random() * total)
           return Math.abs(randomIndex - index) * staggerDuration
         }
-        return Math.abs(staggerFrom - index) * staggerDuration
+        return Math.abs((staggerFrom as number) - index) * staggerDuration
       },
       [staggerFrom, staggerDuration]
     )
@@ -131,7 +130,7 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
       const nextIndex = currentTextIndex === texts.length - 1
         ? (loop ? 0 : currentTextIndex)
         : currentTextIndex + 1
-
+      
       if (nextIndex !== currentTextIndex) {
         handleIndexChange(nextIndex)
       }
@@ -141,7 +140,7 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
       const prevIndex = currentTextIndex === 0
         ? (loop ? texts.length - 1 : currentTextIndex)
         : currentTextIndex - 1
-
+      
       if (prevIndex !== currentTextIndex) {
         handleIndexChange(prevIndex)
       }
@@ -201,7 +200,7 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
               ? (elements as WordObject[])
               : (elements as string[]).map((el, i) => ({
                   characters: [el],
-                  needsSpace: i !== elements.length - 1,
+                  needsSpace: i !== (elements as string[]).length - 1,
                 }))
             ).map((wordObj, wordIndex, array) => {
               const previousCharsCount = array
