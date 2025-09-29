@@ -1,0 +1,422 @@
+{
+    "personalInfo": {
+      "name": "Marlakunta Kedhareswer Naidu",
+      "title": "AI/ML & Data Science Enthusiast",
+      "alternativeTitles": ["Data Scientist", "ML Engineer", "AI Specialist", "Problem Solver", "Vibe Coder"],
+      "location": "Madanapalli, Andhra Pradesh, India",
+      "currentLocation": "Punjab, India (Study)",
+      "email": "kedhareswer.12110626@gmail.com",
+      "phone": "+91-9398911432",
+      "linkedin": "https://www.linkedin.com/in/kedhareswernaidu/",
+      "github": "https://github.com/Kedhareswer",
+      "kaggle": "https://www.kaggle.com/kedhareswernaidu",
+      "portfolio": "https://kedhareswer-portfolio.vercel.app",
+      "availability": {
+        "status": "Available for new opportunities",
+        "responseTime": "24-48 hours",
+        "openToOpportunities": true
+      }
+    },
+    
+    "summary": "Passionate AI/ML and Data Science enthusiast with hands-on experience in machine learning, data analysis, and web development. Currently a final year student with expertise in building intelligent systems and optimizing machine learning workflows, with a focus on computer vision, NLP, and AI-driven automation. Skilled in transforming complex data challenges into clear, actionable insights that drive meaningful business results through innovative AI solutions and cutting-edge machine learning techniques.",
+    
+    "skills": {
+      "programmingLanguages": ["Python", "SQL", "HTML", "CSS", "JavaScript", "R", "TypeScript"],
+      "aiMlFrameworks": ["TensorFlow", "PyTorch", "Scikit-learn", "Pandas", "NumPy", "OpenCV"],
+      "webTechnologies": ["React", "Next.js", "Tailwind CSS", "FastAPI", "Node.js", "Vue.js", "WebSocket", "Express.js", "Svelte", "SvelteKit", "Remix"],
+      "databases": ["MySQL", "Neon"],
+      "dataVisualization": ["Tableau", "Power BI", "Recharts"],
+      "cloudPlatforms": ["AWS", "Azure", "Vercel"],
+      "aiTools": ["Vercel", "Lovable", "Bolt", "Jules", "Cursor", "Windsurf", "Wix Studio", "Relume", "Gemini Studio", "ChatGPT", "Claude", "Hugging Face"],
+      "developerTools": ["Git", "GitHub"],
+      "libraries": [
+          "Radix UI", "shadcn/ui", "Framer Motion", "Lucide React", "Zod", "React Hook Form", "Tailwind CSS Animate", "date-fns", "Day.js", "clsx", "tailwind-merge"
+      ],
+      "specializations": ["Computer Vision", "NLP", "Deep Learning", "Machine Learning", "Data Analysis", "Statistical Modeling", "Medical Imaging", "Neural Style Transfer"],
+      "softSkills": ["Leadership", "Team Player", "Communication", "Adaptability", "Problem Solving", "Project Management", "Critical Thinking", "Time Management"]
+    },
+    
+    "experience": [
+      {
+        "role": "AI Evaluator, AI Trainer - Individual Contractor",
+        "company": "Outlier.AI, Data Annotation, Soul.AI",
+        "duration": "November 2024 - Present",
+        "location": "Remote",
+        "achievements": [
+          "Contributed to the training and improvement of generative AI models by evaluating mathematical content.",
+          "Assessed the factuality, relevance, and quality of AI-generated text within the mathematics domain.",
+          "Crafted and answered subject-specific questions to enhance the accuracy of AI outputs.",
+          "Evaluated and ranked AI-generated responses to ensure consistency and precision."
+        ]
+      },
+      {
+        "role": "AWS Solutions Architecture Intern",
+        "company": "The Forage (Virtual Experience)",
+        "duration": "December 2024 - January 2025",
+        "location": "Virtual",
+        "achievements": [
+          "Designed a simple and scalable hosting architecture based on Elastic Beanstalk for a client experiencing significant growth and slow response times.",
+          "Designed architecture in plain language ensuring client understanding of functionality and cost calculations.",
+          "Focused on performance optimization and clear cost communication for high-growth clients."
+        ]
+      },
+      {
+        "role": "Data Analyst Intern",
+        "company": "PSYLIQ",
+        "duration": "January 2024 - February 2024",
+        "location": "Remote",
+        "achievements": [
+          "Worked on Employees HR Data - cleaned, stored and gathered insightful information made compelling visualizations using MySQL, Python and Power BI.",
+          "Developed data visualizations using Power BI to interpret complex datasets, enhancing decision-making processes and improving data comprehension by 25% within a month.",
+          "Analyzed HR data using MySQL, Python, and Power BI to create compelling visualizations."
+        ]
+      },
+      {
+        "role": "Senior & Junior Manager",
+        "company": "AIESEC in Jalandhar",
+        "duration": "July 2022 - January 2023",
+        "location": "Jalandhar, Punjab, India",
+        "achievements": [
+          "Managed outbound professional exchange programs and led team interactions.",
+          "Demonstrated strong leadership in program execution and team building through collaborative projects.",
+          "Led team interactions and program coordination for international exchange initiatives."
+        ]
+      }
+    ],
+    
+    "education": [
+      {
+        "degree": "Bachelor of Technology - Computer Science and Engineering (Data Science - AI & ML)",
+        "institution": "Lovely Professional University",
+        "duration": "September 2021 - Present",
+        "location": "Phagwara, Punjab, India",
+        "cgpa": "7.71",
+        "specialization": "Data Science (AI & ML)",
+        "status": "Final Year Student"
+      },
+      {
+        "degree": "Intermediate",
+        "institution": "Sri Siddhartha Junior College",
+        "duration": "July 2019 - June 2021",
+        "location": "Madanapalli, Andhra Pradesh, India",
+        "marks": "889"
+      },
+      {
+        "degree": "Matriculation",
+        "institution": "Vijaya Bharathi English Medium High School",
+        "duration": "June 2018 - March 2019",
+        "location": "Madanapalli, Andhra Pradesh, India",
+        "gpa": "9.5"
+      }
+    ],
+    
+    "projects": [
+      {
+        "title": "Multi-Provider AI Chat Application",
+        "description": "A Next.js application that allows you to chat with multiple AI providers including OpenAI, Anthropic, Groq, Google Gemini, DeepSeek, and Fireworks AI.",
+        "technologies": ["Next.js", "TypeScript", "LangChain.js", "Vercel AI SDK", "Tailwind CSS"],
+        "github": "https://github.com/Kedhareswer/langchain-projects",
+        "demo": "https://langchain-projects.vercel.app/",
+        "category": "AI Chat",
+        "date": "Aug 2025",
+        "image": "/projects/ai-chat.png",
+        "objectives": ["Multi-Provider Support", "Dynamic Model Selection", "Real-time Chat", "API Key Management", "Persistent Settings"],
+        "outcomes": ["Live demo deployed", "Production-ready Next.js app", "Comprehensive settings UI"]
+      },
+      {
+        "title": "Portfolio Nexus",
+        "description": "A modern, auto-updating portfolio showcase website with sophisticated UI/UX features, dark theme, and real-time synchronization with repository data. Features include smart search, rating-based filtering, grid/list view toggle, and keyboard shortcuts.",
+        "technologies": ["HTML", "CSS", "JavaScript", "JSON", "Git"],
+        "github": "https://github.com/yourusername/portfolio-nexus",
+        "demo": "https://kedhareswer.github.io/My_Portfolio_Designs/",
+        "category": "Web Development",
+        "date": "July 2025",
+        "image": "/projects/portfolio-nexus.png",
+        "objectives": ["Create an interactive portfolio showcase", "Implement real-time data synchronization", "Design a modern UI with dark theme", "Add advanced filtering and search capabilities"],
+        "outcomes": ["Developed a responsive portfolio website", "Implemented automatic updates every 30 seconds", "Created a dark theme with glassmorphism effects", "Added smart search with auto-suggestions", "Integrated rating-based filtering system"]
+      },
+      {
+        "title": "ChefSpeak",
+        "description": "ChefSpeak is an AI-powered voice cooking assistant designed to revolutionize your cooking experience with advanced AI voice interaction, smart shopping list integration, recipe narration, and multi-language support. It offers hands-free cooking, ingredient detection, meal planning, and professional voice synthesis for a seamless kitchen companion.",
+        "technologies": ["TypeScript", "React", "Tailwind CSS", "Supabase", "ElevenLabs", "PWA", "Web Speech API", "react-i18next", "Spoonacular"],
+        "github": "https://github.com/Kedhareswer/Chef-Speaks",
+        "demo": "https://chef-speaks.netlify.app/",
+        "category": "Web Development",
+        "date": "Jun 2025",
+        "image": "/projects/chefspeak.png",
+        "objectives": ["Enable hands-free AI-powered cooking using natural language voice commands", "Integrate shopping list creation and management via voice", "Provide full recipe narration with high-quality AI voices", "Support multi-language experience across UI and voice recognition", "Facilitate meal planning and dietary preference handling", "Offer mobile-first, offline-capable PWA experience"],
+        "outcomes": ["Revolutionary voice interaction for cooking and shopping tasks", "Voice-controlled smart shopping lists with ingredient detection", "Professional recipe narration supporting 5 languages", "Accurate context retention for multi-turn conversations", "Enhanced accessibility and mobile UX for all users", "Performance optimizations for real-time voice response (<500ms)"]
+      },
+      {
+        "title": "PromptForger",
+        "description": "Transform your AI prompts with advanced optimization techniques for better responses across any platform. PromptForger is an AI prompt engineering platform that offers real-time analysis, optimization, and performance tracking for prompts targeting various AI models. It supports multi-platform deployment, advanced prompt optimization techniques, and features a modern, responsive UI.",
+        "technologies": ["TypeScript", "React", "Vite", "Tailwind CSS", "shadcn/ui", "TanStack Query", "ESLint", "Prettier", "Lucide", "Node.js", "npm"],
+        "github": "https://github.com/Kedhareswer/platform-prompt-alchemy-lab",
+        "demo": "https://prompt-enhancer-hazel.vercel.app/",
+        "category": "Web Development",
+        "date": "July 2025",
+        "image": "/projects/prompt-forger.png",
+        "objectives": ["Enable multi-platform AI prompt support", "Provide real-time prompt analysis and complexity scoring", "Facilitate system and normal prompt modes", "Safe API key storage and management", "Deliver instant optimization suggestions", "Track and display performance metrics (token count, quality, improvement)"],
+        "outcomes": ["Improved response quality by up to 45%", "Reduced token usage by up to 23%", "Enhanced task completion and user satisfaction metrics", "Provided actionable, structured prompt templates for business and technical use cases", "Enabled domain specialization and persona-based prompt generation"]
+      },
+      {
+        "title": "Data Notebook",
+        "description": "A modern, interactive data analysis and visualization platform built with cutting-edge web technologies. Transform your data into actionable insights through an intuitive notebook interface.",
+        "technologies": ["Next.js 13+", "React 18+", "TypeScript", "Radix UI", "Tailwind CSS", "Lucide Icons", "React Context API", "PapaParse", "XLSX", "Recharts", "Vite", "ESLint", "Prettier"],
+        "github": "https://github.com/Kedhareswer/Data_Science_Platform",
+        "demo": "https://data-science-platform.vercel.app/",
+        "category": "Web Development",
+        "date": "April 2025",
+        "image": "/projects/data-notebook.png",
+        "objectives": ["Enable users to create, organize, and share interactive analysis notebooks", "Provide rich text editing and code execution within notebooks", "Support data import from CSV, Excel, JSON, and SQL sources", "Offer built-in data cleaning, transformation, and feature engineering tools", "Deliver stunning visualizations and interactive dashboards", "Ensure responsive design and theme support"],
+        "outcomes": ["Intuitive notebook interface for data analysis", "Interactive data visualization features", "Code editor with syntax highlighting and autocompletion", "Support for multiple data import/export formats", "Modern, responsive UI with dark/light mode", "High performance and best practices (Lighthouse scores: Performance 95+, Accessibility 100, Best Practices 95+, SEO 100)"]
+      },
+      {
+        "title": "QuantumPDF ChatApp VectorDB",
+        "description": "AI-powered chat platform for intelligent conversations with PDF documents, using Retrieval-Augmented Generation (RAG), adaptive chunking, and vector search to provide accurate, context-aware answers. Supports 20+ AI providers, client-side PDF processing, and real-time quality metrics.",
+        "technologies": ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS", "PDF.js", "Tesseract.js", "Pinecone", "ChromaDB", "Weaviate", "OpenAI", "Anthropic", "Google AI", "Groq", "Ollama"],
+        "github": "https://github.com/Kedhareswer/QuantumPDF_ChatApp_VectorDB",
+        "demo": "https://quantumn-pdf-chatapp.netlify.app/",
+        "category": "Deep Learning",
+        "date": "Jun 2025",
+        "image": "/projects/quantumpdf.png",
+        "objectives": ["Enable intelligent, context-aware Q&A on PDF documents", "Support fast, private client-side PDF processing", "Integrate multiple AI/LLM providers", "Optimize document chunking for relevance and speed"],
+        "outcomes": ["Accurate retrieval and summarization of PDF content via chat", "Fast PDF upload and analysis with privacy guarantees", "Flexible AI provider integration", "Improved search quality and response relevance"]
+      },
+      {
+        "title": "Thesis Flow AI",
+        "description": "Thesis Flow AI is a comprehensive platform for academic research, offering literature exploration, intelligent summarization, project management, and real-time team collaboration. It integrates advanced AI (Google Gemini, OpenAI, Groq), NLP pipelines, and Python-based backend for multi-source academic search, content analysis, and research assistance. Features include project planner, real-time chat, Gantt charts, persistent sessions, and secure collaboration.",
+        "technologies": ["Machine Learning", "React", "Node.js", "WebSocket", "AI Integration"],
+        "github": "https://github.com/Kedhareswer/ai-project-planner",
+        "demo": "https://thesisflow-ai.vercel.app/",
+        "category": "Web Development",
+        "date": "July 2025",
+        "image": "/projects/research-bolt.png",
+        "objectives": ["Create collaborative workspace", "Integrate AI capabilities", "Enable real-time collaboration"],
+        "outcomes": ["Seamless team collaboration", "AI-powered research assistance", "Real-time document editing"]
+      },
+      {
+        "title": "ML-Notebook",
+        "description": "Developed an interactive machine learning education platform that integrates structured learning paths, engaging demonstrations, and real-time parameter adjustments to enhance user engagement. Introduced dynamic model comparison and visualization features, allowing learners to evaluate different machine learning techniques side by side while modifying parameters.",
+        "technologies": ["Python", "Machine Learning", "Next.js", "React", "Tailwind CSS"],
+        "github": "https://github.com/Kedhareswer/ML_Notebook",
+        "demo": "https://ml-notebook.vercel.app/",
+        "category": "Machine Learning",
+        "date": "May 2025",
+        "image": "/projects/ml-notebook.png",
+        "objectives": ["Create ML education platform", "Enable interactive learning", "Provide model comparison tools"],
+        "outcomes": ["Interactive learning experience", "Dynamic model comparison", "Real-time parameter adjustment"]
+      },
+      {
+        "title": "Web Development - 100 Mini Projects",
+        "description": "A comprehensive collection of 100 web development projects showcasing modern frontend technologies, responsive design patterns, and interactive user interfaces. Demonstrates proficiency in multiple web technologies.",
+        "technologies": ["HTML", "CSS", "JavaScript", "React", "Vue.js", "Responsive Design"],
+        "github": "https://github.com/Kedhareswer/web-dev-projects",
+        "demo": "https://v0-vintage-web-development-app.vercel.app/",
+        "category": "Web Development",
+        "date": "March 2023",
+        "image": "/projects/web-dev-projects.png",
+        "objectives": ["Create diverse web projects", "Showcase frontend skills", "Implement responsive designs"],
+        "outcomes": ["100 completed projects", "Modern UI/UX patterns", "Cross-browser compatibility"]
+      },
+      {
+        "title": "Image to Sketch using Deep Neural Network and ML",
+        "description": "Developed a deep learning model using the CUHK Face Sketch Database, achieving an 85% quality enhancement through a CNN in TensorFlow. Integrated GANs and Autoencoders for 90% accuracy, maintaining details via Residual Blocks and Batch Normalization. Used transfer learning and adaptive optimization to improve processing speed by 30%.",
+        "technologies": ["Python", "TensorFlow", "Deep Learning", "CNN", "GANs", "Autoencoders", "OpenCV"],
+        "github": "https://github.com/Kedhareswer/MLGeneFunction",
+        "demo": "https://image-to-sketch-wine.vercel.app/",
+        "category": "Deep Learning",
+        "date": "April 2025",
+        "image": "/projects/image-to-sketch.png",
+        "objectives": ["Convert images into sketches", "Optimize processing speed", "Maintain image quality"],
+        "outcomes": ["90% accuracy in sketch rendering", "30% optimization in processing speed", "Real-time processing capability"]
+      }
+    ],
+    
+    "participations": [
+      {
+        "title": "Hackathons & Competitions",
+        "items": [
+          {
+            "name": "AI/ML Hackathon 2023",
+            "description": "Developed an innovative solution for real-time emotion recognition using computer vision and deep learning techniques.",
+            "type": "hackathon",
+            "date": "2023",
+            "achievement": "Innovative Solution Award"
+          },
+          {
+            "name": "Data Science Challenge",
+            "description": "Created predictive models for business optimization, focusing on data-driven decision making and performance improvement.",
+            "type": "competition",
+            "date": "2023",
+            "achievement": "Top Performance"
+          }
+        ]
+      }
+    ],
+    
+    "githubStats": {
+      "username": "Kedhareswer",
+      "repos": 58,
+      "stars": 17,
+      "followers": 4,
+      "following": 2,
+      "pullRequests": 32,
+      "issues": 11,
+      "commits": 509,
+      "forks": 5,
+      "topLanguages": [
+        { "name": "Jupyter Notebook", "percentage": 94.05 },
+        { "name": "TypeScript", "percentage": 5.17 }
+      ]
+    },
+  
+    "certifications": [
+      {
+        "name": "AWS APAC - Solutions Architecture Job Simulation",
+        "issuer": "Forage",
+        "date": "December 2024",
+        "description": "Completed virtual experience program focusing on cloud architecture and solutions design."
+      },
+      {
+        "name": "Certified Data Science Essentials",
+        "issuer": "RF Skilling Academy",
+        "date": "December 2024",
+        "description": "Comprehensive certification covering fundamental data science concepts and practices."
+      },
+      {
+        "name": "Introduction to Responsible AI",
+        "issuer": "Google",
+        "date": "November 2024",
+        "description": "Understanding ethical considerations and responsible practices in AI development."
+      },
+      {
+        "name": "Neo4j Certified Professional",
+        "issuer": "Neo4j",
+        "date": "July 2025",
+        "description": "Demonstrated proficiency in graph databases, Cypher querying, and Neo4j data modeling."
+      },
+      {
+        "name": "Python for Data Science",
+        "issuer": "Infosys",
+        "date": "May 2025",
+        "description": "Completed comprehensive coursework covering Python programming, data analysis, and visualization for data science applications."
+      }
+    ],
+    
+    "testimonials": [
+      {
+        "name": "Jagadesh Chilla",
+        "role": "Founder and Developer Of DIVA AIA",
+        "text": "An exceptional colleague with deep expertise in machine learning and data visualization. His innovative approaches to problem-solving have significantly impacted our project.",
+        "linkedin": "https://www.linkedin.com/in/chilla-jagadesh-532246223/"
+      },
+      {
+        "name": "Manish Chetla",
+        "role": "Video Game Developer at MC Studios",
+        "text": "Outstanding analytical skills and a natural talent for explaining complex concepts. His contributions to our team have been invaluable.",
+        "linkedin": "https://www.linkedin.com/in/manish-chetla/"
+      },
+      {
+        "name": "Ajay Sharma",
+        "role": "Senior Tech Mentor at upGrad Campus",
+        "text": "His attention to detail and technical skills have consistently impressed me. As his professor and mentor for nearly a year, I witnessed his growth and dedication. I am confident he will achieve great success in the future.",
+        "linkedin": "https://www.linkedin.com/in/ajay-sharma-%F0%9F%87%AE%F0%9F%87%B3-52879b88/"
+      },
+      {
+        "name": "Suhail Mahamad",
+        "role": "ML Operations Engineer",
+        "text": "A brilliant problem-solver who consistently delivers innovative solutions. His deep understanding of AI systems and ability to optimize workflows has transformed our deployment pipeline.",
+        "linkedin": "https://www.linkedin.com/in/mahamad-suhail/"
+      },
+      {
+        "name": "Aman Kumar",
+        "role": "Assistant Manager at upGrad",
+        "text": "Exceptional talent in both technical implementation and strategic thinking. Their contributions to our data infrastructure have been foundational to our success in AI initiatives.",
+        "linkedin": "https://www.linkedin.com/in/aman-kumar-27073b249/"
+      }
+    ],
+    
+    "hobbies": [
+      {
+        "name": "Gaming",
+        "description": "Strategic gaming and virtual world exploration",
+        "icon": "gamepad"
+      },
+      {
+        "name": "Reading",
+        "description": "Science fiction and technical literature enthusiast",
+        "icon": "book"
+      },
+      {
+        "name": "Music",
+        "description": "Listening to music and exploring new genres",
+        "icon": "music"
+      },
+      {
+        "name": "Traveling",
+        "description": "Exploring new cultures and destinations",
+        "icon": "plane"
+      }
+    ],
+    
+    "languages": [
+      {
+        "name": "English",
+        "proficiency": "Professional Working Proficiency"
+      },
+      {
+        "name": "Telugu",
+        "proficiency": "Native or Bilingual Proficiency"
+      },
+      {
+        "name": "Hindi",
+        "proficiency": "Limited Working Proficiency"
+      }
+    ],
+    
+    "achievements": [
+      {
+        "title": "Real-time Emotion Recognition System",
+        "description": "Developed innovative AI solution during hackathon",
+        "year": "2023"
+      },
+      {
+        "title": "25% Improvement in Data Comprehension",
+        "description": "Enhanced decision-making processes through Power BI visualizations at PSYLIQ",
+        "year": "2024"
+      },
+      {
+        "title": "90% Accuracy in Image-to-Sketch Conversion",
+        "description": "Achieved high accuracy in deep learning model for image transformation",
+        "year": "2025"
+      },
+      {
+        "title": "Leadership in International Exchange Programs",
+        "description": "Successfully managed outbound professional exchange programs at AIESEC",
+        "year": "2022-2023"
+      }
+    ],
+    
+    "interests": [
+      "Artificial Intelligence",
+      "Machine Learning",
+      "Deep Learning",
+      "Computer Vision",
+      "Natural Language Processing",
+      "Data Science",
+      "Web Development",
+      "Cloud Computing",
+      "Open Source Contribution",
+      "Research and Innovation"
+    ],
+    
+    "currentFocus": [
+      "Completing Bachelor's degree in Data Science and AI/ML",
+      "Building innovative AI solutions",
+      "Contributing to open-source projects",
+      "Exploring career opportunities in AI/ML field",
+      "Continuous learning in emerging technologies"
+    ]
+  }
+  
