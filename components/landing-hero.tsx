@@ -82,7 +82,7 @@ function LandingHero({ profile }: LandingHeroProps) {
   const topHobbies = hobbies.slice(0, 3)
 
   return (
-    <section className="w-full h-screen overflow-hidden md:overflow-visible flex flex-col items-center justify-center relative">
+    <section className="w-full h-screen overflow-hidden md:overflow-visible flex flex-col items-center justify-center relative z-[1]">
       <Floating sensitivity={-0.5} className="h-full">
         <FloatingElement
           depth={0.5}
