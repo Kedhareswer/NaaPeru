@@ -26,9 +26,8 @@ export function Footer({
 }: FooterProps) {
   const currentYear = new Date().getFullYear()
 
-  // Parse name to extract first name
-  const nameParts = name.split(" ")
-  const firstName = nameParts[0] || ""
+  // Use "Kedhar" as the display name
+  const displayName = "Kedhar"
 
   return (
     <footer className="w-full bg-white border-t border-zinc-200">
@@ -38,7 +37,7 @@ export function Footer({
           {/* Column 1: Name and Title */}
           <div className="space-y-2">
             <p className="text-sm font-medium text-zinc-900 tracking-wide">
-              STUDIO(0) {firstName}
+              STUDIO(0) {displayName}
             </p>
             <p className="text-xs text-zinc-600 leading-relaxed max-w-[240px]">
               {title}
@@ -139,7 +138,7 @@ export function Footer({
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
           >
-            {firstName}
+            {displayName}
           </motion.h2>
         </div>
       </div>
