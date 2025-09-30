@@ -10,19 +10,28 @@ interface ProjectsSectionOscarProps {
 }
 
 export function ProjectsSectionOscar({ projects, name = "Your Name" }: ProjectsSectionOscarProps) {
+  // Sort: featured first, then by date
+  const sortedProjects = [...projects].sort((a, b) => {
+    if (a.featured && !b.featured) return -1
+    if (!a.featured && b.featured) return 1
+    return 0
+  })
+  
   // Get first 6 projects (featured + recent)
-  const displayProjects = projects.slice(0, 6)
+  const displayProjects = sortedProjects.slice(0, 6)
   
   const firstName = name.split(" ")[0] || "Your"
 
-  // Grid layout pattern: [large, medium, medium, medium, medium, large]
+  // Grid layout pattern matching Oscar Pecher's design
+  // Row 1-2: [tall], [tall-center], [tall]
+  // Row 3: [medium], [medium], [medium]
   const gridClasses = [
-    "lg:col-span-1 lg:row-span-2", // Large vertical
-    "lg:col-span-1 lg:row-span-1", // Medium
-    "lg:col-span-1 lg:row-span-1", // Medium
-    "lg:col-span-1 lg:row-span-1", // Medium
-    "lg:col-span-1 lg:row-span-1", // Medium
-    "lg:col-span-1 lg:row-span-2", // Large vertical
+    "lg:col-span-1 lg:row-span-2", // Position 1: Tall left
+    "lg:col-span-1 lg:row-span-2", // Position 2: Tall center
+    "lg:col-span-1 lg:row-span-2", // Position 3: Tall right
+    "lg:col-span-1 lg:row-span-1", // Position 4: Medium left
+    "lg:col-span-1 lg:row-span-1", // Position 5: Medium center
+    "lg:col-span-1 lg:row-span-1", // Position 6: Medium right
   ]
 
   return (
@@ -36,8 +45,8 @@ export function ProjectsSectionOscar({ projects, name = "Your Name" }: ProjectsS
           transition={{ duration: 0.8 }}
           className="space-y-3"
         >
-          <h2 className="text-[32px] sm:text-[40px] md:text-[56px] lg:text-[64px] xl:text-[72px] leading-[1.1] font-bold tracking-tight text-black max-w-[1100px]">
-            {firstName} transforms ideas into bold visual narratives — seamlessly blending innovation, creativity, and design.
+          <h2 className="text-[32px] sm:text-[40px] md:text-[56px] lg:text-[64px] xl:text-[72px] leading-[1.05] font-bold tracking-[-0.02em] text-black max-w-[1100px]">
+            {firstName} transforms ideas into bold visual narratives — seamlessly blending film, photography, and design.
           </h2>
           <Link
             href="/projects"
@@ -68,8 +77,8 @@ export function ProjectsSectionOscar({ projects, name = "Your Name" }: ProjectsS
           </Link>
         </div>
 
-        {/* Projects Grid - Masonry-style */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6 auto-rows-[280px]">
+        {/* Projects Grid - Bento Box style matching Oscar Pecher */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 auto-rows-[240px] lg:auto-rows-[260px]">
           {displayProjects.map((project, index) => {
             const gridClass = gridClasses[index] || "lg:col-span-1 lg:row-span-1"
             
@@ -80,7 +89,7 @@ export function ProjectsSectionOscar({ projects, name = "Your Name" }: ProjectsS
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className={`group relative overflow-hidden rounded-2xl md:rounded-3xl bg-zinc-100 ${gridClass}`}
+                className={`group relative overflow-hidden rounded-xl md:rounded-2xl bg-zinc-900 ${gridClass}`}
               >
                 <Link
                   href={project.demo || project.github || "#"}
@@ -89,32 +98,32 @@ export function ProjectsSectionOscar({ projects, name = "Your Name" }: ProjectsS
                   className="block w-full h-full"
                 >
                   {/* Image */}
-                  <div className="absolute inset-0">
+                  <div className="absolute inset-0 bg-zinc-800">
                     {project.image ? (
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                        className="w-full h-full object-cover transition-all duration-500 ease-out group-hover:scale-105 group-hover:brightness-75"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-zinc-200 via-zinc-300 to-zinc-400 flex items-center justify-center">
-                        <span className="text-5xl md:text-6xl font-bold text-white/20">
+                      <div className="w-full h-full bg-gradient-to-br from-zinc-700 via-zinc-800 to-zinc-900 flex items-center justify-center">
+                        <span className="text-5xl md:text-6xl font-bold text-white/10">
                           {project.title.split(" ").map(w => w[0]).join("").slice(0, 2)}
                         </span>
                       </div>
                     )}
                     
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    {/* Gradient Overlay - Always visible, darker on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   </div>
 
-                  {/* Content Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6 text-white translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                    <div className="space-y-1.5">
-                      <h4 className="text-base md:text-lg font-semibold leading-tight line-clamp-2">
+                  {/* Content Overlay - Always visible */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5 text-white transition-all duration-300 group-hover:pb-5 md:group-hover:pb-6">
+                    <div className="space-y-0.5">
+                      <h4 className="text-sm md:text-base font-semibold leading-snug line-clamp-2 tracking-tight">
                         {project.title}
                       </h4>
-                      <p className="text-xs md:text-sm text-white/80 line-clamp-1">
+                      <p className="text-[11px] md:text-xs text-white/70 line-clamp-1 font-light">
                         {project.category || project.technologies[0]}
                       </p>
                     </div>
