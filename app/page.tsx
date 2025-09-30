@@ -1,5 +1,5 @@
 import { LandingHero } from "@/components/landing-hero"
-import { ProjectsSectionOscar } from "@/components/projects-section-oscar"
+import { WorkSection } from "@/components/work-section"
 import { Footer } from "@/components/footer"
 import { promises as fs } from "fs"
 import path from "path"
@@ -54,7 +54,7 @@ export default async function Page() {
   return (
     <div>
       <LandingHero profile={profile} />
-      <ProjectsSectionOscar 
+      <WorkSection 
         projects={projects}
         name={profile.personalInfo?.name}
       />

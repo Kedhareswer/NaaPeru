@@ -60,7 +60,7 @@ export function ExpandableSocials({ email, github, linkedin, kaggle }: Expandabl
 
   return (
     <motion.div
-      className="relative flex items-center justify-center pb-8"
+      className="relative flex items-center justify-center pb-6"
       onHoverStart={() => setIsExpanded(true)}
       onHoverEnd={() => setIsExpanded(false)}
       initial={{ opacity: 0, y: 20 }}
@@ -69,11 +69,11 @@ export function ExpandableSocials({ email, github, linkedin, kaggle }: Expandabl
     >
       {/* Container that expands */}
       <motion.div
-        className="relative flex items-center justify-center gap-4 px-5 py-3 bg-zinc-200/70 backdrop-blur-sm rounded-full shadow-md"
+        className="relative flex items-center justify-center gap-3 px-4 py-2 bg-zinc-200/60 backdrop-blur-sm rounded-full shadow-sm"
         animate={{
-          width: isExpanded ? "auto" : "110px",
-          paddingLeft: isExpanded ? "2rem" : "1.25rem",
-          paddingRight: isExpanded ? "2rem" : "1.25rem",
+          width: isExpanded ? "auto" : "80px",
+          paddingLeft: isExpanded ? "1.5rem" : "1rem",
+          paddingRight: isExpanded ? "1.5rem" : "1rem",
         }}
         transition={{
           duration: 0.5,
@@ -82,7 +82,7 @@ export function ExpandableSocials({ email, github, linkedin, kaggle }: Expandabl
       >
         {/* Three dots (visible when collapsed) */}
         <motion.div
-          className="absolute flex items-center justify-center gap-1.5"
+          className="absolute flex items-center justify-center gap-1"
           animate={{
             opacity: isExpanded ? 0 : 1,
             scale: isExpanded ? 0.5 : 1,
@@ -92,7 +92,7 @@ export function ExpandableSocials({ email, github, linkedin, kaggle }: Expandabl
           {[0, 1, 2].map((i) => (
             <motion.div
               key={i}
-              className="w-2 h-2 rounded-full bg-zinc-500"
+              className="w-1.5 h-1.5 rounded-full bg-zinc-500"
               animate={{
                 scale: !isExpanded ? [1, 1.15, 1] : 0.5,
                 opacity: !isExpanded ? [0.6, 1, 0.6] : 0,
