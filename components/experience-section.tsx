@@ -167,12 +167,15 @@ function ExperienceSection({ profile }: ExperienceSectionProps) {
             <div className="sticky top-6">
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Experience</h2>
               <motion.div
+                key={activeJobIndex}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
                 className="space-y-4"
               >
                 <p className="text-sm text-gray-600 mb-4">
-                  Big data management software for critical applications: biomedical, aerospace, automotive, and imaging system manufacturers. Based in Zug, CH.
+                  {displayExperiences[activeJobIndex]?.role} at {displayExperiences[activeJobIndex]?.company}
+                  {displayExperiences[activeJobIndex]?.location && ` - ${displayExperiences[activeJobIndex].location}`}
                 </p>
                 
                 <div className="text-xs text-blue-600 hover:underline cursor-pointer mb-6">
@@ -182,28 +185,18 @@ function ExperienceSection({ profile }: ExperienceSectionProps) {
                 <div className="space-y-4">
                   <div className="text-xs font-semibold text-gray-800">Highlights</div>
                   <div className="space-y-3 text-xs text-gray-700">
-                    <div className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span>
-                      <span>Conceptualized, delivered and iterated on cross-platform UX/UI, and 17 major updates.</span>
-                    </div>
-                    <div className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span>
-                      <span>Helped the sales team grow Jetraw from 0 to a stable sales pipeline, and onboard major academia and B2B customers.</span>
-                    </div>
-                    <div className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span>
-                      <span>Created a brand system to amplify messaging, and allow internal delegation.</span>
-                    </div>
-                    <div className="flex items-start">
-                      <span className="text-green-600 mr-2">✓</span>
-                      <span>Created a Tailwind-based design system to help save team's time for back-end development.</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-6">
-                  <div className="text-xs text-gray-700 mb-4">
-                    <span className="text-green-600">✓</span> Jetraw won top industrial awards: Intel Ignite "Most Transformed", Open Bosch, SPIE Prism, Innovuissae "Scale-Up".
+                    {displayExperiences[activeJobIndex]?.achievements?.map((achievement, idx) => (
+                      <div key={idx} className="flex items-start">
+                        <span className="text-green-600 mr-2">✓</span>
+                        <span>{achievement}</span>
+                      </div>
+                    ))}
+                    {displayExperiences[activeJobIndex]?.description?.map((desc, idx) => (
+                      <div key={`desc-${idx}`} className="flex items-start">
+                        <span className="text-green-600 mr-2">✓</span>
+                        <span>{desc}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </motion.div>
