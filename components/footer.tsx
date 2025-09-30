@@ -26,10 +26,9 @@ export function Footer({
 }: FooterProps) {
   const currentYear = new Date().getFullYear()
 
-  // Parse name to extract first and last name
+  // Parse name to extract first name
   const nameParts = name.split(" ")
   const firstName = nameParts[0] || ""
-  const lastName = nameParts.slice(1).join(" ") || ""
 
   return (
     <footer className="w-full bg-white border-t border-zinc-200">
@@ -39,9 +38,9 @@ export function Footer({
           {/* Column 1: Name and Title */}
           <div className="space-y-2">
             <p className="text-sm font-medium text-zinc-900 tracking-wide">
-              STUDIO(O) {firstName}
+              STUDIO(0) {firstName}
             </p>
-            <p className="text-xs text-zinc-600 leading-relaxed max-w-[200px]">
+            <p className="text-xs text-zinc-600 leading-relaxed max-w-[240px]">
               {title}
             </p>
           </div>
@@ -72,7 +71,7 @@ export function Footer({
                 rel="noopener noreferrer"
                 className="block text-sm text-zinc-900 hover:text-zinc-600 transition-colors"
               >
-                Instagram
+                LinkedIn
               </a>
             )}
             {socials.behance && (
@@ -82,7 +81,7 @@ export function Footer({
                 rel="noopener noreferrer"
                 className="block text-sm text-zinc-900 hover:text-zinc-600 transition-colors"
               >
-                Behance
+                GitHub
               </a>
             )}
             {socials.savee && (
@@ -92,7 +91,7 @@ export function Footer({
                 rel="noopener noreferrer"
                 className="block text-sm text-zinc-900 hover:text-zinc-600 transition-colors"
               >
-                Savee
+                Kaggle
               </a>
             )}
             {socials.spotify && (
@@ -102,7 +101,7 @@ export function Footer({
                 rel="noopener noreferrer"
                 className="block text-sm text-zinc-900 hover:text-zinc-600 transition-colors"
               >
-                Spotify
+                Portfolio
               </a>
             )}
           </div>
@@ -140,7 +139,7 @@ export function Footer({
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
           >
-            {firstName} {lastName}
+            {firstName}
           </motion.h2>
         </div>
       </div>
