@@ -1,0 +1,149 @@
+"use client"
+
+import { motion } from "framer-motion"
+
+type FooterProps = {
+  name?: string
+  title?: string
+  email?: string
+  phone?: string
+  location?: string
+  socials?: {
+    instagram?: string
+    behance?: string
+    savee?: string
+    spotify?: string
+  }
+}
+
+export function Footer({
+  name = "Your Name",
+  title = "Your Title",
+  email = "hello@example.com",
+  phone = "+00 000 000 00 00",
+  location = "City, Country",
+  socials = {},
+}: FooterProps) {
+  const currentYear = new Date().getFullYear()
+
+  // Parse name to extract first and last name
+  const nameParts = name.split(" ")
+  const firstName = nameParts[0] || ""
+  const lastName = nameParts.slice(1).join(" ") || ""
+
+  return (
+    <footer className="w-full bg-white border-t border-zinc-200">
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16 py-12 md:py-16">
+        {/* Top Section - Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 lg:gap-16 mb-12 md:mb-16">
+          {/* Column 1: Name and Title */}
+          <div className="space-y-2">
+            <p className="text-sm font-medium text-zinc-900 tracking-wide">
+              STUDIO(O) {firstName}
+            </p>
+            <p className="text-xs text-zinc-600 leading-relaxed max-w-[200px]">
+              {title}
+            </p>
+          </div>
+
+          {/* Column 2: Contact Info */}
+          <div className="space-y-2">
+            <a
+              href={`mailto:${email}`}
+              className="block text-sm text-zinc-900 hover:text-zinc-600 transition-colors"
+            >
+              {email}
+            </a>
+            <a
+              href={`tel:${phone.replace(/\s/g, "")}`}
+              className="block text-sm text-zinc-600 hover:text-zinc-900 transition-colors"
+            >
+              {phone}
+            </a>
+            <p className="text-sm text-zinc-600">{location}</p>
+          </div>
+
+          {/* Column 3: Social Links */}
+          <div className="space-y-2">
+            {socials.instagram && (
+              <a
+                href={socials.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-sm text-zinc-900 hover:text-zinc-600 transition-colors"
+              >
+                Instagram
+              </a>
+            )}
+            {socials.behance && (
+              <a
+                href={socials.behance}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-sm text-zinc-900 hover:text-zinc-600 transition-colors"
+              >
+                Behance
+              </a>
+            )}
+            {socials.savee && (
+              <a
+                href={socials.savee}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-sm text-zinc-900 hover:text-zinc-600 transition-colors"
+              >
+                Savee
+              </a>
+            )}
+            {socials.spotify && (
+              <a
+                href={socials.spotify}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-sm text-zinc-900 hover:text-zinc-600 transition-colors"
+              >
+                Spotify
+              </a>
+            )}
+          </div>
+
+          {/* Column 4: Legal Links */}
+          <div className="space-y-2">
+            <a
+              href="#"
+              className="block text-sm text-zinc-900 hover:text-zinc-600 transition-colors"
+            >
+              Imprint
+            </a>
+            <a
+              href="#"
+              className="block text-sm text-zinc-900 hover:text-zinc-600 transition-colors"
+            >
+              Privacy Policy
+            </a>
+            <a
+              href="#"
+              className="block text-sm text-zinc-900 hover:text-zinc-600 transition-colors"
+            >
+              Terms
+            </a>
+            <p className="text-sm text-zinc-600">© {currentYear}</p>
+          </div>
+        </div>
+
+        {/* Bottom Section - Large Name Display */}
+        <div className="relative overflow-hidden">
+          <motion.h2
+            className="text-[12vw] md:text-[10vw] lg:text-[8vw] font-bold text-zinc-200 leading-none tracking-tighter select-none pointer-events-none"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+          >
+            {firstName} {lastName}
+          </motion.h2>
+        </div>
+      </div>
+    </footer>
+  )
+}
