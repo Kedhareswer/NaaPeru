@@ -17,7 +17,7 @@ type FooterProps = {
 }
 
 export function Footer({
-  name = "Your Name",
+  name = "Kedhar",
   title = "Your Title",
   email = "hello@example.com",
   phone = "+00 000 000 00 00",
@@ -26,8 +26,8 @@ export function Footer({
 }: FooterProps) {
   const currentYear = new Date().getFullYear()
 
-  // Use "Kedhar" as the display name
-  const displayName = "Kedhar"
+  // Parse name to extract first name
+  const firstName = "Kedhar"
 
   return (
     <footer className="w-full bg-white border-t border-zinc-200">
@@ -37,7 +37,7 @@ export function Footer({
           {/* Column 1: Name and Title */}
           <div className="space-y-2">
             <p className="text-sm font-medium text-zinc-900 tracking-wide">
-              STUDIO(0) {displayName}
+              STUDIO(0) {firstName}
             </p>
             <p className="text-xs text-zinc-600 leading-relaxed max-w-[240px]">
               {title}
@@ -132,13 +132,13 @@ export function Footer({
         {/* Bottom Section - Large Name Display */}
         <div className="relative overflow-hidden">
           <motion.h2
-            className="text-[12vw] md:text-[10vw] lg:text-[8vw] font-bold text-zinc-200 leading-none tracking-tighter select-none pointer-events-none"
+            className="text-[14vw] md:text-[10vw] lg:text-[9vw] font-extrabold text-zinc-200 leading-none tracking-tighter select-none pointer-events-none"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
           >
-            {displayName}
+            Kedhar
           </motion.h2>
         </div>
       </div>

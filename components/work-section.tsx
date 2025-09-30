@@ -12,16 +12,19 @@ interface WorkSectionProps {
 
 export function WorkSection({ projects, name = "Your Name" }: WorkSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
   const [activeProjectIndex, setActiveProjectIndex] = useState(0)
   
   const firstName = name.split(" ")[0] || "Your"
 
-  // Sort featured projects by date
-  const sortedProjects = [...projects].sort((a, b) => {
-    const dateA = new Date(a.project_date || a.created_at || Date.now()).getTime()
-    const dateB = new Date(b.project_date || b.created_at || Date.now()).getTime()
-    return dateB - dateA
-  })
+  // Only featured projects, sorted by project_date (fallback created_at)
+  const sortedProjects = [...projects]
+    .filter(p => !!p.featured)
+    .sort((a, b) => {
+      const dateA = new Date(a.project_date || a.created_at || "").getTime()
+      const dateB = new Date(b.project_date || b.created_at || "").getTime()
+      return (isNaN(dateB) ? 0 : dateB) - (isNaN(dateA) ? 0 : dateA)
+    })
 
   useEffect(() => {
     const container = containerRef.current
@@ -53,10 +56,26 @@ export function WorkSection({ projects, name = "Your Name" }: WorkSectionProps) 
     }
   }, [activeProjectIndex, sortedProjects.length])
 
+  // Forward wheel events from the whole section and middle column to the right scroll container
+  useEffect(() => {
+    const host = sectionRef.current
+    const scroller = containerRef.current
+    if (!host || !scroller) return
+
+    const onWheel = (e: WheelEvent) => {
+      // Avoid native body scroll; smoothly scroll our container instead
+      e.preventDefault()
+      scroller.scrollBy({ top: e.deltaY, behavior: 'smooth' })
+    }
+
+    host.addEventListener('wheel', onWheel, { passive: false })
+    return () => host.removeEventListener('wheel', onWheel as EventListener)
+  }, [])
+
   const activeProject = sortedProjects[activeProjectIndex]
 
   return (
-    <section className="w-full h-screen flex overflow-hidden bg-white">
+    <section ref={sectionRef} className="w-full h-screen flex overflow-hidden bg-white">
       {/* Left Column - 10% - Fixed Navigation */}
       <div className="w-[10%] bg-gray-50 flex flex-col items-center justify-start pt-8 px-2 h-screen border-r border-gray-200">
         <Link href="/" className="mb-8">
@@ -87,7 +106,7 @@ export function WorkSection({ projects, name = "Your Name" }: WorkSectionProps) 
         <div className="mt-auto mb-8 space-y-3 text-[10px] text-center">
           <div className="font-semibold text-gray-800">Work snippets</div>
           <Link 
-            href="/"
+            href="/projects"
             className="text-gray-600 hover:text-blue-600 transition-colors block"
           >
             More Projects
@@ -273,7 +292,7 @@ export function WorkSection({ projects, name = "Your Name" }: WorkSectionProps) 
                           @{firstName} Platform
                         </div>
                         <div className="text-[10px] lg:text-xs opacity-80 mt-1">
-                          {project.project_date || (project.created_at ? new Date(project.created_at).toLocaleDateString() : 'N/A')}
+                          {project.project_date || (project.created_at ? new Date(project.created_at).toLocaleDateString() : '')}
                         </div>
                       </div>
                     </div>
