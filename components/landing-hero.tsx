@@ -292,42 +292,7 @@ function LandingHero({ profile }: LandingHeroProps) {
               </motion.span>
             </motion.p>
 
-            {/* Line 4 - Digital garden */}
-            <motion.p 
-              className="text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed text-zinc-500 font-serif"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.0, duration: 0.6 }}
-            >
-              Welcome to my
-              <motion.span 
-                className="mx-2 underline decoration-dotted decoration-zinc-400 cursor-pointer"
-                whileHover={{ 
-                  scale: 1.05,
-                  color: "#16a34a",
-                  textDecorationColor: "#16a34a",
-                  transition: { duration: 0.2 }
-                }}
-              >
-                digital garden
-              </motion.span>
-              <motion.span 
-                className="ml-1"
-                animate={{ 
-                  y: [0, -5, 0],
-                  transition: { 
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatDelay: 3
-                  }
-                }}
-              >
-                🌱
-              </motion.span>
-              — a place to learn, experiment, and grow together.
-            </motion.p>
-
-            {/* Line 5 - Expandable Social Icons */}
+            {/* Expandable Social Icons */}
             <div className="mt-12">
               <ExpandableSocials
                 email={profile?.personalInfo?.email}
