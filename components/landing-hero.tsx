@@ -2,7 +2,7 @@
 
 import { LayoutGroup, motion } from "framer-motion"
 import Floating, { FloatingElement } from "@/components/ui/parallax-floating"
-import { SocialHover } from "@/components/social-hover"
+import { ExpandableSocials } from "@/components/expandable-socials"
 
 const exampleImages = [
   {
@@ -229,7 +229,7 @@ function LandingHero({ profile }: LandingHeroProps) {
               >
                 building
               </motion.span>
-              things that make a difference, currently focused on
+              things that makes sense, currently focused on
               <motion.span 
                 className="mx-2 text-zinc-900 font-semibold cursor-pointer"
                 whileHover={{ 
@@ -304,7 +304,7 @@ function LandingHero({ profile }: LandingHeroProps) {
 
             {/* Expandable Social Icons */}
             <div className="mt-12">
-              <SocialHover
+              <ExpandableSocials
                 email={profile?.personalInfo?.email}
                 github={profile?.personalInfo?.github}
                 linkedin={profile?.personalInfo?.linkedin}

@@ -42,14 +42,14 @@ export function Navbar() {
           <div className="hidden md:flex items-center space-x-8">
             <div className="relative">
               <a
-                href="https://your-main-portfolio-url.com"
+                href="https://kedhareswer-portfolio.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="relative inline-flex items-center gap-2 text-sm font-medium text-zinc-600 hover:text-black transition-colors group"
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
               >
-                <span>जानकारी</span>
+                <span>సంచారి</span>
                 <motion.span
                   className="text-xs opacity-0 group-hover:opacity-100 transition-opacity"
                   initial={{ opacity: 0 }}
@@ -61,7 +61,7 @@ export function Navbar() {
               
               {/* Tooltip */}
               <motion.div
-                className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-2 bg-black text-white text-xs rounded-md whitespace-nowrap pointer-events-none"
+                className="absolute top-full right-0 mt-2 px-3 py-2 bg-black text-white text-xs rounded-md whitespace-nowrap pointer-events-none z-[60]"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ 
                   opacity: showTooltip ? 1 : 0,
@@ -69,11 +69,11 @@ export function Navbar() {
                 }}
                 transition={{ duration: 0.2 }}
               >
-                <div className="font-semibold mb-1">जानकारी (jānkārī)</div>
-                <div className="text-zinc-300">Hindi: Information, knowledge</div>
+                <div className="font-semibold mb-1">సంచారి (sanchāri)</div>
+                <div className="text-zinc-300">Telugu: Explorer</div>
                 <div className="text-zinc-400 text-[10px] mt-1">Know more about me</div>
                 {/* Arrow */}
-                <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-black rotate-45" />
+                <div className="absolute -top-1 right-4 w-2 h-2 bg-black rotate-45" />
               </motion.div>
             </div>
           </div>

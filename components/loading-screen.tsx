@@ -9,19 +9,19 @@ interface LoadingScreenProps {
 
 export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
   const [isLoading, setIsLoading] = useState(true)
-  const [progress, setProgress] = useState(0)
+  const [count, setCount] = useState(0)
 
   useEffect(() => {
-    // Simulate loading progress
-    const progressInterval = setInterval(() => {
-      setProgress((prev) => {
+    // Counter animation
+    const counterInterval = setInterval(() => {
+      setCount((prev) => {
         if (prev >= 100) {
-          clearInterval(progressInterval)
+          clearInterval(counterInterval)
           return 100
         }
-        return prev + 2
+        return prev + 1
       })
-    }, 30)
+    }, 25)
 
     // Minimum 3 seconds display
     const timer = setTimeout(() => {
@@ -29,10 +29,10 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
       if (onLoadingComplete) {
         onLoadingComplete()
       }
-    }, 3000)
+    }, 3200)
 
     return () => {
-      clearInterval(progressInterval)
+      clearInterval(counterInterval)
       clearTimeout(timer)
     }
   }, [onLoadingComplete])
@@ -43,158 +43,90 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
         <motion.div
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-white"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
         >
-          <div className="relative flex flex-col items-center justify-center">
-            {/* Main Logo Animation */}
+          {/* Minimal brutalist loader */}
+          <div className="relative flex flex-col items-center">
+            {/* Animated Counter */}
             <motion.div
-              className="mb-8 flex items-center justify-center"
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
+              className="relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
             >
-              {/* Animated Letters */}
-              <div className="flex items-center space-x-1">
-                {["M", ".", "K", ".", "N"].map((letter, index) => (
-                  <motion.span
-                    key={index}
-                    className="text-6xl sm:text-7xl md:text-8xl font-bold text-black"
-                    initial={{ y: 50, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{
-                      duration: 0.5,
-                      delay: 0.1 + index * 0.1,
-                      ease: [0.23, 1, 0.32, 1],
-                    }}
-                  >
-                    {letter}
-                  </motion.span>
-                ))}
+              {/* Large Counter Display */}
+              <div className="text-[15vw] sm:text-[12vw] md:text-[10vw] font-bold text-black leading-none tracking-tighter font-mono">
+                {String(count).padStart(2, '0')}
               </div>
+              
+              {/* Percentage sign */}
+              <motion.span 
+                className="absolute -right-8 top-0 text-4xl font-bold text-zinc-400"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                %
+              </motion.span>
             </motion.div>
 
-            {/* Subtitle */}
+            {/* Minimal loading bar */}
             <motion.div
-              className="mb-12"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
+              className="w-64 h-0.5 bg-zinc-200 mt-12 relative overflow-hidden"
+              initial={{ opacity: 0, width: 0 }}
+              animate={{ opacity: 1, width: 256 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <p className="text-sm sm:text-base font-medium text-zinc-600 tracking-wider uppercase">
-                AI/ML Engineer
-              </p>
-            </motion.div>
-
-            {/* Geometric Loading Animation */}
-            <div className="relative w-64 h-1 bg-zinc-200 rounded-full overflow-hidden">
               <motion.div
-                className="absolute left-0 top-0 h-full bg-black rounded-full"
+                className="absolute left-0 top-0 h-full bg-black"
                 initial={{ width: "0%" }}
-                animate={{ width: `${progress}%` }}
+                animate={{ width: `${count}%` }}
                 transition={{ duration: 0.1 }}
               />
-            </div>
-
-            {/* Progress Percentage */}
-            <motion.div
-              className="mt-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 1 }}
-            >
-              <span className="text-xs font-mono text-zinc-400">
-                {progress.toFixed(0)}%
-              </span>
             </motion.div>
 
-            {/* Floating Geometric Shapes */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              {/* Top Left Square */}
-              <motion.div
-                className="absolute top-20 left-10 w-16 h-16 border-2 border-zinc-200"
-                initial={{ rotate: 0, opacity: 0 }}
-                animate={{
-                  rotate: 360,
-                  opacity: [0, 0.5, 0],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              />
-
-              {/* Top Right Circle */}
-              <motion.div
-                className="absolute top-32 right-20 w-12 h-12 rounded-full border-2 border-zinc-200"
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{
-                  scale: [0.5, 1, 0.5],
-                  opacity: [0, 0.5, 0],
-                }}
-                transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-
-              {/* Bottom Left Triangle */}
-              <motion.div
-                className="absolute bottom-24 left-16 w-0 h-0 border-l-[25px] border-l-transparent border-r-[25px] border-r-transparent border-b-[40px] border-b-zinc-200"
-                initial={{ rotate: 0, opacity: 0 }}
-                animate={{
-                  rotate: -360,
-                  opacity: [0, 0.5, 0],
-                }}
-                transition={{
-                  duration: 3.5,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              />
-
-              {/* Bottom Right Square */}
-              <motion.div
-                className="absolute bottom-20 right-12 w-14 h-14 border-2 border-zinc-200"
-                initial={{ rotate: 45, opacity: 0 }}
-                animate={{
-                  rotate: 405,
-                  opacity: [0, 0.5, 0],
-                }}
-                transition={{
-                  duration: 2.8,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              />
-            </div>
-
-            {/* Pulsing Dots */}
-            <motion.div
-              className="absolute bottom-8 flex items-center gap-2"
+            {/* Text label */}
+            <motion.p
+              className="mt-8 text-xs font-medium tracking-[0.3em] text-zinc-400 uppercase"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: 1.2 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
             >
-              {[0, 1, 2].map((i) => (
-                <motion.div
-                  key={i}
-                  className="w-2 h-2 rounded-full bg-zinc-400"
-                  animate={{
-                    scale: [1, 1.5, 1],
-                    opacity: [0.5, 1, 0.5],
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    delay: i * 0.2,
-                    ease: "easeInOut",
-                  }}
-                />
-              ))}
-            </motion.div>
+              Loading
+            </motion.p>
+
+            {/* Corner ornaments */}
+            <div className="fixed inset-0 pointer-events-none">
+              {/* Top left */}
+              <motion.div
+                className="absolute top-8 left-8 w-16 h-16 border-l-2 border-t-2 border-zinc-200"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              />
+              {/* Top right */}
+              <motion.div
+                className="absolute top-8 right-8 w-16 h-16 border-r-2 border-t-2 border-zinc-200"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              />
+              {/* Bottom left */}
+              <motion.div
+                className="absolute bottom-8 left-8 w-16 h-16 border-l-2 border-b-2 border-zinc-200"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+              />
+              {/* Bottom right */}
+              <motion.div
+                className="absolute bottom-8 right-8 w-16 h-16 border-r-2 border-b-2 border-zinc-200"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+              />
+            </div>
           </div>
         </motion.div>
       )}

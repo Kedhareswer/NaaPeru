@@ -27,7 +27,7 @@ export function ExpandableSocials({ email, github, linkedin, kaggle }: Expandabl
         </svg>
       ),
       label: "LinkedIn",
-      href: linkedin || "https://linkedin.com",
+      href: linkedin || "https://www.linkedin.com/in/kedhareswernaidu/",
     },
     {
       icon: (
@@ -36,7 +36,7 @@ export function ExpandableSocials({ email, github, linkedin, kaggle }: Expandabl
         </svg>
       ),
       label: "Mail",
-      href: `mailto:${email || "your@email.com"}`,
+      href: `mailto:${email || "kedhareswer.12110626@gmail.com"}`,
     },
     {
       icon: (
@@ -45,7 +45,7 @@ export function ExpandableSocials({ email, github, linkedin, kaggle }: Expandabl
         </svg>
       ),
       label: "GitHub",
-      href: github || "https://github.com",
+      href: github || "https://github.com/Kedhareswer",
     },
     {
       icon: (
@@ -54,7 +54,7 @@ export function ExpandableSocials({ email, github, linkedin, kaggle }: Expandabl
         </svg>
       ),
       label: "Kaggle",
-      href: kaggle || "https://kaggle.com",
+      href: kaggle || "https://www.kaggle.com/kedhareswernaidu",
     },
   ]
 
