@@ -2,7 +2,7 @@
 
 import { LayoutGroup, motion } from "framer-motion"
 import Floating, { FloatingElement } from "@/components/ui/parallax-floating"
-import { ExpandableSocials } from "@/components/expandable-socials"
+import { SocialHover } from "@/components/social-hover"
 
 const exampleImages = [
   {
@@ -73,8 +73,7 @@ type LandingHeroProps = {
 }
 
 function LandingHero({ profile }: LandingHeroProps) {
-  const fullName = profile?.personalInfo?.name || "Friend"
-  const firstName = fullName.split(" ")[0]
+  const firstName = "Kedhar"
   const title = profile?.personalInfo?.title
   const focus = (profile?.currentFocus && profile.currentFocus[1]) ||
     "building innovative AI solutions"
@@ -305,7 +304,7 @@ function LandingHero({ profile }: LandingHeroProps) {
 
             {/* Expandable Social Icons */}
             <div className="mt-12">
-              <ExpandableSocials
+              <SocialHover
                 email={profile?.personalInfo?.email}
                 github={profile?.personalInfo?.github}
                 linkedin={profile?.personalInfo?.linkedin}

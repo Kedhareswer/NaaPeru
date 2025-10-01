@@ -6,6 +6,7 @@ import Link from "next/link"
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const [showTooltip, setShowTooltip] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,13 +15,6 @@ export function Navbar() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    }
-  }
 
   return (
     <motion.nav
@@ -36,34 +30,52 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <motion.div
-              className="text-xl md:text-2xl font-bold text-black"
+              className="text-xl md:text-2xl font-bold text-black tracking-wider"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
             >
-              Kedhar
+              M.K.N
             </motion.div>
           </Link>
 
           {/* Nav Links */}
           <div className="hidden md:flex items-center space-x-8">
-            <button
-              onClick={() => scrollToSection("hero")}
-              className="text-sm font-medium text-zinc-600 hover:text-black transition-colors"
-            >
-              Home
-            </button>
-            <button
-              onClick={() => scrollToSection("projects")}
-              className="text-sm font-medium text-zinc-600 hover:text-black transition-colors"
-            >
-              Projects
-            </button>
-            <button
-              onClick={() => scrollToSection("footer")}
-              className="text-sm font-medium text-zinc-600 hover:text-black transition-colors"
-            >
-              Contact
-            </button>
+            <div className="relative">
+              <a
+                href="https://your-main-portfolio-url.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative inline-flex items-center gap-2 text-sm font-medium text-zinc-600 hover:text-black transition-colors group"
+                onMouseEnter={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
+              >
+                <span>जानकारी</span>
+                <motion.span
+                  className="text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: showTooltip ? 1 : 0 }}
+                >
+                  ?
+                </motion.span>
+              </a>
+              
+              {/* Tooltip */}
+              <motion.div
+                className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-2 bg-black text-white text-xs rounded-md whitespace-nowrap pointer-events-none"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ 
+                  opacity: showTooltip ? 1 : 0,
+                  y: showTooltip ? 0 : -10
+                }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="font-semibold mb-1">जानकारी (jānkārī)</div>
+                <div className="text-zinc-300">Hindi: Information, knowledge</div>
+                <div className="text-zinc-400 text-[10px] mt-1">Know more about me</div>
+                {/* Arrow */}
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-black rotate-45" />
+              </motion.div>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
