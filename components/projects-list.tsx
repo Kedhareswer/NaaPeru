@@ -46,7 +46,7 @@ export function ProjectsList({ projects }: ProjectsListProps) {
   }
 
   return (
-    <section className="w-full bg-white py-16 md:py-20 lg:py-24">
+    <section id="projects" className="w-full bg-white py-16 md:py-20 lg:py-24">
       <div className="max-w-[1400px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         {/* Header */}
         <div className="flex items-start justify-between mb-8 md:mb-12">
@@ -73,32 +73,32 @@ export function ProjectsList({ projects }: ProjectsListProps) {
                   className="py-4 md:py-5 cursor-pointer hover:bg-zinc-50 transition-colors"
                   onClick={() => toggleProject(project.id)}
                 >
-                  <div className="grid grid-cols-12 gap-4 items-center">
+                  <div className="grid grid-cols-12 gap-2 sm:gap-4 items-center">
                     {/* Project Name */}
-                    <div className="col-span-12 sm:col-span-5 md:col-span-4">
-                      <h3 className="text-base md:text-lg font-normal text-black">
+                    <div className="col-span-12 sm:col-span-5 md:col-span-4 lg:col-span-4">
+                      <h3 className="text-sm sm:text-base md:text-lg font-normal text-black break-words">
                         {project.title}
                       </h3>
                     </div>
 
                     {/* Category */}
-                    <div className="col-span-8 sm:col-span-4 md:col-span-5">
-                      <p className="text-sm md:text-base text-zinc-600">
+                    <div className="col-span-8 sm:col-span-4 md:col-span-5 lg:col-span-5">
+                      <p className="text-xs sm:text-sm md:text-base text-zinc-600">
                         {project.category || "Web Development"}
                       </p>
                     </div>
 
                     {/* Year */}
-                    <div className="col-span-3 sm:col-span-2 md:col-span-2 text-right">
-                      <p className="text-sm md:text-base text-black">
+                    <div className="col-span-3 sm:col-span-2 md:col-span-2 lg:col-span-2 text-right">
+                      <p className="text-xs sm:text-sm md:text-base text-black">
                         {getYear(project)}
                       </p>
                     </div>
 
                     {/* Expand Button */}
-                    <div className="col-span-1 sm:col-span-1 md:col-span-1 flex justify-end">
+                    <div className="col-span-1 sm:col-span-1 md:col-span-1 lg:col-span-1 flex justify-end">
                       <motion.button
-                        className="w-6 h-6 flex items-center justify-center text-xl text-black"
+                        className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-lg sm:text-xl text-black"
                         animate={{ rotate: isExpanded ? 45 : 0 }}
                         transition={{ duration: 0.2 }}
                       >

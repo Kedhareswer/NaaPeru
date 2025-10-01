@@ -30,7 +30,7 @@ export function Footer({
   const firstName = "Kedhar"
 
   return (
-    <footer className="w-full bg-white border-t border-zinc-200">
+    <footer id="footer" className="w-full bg-white border-t border-zinc-200">
       <div className="max-w-[1400px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16 py-12 md:py-16">
         {/* Top Section - Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-12 md:mb-16">
@@ -120,9 +120,9 @@ export function Footer({
         </div>
 
         {/* Bottom Section - Large Name Display */}
-        <div className="relative overflow-hidden">
+        <div className="relative overflow-hidden pt-4 pb-8">
           <motion.h2
-            className="text-[20vw] sm:text-[18vw] md:text-[16vw] lg:text-[14vw] xl:text-[12vw] font-bold text-zinc-200/40 leading-[0.9] tracking-tighter select-none pointer-events-none"
+            className="text-[22vw] sm:text-[20vw] md:text-[18vw] lg:text-[16vw] xl:text-[14vw] font-bold text-zinc-200/30 leading-[0.85] tracking-tighter select-none pointer-events-none"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

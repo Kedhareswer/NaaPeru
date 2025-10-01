@@ -82,7 +82,7 @@ function LandingHero({ profile }: LandingHeroProps) {
   const topHobbies = hobbies.slice(0, 3)
 
   return (
-    <section className="w-full h-screen overflow-hidden md:overflow-visible flex flex-col items-center justify-center relative z-[1]">
+    <section id="hero" className="w-full h-screen overflow-hidden md:overflow-visible flex flex-col items-center justify-center relative z-[1]">
       <Floating sensitivity={-0.5} className="h-full">
         <FloatingElement
           depth={0.5}
@@ -252,6 +252,17 @@ function LandingHero({ profile }: LandingHeroProps) {
                 }}
               >
                 ✨
+              </motion.span>
+              and
+              <motion.span 
+                className="mx-2 text-zinc-900 font-semibold cursor-pointer"
+                whileHover={{ 
+                  scale: 1.02,
+                  color: "#059669",
+                  transition: { duration: 0.2 }
+                }}
+              >
+                great UI/UX
               </motion.span>
             </motion.p>
 

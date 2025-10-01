@@ -13,6 +13,11 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
       },
+      fontFamily: {
+        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+        serif: ["Playfair Display", "Georgia", "serif"],
+        mono: ["JetBrains Mono", "monospace"],
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
