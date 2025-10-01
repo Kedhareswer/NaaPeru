@@ -1,105 +1,135 @@
 "use client"
 
-import { Github, Linkedin, MapPin, BarChart2 } from "lucide-react"
-import Link from "next/link"
 import { motion } from "framer-motion"
 
-export default function Footer() {
+type FooterProps = {
+  name?: string
+  title?: string
+  email?: string
+  phone?: string
+  location?: string
+  socials?: {
+    instagram?: string
+    behance?: string
+    savee?: string
+    spotify?: string
+  }
+}
+
+export function Footer({
+  name = "Kedhar",
+  title = "Your Title",
+  email = "hello@example.com",
+  phone = "+00 000 000 00 00",
+  location = "City, Country",
+  socials = {},
+}: FooterProps) {
+  const currentYear = new Date().getFullYear()
+
+  // Parse name to extract first name
+  const firstName = "Kedhar"
+
   return (
-    <footer className="bg-gradient-to-b from-gray-50 to-gray-100 py-16 border-t border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          {/* Motivation Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="lg:col-span-2"
-          >
-            <h3 className="text-xl font-light mb-4 text-gray-900">Motivation</h3>
-            <p className="text-gray-600 mb-6 leading-relaxed">
-              "AI is just the person dreaming bigger"
+    <footer id="footer" className="w-full bg-white border-t border-zinc-300">
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16 py-8 md:py-10">
+        {/* Top Section - Grid Layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 mb-8 md:mb-10">
+          {/* Column 1: Name and Title */}
+          <div className="space-y-1">
+            <p className="text-xs font-medium text-black">
+              STUDIO(0) {firstName}
             </p>
-            <div className="space-y-3">
-              <div className="flex items-center gap-2 text-gray-600">
-                <MapPin className="w-4 h-4" />
-                <span className="font-light">Madanapalle, Andhra Pradesh, India</span>
-              </div>
-            </div>
-          </motion.div>
+            <p className="text-xs text-zinc-600">
+              {title}
+            </p>
+          </div>
 
-          {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <h3 className="text-xl font-light mb-4 text-gray-900">Quick Links</h3>
-            <div className="space-y-3">
-              <Link
-                href="/#case-studies"
-                className="block text-gray-600 hover:text-blue-600 transition-colors duration-200 font-light"
-              >
-                Case Studies
-              </Link>
-              <Link
-                href="/#about"
-                className="block text-gray-600 hover:text-blue-600 transition-colors duration-200 font-light"
-              >
-                Skills & Expertise
-              </Link>
-              <Link
-                href="/#testimonials"
-                className="block text-gray-600 hover:text-blue-600 transition-colors duration-200 font-light"
-              >
-                Testimonials
-              </Link>
-              <Link
-                href="/#contact"
-                className="block text-gray-600 hover:text-blue-600 transition-colors duration-200 font-light"
-              >
-                Contact
-              </Link>
-            </div>
-          </motion.div>
+          {/* Column 2: Contact Info */}
+          <div className="space-y-1">
+            <p className="block text-xs text-black">{email}</p>
+            <p className="block text-xs text-zinc-600">{phone}</p>
+            <p className="text-xs text-zinc-600">{location}</p>
+          </div>
 
-          {/* Connect */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <h3 className="text-xl font-light mb-4 text-gray-900">Connect</h3>
-            <div className="space-y-3">
+          {/* Column 3: Social Links */}
+          <div className="space-y-1">
+            {socials.instagram && (
               <a
-                href="https://github.com/Kedhareswer"
+                href={socials.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors duration-200 font-light"
+                className="block text-xs text-black hover:text-zinc-600 transition-colors"
               >
-                <Github className="w-5 h-5" />
-                GitHub
-              </a>
-              <a
-                href="https://linkedin.com/in/kedhareswernaidu"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors duration-200 font-light"
-              >
-                <Linkedin className="w-5 h-5" />
                 LinkedIn
               </a>
+            )}
+            {socials.behance && (
               <a
-                href="https://www.kaggle.com/kedhareswernaidu"
+                href={socials.behance}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors duration-200 font-light"
+                className="block text-xs text-black hover:text-zinc-600 transition-colors"
               >
-                <BarChart2 className="w-5 h-5" />
+                GitHub
+              </a>
+            )}
+            {socials.savee && (
+              <a
+                href={socials.savee}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-xs text-black hover:text-zinc-600 transition-colors"
+              >
                 Kaggle
               </a>
-            </div>
-          </motion.div>
+            )}
+            {socials.spotify && (
+              <a
+                href={socials.spotify}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-xs text-black hover:text-zinc-600 transition-colors"
+              >
+                Portfolio
+              </a>
+            )}
+          </div>
+
+          {/* Column 4: Legal Links */}
+          <div className="space-y-1">
+            <a
+              href="#"
+              className="block text-xs text-black hover:text-zinc-600 transition-colors"
+            >
+              Imprint
+            </a>
+            <a
+              href="#"
+              className="block text-xs text-black hover:text-zinc-600 transition-colors"
+            >
+              Privacy Policy
+            </a>
+            <a
+              href="#"
+              className="block text-xs text-black hover:text-zinc-600 transition-colors"
+            >
+              Terms
+            </a>
+            <p className="text-xs text-zinc-600">© {currentYear}</p>
+          </div>
+        </div>
+
+        {/* Bottom Section - Large Name Display */}
+        <div className="relative overflow-hidden">
+          <motion.h2
+            className="text-[26vw] sm:text-[22vw] md:text-[20vw] lg:text-[16vw] xl:text-[14vw] font-bold text-zinc-200/20 leading-[0.75] tracking-tighter select-none pointer-events-none"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+          >
+            Kedhar
+          </motion.h2>
         </div>
       </div>
     </footer>
