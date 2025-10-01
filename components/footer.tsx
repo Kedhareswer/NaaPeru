@@ -30,29 +30,29 @@ export function Footer({
   const firstName = "Kedhar"
 
   return (
-    <footer id="footer" className="w-full bg-white border-t border-zinc-200">
-      <div className="max-w-[1400px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16 py-10 md:py-12">
+    <footer id="footer" className="w-full bg-white border-t border-zinc-300">
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16 py-8 md:py-10">
         {/* Top Section - Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10 lg:gap-12 mb-10 md:mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 mb-8 md:mb-10">
           {/* Column 1: Name and Title */}
-          <div className="space-y-0.5">
-            <p className="text-xs font-semibold text-black">
+          <div className="space-y-1">
+            <p className="text-xs font-medium text-black">
               STUDIO(0) {firstName}
             </p>
-            <p className="text-xs text-zinc-600 leading-relaxed">
+            <p className="text-xs text-zinc-600">
               {title}
             </p>
           </div>
 
           {/* Column 2: Contact Info */}
-          <div className="space-y-0.5">
+          <div className="space-y-1">
             <p className="block text-xs text-black">{email}</p>
             <p className="block text-xs text-zinc-600">{phone}</p>
             <p className="text-xs text-zinc-600">{location}</p>
           </div>
 
           {/* Column 3: Social Links */}
-          <div className="space-y-0.5">
+          <div className="space-y-1">
             {socials.instagram && (
               <a
                 href={socials.instagram}
@@ -96,7 +96,7 @@ export function Footer({
           </div>
 
           {/* Column 4: Legal Links */}
-          <div className="space-y-0.5">
+          <div className="space-y-1">
             <a
               href="#"
               className="block text-xs text-black hover:text-zinc-600 transition-colors"
@@ -120,10 +120,10 @@ export function Footer({
         </div>
 
         {/* Bottom Section - Large Name Display */}
-        <div className="relative overflow-hidden pt-2">
+        <div className="relative overflow-hidden">
           <motion.h2
-            className="text-[24vw] sm:text-[20vw] md:text-[18vw] lg:text-[15vw] xl:text-[12vw] font-bold text-zinc-200/25 leading-[0.8] tracking-tighter select-none pointer-events-none"
-            initial={{ opacity: 0, y: 50 }}
+            className="text-[26vw] sm:text-[22vw] md:text-[20vw] lg:text-[16vw] xl:text-[14vw] font-bold text-zinc-200/20 leading-[0.75] tracking-tighter select-none pointer-events-none"
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}

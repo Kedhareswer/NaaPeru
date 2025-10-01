@@ -157,18 +157,6 @@ export function ExpandableSocials({ email, github, linkedin, kaggle }: Expandabl
                   social.icon
                 )}
               </motion.div>
-
-              {/* Label */}
-              <motion.span
-                className="text-[10px] font-medium text-zinc-800 whitespace-nowrap"
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: isExpanded ? 1 : 0,
-                }}
-                transition={{ delay: isExpanded ? 0.35 + index * 0.08 : 0 }}
-              >
-                {social.label}
-              </motion.span>
             </motion.a>
           ))}
         </motion.div>
