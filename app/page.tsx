@@ -1,6 +1,7 @@
 import { LandingHero } from "@/components/landing-hero"
 import { ProjectsList } from "@/components/projects-list"
 import { Footer } from "@/components/footer"
+import { PageWrapper } from "@/components/page-wrapper"
 import { promises as fs } from "fs"
 import path from "path"
 
@@ -17,22 +18,24 @@ export default async function Page() {
   const projects = JSON.parse(projectsRaw)
   
   return (
-    <div>
-      <LandingHero profile={profile} />
-      <ProjectsList projects={projects} />
-      <Footer
-        name={profile.personalInfo?.name}
-        title={profile.personalInfo?.title}
-        email={profile.personalInfo?.email}
-        phone={profile.personalInfo?.phone}
-        location={profile.personalInfo?.location}
-        socials={{
-          instagram: profile.personalInfo?.linkedin,
-          behance: profile.personalInfo?.github,
-          savee: profile.personalInfo?.kaggle,
-          spotify: profile.personalInfo?.portfolio,
-        }}
-      />
-    </div>
+    <PageWrapper>
+      <div>
+        <LandingHero profile={profile} />
+        <ProjectsList projects={projects} />
+        <Footer
+          name={profile.personalInfo?.name}
+          title={profile.personalInfo?.title}
+          email={profile.personalInfo?.email}
+          phone={profile.personalInfo?.phone}
+          location={profile.personalInfo?.location}
+          socials={{
+            instagram: profile.personalInfo?.linkedin,
+            behance: profile.personalInfo?.github,
+            savee: profile.personalInfo?.kaggle,
+            spotify: profile.personalInfo?.portfolio,
+          }}
+        />
+      </div>
+    </PageWrapper>
   )
 }
