@@ -11,13 +11,13 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Minimum 3.5 seconds display for full animation
+    // Minimum 5 seconds display for full animation
     const timer = setTimeout(() => {
       setIsLoading(false)
       if (onLoadingComplete) {
         onLoadingComplete()
       }
-    }, 3500)
+    }, 5000)
 
     return () => {
       clearTimeout(timer)

@@ -34,8 +34,8 @@ export function Navbar() {
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
             >
-              <span className="text-xl md:text-2xl font-black text-slate-900 tracking-tight">
-                K.
+              <span className="text-xl md:text-2xl font-black text-black tracking-tight">
+                K
               </span>
               <motion.span
                 className="w-1.5 h-1.5 bg-blue-500 rounded-full ml-1"
@@ -58,7 +58,7 @@ export function Navbar() {
                 href="https://know-me-henna.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-slate-900 transition-colors duration-200 group"
+                className="relative inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-black transition-colors duration-200 group"
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
               >
