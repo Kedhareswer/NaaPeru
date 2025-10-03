@@ -154,7 +154,7 @@ function LandingHero({ profile }: LandingHeroProps) {
         </FloatingElement>
       </Floating>
 
-      <div className="flex flex-col justify-center items-center w-[300px] sm:w-[400px] md:w-[500px] lg:w-[600px] z-50 pointer-events-auto">
+      <div className="flex flex-col justify-center items-center w-full max-w-4xl px-4 z-50 pointer-events-auto">
         <LayoutGroup>
           <motion.div
             className="space-y-4 md:space-y-6 lg:space-y-8"
@@ -162,144 +162,62 @@ function LandingHero({ profile }: LandingHeroProps) {
             initial={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
           >
-            {/* Line 1 - Animated greeting */}
-            <motion.p 
-              className="text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed text-zinc-500 font-serif"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
+            {/* Large Kedhar Title */}
+            <motion.div 
+              className="text-center mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
             >
-              Hey there, I'm
-              <motion.span 
-                className="mx-2 text-zinc-900 font-semibold cursor-pointer"
-                whileHover={{ 
-                  scale: 1.05,
-                  color: "#3b82f6",
-                  transition: { duration: 0.2 }
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {firstName}
-              </motion.span>
-              <motion.span 
-                className="ml-1"
-                animate={{ 
-                  rotate: [0, 20, -20, 0],
-                  transition: { 
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatDelay: 3
-                  }
-                }}
-              >
-                👋
-              </motion.span>
-              {title && (
-                <>
-                  <span className="ml-3">—</span>
-                  <motion.span 
-                    className="ml-3 text-zinc-900 font-semibold cursor-pointer"
-                    whileHover={{ 
-                      scale: 1.02,
-                      color: "#059669",
-                      transition: { duration: 0.2 }
-                    }}
-                  >
-                    {title}
-                  </motion.span>
-                </>
-              )}
-            </motion.p>
+              <div className="flex items-center justify-center">
+                <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-slate-900 leading-none tracking-tight">
+                  Kedhar
+                </h1>
+                <motion.span
+                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 bg-blue-500 rounded-full ml-2 shadow-lg"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    transition: { 
+                      duration: 2,
+                      repeat: Infinity,
+                      repeatDelay: 3
+                    }
+                  }}
+                />
+              </div>
+            </motion.div>
 
-            {/* Line 2 - Building things */}
-            <motion.p 
-              className="text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed text-zinc-500 font-serif"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
+            {/* Creative Technologist Subtitle */}
+            <motion.h2
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-600 text-center mb-8 tracking-wide"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.6 }}
             >
-              I love
-              <motion.span 
-                className="mx-2 text-zinc-900 font-semibold cursor-pointer"
-                whileHover={{ 
-                  scale: 1.05,
-                  color: "#dc2626",
-                  transition: { duration: 0.2 }
-                }}
-              >
-                building
-              </motion.span>
-              things that makes sense, currently focused on
-              <motion.span 
-                className="mx-2 text-zinc-900 font-semibold cursor-pointer"
-                whileHover={{ 
-                  scale: 1.02,
-                  color: "#7c3aed",
-                  transition: { duration: 0.2 }
-                }}
-              >
-                {focus}
-              </motion.span>
-              <motion.span
-                animate={{ 
-                  scale: [1, 1.2, 1],
-                  transition: { 
-                    duration: 1.5,
-                    repeat: Infinity,
-                    repeatDelay: 4
-                  }
-                }}
-              >
-                ✨
-              </motion.span>
-              and
-              <motion.span 
-                className="mx-2 text-zinc-900 font-semibold cursor-pointer"
-                whileHover={{ 
-                  scale: 1.02,
-                  color: "#059669",
-                  transition: { duration: 0.2 }
-                }}
-              >
-                great UI/UX
-              </motion.span>
-            </motion.p>
+              Creative Technologist
+            </motion.h2>
 
-            {/* Line 3 - Hobbies */}
+            {/* First Description Paragraph */}
             <motion.p 
-              className="text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed text-zinc-500 font-serif"
+              className="text-base sm:text-lg md:text-xl text-gray-600 text-center mb-6 leading-relaxed max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
             >
-              When I'm not coding, you'll find me
-              {topHobbies.length > 0 && topHobbies.map((hobby, i) => (
-                <motion.span 
-                  key={hobby}
-                  className="mx-1 text-zinc-900 font-semibold cursor-pointer"
-                  whileHover={{ 
-                    scale: 1.05,
-                    color: "#ea580c",
-                    transition: { duration: 0.2 }
-                  }}
-                >
-                  {hobby.toLowerCase()}
-                  {i < topHobbies.length - 1 ? 
-                    (i === topHobbies.length - 2 ? " or " : ", ") : ""}
-                </motion.span>
-              ))}
-              <motion.span
-                animate={{ 
-                  rotate: [0, 15, -15, 0],
-                  transition: { 
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatDelay: 5
-                  }
-                }}
-              >
-                🎮
-              </motion.span>
+              I design and build intelligent systems & beautiful interfaces. Currently 
+              exploring the intersection of <span className="font-semibold text-slate-900">AI-driven products</span> and <span className="font-semibold text-slate-900">human-centered design</span>.
+            </motion.p>
+
+            {/* Second Description Paragraph */}
+            <motion.p 
+              className="text-base sm:text-lg md:text-xl text-gray-600 text-center leading-relaxed max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0, duration: 0.6 }}
+            >
+              I'm a creative developer who crafts meaningful digital experiences. I blend 
+              <span className="font-semibold text-slate-900"> design and technology</span> to build things that are both 
+              <span className="font-semibold text-slate-900"> beautiful and useful</span>.
             </motion.p>
 
             {/* Expandable Social Icons */}

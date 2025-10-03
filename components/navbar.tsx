@@ -30,7 +30,8 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <motion.div
-              className="text-xl md:text-2xl font-bold text-black tracking-wider font-sans"
+              className="text-xl md:text-2xl font-bold text-black tracking-wider"
+              style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
             >
@@ -45,7 +46,8 @@ export function Navbar() {
                 href="https://know-me-henna.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative inline-flex items-center gap-2 text-sm font-medium text-zinc-600 hover:text-black transition-colors group font-sans"
+                className="relative inline-flex items-center gap-2 text-sm font-medium text-zinc-600 hover:text-black transition-colors group"
+                style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
               >
