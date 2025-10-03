@@ -164,7 +164,7 @@ function LandingHero({ profile }: LandingHeroProps) {
           >
             {/* Large Kedhar Title */}
             <motion.div 
-              className="text-center mb-6"
+              className="text-center mb-4"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
@@ -197,27 +197,15 @@ function LandingHero({ profile }: LandingHeroProps) {
               Creative Technologist
             </motion.h2>
 
-            {/* First Description Paragraph */}
+            {/* Description Paragraph */}
             <motion.p 
-              className="text-base sm:text-lg md:text-xl text-gray-600 text-center mb-6 leading-relaxed max-w-2xl mx-auto"
+              className="text-base sm:text-lg md:text-xl text-gray-600 text-center leading-relaxed max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
             >
               I design and build intelligent systems & beautiful interfaces. Currently 
               exploring the intersection of <span className="font-semibold text-slate-900">AI-driven products</span> and <span className="font-semibold text-slate-900">human-centered design</span>.
-            </motion.p>
-
-            {/* Second Description Paragraph */}
-            <motion.p 
-              className="text-base sm:text-lg md:text-xl text-gray-600 text-center leading-relaxed max-w-2xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.0, duration: 0.6 }}
-            >
-              I'm a creative developer who crafts meaningful digital experiences. I blend 
-              <span className="font-semibold text-slate-900"> design and technology</span> to build things that are both 
-              <span className="font-semibold text-slate-900"> beautiful and useful</span>.
             </motion.p>
 
             {/* Expandable Social Icons */}

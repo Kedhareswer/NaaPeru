@@ -10,17 +10,44 @@ interface ProjectsListProps {
 
 export function ProjectsList({ projects }: ProjectsListProps) {
   const [expandedProjects, setExpandedProjects] = useState<Set<number>>(new Set())
+  const [clickedProjects, setClickedProjects] = useState<Set<number>>(new Set())
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
   const [expandAll, setExpandAll] = useState(false)
 
   const toggleProject = (id: number) => {
+    const newClicked = new Set(clickedProjects)
     const newExpanded = new Set(expandedProjects)
-    if (newExpanded.has(id)) {
+    
+    if (clickedProjects.has(id)) {
+      // If already clicked, remove from both clicked and expanded
+      newClicked.delete(id)
       newExpanded.delete(id)
     } else {
+      // If not clicked, add to both clicked and expanded
+      newClicked.add(id)
       newExpanded.add(id)
     }
+    
+    setClickedProjects(newClicked)
     setExpandedProjects(newExpanded)
+  }
+
+  const handleMouseEnter = (id: number) => {
+    setHoveredProject(id)
+    if (!clickedProjects.has(id)) {
+      const newExpanded = new Set(expandedProjects)
+      newExpanded.add(id)
+      setExpandedProjects(newExpanded)
+    }
+  }
+
+  const handleMouseLeave = (id: number) => {
+    setHoveredProject(null)
+    if (!clickedProjects.has(id)) {
+      const newExpanded = new Set(expandedProjects)
+      newExpanded.delete(id)
+      setExpandedProjects(newExpanded)
+    }
   }
 
   const handleExpandAll = () => {
@@ -32,8 +59,13 @@ export function ProjectsList({ projects }: ProjectsListProps) {
     setExpandAll(!expandAll)
   }
 
-  // Sort projects by date descending
+  // Sort projects: featured first, then by date descending
   const sortedProjects = [...projects].sort((a, b) => {
+    // Prioritize featured projects
+    if (a.featured && !b.featured) return -1
+    if (!a.featured && b.featured) return 1
+    
+    // If both featured or both not featured, sort by date
     const dateA = new Date(a.project_date || a.created_at || "").getTime()
     const dateB = new Date(b.project_date || b.created_at || "").getTime()
     return (isNaN(dateB) ? 0 : dateB) - (isNaN(dateA) ? 0 : dateA)
@@ -51,13 +83,23 @@ export function ProjectsList({ projects }: ProjectsListProps) {
       <div className="max-w-[1400px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         {/* Header */}
         <div className="flex items-start justify-between mb-8 md:mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
-            Projects;
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 leading-none tracking-tight">
+            Projects
+            <motion.span
+              className="w-2 h-2 md:w-3 md:h-3 bg-blue-500 rounded-full ml-1 inline-block"
+              animate={{ 
+                scale: [1, 1.2, 1],
+                transition: { 
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatDelay: 4
+                }
+              }}
+            />
           </h2>
           <button
             onClick={handleExpandAll}
-            className="text-sm md:text-base text-zinc-600 hover:text-black transition-colors underline underline-offset-4 font-medium"
-            style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
+            className="text-sm md:text-base font-medium text-gray-600 hover:text-slate-900 transition-colors duration-200"
           >
             {expandAll ? "Collapse All" : "Expand All"}
           </button>
@@ -67,48 +109,34 @@ export function ProjectsList({ projects }: ProjectsListProps) {
         <div className="space-y-0">
           {sortedProjects.map((project, index) => {
             const isExpanded = expandedProjects.has(project.id)
-            const isHovered = hoveredProject === project.id
-            const shouldExpand = isExpanded || isHovered
             
             return (
               <div key={project.id} className="border-t border-dotted border-zinc-300">
                 {/* Project Row */}
                 <motion.div
-                  className="py-4 md:py-5 cursor-pointer transition-colors"
+                  className="py-4 md:py-5 cursor-pointer transition-all duration-300 ease-out"
                   onClick={() => toggleProject(project.id)}
-                  onMouseEnter={() => setHoveredProject(project.id)}
-                  onMouseLeave={() => setHoveredProject(null)}
-                  animate={{
-                    backgroundColor: isHovered ? "rgb(249 250 251)" : "rgb(255 255 255)",
-                  }}
-                  transition={{ duration: 0.2 }}
+                  onMouseEnter={() => handleMouseEnter(project.id)}
+                  onMouseLeave={() => handleMouseLeave(project.id)}
                 >
                   <div className="grid grid-cols-12 gap-2 sm:gap-4 items-center">
                     {/* Project Name */}
                     <div className="col-span-12 sm:col-span-5 md:col-span-4 lg:col-span-4">
-                      <motion.h3 
-                        className="text-sm sm:text-base md:text-lg font-semibold text-black break-words"
-                        style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
-                        animate={{
-                          scale: isHovered ? 1.02 : 1,
-                          color: isHovered ? "rgb(59 130 246)" : "rgb(0 0 0)",
-                        }}
-                        transition={{ duration: 0.2 }}
-                      >
+                      <h3 className="text-sm sm:text-base md:text-lg font-semibold text-slate-900 break-words">
                         {project.title}
-                      </motion.h3>
+                      </h3>
                     </div>
 
                     {/* Category */}
                     <div className="col-span-8 sm:col-span-4 md:col-span-5 lg:col-span-5">
-                      <p className="text-xs sm:text-sm md:text-base text-zinc-600 font-medium" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+                      <p className="text-xs sm:text-sm md:text-base text-gray-600 font-medium">
                         {project.category || "Web Development"}
                       </p>
                     </div>
 
                     {/* Year */}
                     <div className="col-span-3 sm:col-span-2 md:col-span-2 lg:col-span-2 text-right">
-                      <p className="text-xs sm:text-sm md:text-base text-black font-medium" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+                      <p className="text-xs sm:text-sm md:text-base text-slate-900 font-medium">
                         {getYear(project)}
                       </p>
                     </div>
@@ -116,13 +144,9 @@ export function ProjectsList({ projects }: ProjectsListProps) {
                     {/* Expand Button */}
                     <div className="col-span-1 sm:col-span-1 md:col-span-1 lg:col-span-1 flex justify-end">
                       <motion.button
-                        className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-lg sm:text-xl text-black font-bold"
-                        animate={{ 
-                          rotate: shouldExpand ? 45 : 0,
-                          scale: isHovered ? 1.1 : 1,
-                          color: isHovered ? "rgb(59 130 246)" : "rgb(0 0 0)"
-                        }}
-                        transition={{ duration: 0.2 }}
+                        className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-lg sm:text-xl text-slate-900 font-light"
+                        animate={{ rotate: isExpanded ? 45 : 0 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
                       >
                         +
                       </motion.button>
@@ -134,40 +158,47 @@ export function ProjectsList({ projects }: ProjectsListProps) {
                 <motion.div
                   initial={false}
                   animate={{
-                    height: shouldExpand ? "auto" : 0,
-                    opacity: shouldExpand ? 1 : 0,
+                    height: isExpanded ? "auto" : 0,
+                    opacity: isExpanded ? 1 : 0,
                   }}
                   transition={{ 
-                    duration: isHovered ? 0.2 : 0.3, 
-                    ease: [0.23, 1, 0.32, 1] 
+                    duration: 0.4, 
+                    ease: "easeOut",
+                    opacity: { duration: isExpanded ? 0.3 : 0.2, delay: isExpanded ? 0.1 : 0 }
                   }}
                   className="overflow-hidden"
                 >
-                  <div className="pb-6 pt-2 px-4 md:px-6 bg-zinc-50">
+                  <motion.div 
+                    className="pb-6 pt-2 px-4 md:px-6 bg-gray-50"
+                    initial={false}
+                    animate={{
+                      y: isExpanded ? 0 : -10,
+                    }}
+                    transition={{ duration: 0.3, delay: isExpanded ? 0.1 : 0 }}
+                  >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {/* Left Column - Details */}
                       <div className="space-y-4">
                         {/* Description */}
                         <div>
-                          <h4 className="text-xs font-semibold text-zinc-900 uppercase tracking-wider mb-2" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+                          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
                             Overview
                           </h4>
-                          <p className="text-sm text-zinc-700 leading-relaxed font-normal" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+                          <p className="text-sm text-gray-700 leading-relaxed font-medium">
                             {project.description}
                           </p>
                         </div>
 
                         {/* Technologies */}
                         <div>
-                          <h4 className="text-xs font-semibold text-zinc-900 uppercase tracking-wider mb-2" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+                          <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2">
                             Technologies
                           </h4>
                           <div className="flex flex-wrap gap-2">
                             {project.technologies.map((tech, i) => (
                               <span
                                 key={i}
-                                className="text-xs px-2 py-1 bg-white border border-zinc-300 text-zinc-800 rounded font-medium"
-                                style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
+                                className="text-xs px-3 py-1.5 bg-white border border-gray-300 text-slate-900 rounded-md font-medium shadow-sm"
                               >
                                 {tech}
                               </span>
@@ -182,8 +213,7 @@ export function ProjectsList({ projects }: ProjectsListProps) {
                               href={project.demo}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-sm text-black hover:text-zinc-600 underline underline-offset-4 transition-colors font-medium"
-                              style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
+                              className="text-sm font-semibold text-slate-900 hover:text-blue-600 transition-colors duration-200"
                               onClick={(e) => e.stopPropagation()}
                             >
                               View Demo →
@@ -194,8 +224,7 @@ export function ProjectsList({ projects }: ProjectsListProps) {
                               href={project.github}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-sm text-zinc-600 hover:text-black underline underline-offset-4 transition-colors font-medium"
-                              style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
+                              className="text-sm font-medium text-gray-600 hover:text-slate-900 transition-colors duration-200"
                               onClick={(e) => e.stopPropagation()}
                             >
                               Source Code →
@@ -205,23 +234,30 @@ export function ProjectsList({ projects }: ProjectsListProps) {
                       </div>
 
                       {/* Right Column - Image */}
-                      <div>
+                      <motion.div
+                        initial={false}
+                        animate={{
+                          scale: isExpanded ? 1 : 0.95,
+                          opacity: isExpanded ? 1 : 0.8,
+                        }}
+                        transition={{ duration: 0.3, delay: isExpanded ? 0.2 : 0 }}
+                      >
                         {project.image ? (
                           <img
                             src={project.image}
                             alt={project.title}
-                            className="w-full h-48 md:h-64 object-cover rounded border border-zinc-300"
+                            className="w-full h-48 md:h-64 object-cover rounded-lg border border-gray-300 shadow-sm"
                           />
                         ) : (
-                          <div className="w-full h-48 md:h-64 bg-zinc-200 rounded border border-zinc-300 flex items-center justify-center">
-                            <span className="text-4xl font-bold text-zinc-400">
+                          <div className="w-full h-48 md:h-64 bg-gray-200 rounded-lg border border-gray-300 flex items-center justify-center shadow-sm">
+                            <span className="text-4xl font-black text-gray-400">
                               {project.title.split(' ').map(w => w[0]).join('').slice(0, 2)}
                             </span>
                           </div>
                         )}
-                      </div>
+                      </motion.div>
                     </div>
-                  </div>
+                  </motion.div>
                 </motion.div>
               </div>
             )

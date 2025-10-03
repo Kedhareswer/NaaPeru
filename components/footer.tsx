@@ -27,76 +27,79 @@ export function Footer({
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer id="footer" className="w-full bg-gray-100 py-16 px-6 sm:px-8 md:px-12 lg:px-16">
-      <div className="max-w-[1400px] mx-auto">
+    <footer id="footer" className="w-full bg-gray-100 px-6 py-12">
+      <div className="max-w-[1200px] mx-auto">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 lg:gap-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16">
           
           {/* Left Column - Brand */}
-          <div className="space-y-4">
-            <h3 className="text-5xl sm:text-6xl md:text-7xl font-black text-black leading-none" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+          <div className="space-y-3">
+            <h3 className="text-4xl font-black text-black leading-none">
               K.
             </h3>
-            <p className="text-sm text-gray-600 leading-relaxed max-w-xs font-normal" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+            <p className="text-sm text-gray-600 leading-relaxed max-w-[280px]">
               Crafting digital experiences where AI meets artistry.
             </p>
-            <p className="text-xs text-gray-500 mt-8 font-medium" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+            <p className="text-xs text-gray-500 pt-4">
               © {currentYear} Kedhar. All Rights Reserved.
             </p>
           </div>
 
           {/* Center Column - Connect */}
-          <div className="space-y-6">
-            <h4 className="text-sm font-bold text-black tracking-wider uppercase" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+          <div className="space-y-4">
+            <h4 className="text-sm font-semibold text-black tracking-wide">
               CONNECT
             </h4>
-            <div className="space-y-3">
+            <div className="space-y-2">
               {socials.instagram && (
-                <a
-                  href={socials.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-sm text-gray-600 hover:text-black transition-colors duration-200 font-medium"
-                  style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
-                >
-                  LinkedIn
-                </a>
+                <div>
+                  <a
+                    href={socials.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-sm text-gray-600 hover:text-black transition-colors"
+                  >
+                    LinkedIn
+                  </a>
+                </div>
               )}
               {socials.behance && (
-                <a
-                  href={socials.behance}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-sm text-gray-600 hover:text-black transition-colors duration-200 font-medium"
-                  style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
-                >
-                  Github
-                </a>
+                <div>
+                  <a
+                    href={socials.behance}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-sm text-gray-600 hover:text-black transition-colors"
+                  >
+                    Github
+                  </a>
+                </div>
               )}
               {socials.savee && (
-                <a
-                  href={socials.savee}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-sm text-gray-600 hover:text-black transition-colors duration-200 font-medium"
-                  style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
-                >
-                  Kaggle
-                </a>
+                <div>
+                  <a
+                    href={socials.savee}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-sm text-gray-600 hover:text-black transition-colors"
+                  >
+                    Kaggle
+                  </a>
+                </div>
               )}
             </div>
           </div>
 
           {/* Right Column - Contact */}
-          <div className="space-y-6">
-            <h4 className="text-sm font-bold text-black tracking-wider uppercase" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+          <div className="space-y-4">
+            <h4 className="text-sm font-semibold text-black tracking-wide">
               CONTACT
             </h4>
-            <div className="space-y-3">
-              <p className="text-sm text-gray-600 font-medium" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+            <div className="space-y-2">
+              <p className="text-sm text-gray-600">
                 {email}
               </p>
-              <p className="text-sm text-gray-600 font-medium" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+              <p className="text-sm text-gray-600">
                 {location}
               </p>
             </div>
