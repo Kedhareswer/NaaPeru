@@ -98,12 +98,12 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
             className="flex flex-col"
           >
             <div className="relative w-full bg-black">
-              <div className="relative aspect-[16/9] w-full">
+              <div className="relative aspect-[16/9] w-full overflow-hidden">
                 {currentFeatured?.image ? (
                   <motion.img
                     src={currentFeatured.image}
                     alt={currentFeatured.title}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover object-center"
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
                   />
@@ -168,20 +168,20 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
             </h3>
             <span className="text-xs uppercase tracking-[0.4em] text-neutral-500">{remainingProjects.length} items</span>
           </div>
-          <div className="mt-8 overflow-x-auto border border-black/50">
-            <table className="min-w-full border-collapse">
-              <thead className="bg-black text-white text-xs uppercase tracking-[0.4em]">
+          <div className="mt-8 max-h-[520px] overflow-x-auto overflow-y-auto border border-black/50">
+            <table className="min-w-full border-separate border-spacing-0">
+              <thead className="sticky top-0 z-10 bg-black text-white text-xs uppercase tracking-[0.4em]">
                 <tr>
-                  <th className="px-6 py-4 text-left">Project</th>
-                  <th className="px-6 py-4 text-left">Overview</th>
-                  <th className="px-6 py-4 text-left">Live Demo</th>
-                  <th className="px-6 py-4 text-left">Status</th>
+                  <th className="border border-white/20 px-6 py-4 text-left">Project</th>
+                  <th className="border border-white/20 px-6 py-4 text-left">Overview</th>
+                  <th className="border border-white/20 px-6 py-4 text-left">Live Demo</th>
+                  <th className="border border-white/20 px-6 py-4 text-left">Status</th>
                 </tr>
               </thead>
               <tbody className="text-sm">
                 {remainingProjects.map((project) => (
-                  <tr key={project.id} className="border-t border-black/20 hover:bg-neutral-50 transition-colors">
-                    <td className="px-6 py-5">
+                  <tr key={project.id} className="hover:bg-neutral-50 transition-colors">
+                    <td className="border border-black/15 px-6 py-5">
                       <button
                         onClick={() => project.id && router.push(`/project/${project.id}`)}
                         className="font-semibold uppercase tracking-[0.35em] text-left text-black hover:underline"
@@ -189,10 +189,10 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                         {project.title}
                       </button>
                     </td>
-                    <td className="px-6 py-5 text-neutral-600">
+                    <td className="border border-black/15 px-6 py-5 text-neutral-600">
                       {project.description || "—"}
                     </td>
-                    <td className="px-6 py-5">
+                    <td className="border border-black/15 px-6 py-5">
                       {project.demo ? (
                         <a
                           href={project.demo}
@@ -206,8 +206,8 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                         <span className="text-neutral-400 text-xs uppercase tracking-[0.35em]">Unavailable</span>
                       )}
                     </td>
-                    <td className="px-6 py-5 text-xs uppercase tracking-[0.35em] text-neutral-600">
-                      {project.featured ? "Featured" : "Active"}
+                    <td className="border border-black/15 px-6 py-5 text-xs uppercase tracking-[0.35em] text-neutral-600">
+                      {project.title === "ChefSpeak" ? "Shelved" : project.featured ? "Featured" : "Active"}
                     </td>
                   </tr>
                 ))}
