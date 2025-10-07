@@ -153,21 +153,6 @@ export function ProjectDetail({ project, allProjects }: ProjectDetailProps) {
                   </p>
                 </div>
 
-                {/* Outcomes Section */}
-                {project.outcomes && project.outcomes.length > 0 && (
-                  <div>
-                    <h2 className="text-xs font-bold uppercase tracking-wider mb-4 text-black">
-                      Outcomes
-                    </h2>
-                    <ul className="space-y-2">
-                      {project.outcomes.map((outcome, index) => (
-                        <li key={index} className="text-sm text-gray-700">
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
                 {/* Links Section */}
                 <div>
                   <h2 className="text-xs font-bold uppercase tracking-wider mb-4 text-black">
@@ -197,23 +182,19 @@ export function ProjectDetail({ project, allProjects }: ProjectDetailProps) {
                   </div>
                 </div>
 
-                {/* Category & Date Info */}
-                <div className="pt-6 border-t border-gray-200">
-                  <div className="space-y-2 text-xs text-gray-600">
-                    {project.category && (
-                      <p>
-                        <span className="font-bold uppercase tracking-wider">Category:</span>{" "}
-                        {project.category}
-                      </p>
-                    )}
-                    {project.project_date && (
-                      <p>
-                        <span className="font-bold uppercase tracking-wider">Date:</span>{" "}
-                        {project.project_date}
-                      </p>
-                    )}
+                {/* Outcomes Section */}
+                {project.outcomes && project.outcomes.length > 0 && (
+                  <div className="pt-6 border-t border-gray-200">
+                    <h2 className="text-xs font-bold uppercase tracking-wider mb-4 text-black">
+                      Outcomes
+                    </h2>
+                    <ul className="space-y-2 text-sm text-gray-700">
+                      {project.outcomes.map((outcome, index) => (
+                        <li key={index}>{outcome}</li>
+                      ))}
+                    </ul>
                   </div>
-                </div>
+                )}
               </div>
             </motion.aside>
           )}
