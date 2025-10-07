@@ -64,34 +64,34 @@ export function AboutSection({ profile }: AboutSectionProps) {
       <div className="mx-auto w-full max-w-6xl px-4 md:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-16">
           {/* Narrative */}
-          <div className="space-y-8 text-[18px] leading-relaxed text-neutral-700">
-            <p className="text-[clamp(1.5rem,2vw,1.75rem)] leading-[1.6] text-neutral-900">
+          <div className="space-y-8 text-lg leading-relaxed text-slate-700">
+            <p className="text-2xl md:text-[28px] leading-[1.6] text-slate-800">
               Hey there, I&apos;m <span className="font-semibold text-slate-900">{name}</span> <span className="ml-1">👋</span>
               <br className="hidden md:block" />
               Welcome to my{' '}
-              <span className="inline-block border-b border-sky-400/70 pb-0.5 text-sky-600">digital garden</span>{' '}
+              <span className="inline-block border-b border-sky-400/70 pb-0.5 text-sky-700">digital garden</span>{' '}
               where I nurture ideas, build{' '}
-              <span className="inline-block border-b border-emerald-400/70 pb-0.5 text-emerald-500">thoughtful things</span>,
+              <span className="inline-block border-b border-emerald-400/70 pb-0.5 text-emerald-600">thoughtful things</span>,
               and chase bold problems in AI.
             </p>
 
-            <p className="text-[17px] leading-relaxed">
+            <p>
               By day, I craft intelligent experiences that feel{' '}
-              <span className="font-semibold text-neutral-900">human</span>, blending data, design, and engineering. By night,
+              <span className="font-semibold text-slate-900">human</span>, blending data, design, and engineering. By night,
               I keep sharpening my curiosity—experimenting with{' '}
-              <span className="border-b border-amber-400/70 pb-0.5 text-amber-500">creative tools</span>,
+              <span className="border-b border-amber-400/70 pb-0.5 text-amber-600">creative tools</span>,
               prototyping concepts, and documenting the journey.
             </p>
 
-            <p className="text-[17px] leading-relaxed">
+            <p>
               When I&apos;m not shipping features, you&apos;ll find me{' '}
               {primaryHobby ? (
-                <span className="font-semibold text-neutral-900">{primaryHobby.name.toLowerCase()}</span>
+                <span className="font-semibold text-slate-900">{primaryHobby.name.toLowerCase()}</span>
               ) : (
-                <span className="font-semibold text-neutral-900">exploring something new</span>
+                <span className="font-semibold text-slate-900">exploring something new</span>
               )},
               diving into{' '}
-              <span className="border-b border-purple-400/70 pb-0.5 text-purple-500">curious rabbit holes</span>,
+              <span className="border-b border-purple-400/70 pb-0.5 text-purple-600">curious rabbit holes</span>,
               or planning the next adventure. It&apos;s all part of keeping the mind sharp and the heart inspired.
             </p>
           </div>
