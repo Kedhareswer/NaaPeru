@@ -39,139 +39,137 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
   }
 
   return (
-    <section id="projects" className="w-full min-h-screen bg-white">
-      <div className="grid grid-cols-1 lg:grid-cols-[70%_30%] min-h-screen">
-        {/* Featured Project - Left Side (70%) */}
-        <div className="flex flex-col items-center justify-center px-8 md:px-16 lg:px-24 py-16 lg:py-24 border-r border-gray-200">
+    <section id="projects" className="w-full bg-white">
+      <div className="mx-auto flex w-full max-w-[1400px] flex-col gap-12 px-6 pb-28 pt-24 lg:flex-row lg:gap-16">
+        {/* Featured Project */}
+        <div className="flex-1 border border-black/70 bg-white shadow-[0_30px_60px_rgba(0,0,0,0.08)]">
           <motion.div
             key={currentFeatured?.id}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="w-full max-w-[600px] flex flex-col items-center"
+            transition={{ duration: 0.55, ease: [0.23, 1, 0.32, 1] }}
+            className="flex flex-col"
           >
-            {/* Featured Image */}
-            <div className="w-full aspect-[4/3] mb-8 relative overflow-hidden">
-              {currentFeatured?.image ? (
-                <motion.img
-                  src={currentFeatured.image}
-                  alt={currentFeatured.title}
-                  className="w-full h-full object-cover"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}
-                />
-              ) : (
-                <div className="w-full h-full bg-gradient-to-br from-orange-400 via-orange-500 to-red-600 flex items-center justify-center">
-                  <span className="text-white text-6xl font-black">
-                    {currentFeatured?.title.split(" ").map(w => w[0]).join("").slice(0, 3).toUpperCase()}
-                  </span>
+            <div className="relative w-full bg-black">
+              <div className="relative aspect-[16/9] w-full">
+                {currentFeatured?.image ? (
+                  <motion.img
+                    src={currentFeatured.image}
+                    alt={currentFeatured.title}
+                    className="h-full w-full object-cover"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-gradient-to-r from-orange-400 to-rose-500 text-white">
+                    <span className="text-6xl font-black">
+                      {currentFeatured?.title.split(" ").map(w => w[0]).join("" ).slice(0, 3).toUpperCase()}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center gap-4 border-t border-black/70 bg-white px-10 py-10 text-center">
+              <div>
+                <h2 className="text-2xl font-black uppercase tracking-[0.35em] text-black md:text-[28px]">
+                  {currentFeatured?.title}
+                </h2>
+                <p className="mt-2 text-xs uppercase tracking-[0.4em] text-neutral-500">
+                  ({getCategoryCode(currentFeatured, selectedFeatured)})
+                </p>
+              </div>
+
+              <button
+                onClick={() => {
+                  if (currentFeatured?.id) {
+                    router.push(`/project/${currentFeatured.id}`)
+                  }
+                }}
+                className="mt-4 w-full max-w-[420px] rounded-full border border-black px-10 py-3 text-xs font-semibold uppercase tracking-[0.5em] text-black transition-all duration-300 hover:bg-black hover:text-white"
+              >
+                Read More
+              </button>
+
+              {sortedFeatured.length > 1 && (
+                <div className="mt-8 flex items-center gap-3">
+                  {sortedFeatured.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedFeatured(index)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        index === selectedFeatured
+                          ? "w-12 bg-black"
+                          : "w-6 bg-neutral-300 hover:bg-neutral-400"
+                      }`}
+                      aria-label={`Show featured project ${index + 1}`}
+                    />
+                  ))}
                 </div>
               )}
             </div>
-
-            {/* Featured Title */}
-            <h2 className="text-2xl md:text-3xl font-black text-center text-black uppercase tracking-wider mb-2">
-              {currentFeatured?.title}
-            </h2>
-
-            {/* Category Code */}
-            <p className="text-sm text-gray-600 tracking-widest mb-8">
-              ({getCategoryCode(currentFeatured, selectedFeatured)})
-            </p>
-
-            {/* Read More Button */}
-            <button
-              onClick={() => {
-                if (currentFeatured?.id) {
-                  router.push(`/project/${currentFeatured.id}`)
-                }
-              }}
-              className="w-full max-w-[400px] py-3 px-8 border border-black text-black text-sm font-medium uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300 cursor-pointer"
-            >
-              READ MORE
-            </button>
-
-            {/* Featured Navigation Dots */}
-            {sortedFeatured.length > 1 && (
-              <div className="flex gap-3 mt-12">
-                {sortedFeatured.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedFeatured(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      index === selectedFeatured
-                        ? "bg-black w-8"
-                        : "bg-gray-300 hover:bg-gray-400"
-                    }`}
-                  />
-                ))}
-              </div>
-            )}
           </motion.div>
         </div>
 
-        {/* Other Projects Sidebar - Right Side (30%) */}
-        <div className="bg-white border-l border-gray-200 lg:h-screen lg:sticky lg:top-0 overflow-y-auto">
-          <div className="flex flex-col">
+        {/* Sidebar */}
+        <aside className="w-full max-w-[380px] self-start border border-black/70 bg-white shadow-[0_22px_45px_rgba(0,0,0,0.08)] lg:sticky lg:top-24">
+          <div className="divide-y divide-neutral-200">
             {sortedOthers.map((project, index) => (
               <motion.div
                 key={project.id}
-                className="border-b border-gray-200 last:border-b-0"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.05, ease: [0.23, 1, 0.32, 1] }}
                 onMouseEnter={() => setHoveredProject(project.id)}
                 onMouseLeave={() => setHoveredProject(null)}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
+                className="group cursor-pointer bg-white"
               >
-                {/* Project Card */}
-                <div className="p-6">
-                  {/* Project Image */}
-                  <div className="w-full aspect-[4/3] mb-4 overflow-hidden bg-gray-100">
-                    {project.image ? (
-                      <motion.img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover"
-                        animate={{
-                          scale: hoveredProject === project.id ? 1.05 : 1,
-                        }}
-                        transition={{ duration: 0.4 }}
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                        <span className="text-gray-500 text-3xl font-black">
-                          {project.title.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()}
-                        </span>
-                      </div>
-                    )}
+                <div className="space-y-4 px-6 py-6">
+                  <div className="relative w-full overflow-hidden">
+                    <div className="aspect-[4/3] w-full overflow-hidden border border-black/70 bg-neutral-100">
+                      {project.image ? (
+                        <motion.img
+                          src={project.image}
+                          alt={project.title}
+                          className="h-full w-full object-cover"
+                          animate={{ scale: hoveredProject === project.id ? 1.04 : 1 }}
+                          transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center bg-gradient-to-r from-neutral-200 to-neutral-300 text-neutral-500">
+                          <span className="text-3xl font-black">
+                            {project.title.split(" ").map(w => w[0]).join("" ).slice(0, 2).toUpperCase()}
+                          </span>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Project Title */}
-                  <h3 className="text-base font-semibold text-black uppercase tracking-wide mb-1">
-                    {project.title}
-                  </h3>
+                  <div className="space-y-1 text-center">
+                    <h3 className="text-base font-black uppercase tracking-[0.35em] text-black">
+                      {project.title}
+                    </h3>
+                    <p className="text-[10px] uppercase tracking-[0.45em] text-neutral-500">
+                      ({getCategoryCode(project, index + featuredProjects.length)})
+                    </p>
+                  </div>
 
-                  {/* Category Code */}
-                  <p className="text-xs text-gray-500 tracking-wider mb-4">
-                    ({getCategoryCode(project, index + featuredProjects.length)})
-                  </p>
-
-                  {/* Read More Button */}
                   <button
-                    onClick={() => {
-                      if (project.id) {
-                        router.push(`/project/${project.id}`)
-                      }
-                    }}
-                    className="w-full py-2 px-4 border border-black text-black text-xs font-medium uppercase tracking-wider hover:bg-black hover:text-white transition-all duration-300 cursor-pointer"
+                    onClick={() => router.push(`/project/${project.id}`)}
+                    className="w-full rounded-full border border-black px-6 py-2 text-[11px] font-semibold uppercase tracking-[0.45em] text-black transition-all duration-300 group-hover:bg-black group-hover:text-white"
                   >
-                    READ MORE
+                    Read More
                   </button>
                 </div>
               </motion.div>
             ))}
           </div>
-        </div>
+
+          <div className="flex items-center justify-between border-t border-black/70 px-6 py-4 text-[11px] uppercase tracking-[0.45em] text-neutral-500">
+            <span>SW.</span>
+            <span>Instagram</span>
+          </div>
+        </aside>
       </div>
     </section>
   )

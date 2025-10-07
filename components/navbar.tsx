@@ -3,10 +3,16 @@
 import { motion } from "framer-motion"
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [showTooltip, setShowTooltip] = useState(false)
+  const pathname = usePathname()
+
+  if (pathname?.startsWith("/project/")) {
+    return null
+  }
 
   useEffect(() => {
     const handleScroll = () => {
