@@ -36,12 +36,12 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
 
   return (
     <section id="projects" className="relative w-full bg-white">
-      <div className="mx-auto w-full max-w-[1500px] px-6 pb-24 pt-28 lg:px-16">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,0.3fr)]">
+      <div className="mx-auto w-full max-w-[1400px] px-6 pb-24 pt-24 lg:px-10 lg:pb-32">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,0.2fr)]">
           {/* Featured Column */}
-          <div className="space-y-12 lg:sticky lg:top-28">
-            <div className="flex flex-col gap-3 text-xs uppercase tracking-[0.45em] text-neutral-500">
-              <span className="text-[10px]">Featured Portfolio</span>
+          <div className="space-y-10 lg:sticky lg:top-24">
+            <div className="flex flex-col gap-2 text-xs uppercase tracking-[0.45em] text-neutral-500">
+              <span>Featured Portfolio</span>
               {sortedFeatured.length > 1 && (
                 <div className="flex gap-2">
                   {sortedFeatured.map((project, index) => (
@@ -49,9 +49,7 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                       key={project.id}
                       onClick={() => setSelectedFeatured(index)}
                       className={`flex-1 rounded-full border border-neutral-900 px-4 py-2 text-[10px] font-semibold transition ${
-                        index === selectedFeatured
-                          ? "bg-neutral-900 text-white"
-                          : "bg-white text-neutral-700 hover:bg-neutral-100"
+                        index === selectedFeatured ? "bg-neutral-900 text-white" : "text-neutral-700 hover:bg-neutral-100"
                       }`}
                       aria-label={`Show featured project ${index + 1}`}
                     >
@@ -68,56 +66,59 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, ease: [0.23, 1, 0.32, 1] }}
-                className="overflow-hidden rounded-[40px] border border-neutral-900 bg-white shadow-[0_32px_70px_rgba(15,23,42,0.18)]"
+                className="space-y-8 rounded-[36px] border border-neutral-900 bg-white shadow-[0_36px_68px_rgba(15,23,42,0.18)]"
               >
-                <div className="relative aspect-[16/9] w-full border-b border-neutral-900 bg-black">
-                  {currentFeatured.image ? (
-                    <motion.img
-                      src={currentFeatured.image}
-                      alt={currentFeatured.title}
-                      className="h-full w-full object-cover"
-                      whileHover={{ scale: 1.02 }}
-                      transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                    />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-orange-400 via-orange-500 to-rose-500 text-white">
-                      <span className="text-6xl font-black uppercase tracking-[0.3em]">
-                        {currentFeatured.title
-                          .split(" ")
-                          .map((word) => word[0])
-                          .join("")
-                          .slice(0, 3)}
-                      </span>
-                    </div>
-                  )}
+                <div className="relative overflow-hidden rounded-t-[36px] border-b border-neutral-900 bg-black">
+                  <div className="relative aspect-[16/9] w-full">
+                    {currentFeatured.image ? (
+                      <motion.img
+                        src={currentFeatured.image}
+                        alt={currentFeatured.title}
+                        className="h-full w-full object-cover"
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-orange-400 via-orange-500 to-rose-500 text-white">
+                        <span className="text-6xl font-black uppercase tracking-[0.3em]">
+                          {currentFeatured.title
+                            .split(" ")
+                            .map((word) => word[0])
+                            .join("")
+                            .slice(0, 3)}
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                <div className="px-12 pb-12 pt-8 text-center">
-                  <h2 className="text-[clamp(1.9rem,2.6vw,2.6rem)] font-black uppercase tracking-[0.32em] text-neutral-900">
+                <div className="px-10 pb-10 pt-4 text-center">
+                  <h2 className="text-[clamp(1.8rem,2.6vw,2.4rem)] font-black uppercase tracking-[0.32em] text-neutral-900">
                     {currentFeatured.title}
                   </h2>
-                  <p className="mt-2 text-[11px] uppercase tracking-[0.48em] text-neutral-500">
+                  <p className="mt-3 text-[11px] uppercase tracking-[0.45em] text-neutral-500">
                     ({getCategoryCode(currentFeatured, selectedFeatured)})
                   </p>
 
-                  <div className="mt-6 flex flex-col items-center gap-3">
-                    <div className="h-1 w-full max-w-[360px] rounded-full border border-neutral-900" />
-                    <button
-                      onClick={() => currentFeatured.id && router.push(`/project/${currentFeatured.id}`)}
-                      className="w-full max-w-[360px] rounded-full border border-neutral-900 px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.5em] text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
-                    >
-                      Read More
-                    </button>
-                  </div>
+                  <p className="mt-6 text-sm leading-relaxed text-neutral-600">
+                    {currentFeatured.description || "A curated highlight selected from recent work."}
+                  </p>
+
+                  <button
+                    onClick={() => currentFeatured.id && router.push(`/project/${currentFeatured.id}`)}
+                    className="mt-8 inline-flex w-full max-w-[420px] justify-center rounded-full border border-neutral-900 px-10 py-3 text-[11px] font-semibold uppercase tracking-[0.5em] text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
+                  >
+                    Read More
+                  </button>
                 </div>
               </motion.div>
             )}
           </div>
 
           {/* Other Projects Column */}
-          <aside className="lg:sticky lg:top-28">
-            <div className="rounded-[40px] border border-neutral-900 bg-white shadow-[0_26px_60px_rgba(15,23,42,0.16)]">
-              <div className="max-h-[calc(100vh-220px)] overflow-y-auto scroll-smooth pr-2 lg:scrollbar-thin lg:scrollbar-track-transparent lg:scrollbar-thumb-neutral-300">
+          <aside className="lg:sticky lg:top-24">
+            <div className="rounded-[32px] border border-neutral-900 bg-white shadow-[0_28px_64px_rgba(15,23,42,0.15)]">
+              <div className="max-h-[calc(100vh-200px)] overflow-y-auto pr-2 lg:scrollbar-thin lg:scrollbar-track-transparent lg:scrollbar-thumb-neutral-300">
                 {sortedOthers.map((project, index) => (
                   <motion.article
                     key={project.id}
@@ -126,9 +127,9 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                     transition={{ duration: 0.4, delay: index * 0.05, ease: [0.23, 1, 0.32, 1] }}
                     onMouseEnter={() => setHoveredProject(project.id)}
                     onMouseLeave={() => setHoveredProject(null)}
-                    className="group border-b border-neutral-200 px-6 py-7 last:border-b-0"
+                    className="group border-b border-neutral-200 px-6 py-6 last:border-b-0"
                   >
-                    <div className="overflow-hidden rounded-[28px] border border-neutral-900 bg-neutral-100">
+                    <div className="overflow-hidden rounded-[24px] border border-neutral-900 bg-neutral-100">
                       {project.image ? (
                         <motion.img
                           src={project.image}
