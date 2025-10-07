@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import type { Project } from "@/types/project"
 
@@ -26,25 +26,7 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
   const sortedFeatured = [...featuredProjects].sort(sortByDate)
   const sortedOthers = [...otherProjects].sort(sortByDate)
 
-  const featuredCount = sortedFeatured.length
-
   const currentFeatured = sortedFeatured[selectedFeatured] || sortedFeatured[0]
-
-  useEffect(() => {
-    if (featuredCount <= 1) return
-
-    const interval = window.setInterval(() => {
-      setSelectedFeatured((prev) => (prev + 1) % featuredCount)
-    }, 8000)
-
-    return () => window.clearInterval(interval)
-  }, [featuredCount])
-
-  useEffect(() => {
-    if (selectedFeatured >= featuredCount) {
-      setSelectedFeatured(0)
-    }
-  }, [featuredCount, selectedFeatured])
 
   const getCategoryCode = (project: Project, index: number) => {
     const prefix = project.category?.substring(0, 2).toUpperCase() || "SM"
@@ -55,11 +37,11 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
   return (
     <section id="projects" className="relative w-full bg-white">
       <div className="mx-auto w-full max-w-[1500px] px-6 pb-24 pt-28 lg:px-16">
-        <div className="grid gap-12 items-start lg:grid-cols-[minmax(0,0.7fr)_minmax(0,0.3fr)]">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,0.3fr)]">
           {/* Featured Column */}
           <div className="space-y-12 lg:sticky lg:top-28">
-            <div className="flex flex-col gap-4 text-xs uppercase tracking-[0.45em] text-neutral-500">
-              <span className="text-[10px] tracking-[0.6em]">Featured Portfolio</span>
+            <div className="flex flex-col gap-3 text-xs uppercase tracking-[0.45em] text-neutral-500">
+              <span className="text-[10px]">Featured Portfolio</span>
               {sortedFeatured.length > 1 && (
                 <div className="flex gap-2">
                   {sortedFeatured.map((project, index) => (
@@ -86,7 +68,7 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, ease: [0.23, 1, 0.32, 1] }}
-                className="overflow-hidden rounded-[42px] border border-neutral-900 bg-white shadow-[0_38px_72px_rgba(15,23,42,0.18)]"
+                className="overflow-hidden rounded-[40px] border border-neutral-900 bg-white shadow-[0_32px_70px_rgba(15,23,42,0.18)]"
               >
                 <div className="relative aspect-[16/9] w-full border-b border-neutral-900 bg-black">
                   {currentFeatured.image ? (
@@ -99,7 +81,7 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-orange-400 via-orange-500 to-rose-500 text-white">
-                      <span className="text-6xl font-black uppercase tracking-[0.32em]">
+                      <span className="text-6xl font-black uppercase tracking-[0.3em]">
                         {currentFeatured.title
                           .split(" ")
                           .map((word) => word[0])
@@ -110,16 +92,16 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                   )}
                 </div>
 
-                <div className="px-12 pb-14 pt-10 text-center">
-                  <h2 className="text-[clamp(2rem,2.6vw,2.75rem)] font-black uppercase tracking-[0.32em] text-neutral-900">
+                <div className="px-12 pb-12 pt-8 text-center">
+                  <h2 className="text-[clamp(1.9rem,2.6vw,2.6rem)] font-black uppercase tracking-[0.32em] text-neutral-900">
                     {currentFeatured.title}
                   </h2>
-                  <p className="mt-3 text-[11px] uppercase tracking-[0.5em] text-neutral-500">
+                  <p className="mt-2 text-[11px] uppercase tracking-[0.48em] text-neutral-500">
                     ({getCategoryCode(currentFeatured, selectedFeatured)})
                   </p>
 
-                  <div className="mt-8 flex flex-col items-center gap-4">
-                    <div className="h-[0.45rem] w-full max-w-[360px] rounded-full border border-neutral-900" />
+                  <div className="mt-6 flex flex-col items-center gap-3">
+                    <div className="h-1 w-full max-w-[360px] rounded-full border border-neutral-900" />
                     <button
                       onClick={() => currentFeatured.id && router.push(`/project/${currentFeatured.id}`)}
                       className="w-full max-w-[360px] rounded-full border border-neutral-900 px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.5em] text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
@@ -134,8 +116,8 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
 
           {/* Other Projects Column */}
           <aside className="lg:sticky lg:top-28">
-            <div className="rounded-[42px] border border-neutral-900 bg-white shadow-[0_28px_62px_rgba(15,23,42,0.16)]">
-              <div className="max-h-[calc(100vh-240px)] overflow-y-auto scroll-smooth px-4 pb-6 pt-10 lg:px-6 lg:scrollbar-thin lg:scrollbar-track-transparent lg:scrollbar-thumb-neutral-300">
+            <div className="rounded-[40px] border border-neutral-900 bg-white shadow-[0_26px_60px_rgba(15,23,42,0.16)]">
+              <div className="max-h-[calc(100vh-220px)] overflow-y-auto scroll-smooth pr-2 lg:scrollbar-thin lg:scrollbar-track-transparent lg:scrollbar-thumb-neutral-300">
                 {sortedOthers.map((project, index) => (
                   <motion.article
                     key={project.id}
@@ -144,7 +126,7 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                     transition={{ duration: 0.4, delay: index * 0.05, ease: [0.23, 1, 0.32, 1] }}
                     onMouseEnter={() => setHoveredProject(project.id)}
                     onMouseLeave={() => setHoveredProject(null)}
-                    className="group border-b border-neutral-200 px-4 pb-12 pt-4 last:border-b-0"
+                    className="group border-b border-neutral-200 px-6 py-7 last:border-b-0"
                   >
                     <div className="overflow-hidden rounded-[28px] border border-neutral-900 bg-neutral-100">
                       {project.image ? (
@@ -156,7 +138,7 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                           transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
                         />
                       ) : (
-                        <div className="flex aspect-[4/3] w-full items-center justify-center text-3xl font-black uppercase tracking-[0.32em] text-neutral-500">
+                        <div className="flex h-[220px] w-full items-center justify-center text-3xl font-black uppercase tracking-[0.32em] text-neutral-500">
                           {project.title
                             .split(" ")
                             .map((word) => word[0])
@@ -166,7 +148,7 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                       )}
                     </div>
 
-                    <div className="mt-7 space-y-2 text-center">
+                    <div className="mt-5 space-y-2 text-center">
                       <h3 className="text-base font-black uppercase tracking-[0.35em] text-neutral-900">
                         {project.title}
                       </h3>
@@ -175,13 +157,9 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                       </p>
                     </div>
 
-                    <div className="mt-6 flex justify-center">
-                      <div className="h-[0.45rem] w-full max-w-[260px] rounded-full border border-neutral-900" />
-                    </div>
-
                     <button
                       onClick={() => project.id && router.push(`/project/${project.id}`)}
-                      className="mt-5 inline-flex w-full justify-center rounded-full border border-neutral-900 px-6 py-2 text-[11px] font-semibold uppercase tracking-[0.48em] text-neutral-900 transition group-hover:bg-neutral-900 group-hover:text-white"
+                      className="mt-5 inline-flex w-full justify-center rounded-full border border-neutral-900 px-6 py-2 text-[11px] font-semibold uppercase tracking-[0.45em] text-neutral-900 transition group-hover:bg-neutral-900 group-hover:text-white"
                     >
                       Read More
                     </button>
