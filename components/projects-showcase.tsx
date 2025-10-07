@@ -59,10 +59,10 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
       const { scrollTop, scrollHeight, clientHeight } = sidebarEl
       const delta = event.deltaY
 
-      const canScrollDown = delta > 0 && scrollTop + clientHeight < scrollHeight
-      const canScrollUp = delta < 0 && scrollTop > 0
+      const atTop = scrollTop === 0
+      const atBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight
 
-      if (canScrollDown || canScrollUp) {
+      if ((delta < 0 && !atTop) || (delta > 0 && !atBottom)) {
         event.preventDefault()
         sidebarEl.scrollBy({ top: delta, behavior: "auto" })
       }
@@ -200,11 +200,6 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                 </div>
               </motion.div>
             ))}
-          </div>
-
-          <div className="flex items-center justify-between border-t border-black/70 px-6 py-4 text-[11px] uppercase tracking-[0.45em] text-neutral-500">
-            <span>SW.</span>
-            <span>Instagram</span>
           </div>
         </aside>
       </div>
