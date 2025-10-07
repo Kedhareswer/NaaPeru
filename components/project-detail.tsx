@@ -46,13 +46,22 @@ export function ProjectDetail({ project, allProjects }: ProjectDetailProps) {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Header with back button */}
-      <header className="border-b border-gray-200 px-6 py-4">
-        <button
-          onClick={() => router.back()}
-          className="flex items-center gap-2 text-black hover:text-gray-600 transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5" />
-        </button>
+      <header className="sticky top-0 z-40 border-b border-gray-200 bg-white/95 backdrop-blur">
+        <div className="flex items-center justify-between px-6 lg:px-12 py-4">
+          <button
+            onClick={() => router.back()}
+            className="flex items-center gap-3 px-3 py-2 text-black hover:text-gray-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            aria-label="Go back"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span className="text-xs uppercase tracking-[0.4em] hidden sm:inline-block">Back</span>
+          </button>
+          <div className="flex items-center gap-2">
+            <span className="text-xl lg:text-2xl font-black uppercase tracking-[0.4em]">K</span>
+            <span className="text-base text-sky-500">•</span>
+          </div>
+          <span className="text-xs uppercase tracking-[0.35em] text-gray-500">Project Detail</span>
+        </div>
       </header>
 
       {/* Main Content */}
