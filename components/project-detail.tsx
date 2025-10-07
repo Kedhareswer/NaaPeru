@@ -19,6 +19,11 @@ export function ProjectDetail({ project, allProjects }: ProjectDetailProps) {
   // Create an array of images for the gallery (project image + placeholder images)
   const galleryImages = project.image ? [project.image] : []
 
+  // Get next and previous projects
+  const currentIndex = allProjects.findIndex(p => p.id === project.id)
+  const nextProject = allProjects[(currentIndex + 1) % allProjects.length]
+  const previousProject = allProjects[(currentIndex - 1 + allProjects.length) % allProjects.length]
+
   const getCategoryCode = (proj: Project) => {
     const index = allProjects.findIndex(p => p.id === proj.id)
     const prefix = proj.category?.substring(0, 2).toUpperCase() || "SM"
@@ -52,70 +57,162 @@ export function ProjectDetail({ project, allProjects }: ProjectDetailProps) {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col lg:flex-row">
-        {/* Image Gallery Area - Left Side (70%) */}
-        <div className="flex-1 lg:w-[70%] bg-black relative flex items-center justify-center p-8 lg:p-16">
-          {/* Project Title Overlay */}
-          <div className="absolute top-8 left-8 lg:top-12 lg:left-12 z-10">
-            <h1 className="text-white text-3xl lg:text-5xl xl:text-6xl font-black uppercase tracking-wider">
-              {project.title}
-            </h1>
-            <p className="text-white text-sm lg:text-base tracking-widest mt-2">
-              ({getCategoryCode(project)})
-            </p>
-          </div>
+        {/* Left Side (70%) - Gallery + Navigation */}
+        <div className="flex-1 lg:w-[70%] flex flex-col">
+          {/* Image Gallery Area */}
+          <div className="bg-black relative flex items-center justify-center p-8 lg:p-16 min-h-[60vh] lg:min-h-[70vh]">
+            {/* Project Title Overlay */}
+            <div className="absolute top-8 left-8 lg:top-12 lg:left-12 z-10">
+              <h1 className="text-white text-3xl lg:text-5xl xl:text-6xl font-black uppercase tracking-wider">
+                {project.title}
+              </h1>
+              <p className="text-white text-sm lg:text-base tracking-widest mt-2">
+                ({getCategoryCode(project)})
+              </p>
+            </div>
 
-          {/* Main Image Display */}
-          <div className="relative w-full h-full flex items-center justify-center max-w-5xl">
-            <AnimatePresence mode="wait">
-              {galleryImages.length > 0 ? (
-                <motion.img
-                  key={currentImageIndex}
-                  src={galleryImages[currentImageIndex]}
-                  alt={project.title}
-                  className="max-w-full max-h-[70vh] object-contain"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4 }}
-                />
-              ) : (
-                <motion.div
-                  className="w-full max-w-2xl aspect-video bg-gradient-to-br from-orange-400 via-orange-500 to-red-600 flex items-center justify-center rounded-lg"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  <span className="text-white text-8xl font-black">
-                    {project.title.split(" ").map(w => w[0]).join("").slice(0, 3).toUpperCase()}
-                  </span>
-                </motion.div>
+            {/* Main Image Display */}
+            <div className="relative w-full h-full flex items-center justify-center max-w-5xl">
+              <AnimatePresence mode="wait">
+                {galleryImages.length > 0 ? (
+                  <motion.img
+                    key={currentImageIndex}
+                    src={galleryImages[currentImageIndex]}
+                    alt={project.title}
+                    className="max-w-full max-h-[50vh] lg:max-h-[60vh] object-contain"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.4 }}
+                  />
+                ) : (
+                  <motion.div
+                    className="w-full max-w-2xl aspect-video bg-gradient-to-br from-orange-400 via-orange-500 to-red-600 flex items-center justify-center rounded-lg"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    <span className="text-white text-8xl font-black">
+                      {project.title.split(" ").map(w => w[0]).join("").slice(0, 3).toUpperCase()}
+                    </span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Navigation Arrows (if multiple images) */}
+              {galleryImages.length > 1 && (
+                <>
+                  <button
+                    onClick={prevImage}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center transition-all"
+                  >
+                    <ChevronLeft className="w-6 h-6 text-white" />
+                  </button>
+                  <button
+                    onClick={nextImage}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center transition-all"
+                  >
+                    <ChevronRight className="w-6 h-6 text-white" />
+                  </button>
+                </>
               )}
-            </AnimatePresence>
+            </div>
 
-            {/* Navigation Arrows (if multiple images) */}
+            {/* Image Counter (if multiple images) */}
             {galleryImages.length > 1 && (
-              <>
-                <button
-                  onClick={prevImage}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center transition-all"
-                >
-                  <ChevronLeft className="w-6 h-6 text-white" />
-                </button>
-                <button
-                  onClick={nextImage}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center transition-all"
-                >
-                  <ChevronRight className="w-6 h-6 text-white" />
-                </button>
-              </>
+              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white text-sm">
+                {currentImageIndex + 1} / {galleryImages.length}
+              </div>
             )}
           </div>
 
-          {/* Image Counter (if multiple images) */}
-          {galleryImages.length > 1 && (
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white text-sm">
-              {currentImageIndex + 1} / {galleryImages.length}
+          {/* Next/Previous Project Navigation */}
+          <div className="bg-white border-t border-gray-200 p-8 lg:p-12">
+            <div className="max-w-4xl">
+              {/* Next Project */}
+              {nextProject && (
+                <div className="mb-12">
+                  <h2 className="text-5xl lg:text-6xl xl:text-7xl font-black uppercase tracking-tight mb-8 text-black">
+                    NEXT
+                  </h2>
+                  <div className="max-w-sm">
+                    {/* Next Project Image */}
+                    <div className="w-full aspect-[4/3] mb-6 overflow-hidden">
+                      {nextProject.image ? (
+                        <img
+                          src={nextProject.image}
+                          alt={nextProject.title}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                          <span className="text-gray-500 text-4xl font-black">
+                            {nextProject.title.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    {/* Next Project Title */}
+                    <h3 className="text-lg font-black uppercase tracking-wide mb-2 text-black">
+                      {nextProject.title}
+                    </h3>
+                    {/* Next Project Code */}
+                    <p className="text-xs tracking-widest mb-6 text-gray-600">
+                      ({getCategoryCode(nextProject)})
+                    </p>
+                    {/* Explore Button */}
+                    <button
+                      onClick={() => router.push(`/project/${nextProject.id}`)}
+                      className="w-full py-3 px-6 border border-black text-black text-xs font-medium uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300"
+                    >
+                      EXPLORE PROJECT
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Previous Project */}
+              {previousProject && previousProject.id !== nextProject?.id && (
+                <div>
+                  <h2 className="text-5xl lg:text-6xl xl:text-7xl font-black uppercase tracking-tight mb-8 text-black">
+                    PREVIOUS
+                  </h2>
+                  <div className="max-w-sm">
+                    {/* Previous Project Image */}
+                    <div className="w-full aspect-[4/3] mb-6 overflow-hidden">
+                      {previousProject.image ? (
+                        <img
+                          src={previousProject.image}
+                          alt={previousProject.title}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                          <span className="text-gray-500 text-4xl font-black">
+                            {previousProject.title.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    {/* Previous Project Title */}
+                    <h3 className="text-lg font-black uppercase tracking-wide mb-2 text-black">
+                      {previousProject.title}
+                    </h3>
+                    {/* Previous Project Code */}
+                    <p className="text-xs tracking-widest mb-6 text-gray-600">
+                      ({getCategoryCode(previousProject)})
+                    </p>
+                    {/* Explore Button */}
+                    <button
+                      onClick={() => router.push(`/project/${previousProject.id}`)}
+                      className="w-full py-3 px-6 border border-black text-black text-xs font-medium uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300"
+                    >
+                      EXPLORE PROJECT
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
 
         {/* Info Sidebar - Right Side (30%) */}
