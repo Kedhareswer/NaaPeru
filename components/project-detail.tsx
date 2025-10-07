@@ -57,37 +57,38 @@ export function ProjectDetail({ project, allProjects }: ProjectDetailProps) {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col lg:flex-row">
-        {/* Left Side (70%) - Gallery + Navigation */}
+        {/* Left Side (70%) - Title + Gallery + Navigation */}
         <div className="flex-1 lg:w-[70%] flex flex-col">
-          {/* Image Gallery Area */}
-          <div className="bg-black relative flex items-center justify-center p-8 lg:p-16 min-h-[60vh] lg:min-h-[70vh]">
-            {/* Project Title Overlay */}
-            <div className="absolute top-8 left-8 lg:top-12 lg:left-12 z-10">
-              <h1 className="text-white text-3xl lg:text-5xl xl:text-6xl font-black uppercase tracking-wider">
+          {/* Title Block */}
+          <div className="bg-white px-6 sm:px-8 lg:px-12 pt-8 pb-6">
+            <div className="flex items-end justify-between">
+              <h1 className="text-3xl lg:text-5xl xl:text-6xl font-black uppercase tracking-wider text-black">
                 {project.title}
               </h1>
-              <p className="text-white text-sm lg:text-base tracking-widest mt-2">
-                ({getCategoryCode(project)})
-              </p>
+              <p className="hidden sm:block text-sm lg:text-base tracking-widest text-gray-700">({getCategoryCode(project)})</p>
             </div>
+            <div className="mt-4 border-b border-gray-900" />
+          </div>
 
+          {/* Image Gallery Area - full-height within column */}
+          <div className="bg-black relative flex items-center justify-center px-6 sm:px-8 lg:px-12 py-8 min-h-[70vh]">
             {/* Main Image Display */}
-            <div className="relative w-full h-full flex items-center justify-center max-w-5xl">
+            <div className="relative w-full h-full flex items-center justify-center">
               <AnimatePresence mode="wait">
                 {galleryImages.length > 0 ? (
                   <motion.img
                     key={currentImageIndex}
                     src={galleryImages[currentImageIndex]}
                     alt={project.title}
-                    className="max-w-full max-h-[50vh] lg:max-h-[60vh] object-contain"
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    className="w-full h-[65vh] lg:h-[75vh] object-contain"
+                    initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
                     transition={{ duration: 0.4 }}
                   />
                 ) : (
                   <motion.div
-                    className="w-full max-w-2xl aspect-video bg-gradient-to-br from-orange-400 via-orange-500 to-red-600 flex items-center justify-center rounded-lg"
+                    className="w-full max-w-3xl aspect-video bg-gradient-to-br from-orange-400 via-orange-500 to-red-600 flex items-center justify-center"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                   >
@@ -119,95 +120,53 @@ export function ProjectDetail({ project, allProjects }: ProjectDetailProps) {
 
             {/* Image Counter (if multiple images) */}
             {galleryImages.length > 1 && (
-              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white text-sm">
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-sm">
                 {currentImageIndex + 1} / {galleryImages.length}
               </div>
             )}
           </div>
 
-          {/* Next/Previous Project Navigation */}
-          <div className="bg-white border-t border-gray-200 p-8 lg:p-12">
-            <div className="max-w-4xl">
-              {/* Next Project */}
-              {nextProject && (
-                <div className="mb-12">
-                  <h2 className="text-5xl lg:text-6xl xl:text-7xl font-black uppercase tracking-tight mb-8 text-black">
-                    NEXT
-                  </h2>
+          {/* Previous | Next - side by side */}
+          <div className="bg-white border-t border-gray-200 px-6 sm:px-8 lg:px-12 py-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {/* Previous (Left) */}
+              {previousProject && (
+                <div>
+                  <h2 className="text-5xl lg:text-6xl font-black uppercase tracking-tight mb-8 text-black">PREVIOUS</h2>
                   <div className="max-w-sm">
-                    {/* Next Project Image */}
                     <div className="w-full aspect-[4/3] mb-6 overflow-hidden">
-                      {nextProject.image ? (
-                        <img
-                          src={nextProject.image}
-                          alt={nextProject.title}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                        />
+                      {previousProject.image ? (
+                        <img src={previousProject.image} alt={previousProject.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                          <span className="text-gray-500 text-4xl font-black">
-                            {nextProject.title.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()}
-                          </span>
+                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                          <span className="text-gray-500 text-4xl font-black">{previousProject.title.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()}</span>
                         </div>
                       )}
                     </div>
-                    {/* Next Project Title */}
-                    <h3 className="text-lg font-black uppercase tracking-wide mb-2 text-black">
-                      {nextProject.title}
-                    </h3>
-                    {/* Next Project Code */}
-                    <p className="text-xs tracking-widest mb-6 text-gray-600">
-                      ({getCategoryCode(nextProject)})
-                    </p>
-                    {/* Explore Button */}
-                    <button
-                      onClick={() => router.push(`/project/${nextProject.id}`)}
-                      className="w-full py-3 px-6 border border-black text-black text-xs font-medium uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300"
-                    >
-                      EXPLORE PROJECT
-                    </button>
+                    <h3 className="text-lg font-black uppercase tracking-wide mb-2 text-black">{previousProject.title}</h3>
+                    <p className="text-xs tracking-widest mb-6 text-gray-600">({getCategoryCode(previousProject)})</p>
+                    <button onClick={() => router.push(`/project/${previousProject.id}`)} className="w-full py-3 px-6 border border-black text-black text-xs font-medium uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300">EXPLORE PROJECT</button>
                   </div>
                 </div>
               )}
 
-              {/* Previous Project */}
-              {previousProject && previousProject.id !== nextProject?.id && (
-                <div>
-                  <h2 className="text-5xl lg:text-6xl xl:text-7xl font-black uppercase tracking-tight mb-8 text-black">
-                    PREVIOUS
-                  </h2>
-                  <div className="max-w-sm">
-                    {/* Previous Project Image */}
+              {/* Next (Right) */}
+              {nextProject && (
+                <div className="md:text-right">
+                  <h2 className="text-5xl lg:text-6xl font-black uppercase tracking-tight mb-8 text-black">NEXT</h2>
+                  <div className="md:ml-auto max-w-sm">
                     <div className="w-full aspect-[4/3] mb-6 overflow-hidden">
-                      {previousProject.image ? (
-                        <img
-                          src={previousProject.image}
-                          alt={previousProject.title}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                        />
+                      {nextProject.image ? (
+                        <img src={nextProject.image} alt={nextProject.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                          <span className="text-gray-500 text-4xl font-black">
-                            {previousProject.title.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()}
-                          </span>
+                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                          <span className="text-gray-500 text-4xl font-black">{nextProject.title.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()}</span>
                         </div>
                       )}
                     </div>
-                    {/* Previous Project Title */}
-                    <h3 className="text-lg font-black uppercase tracking-wide mb-2 text-black">
-                      {previousProject.title}
-                    </h3>
-                    {/* Previous Project Code */}
-                    <p className="text-xs tracking-widest mb-6 text-gray-600">
-                      ({getCategoryCode(previousProject)})
-                    </p>
-                    {/* Explore Button */}
-                    <button
-                      onClick={() => router.push(`/project/${previousProject.id}`)}
-                      className="w-full py-3 px-6 border border-black text-black text-xs font-medium uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300"
-                    >
-                      EXPLORE PROJECT
-                    </button>
+                    <h3 className="text-lg font-black uppercase tracking-wide mb-2 text-black">{nextProject.title}</h3>
+                    <p className="text-xs tracking-widest mb-6 text-gray-600">({getCategoryCode(nextProject)})</p>
+                    <button onClick={() => router.push(`/project/${nextProject.id}`)} className="w-full py-3 px-6 border border-black text-black text-xs font-medium uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300">EXPLORE PROJECT</button>
                   </div>
                 </div>
               )}

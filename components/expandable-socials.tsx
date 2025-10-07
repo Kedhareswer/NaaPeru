@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
 
 type SocialLink = {
@@ -18,6 +18,12 @@ type ExpandableSocialsProps = {
 
 export function ExpandableSocials({ email, github, linkedin, kaggle }: ExpandableSocialsProps) {
   const [isExpanded, setIsExpanded] = useState(false)
+
+  const containerTransition = {
+    type: "spring" as const,
+    stiffness: 260,
+    damping: 28,
+  }
 
   const socials: SocialLink[] = [
     {
@@ -63,21 +69,25 @@ export function ExpandableSocials({ email, github, linkedin, kaggle }: Expandabl
       className="relative flex items-center justify-center pb-6"
       onHoverStart={() => setIsExpanded(true)}
       onHoverEnd={() => setIsExpanded(false)}
-      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.2, duration: 0.6 }}
+      transition={{ delay: 1.2, duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
     >
       {/* Container that expands */}
       <motion.div
-        className="relative flex items-center justify-center gap-3 px-4 py-2 bg-zinc-200/60 backdrop-blur-sm rounded-full shadow-sm"
+        className="relative flex items-center justify-center gap-3 px-4 py-2 bg-zinc-200/70 backdrop-blur-md rounded-full shadow-sm"
         animate={{
           width: isExpanded ? "auto" : "80px",
           paddingLeft: isExpanded ? "1.5rem" : "1rem",
           paddingRight: isExpanded ? "1.5rem" : "1rem",
+          boxShadow: isExpanded
+            ? "0px 12px 35px rgba(15, 23, 42, 0.18)"
+            : "0px 6px 18px rgba(15, 23, 42, 0.08)",
+          backgroundColor: isExpanded ? "rgba(244,244,245,0.85)" : "rgba(244,244,245,0.65)",
+          scale: isExpanded ? 1.04 : 1,
         }}
         transition={{
-          duration: 0.5,
-          ease: [0.23, 1, 0.32, 1],
+          duration: 0.4,
+          ease: [0.16, 1, 0.3, 1],
         }}
       >
         {/* Three dots (visible when collapsed) */}
@@ -86,19 +96,23 @@ export function ExpandableSocials({ email, github, linkedin, kaggle }: Expandabl
           animate={{
             opacity: isExpanded ? 0 : 1,
             scale: isExpanded ? 0.5 : 1,
+            y: isExpanded ? -8 : 0,
           }}
-          transition={{ duration: 0.3 }}
+          transition={{
+            duration: 0.4,
+            ease: [0.16, 1, 0.3, 1],
+          }}
         >
           {[0, 1, 2].map((i) => (
             <motion.div
               key={i}
               className="w-1.5 h-1.5 rounded-full bg-zinc-500"
               animate={{
-                scale: !isExpanded ? [1, 1.15, 1] : 0.5,
-                opacity: !isExpanded ? [0.6, 1, 0.6] : 0,
+                scale: !isExpanded ? [1, 1.18, 1] : 0.5,
+                opacity: !isExpanded ? [0.45, 1, 0.45] : 0,
               }}
               transition={{
-                duration: 2,
+                duration: 1.6,
                 repeat: Infinity,
                 delay: i * 0.3,
               }}
@@ -107,59 +121,59 @@ export function ExpandableSocials({ email, github, linkedin, kaggle }: Expandabl
         </motion.div>
 
         {/* Social icons (visible when expanded) */}
-        <motion.div
-          className="flex items-center gap-4"
-          animate={{
-            opacity: isExpanded ? 1 : 0,
-          }}
-          transition={{ duration: 0.3, delay: isExpanded ? 0.15 : 0 }}
-        >
-          {socials.map((social, index) => (
-            <motion.a
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative flex flex-col items-center gap-2"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{
-                opacity: isExpanded ? 1 : 0,
-                y: isExpanded ? 0 : 10,
-                scale: isExpanded ? 1 : 0.8,
-              }}
-              transition={{
-                duration: 0.3,
-                delay: isExpanded ? 0.1 + index * 0.08 : 0,
-              }}
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              className="flex items-center gap-4"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 6 }}
+              transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
             >
-              {/* Icon circle */}
-              <motion.div
-                className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-zinc-800 shadow-sm transition-colors duration-300"
-                whileHover={{
-                  backgroundColor:
-                    index === 0
-                      ? "#0077b5"  // LinkedIn blue
-                      : index === 1
-                        ? "#ea4335"  // Mail red
-                        : index === 2
-                          ? "#000000"  // GitHub black
-                          : "#20beff",  // Kaggle blue
-                  color: "#ffffff",
-                  scale: 1.05,
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {/** Reduce icon size */}
-                {typeof social.icon === "object" ? (
-                  // Override nested svg sizes by wrapping with a div if needed
-                  <div className="[&_svg]:w-5 [&_svg]:h-5">{social.icon}</div>
-                ) : (
-                  social.icon
-                )}
-              </motion.div>
-            </motion.a>
-          ))}
-        </motion.div>
+              {socials.map((social, index) => (
+                <motion.a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative flex flex-col items-center gap-2"
+                  initial={{ opacity: 0, y: 12, scale: 0.85 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 12, scale: 0.9 }}
+                  transition={{
+                    ...containerTransition,
+                    delay: index * 0.06,
+                  }}
+                >
+                  {/* Icon circle */}
+                  <motion.div
+                    className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-zinc-800 shadow-sm transition-colors duration-300"
+                    whileHover={{
+                      backgroundColor:
+                        index === 0
+                          ? "#0077b5"
+                          : index === 1
+                            ? "#ea4335"
+                            : index === 2
+                              ? "#000000"
+                              : "#20beff",
+                      color: "#ffffff",
+                      scale: 1.08,
+                      boxShadow: "0px 12px 25px rgba(15, 23, 42, 0.22)",
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {typeof social.icon === "object" ? (
+                      <div className="[&_svg]:w-5 [&_svg]:h-5">{social.icon}</div>
+                    ) : (
+                      social.icon
+                    )}
+                  </motion.div>
+                </motion.a>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </motion.div>
   )

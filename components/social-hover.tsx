@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
 import { SocialTooltip, SocialItem } from "@/components/ui/social-media"
 
@@ -57,21 +57,25 @@ export function SocialHover({ email, github, linkedin, kaggle }: SocialHoverProp
       className="relative flex items-center justify-center pb-6"
       onHoverStart={() => setIsExpanded(true)}
       onHoverEnd={() => setIsExpanded(false)}
-      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.2, duration: 0.6 }}
+      transition={{ delay: 1.2, duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
     >
       {/* Container that expands */}
       <motion.div
-        className="relative flex items-center justify-center gap-3 px-4 py-2 bg-zinc-200/60 backdrop-blur-sm rounded-full shadow-sm"
+        className="relative flex items-center justify-center gap-3 px-4 py-2 bg-zinc-200/70 backdrop-blur-md rounded-full shadow-sm"
         animate={{
           width: isExpanded ? "auto" : "80px",
           paddingLeft: isExpanded ? "1.5rem" : "1rem",
           paddingRight: isExpanded ? "1.5rem" : "1rem",
+          boxShadow: isExpanded
+            ? "0px 12px 35px rgba(15, 23, 42, 0.18)"
+            : "0px 6px 18px rgba(15, 23, 42, 0.08)",
+          backgroundColor: isExpanded ? "rgba(244,244,245,0.85)" : "rgba(244,244,245,0.65)",
+          scale: isExpanded ? 1.04 : 1,
         }}
         transition={{
-          duration: 0.5,
-          ease: [0.23, 1, 0.32, 1],
+          duration: 0.4,
+          ease: [0.16, 1, 0.3, 1],
         }}
       >
         {/* Three dots (visible when collapsed) */}
@@ -80,19 +84,20 @@ export function SocialHover({ email, github, linkedin, kaggle }: SocialHoverProp
           animate={{
             opacity: isExpanded ? 0 : 1,
             scale: isExpanded ? 0.5 : 1,
+            y: isExpanded ? -8 : 0,
           }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         >
           {[0, 1, 2].map((i) => (
             <motion.div
               key={i}
               className="w-1.5 h-1.5 rounded-full bg-zinc-500"
               animate={{
-                scale: !isExpanded ? [1, 1.15, 1] : 0.5,
-                opacity: !isExpanded ? [0.6, 1, 0.6] : 0,
+                scale: !isExpanded ? [1, 1.18, 1] : 0.5,
+                opacity: !isExpanded ? [0.45, 1, 0.45] : 0,
               }}
               transition={{
-                duration: 2,
+                duration: 1.6,
                 repeat: Infinity,
                 delay: i * 0.3,
               }}
@@ -101,14 +106,18 @@ export function SocialHover({ email, github, linkedin, kaggle }: SocialHoverProp
         </motion.div>
 
         {/* Social icons (visible when expanded) */}
-        <motion.div
-          animate={{
-            opacity: isExpanded ? 1 : 0,
-          }}
-          transition={{ duration: 0.3, delay: isExpanded ? 0.15 : 0 }}
-        >
-          <SocialTooltip items={socialLinks} />
-        </motion.div>
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 6 }}
+              transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+            >
+              <SocialTooltip items={socialLinks} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </motion.div>
   )
