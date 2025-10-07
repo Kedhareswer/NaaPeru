@@ -130,52 +130,6 @@ export function ProjectDetail({ project, allProjects }: ProjectDetailProps) {
             )}
           </div>
 
-          {/* Previous | Next - side by side */}
-          <div className="bg-white border-t border-gray-200 px-6 sm:px-8 lg:px-12 py-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              {/* Previous (Left) */}
-              {previousProject && (
-                <div>
-                  <h2 className="text-5xl lg:text-6xl font-black uppercase tracking-tight mb-8 text-black">PREVIOUS</h2>
-                  <div className="max-w-sm">
-                    <div className="w-full aspect-[4/3] mb-6 overflow-hidden">
-                      {previousProject.image ? (
-                        <img src={previousProject.image} alt={previousProject.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                      ) : (
-                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                          <span className="text-gray-500 text-4xl font-black">{previousProject.title.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()}</span>
-                        </div>
-                      )}
-                    </div>
-                    <h3 className="text-lg font-black uppercase tracking-wide mb-2 text-black">{previousProject.title}</h3>
-                    <p className="text-xs tracking-widest mb-6 text-gray-600">({getCategoryCode(previousProject)})</p>
-                    <button onClick={() => router.push(`/project/${previousProject.id}`)} className="w-full py-3 px-6 border border-black text-black text-xs font-medium uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300">EXPLORE PROJECT</button>
-                  </div>
-                </div>
-              )}
-
-              {/* Next (Right) */}
-              {nextProject && (
-                <div className="md:text-right">
-                  <h2 className="text-5xl lg:text-6xl font-black uppercase tracking-tight mb-8 text-black">NEXT</h2>
-                  <div className="md:ml-auto max-w-sm">
-                    <div className="w-full aspect-[4/3] mb-6 overflow-hidden">
-                      {nextProject.image ? (
-                        <img src={nextProject.image} alt={nextProject.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                      ) : (
-                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                          <span className="text-gray-500 text-4xl font-black">{nextProject.title.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()}</span>
-                        </div>
-                      )}
-                    </div>
-                    <h3 className="text-lg font-black uppercase tracking-wide mb-2 text-black">{nextProject.title}</h3>
-                    <p className="text-xs tracking-widest mb-6 text-gray-600">({getCategoryCode(nextProject)})</p>
-                    <button onClick={() => router.push(`/project/${nextProject.id}`)} className="w-full py-3 px-6 border border-black text-black text-xs font-medium uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300">EXPLORE PROJECT</button>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
         </div>
 
         {/* Info Sidebar - Right Side (30%) */}

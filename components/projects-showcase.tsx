@@ -29,9 +29,10 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
 
   const sortedFeatured = [...featuredProjects].sort(sortByDate)
   const sortedOthers = [...otherProjects].sort(sortByDate)
+  const displayFeatured = sortedFeatured.length > 0 ? sortedFeatured : sortedOthers
 
   // Current featured project to display
-  const currentFeatured = sortedFeatured[selectedFeatured] || sortedFeatured[0]
+  const currentFeatured = displayFeatured[selectedFeatured % (displayFeatured.length || 1)]
 
   const getCategoryCode = (project: Project, index: number) => {
     // Generate category codes like SM001, SM002, etc.
@@ -41,14 +42,14 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
   }
 
   useEffect(() => {
-    if (sortedFeatured.length <= 1) return
+    if (displayFeatured.length <= 1) return
 
     const intervalId = window.setInterval(() => {
-      setSelectedFeatured((prev) => (prev + 1) % sortedFeatured.length)
+      setSelectedFeatured((prev) => (prev + 1) % displayFeatured.length)
     }, 6500)
 
     return () => window.clearInterval(intervalId)
-  }, [sortedFeatured.length])
+  }, [displayFeatured.length])
 
   useEffect(() => {
     const sectionEl = sectionRef.current
@@ -97,7 +98,7 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-gradient-to-r from-orange-400 to-rose-500 text-white">
                     <span className="text-6xl font-black">
-                      {currentFeatured?.title.split(" ").map(w => w[0]).join("" ).slice(0, 3).toUpperCase()}
+                      {currentFeatured?.title ? currentFeatured.title.split(" ").map(w => w[0]).join("" ).slice(0, 3).toUpperCase() : "PRJ"}
                     </span>
                   </div>
                 )}
@@ -107,10 +108,10 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
             <div className="flex flex-col items-center gap-4 border-t border-black/70 bg-white px-10 py-10 text-center">
               <div>
                 <h2 className="text-2xl font-black uppercase tracking-[0.35em] text-black md:text-[28px]">
-                  {currentFeatured?.title}
+                  {currentFeatured?.title || "Untitled Project"}
                 </h2>
                 <p className="mt-2 text-xs uppercase tracking-[0.4em] text-neutral-500">
-                  ({getCategoryCode(currentFeatured, selectedFeatured)})
+                  ({currentFeatured ? getCategoryCode(currentFeatured, selectedFeatured) : "PRJ000"})
                 </p>
               </div>
 
@@ -125,9 +126,9 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                 Read More
               </button>
 
-              {sortedFeatured.length > 1 && (
+              {displayFeatured.length > 1 && (
                 <div className="mt-8 flex items-center gap-3">
-                  {sortedFeatured.map((_, index) => (
+                  {displayFeatured.map((_, index) => (
                     <button
                       key={index}
                       onClick={() => setSelectedFeatured(index)}
