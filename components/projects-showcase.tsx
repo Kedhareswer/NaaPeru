@@ -66,7 +66,7 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                     <button
                       key={project.id}
                       onClick={() => setSelectedFeatured(index)}
-                      className={`flex-1 rounded-full border border-neutral-900 px-4 py-2 text-[10px] font-semibold transition ${
+                      className={`flex-1 border border-neutral-900 px-4 py-2 text-[10px] font-semibold transition ${
                         index === selectedFeatured
                           ? "bg-neutral-900 text-white"
                           : "bg-white text-neutral-700 hover:bg-neutral-100"
@@ -86,7 +86,7 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, ease: [0.23, 1, 0.32, 1] }}
-                className="overflow-hidden rounded-[42px] border border-neutral-900 bg-white shadow-[0_38px_72px_rgba(15,23,42,0.18)]"
+                className="overflow-hidden border border-neutral-900 bg-white shadow-[0_38px_72px_rgba(15,23,42,0.18)]"
               >
                 <div className="relative aspect-[16/9] w-full border-b border-neutral-900 bg-black">
                   {currentFeatured.image ? (
@@ -119,10 +119,10 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                   </p>
 
                   <div className="mt-8 flex flex-col items-center gap-4">
-                    <div className="h-[0.45rem] w-full max-w-[360px] rounded-full border border-neutral-900" />
+                    <div className="h-[0.45rem] w-full max-w-[360px] border border-neutral-900" />
                     <button
                       onClick={() => currentFeatured.id && router.push(`/project/${currentFeatured.id}`)}
-                      className="w-full max-w-[360px] rounded-full border border-neutral-900 px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.5em] text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
+                      className="w-full max-w-[360px] border border-neutral-900 px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.5em] text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
                     >
                       Read More
                     </button>
@@ -134,7 +134,7 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
 
           {/* Other Projects Column */}
           <aside className="lg:sticky lg:top-28">
-            <div className="rounded-[42px] border border-neutral-900 bg-white shadow-[0_28px_62px_rgba(15,23,42,0.16)]">
+            <div className="border border-neutral-900 bg-white shadow-[0_28px_62px_rgba(15,23,42,0.16)]">
               <div className="max-h-[calc(100vh-240px)] overflow-y-auto scroll-smooth px-4 pb-6 pt-10 lg:px-6 lg:scrollbar-thin lg:scrollbar-track-transparent lg:scrollbar-thumb-neutral-300">
                 {sortedOthers.map((project, index) => (
                   <motion.article
@@ -146,7 +146,7 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                     onMouseLeave={() => setHoveredProject(null)}
                     className="group border-b border-neutral-200 px-4 pb-12 pt-4 last:border-b-0"
                   >
-                    <div className="overflow-hidden rounded-[28px] border border-neutral-900 bg-neutral-100">
+                    <div className="overflow-hidden border border-neutral-900 bg-neutral-100">
                       {project.image ? (
                         <motion.img
                           src={project.image}
@@ -176,12 +176,12 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                     </div>
 
                     <div className="mt-6 flex justify-center">
-                      <div className="h-[0.45rem] w-full max-w-[260px] rounded-full border border-neutral-900" />
+                      <div className="h-[0.45rem] w-full max-w-[260px] border border-neutral-900" />
                     </div>
 
                     <button
                       onClick={() => project.id && router.push(`/project/${project.id}`)}
-                      className="mt-5 inline-flex w-full justify-center rounded-full border border-neutral-900 px-6 py-2 text-[11px] font-semibold uppercase tracking-[0.48em] text-neutral-900 transition group-hover:bg-neutral-900 group-hover:text-white"
+                      className="mt-5 inline-flex w-full justify-center border border-neutral-900 px-6 py-2 text-[11px] font-semibold uppercase tracking-[0.48em] text-neutral-900 transition group-hover:bg-neutral-900 group-hover:text-white"
                     >
                       Read More
                     </button>
