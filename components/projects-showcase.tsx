@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import type { Project } from "@/types/project"
 
@@ -13,6 +13,8 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
   const router = useRouter()
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
   const [selectedFeatured, setSelectedFeatured] = useState<number>(0)
+  const sectionRef = useRef<HTMLElement | null>(null)
+  const sidebarRef = useRef<HTMLDivElement | null>(null)
 
   // Get featured projects and other projects
   const featuredProjects = projects.filter(p => p.featured)
@@ -38,8 +40,40 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
     return `${prefix}${code}`
   }
 
+  useEffect(() => {
+    if (sortedFeatured.length <= 1) return
+
+    const intervalId = window.setInterval(() => {
+      setSelectedFeatured((prev) => (prev + 1) % sortedFeatured.length)
+    }, 6500)
+
+    return () => window.clearInterval(intervalId)
+  }, [sortedFeatured.length])
+
+  useEffect(() => {
+    const sectionEl = sectionRef.current
+    const handleWheel = (event: WheelEvent) => {
+      const sidebarEl = sidebarRef.current
+      if (!sidebarEl) return
+
+      const { scrollTop, scrollHeight, clientHeight } = sidebarEl
+      const delta = event.deltaY
+
+      const canScrollDown = delta > 0 && scrollTop + clientHeight < scrollHeight
+      const canScrollUp = delta < 0 && scrollTop > 0
+
+      if (canScrollDown || canScrollUp) {
+        event.preventDefault()
+        sidebarEl.scrollBy({ top: delta, behavior: "auto" })
+      }
+    }
+
+    sectionEl?.addEventListener("wheel", handleWheel, { passive: false })
+    return () => sectionEl?.removeEventListener("wheel", handleWheel)
+  }, [])
+
   return (
-    <section id="projects" className="w-full bg-white">
+    <section ref={sectionRef} id="projects" className="w-full bg-white">
       <div className="mx-auto flex w-full max-w-[1400px] flex-col gap-12 px-6 pb-28 pt-24 lg:flex-row lg:gap-16">
         {/* Featured Project */}
         <div className="flex-1 border border-black/70 bg-white shadow-[0_30px_60px_rgba(0,0,0,0.08)]">
@@ -112,8 +146,11 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
         </div>
 
         {/* Sidebar */}
-        <aside className="w-full max-w-[380px] self-start border border-black/70 bg-white shadow-[0_22px_45px_rgba(0,0,0,0.08)] lg:sticky lg:top-24">
-          <div className="divide-y divide-neutral-200">
+        <aside
+          ref={sidebarRef}
+          className="w-full max-w-[380px] self-start border border-black/70 bg-white shadow-[0_22px_45px_rgba(0,0,0,0.08)] lg:sticky lg:top-24 lg:max-h-[70vh] lg:overflow-y-auto lg:pr-2"
+        >
+          <div className="flex flex-col gap-6 lg:gap-8">
             {sortedOthers.map((project, index) => (
               <motion.div
                 key={project.id}
@@ -122,9 +159,9 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
                 transition={{ duration: 0.4, delay: index * 0.05, ease: [0.23, 1, 0.32, 1] }}
                 onMouseEnter={() => setHoveredProject(project.id)}
                 onMouseLeave={() => setHoveredProject(null)}
-                className="group cursor-pointer bg-white"
+                className="group cursor-pointer bg-white border border-black/60 shadow-[0_18px_36px_rgba(0,0,0,0.08)]"
               >
-                <div className="space-y-4 px-6 py-6">
+                <div className="flex h-full flex-col space-y-4 px-6 py-6 lg:h-[420px]">
                   <div className="relative w-full overflow-hidden">
                     <div className="aspect-[4/3] w-full overflow-hidden border border-black/70 bg-neutral-100">
                       {project.image ? (
@@ -156,7 +193,7 @@ export function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
 
                   <button
                     onClick={() => router.push(`/project/${project.id}`)}
-                    className="w-full rounded-full border border-black px-6 py-2 text-[11px] font-semibold uppercase tracking-[0.45em] text-black transition-all duration-300 group-hover:bg-black group-hover:text-white"
+                    className="mt-auto w-full rounded-full border border-black px-6 py-2 text-[11px] font-semibold uppercase tracking-[0.45em] text-black transition-all duration-300 group-hover:bg-black group-hover:text-white"
                   >
                     Read More
                   </button>
