@@ -1,5 +1,5 @@
 import { LandingHero } from "@/components/landing-hero"
-import { ProjectsList } from "@/components/projects-list"
+import { ProjectsShowcase } from "@/components/projects-showcase"
 import { Footer } from "@/components/footer"
 import { PageWrapper } from "@/components/page-wrapper"
 import { promises as fs } from "fs"
@@ -21,7 +21,7 @@ export default async function Page() {
     <PageWrapper>
       <div>
         <LandingHero profile={profile} />
-        <ProjectsList projects={projects} />
+        <ProjectsShowcase projects={projects} />
         <Footer
           name={profile.personalInfo?.name}
           title={profile.personalInfo?.title}
