@@ -99,7 +99,7 @@ export function AboutSection({ profile }: AboutSectionProps) {
           {/* Hobbies Showcase */}
           <div className="grid grid-cols-2 gap-6">
             {primaryHobby && (
-              <article className="group col-span-2 overflow-hidden border border-neutral-900 bg-white shadow-[0_22px_45px_rgba(15,23,42,0.12)] transition-transform duration-500 hover:-translate-y-1">
+              <article className="group col-span-2 overflow-hidden rounded-[28px] border border-slate-200 bg-slate-50 shadow-[0_22px_45px_rgba(15,23,42,0.08)] transition-transform duration-500 hover:-translate-y-1">
                 <div className="flex items-center justify-between px-6 pt-6 text-sm uppercase tracking-[0.35em] text-slate-500">
                   <span>Hobbies · {primaryHobby.name}</span>
                   <ArrowUpRight className="h-5 w-5 text-slate-400 transition-colors group-hover:text-slate-600" />
@@ -124,7 +124,7 @@ export function AboutSection({ profile }: AboutSectionProps) {
             {otherHobbies.map((hobby) => (
               <article
                 key={hobby.name}
-                className="group overflow-hidden border border-neutral-900 bg-white shadow-[0_18px_36px_rgba(15,23,42,0.12)] transition-transform duration-500 hover:-translate-y-1"
+                className="group overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_18px_36px_rgba(15,23,42,0.08)] transition-transform duration-500 hover:-translate-y-1"
               >
                 <div className="flex items-center justify-between px-5 pt-5 text-[11px] uppercase tracking-[0.4em] text-slate-500">
                   <span>Hobbies · {hobby.name}</span>
