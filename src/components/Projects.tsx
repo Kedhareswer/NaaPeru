@@ -20,7 +20,7 @@ export const Projects = () => {
       type: "WEB",
       github: "https://github.com/Kedhareswer/ai-project-planner",
       demo: "https://thesisflow-ai.vercel.app/",
-      projectDate: "Jul 2025",
+      projectDate: "Ongoing",
     },
     {
       number: "02",
@@ -105,6 +105,15 @@ export const Projects = () => {
 
   const moreProjects = [
     {
+      title: "Portfolio Nexus",
+      description:
+        "Auto-updating portfolio experience with dark mode UI, live repository sync, smart search, and rating-based discovery across featured builds.",
+      demo: "https://kedhareswer.github.io/My_Portfolio_Designs/",
+      status: "Live",
+      category: "Web Development",
+      date: "Ongoing",
+    },
+    {
       title: "Multi-Provider AI Chat Application",
       description:
         "Chat platform bridging OpenAI, Anthropic, Groq, Gemini, DeepSeek, and Fireworks with unified conversations, model switching, and persistent settings.",
@@ -123,21 +132,21 @@ export const Projects = () => {
       date: "Jul 2025",
     },
     {
-      title: "Portfolio Nexus",
-      description:
-        "Auto-updating portfolio experience with dark mode UI, live repository sync, smart search, and rating-based discovery across featured builds.",
-      demo: "https://kedhareswer.github.io/My_Portfolio_Designs/",
-      status: "Live",
-      category: "Web Development",
-      date: "Jul 2025",
-    },
-    {
       title: "ChefSpeak",
       description:
         "Voice-first cooking companion with multilingual narration, shopping lists, and ingredient detection powered by ElevenLabs and Supabase.",
       demo: "https://chef-speaks.netlify.app/",
       status: "Shelved",
       category: "Voice AI",
+      date: "Jun 2025",
+    },
+    {
+      title: "Endoscopy Image Enhancement",
+      description:
+        "Medical imaging enhancer leveraging deep learning pipelines to clarify endoscopy footage with 40% quality gain.",
+      demo: "https://huggingface.co/spaces/Kedhareswer/EndoscopyImageEnhancement",
+      status: "Research",
+      category: "Medical Imaging",
       date: "Jun 2025",
     },
     {
@@ -159,22 +168,13 @@ export const Projects = () => {
       date: "May 2025",
     },
     {
-      title: "Endoscopy Image Enhancement",
-      description:
-        "Medical imaging enhancer leveraging deep learning pipelines to clarify endoscopy footage with 40% quality gain.",
-      demo: "https://huggingface.co/spaces/Kedhareswer/EndoscopyImageEnhancement",
-      status: "Research",
-      category: "Medical Imaging",
-      date: "May 2025",
-    },
-    {
       title: "Image to Sketch",
       description:
         "GAN-assisted transformation engine turning photos into sketches with 90% fidelity and 30% faster processing.",
       demo: "https://image-to-sketch-wine.vercel.app/",
       status: "Live",
       category: "Computer Vision",
-      date: "Apr 2025",
+      date: "Jan 2025",
     },
     {
       title: "Web Development - 100 Mini Projects",
