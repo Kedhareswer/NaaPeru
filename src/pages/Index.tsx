@@ -21,9 +21,9 @@ const Index = () => {
     <>
       {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
       
-      <div className={loading ? "hidden" : "block"}>
+      <div className={loading ? "hidden" : "block overflow-x-hidden"}>
         <Navigation />
-        <main>
+        <main className="overflow-x-hidden">
           <Hero />
           <Projects />
           <Footer />

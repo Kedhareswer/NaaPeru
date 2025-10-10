@@ -84,7 +84,7 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-body antialiased;
+    @apply bg-background text-foreground font-body antialiased overflow-x-hidden;
     background-color: hsl(var(--background));
     background-image:
       radial-gradient(circle at 20% 20%, hsla(0 0% 100% / 0.04), transparent 45%),
@@ -164,6 +164,6 @@ All colors MUST be HSL.
   }
 
   .container-portfolio {
-    @apply max-w-[1440px] mx-auto px-6 md:px-16 lg:px-32;
+    @apply max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32;
   }
 }

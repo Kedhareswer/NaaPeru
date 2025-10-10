@@ -188,24 +188,24 @@ export const Projects = () => {
   ];
 
   return (
-    <section id="projects" className="relative bg-background py-3xl md:py-4xl overflow-hidden">
+    <section id="projects" className="relative bg-background py-3xl md:py-4xl overflow-x-hidden overflow-y-visible">
       <div className="container-portfolio">
         {/* Presence Section */}
-        <div className="mb-24 grid gap-12 lg:grid-cols-[minmax(0,1.7fr),minmax(0,1fr)]">
-          <div className="space-y-8">
+        <div className="mb-24 grid gap-12 lg:grid-cols-[minmax(0,1.7fr),minmax(0,1fr)] overflow-hidden">
+          <div className="space-y-8 overflow-hidden">
             <span className="font-body text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">
               My Presence
             </span>
-            <h2 className="font-heading text-4xl md:text-5xl text-foreground">
+            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl text-foreground break-words">
               Marlakunta Kedhareswer Naidu
             </h2>
-            <p className="max-w-2xl font-body text-lg text-gray-light">
+            <p className="max-w-2xl font-body text-base sm:text-lg text-gray-light">
             I don’t fit into one box — I’m a Data Scientist, AI Engineer, Designer, and relentless experimenter.
 I design intelligence and shape it into experiences people actually feel.
 Exploring how AI-driven systems and human-centered design can coexist beautifully — and meaningfully.
             </p>
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2 overflow-hidden">
               {[
                 {
                   icon: <Linkedin className="h-5 w-5" />,
@@ -241,18 +241,18 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between rounded-lg border border-border/20 bg-card/50 p-5 transition-all duration-normal hover:border-primary/50 hover:bg-card/70"
+                  className="group flex items-center justify-between rounded-lg border border-border/20 bg-card/50 p-4 sm:p-5 transition-all duration-normal hover:border-primary/50 hover:bg-card/70 overflow-hidden"
                 >
-                  <div className="flex items-center gap-3 font-body">
-                    <span className="rounded-full border border-primary/30 p-2 text-primary/90">
+                  <div className="flex items-center gap-2 sm:gap-3 font-body min-w-0 flex-1">
+                    <span className="rounded-full border border-primary/30 p-2 text-primary/90 flex-shrink-0">
                       {item.icon}
                     </span>
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.3em] text-gray-light/80">{item.label}</p>
-                      <p className="text-base font-semibold text-foreground">{item.handle}</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-light/80">{item.label}</p>
+                      <p className="text-sm sm:text-base font-semibold text-foreground truncate">{item.handle}</p>
                     </div>
                   </div>
-                  <ArrowUpRight className="h-4 w-4 text-primary transition-transform duration-normal group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  <ArrowUpRight className="h-4 w-4 text-primary transition-transform duration-normal group-hover:translate-x-1 group-hover:-translate-y-1 flex-shrink-0 ml-2" />
                 </a>
               ))}
             </div>
@@ -275,19 +275,19 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative overflow-hidden">
             <div className="absolute inset-0 rounded-xl bg-primary/10 blur-3xl" />
-            <div className="relative flex h-full flex-col justify-between rounded-xl border border-border/25 bg-black/40 p-8 backdrop-blur">
+            <div className="relative flex h-full flex-col justify-between rounded-xl border border-border/25 bg-black/40 p-6 sm:p-8 backdrop-blur overflow-hidden">
               <div className="space-y-3">
-                <span className="font-body text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">Availability</span>
-                <p className="font-heading text-2xl text-foreground">Open for applied AI & data leadership mandates.</p>
+                <span className="font-body text-xs font-semibold uppercase tracking-[0.3em] sm:tracking-[0.35em] text-primary/80">Availability</span>
+                <p className="font-heading text-xl sm:text-2xl text-foreground break-words">Open for applied AI & data leadership mandates.</p>
                 <p className="font-body text-sm text-gray-light">
                   Collaborating with teams building intelligent research platforms, data products, and developer tooling.
                 </p>
               </div>
 
               <div className="space-y-4 pt-6">
-                <span className="font-body text-xs font-semibold uppercase tracking-[0.3em] text-gray-light/70">Open source contributions</span>
+                <span className="font-body text-xs font-semibold uppercase tracking-[0.25em] sm:tracking-[0.3em] text-gray-light/70">Open source contributions</span>
                 <div className="space-y-3">
                   {openSourceContributions.map((contrib) => (
                     <a
@@ -295,13 +295,13 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
                       href={contrib.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex items-start justify-between gap-6 rounded-lg border border-border/20 bg-card/35 p-4 transition-all duration-normal hover:border-primary/40 hover:bg-card/60"
+                      className="group flex items-start justify-between gap-3 sm:gap-6 rounded-lg border border-border/20 bg-card/35 p-3 sm:p-4 transition-all duration-normal hover:border-primary/40 hover:bg-card/60 overflow-hidden"
                     >
-                      <div className="space-y-1">
-                        <p className="font-body text-sm font-semibold uppercase tracking-[0.25em] text-foreground">{contrib.name}</p>
+                      <div className="space-y-1 min-w-0 flex-1">
+                        <p className="font-body text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em] text-foreground break-words">{contrib.name}</p>
                         <p className="font-body text-xs text-gray-light/80">{contrib.summary}</p>
                       </div>
-                      <ArrowUpRight className="mt-1 h-4 w-4 text-primary transition-transform duration-normal group-hover:translate-x-1 group-hover:-translate-y-1" />
+                      <ArrowUpRight className="mt-1 h-4 w-4 text-primary transition-transform duration-normal group-hover:translate-x-1 group-hover:-translate-y-1 flex-shrink-0" />
                     </a>
                   ))}
                 </div>
@@ -363,7 +363,7 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
             </motion.p>
           </div>
           {/* kinetic marquee */}
-          <div className="relative left-1/2 mt-8 w-screen -translate-x-1/2 overflow-hidden border border-border/20 bg-card/30 py-4">
+          <div className="relative mt-8 -mx-4 sm:-mx-6 md:-mx-12 lg:-mx-24 xl:-mx-32 overflow-hidden border border-border/20 bg-card/30 py-4">
             <div
               className="flex whitespace-nowrap text-2xl md:text-3xl font-heading text-foreground/70"
               style={{ animation: `marqueeX ${marqueeSpeedSec}s linear infinite` }}
@@ -462,7 +462,7 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
                   className={`col-span-12 md:col-span-7 group relative flex h-full flex-col overflow-hidden border border-border/25 bg-[#070709] shadow-[0_30px_60px_-45px_rgba(0,0,0,0.8)]`}
                   style={{ animation: `revealUp 700ms ease both`, animationDelay: delay }}
                 >
-                  <div className="absolute left-0 top-6 -translate-x-1/2 origin-left -rotate-90 border border-border/30 bg-[#050507] px-3 py-1 text-[10px] tracking-[0.4em] text-gray-light/75">{project.category}</div>
+                  <div className="absolute left-0 top-6 origin-left -rotate-90 border border-border/30 bg-[#050507] px-3 py-1 text-[10px] tracking-[0.4em] text-gray-light/75 -ml-12">{project.category}</div>
                   <div className="flex items-center justify-between px-6 md:px-8 pt-6">
                     <span className="font-body text-[10px] md:text-xs uppercase tracking-[0.4em] text-primary/80">{project.projectDate}</span>
                     <span className="font-heading text-5xl md:text-6xl font-extrabold text-primary/8">{project.number}</span>
@@ -670,7 +670,58 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
           </div>
 
           <div className="overflow-hidden border border-border/30 bg-card/40 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.8)] backdrop-blur">
-            <div className="overflow-x-hidden">
+            {/* Mobile Card Layout */}
+            <div className="block lg:hidden divide-y divide-border/20">
+              {moreProjects.slice((currentPage - 1) * projectsPerPage, currentPage * projectsPerPage).map((project, idx) => (
+                <div key={project.title} className="p-6 space-y-4 hover:bg-primary/[0.03] transition-all duration-300">
+                  <div className="flex items-start gap-3">
+                    <span className="font-heading text-2xl font-bold text-primary/20">
+                      {String((currentPage - 1) * projectsPerPage + idx + 1).padStart(2, '0')}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-body text-sm font-semibold uppercase tracking-[0.2em] text-foreground break-words">
+                        {project.title}
+                      </h4>
+                      <div className="mt-1 text-xs uppercase tracking-[0.25em] text-primary/70">{project.date}</div>
+                    </div>
+                  </div>
+                  
+                  <p className="font-body text-sm text-gray-light leading-relaxed">
+                    {project.description}
+                  </p>
+                  
+                  <div className="flex items-center gap-2">
+                    <span className="inline-block border-l-2 border-primary/40 pl-3 font-body text-xs uppercase tracking-[0.25em] text-foreground/90">
+                      {project.category}
+                    </span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between gap-4 pt-2">
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 border border-primary/30 bg-primary/5 px-4 py-2 font-body text-xs font-semibold uppercase tracking-[0.25em] text-primary transition-all duration-300 hover:border-primary hover:bg-primary/10"
+                    >
+                      Visit
+                      <ArrowUpRight className="h-4 w-4" />
+                    </a>
+                    <span className={`inline-flex border px-3 py-1.5 font-body text-xs font-semibold uppercase tracking-[0.2em] ${
+                      project.status === 'Live'
+                        ? 'border-primary/30 bg-primary/10 text-primary'
+                        : project.status === 'Research'
+                        ? 'border-gray-light/30 bg-gray-light/10 text-gray-light'
+                        : 'border-muted/30 bg-muted/10 text-muted-foreground'
+                    }`}>
+                      {project.status}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop Table Layout */}
+            <div className="hidden lg:block overflow-x-auto">
               <table className="w-full divide-y divide-border/20">
                 <colgroup>
                   <col className="w-[18%]" />
@@ -739,29 +790,29 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
             </div>
 
             {/* Pagination Controls */}
-            <div className="flex items-center justify-between border-t border-border/30 bg-black/60 px-8 py-6 backdrop-blur">
-              <div className="flex items-center gap-2">
-                <span className="font-body text-xs uppercase tracking-[0.3em] text-gray-light/60">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-t border-border/30 bg-black/60 px-4 sm:px-8 py-6 backdrop-blur">
+              <div className="flex items-center gap-2 justify-center sm:justify-start">
+                <span className="font-body text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-light/60">
                   Showing {((currentPage - 1) * projectsPerPage) + 1} to {Math.min(currentPage * projectsPerPage, moreProjects.length)} of {moreProjects.length}
                 </span>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
                 <button
                   onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
-                  className="group flex items-center gap-2 border border-border/40 bg-card/30 px-5 py-3 font-body text-xs font-semibold uppercase tracking-[0.3em] text-foreground transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-border/40 disabled:hover:bg-card/30"
+                  className="group flex items-center gap-1 sm:gap-2 border border-border/40 bg-card/30 px-3 sm:px-5 py-2 sm:py-3 font-body text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-foreground transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-border/40 disabled:hover:bg-card/30"
                 >
-                  <ChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                  Prev
+                  <ChevronLeft className="h-3 w-3 sm:h-4 sm:w-4 transition-transform group-hover:-translate-x-1" />
+                  <span className="hidden sm:inline">Prev</span>
                 </button>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2">
                   {Array.from({ length: Math.ceil(moreProjects.length / projectsPerPage) }, (_, i) => i + 1).map((page) => (
                     <button
                       key={page}
                       onClick={() => setCurrentPage(page)}
-                      className={`border px-4 py-3 font-body text-xs font-bold uppercase tracking-[0.3em] transition-all duration-300 ${
+                      className={`border px-3 sm:px-4 py-2 sm:py-3 font-body text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] transition-all duration-300 ${
                         currentPage === page
                           ? 'border-primary bg-primary/20 text-primary'
                           : 'border-border/40 bg-card/30 text-gray-light hover:border-primary/50 hover:bg-primary/5'
@@ -775,10 +826,10 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
                 <button
                   onClick={() => setCurrentPage(prev => Math.min(prev + 1, Math.ceil(moreProjects.length / projectsPerPage)))}
                   disabled={currentPage === Math.ceil(moreProjects.length / projectsPerPage)}
-                  className="group flex items-center gap-2 border border-border/40 bg-card/30 px-5 py-3 font-body text-xs font-semibold uppercase tracking-[0.3em] text-foreground transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-border/40 disabled:hover:bg-card/30"
+                  className="group flex items-center gap-1 sm:gap-2 border border-border/40 bg-card/30 px-3 sm:px-5 py-2 sm:py-3 font-body text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-foreground transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-border/40 disabled:hover:bg-card/30"
                 >
-                  Next
-                  <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <span className="hidden sm:inline">Next</span>
+                  <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
             </div>
