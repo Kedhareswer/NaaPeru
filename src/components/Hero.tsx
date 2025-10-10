@@ -58,8 +58,7 @@ export const Hero = () => {
           {/* Right Visual */}
           <div className="order-1 col-span-4 w-full md:col-span-8 lg:order-2 lg:col-span-5 relative">
             <div
-              className="animate-scale-in relative aspect-[3/4] overflow-hidden rounded sm:aspect-[4/3] lg:aspect-[3/4]"
-              style={{ animationDelay: "800ms" }}
+              className="relative aspect-[3/4] overflow-hidden rounded sm:aspect-[4/3] lg:aspect-[3/4]"
             >
               {/* Top Left - DOB */}
               <div className="absolute left-3 top-3 sm:left-4 sm:top-4 md:left-6 md:top-6 z-20 flex flex-col gap-0.5 sm:gap-1">
