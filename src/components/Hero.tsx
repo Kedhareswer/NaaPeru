@@ -61,6 +61,30 @@ export const Hero = () => {
               className="animate-scale-in relative aspect-[3/4] overflow-hidden rounded shadow-lg md:aspect-[4/3] lg:aspect-[3/4]"
               style={{ animationDelay: "800ms" }}
             >
+              {/* Top Left - DOB */}
+              <div className="absolute left-6 top-6 z-20 flex flex-col gap-1">
+                <span className="font-heading text-xs uppercase tracking-widest text-primary/70">
+                  DOB
+                </span>
+                <span className="font-heading text-lg font-medium text-primary" style={{
+                  letterSpacing: '0.02em'
+                }}>
+                  01/09/2004
+                </span>
+              </div>
+
+              {/* Top Right - HEIGHT */}
+              <div className="absolute right-6 top-6 z-20 flex flex-col items-end gap-1">
+                <span className="font-heading text-xs uppercase tracking-widest text-primary/70">
+                  HEIGHT
+                </span>
+                <span className="font-heading text-lg font-medium text-primary" style={{
+                  letterSpacing: '0.02em'
+                }}>
+                  175 CM
+                </span>
+              </div>
+
               <img
                 src={heroImage}
                 alt="Professional portrait"
@@ -81,10 +105,36 @@ export const Hero = () => {
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-br from-primary/40 via-transparent to-transparent mix-blend-multiply" />
-              <div className="absolute left-10 bottom-48 flex h-28 w-28 rotate-[-8deg] items-center justify-center rounded-full border border-primary/60 bg-background/60 text-center font-heading text-[0.65rem] uppercase tracking-[0.4em] text-primary/90 shadow-[0_18px_40px_rgba(255,0,0,0.25)] backdrop-blur">
+
+              {/* Circular Badge */}
+              <div className="absolute left-10 bottom-48 flex h-28 w-28 rotate-[-8deg] items-center justify-center rounded-full border border-primary/60 bg-background/60 text-center font-heading text-[0.65rem] uppercase tracking-[0.4em] text-primary/90 shadow-[0_18px_40px_rgba(255,0,0,0.25)] backdrop-blur z-20">
                 <div className="absolute inset-1 rounded-full border border-dashed border-primary/50" aria-hidden="true" />
                 <span className="relative block px-3 leading-tight">
                   Kedharewer
+                </span>
+              </div>
+
+              {/* Bottom Left - AGE */}
+              <div className="absolute left-6 bottom-6 z-20 flex flex-col gap-1">
+                <span className="font-heading text-xs uppercase tracking-widest text-primary/70">
+                  AGE
+                </span>
+                <span className="font-heading text-lg font-medium text-primary" style={{
+                  letterSpacing: '0.02em'
+                }}>
+                  21 YRS
+                </span>
+              </div>
+
+              {/* Bottom Right - WEIGHT */}
+              <div className="absolute right-6 bottom-6 z-20 flex flex-col items-end gap-1">
+                <span className="font-heading text-xs uppercase tracking-widest text-primary/70">
+                  WEIGHT
+                </span>
+                <span className="font-heading text-lg font-medium text-primary" style={{
+                  letterSpacing: '0.02em'
+                }}>
+                  55 KG
                 </span>
               </div>
             </div>

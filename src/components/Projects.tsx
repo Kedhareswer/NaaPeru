@@ -29,7 +29,7 @@ export const Projects = () => {
       description:
         "PDF intelligence assistant with RAG, adaptive chunking, and Vector DB support for instant, accurate document conversations.",
       tags: ["Next.js 15", "Tailwind", "Vector DB", "LLM"],
-      image: "/projects/quantumpdf.jpeg",
+      image: "/projects/quantumpdf.png",
       type: "APP",
       github: "https://github.com/Kedhareswer/QuantumPDF_ChatApp_VectorDB",
       demo: "https://quantumn-pdf-chatapp.netlify.app/",
@@ -43,7 +43,7 @@ export const Projects = () => {
         "Interactive data analysis notebook with rich visualizations, code execution, and multi-format data ingestion for analysts and teams.",
       tags: ["Next.js", "Radix UI", "Recharts", "TypeScript"],
       image: "/projects/data-notebook.png",
-      type: "WEB",
+      type: "Detail Sheet",
       github: "https://github.com/Kedhareswer/Data_Science_Platform",
       demo: "https://data-science-platform.vercel.app/",
       projectDate: "Apr 2025",
@@ -83,13 +83,13 @@ export const Projects = () => {
   // Additional mockups/screens per project (used in poster grid and spotlight)
   const projectMockups: Record<string, string[]> = {
     "QuantumPDF Chat App": [
-      "/projects/quantumpdf.jpeg",
-      "/projects/email-insight.png",
-      "/projects/email-insight-2.png",
+      "/projects/quantumpdf.png",
+      "/projects/quantumpdf1.png",
+      "/projects/quantumpdf3.png",
     ],
     "Data Notebook": [
       "/projects/data-notebook.png",
-      "/projects/ml-notebook.png",
+      "/projects/data-notebook1.png",
     ],
     "ThesisFlow-AI": [
       "/projects/research-bolt.png",
@@ -423,8 +423,8 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
               </div>
             </div>
 
-            <div className="col-span-12 lg:col-span-6 relative border-t lg:border-l border-border/20">
-              <div className="relative aspect-[16/10] w-full overflow-hidden">
+            <div className="col-span-12 lg:col-span-6 relative flex border-t lg:border-l border-border/20">
+              <div className="relative aspect-[16/10] w-full flex-1 overflow-hidden lg:aspect-auto lg:h-full">
                 {spotlightVideo ? (
                   <video
                     className="absolute inset-0 h-full w-full object-cover"
@@ -479,16 +479,27 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
                   </div>
                   <div className="relative mt-6 border-t border-border/20">
                     {isQuantumProject ? (
-                      <div className="px-8 py-5 space-y-4">
-                        <div className="relative aspect-[16/9] w-full overflow-hidden border border-border/10">
-                          <img src={primary} alt={`${project.title} primary mockup`} className="absolute inset-0 h-full w-full object-contain bg-black/40 transition-transform duration-[800ms] group-hover:scale-[1.03]" />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                      <div className="px-8 py-5 space-y-5">
+                        <div className="relative overflow-hidden border border-border/10 bg-[#050506]">
+                          <img
+                            src={primary}
+                            alt={`${project.title} primary mockup`}
+                            className="block w-full h-auto"
+                          />
+                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
                         </div>
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                           {[secondary, mocks[2]].filter(Boolean).map((mock, mockIndex) => (
-                            <div key={mockIndex} className="relative aspect-[16/10] overflow-hidden border border-border/10">
-                              <img src={mock as string} alt={`${project.title} detail ${mockIndex + 1}`} className="absolute inset-0 h-full w-full object-contain bg-black/40 transition-transform duration-[800ms] group-hover:scale-[1.04]" />
-                              <div className="absolute inset-0 border border-white/5" />
+                            <div
+                              key={mockIndex}
+                              className="relative overflow-hidden border border-border/10 bg-[#050506] aspect-[4/5] md:aspect-[3/4]"
+                            >
+                              <img
+                                src={mock as string}
+                                alt={`${project.title} detail ${mockIndex + 1}`}
+                                className="absolute inset-0 h-full w-full object-cover"
+                              />
+                              <div className="pointer-events-none absolute inset-0 border border-white/5" />
                             </div>
                           ))}
                         </div>
@@ -496,11 +507,11 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
                     ) : (
                       <div className="grid grid-cols-12 gap-3 px-8 py-5">
                         <div className="col-span-7 relative aspect-[16/10] overflow-hidden">
-                          <img src={primary} alt={`${project.title} mockup`} className="absolute inset-0 h-full w-full object-cover transition-transform duration-[800ms] group-hover:scale-[1.03]" />
+                          <img src={primary} alt={`${project.title} mockup`} className="absolute inset-0 h-full w-full object-cover" />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                         </div>
                         <div className="col-span-5 relative aspect-[16/12] overflow-hidden">
-                          <img src={secondary} alt={`${project.title} screen`} className="absolute inset-0 h-full w-full object-cover opacity-95 transition-transform duration-[800ms] group-hover:scale-[1.04]" />
+                          <img src={secondary} alt={`${project.title} screen`} className="absolute inset-0 h-full w-full object-cover opacity-95" />
                           <div className="absolute inset-0 border border-white/10" />
                         </div>
                       </div>
@@ -540,14 +551,37 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
                     </motion.h4>
                     <p className="mt-4 font-body text-sm leading-[1.65] text-foreground/90">{project.description}</p>
                   </div>
-                  <div className="relative mx-8 mb-6 overflow-hidden aspect-[3/4] border border-border/20">
-                    <img src={primary} alt={`${project.title} cover`} className="absolute inset-0 h-full w-full object-contain bg-black/40 transition-transform duration-[850ms] group-hover:scale-[1.04]" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                    <div className="absolute right-3 top-3 border border-primary/20 bg-black/60 backdrop-blur-sm px-3 py-1.5 text-[10px] uppercase tracking-[0.4em] text-primary/90">{project.category}</div>
-                    <div className="absolute left-4 bottom-4 flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-foreground/80">
-                      <span className="h-px w-6 bg-primary/70" />
-                      {project.type}
+                  <div className="mx-8 mb-6 space-y-4">
+                    <div className="relative overflow-hidden rounded-lg border border-border/20 bg-gradient-to-b from-[#0b0d13] via-[#050506] to-black/85 aspect-[4/5] md:aspect-[3/4]">
+                      <img
+                        src={primary}
+                        alt={`${project.title} cover`}
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,98,67,0.22)_0%,_rgba(0,0,0,0)_65%)]" />
+                      <div className="pointer-events-none absolute right-6 top-6 border border-primary/25 bg-black/60 px-3 py-1.5 text-[10px] uppercase tracking-[0.4em] text-primary/90">
+                        {project.category}
+                      </div>
+                      <div className="pointer-events-none absolute bottom-6 left-6 flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-foreground/80">
+                        <span className="h-px w-6 bg-primary/70" />
+                        {project.type}
+                      </div>
                     </div>
+
+                    {mocks[1] && (
+                      <div className="relative overflow-hidden rounded-lg border border-border/15 bg-[#05060a]/90 aspect-[16/10]">
+                        <img
+                          src={mocks[1]}
+                          alt={`${project.title} detail view`}
+                          className="absolute inset-0 h-full w-full object-cover"
+                        />
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                        <div className="pointer-events-none absolute left-5 bottom-5 flex items-center gap-2 text-[10px] uppercase tracking-[0.35em] text-foreground/70">
+                          <span className="h-px w-5 bg-primary/60" />
+                          Web
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className="mt-auto flex items-center justify-between px-8 pb-6">
                     <a href={project.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-body text-xs font-semibold uppercase tracking-[0.32em] text-primary">
@@ -570,7 +604,7 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
                 <div className="grid grid-cols-12 gap-0">
                   <div className="col-span-12 md:col-span-6 relative border-r border-border/20">
                     <div className="relative aspect-[16/10] md:aspect-[4/3] overflow-hidden">
-                      <img src={primary} alt={`${project.title} media`} className="absolute inset-0 h-full w-full object-cover transition-transform duration-[850ms] group-hover:scale-[1.03]" />
+                      <img src={primary} alt={`${project.title} media`} className="absolute inset-0 h-full w-full object-cover" />
                       <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-transparent" />
                     </div>
                   </div>
