@@ -34,22 +34,6 @@ export const Footer = () => {
 
   return (
     <footer id="contact" className="relative border-t border-border/10 bg-background">
-      {/* Final CTA Section */}
-      <div className="container-portfolio py-16 md:py-24">
-        <div className="flex flex-col items-center gap-4 text-center lg:flex-row lg:items-center lg:justify-center lg:gap-8">
-          <div className="relative flex items-center justify-center">
-            <span className="pointer-events-none absolute h-[22rem] w-[22rem] rounded-full bg-[radial-gradient(circle,_rgba(255,84,58,0.45)_0%,_rgba(0,0,0,0)_70%)] blur-xl opacity-80 animate-[pulse_6s_ease-in-out_infinite] md:h-[26rem] md:w-[26rem] lg:h-[30rem] lg:w-[30rem]" />
-            <span className="pointer-events-none absolute h-[28rem] w-[28rem] rounded-full border border-primary/20 opacity-50 animate-[ping_8s_ease-in-out_infinite] md:h-[32rem] md:w-[32rem] lg:h-[36rem] lg:w-[36rem]" />
-            <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#ff6243]/15 via-transparent to-[#05090f]/60 blur-3xl" />
-            <img
-              src="/elements4.png"
-              alt="Decorative emblem"
-              className="relative z-10 h-auto w-[24rem] md:w-[30rem] lg:w-[38rem] drop-shadow-[0_45px_120px_rgba(255,84,58,0.45)]"
-            />
-          </div>
-        </div>
-      </div>
-
       {/* Information Grid */}
       <div className="border-t border-border/10 bg-surface-subtle">
         <div className="container-portfolio py-12 md:py-16">
