@@ -1,4 +1,4 @@
-import { ArrowUpRight, Github, Linkedin, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { useScrollTrigger } from "@/hooks/useScrollTrigger";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -6,6 +6,7 @@ import { useState } from "react";
 export const Projects = () => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollTrigger({ threshold: 0.3 });
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeExperience, setActiveExperience] = useState<number | null>(0);
   const projectsPerPage = 5;
 
   const projects = [
@@ -103,6 +104,69 @@ export const Projects = () => {
     "Community-driven learning",
   ];
 
+  const experiences = [
+    {
+      company: "Outlier.AI · Data Annotation · Soul.AI",
+      role: "AI Evaluator & Trainer",
+      period: "Nov 2024 — Jan 2025",
+      location: "Remote",
+      headline: "Refining mathematical reasoning for frontier generative models.",
+      description:
+        "Evaluating AI-generated mathematical content to improve factuality, relevance, and instructional clarity across multiple model providers.",
+      highlights: [
+        "Contributed structured evaluations that shaped iterative updates to large language model behavior in quantitative domains.",
+        "Crafted, answered, and scored domain-specific prompts to calibrate accuracy and consistency.",
+        "Ranked competing AI responses to surface signal on reasoning quality and pedagogical soundness.",
+      ],
+      tags: ["Generative AI", "Model Evaluation", "Quality Ops"],
+    },
+    {
+      company: "The Forage",
+      role: "AWS Solutions Architecture Intern",
+      period: "Dec 2024 — Jan 2025",
+      location: "Virtual",
+      headline: "Designing resilient cloud footprints for high-growth clients.",
+      description:
+        "Completed the AWS APAC job simulation focused on translating scalability and cost insights into plain-language blueprints for stakeholders.",
+      highlights: [
+        "Architected Elastic Beanstalk deployment pathways tailored to traffic spikes and latency pain points.",
+        "Produced cost clarity narratives that improved client understanding of capacity trade-offs.",
+        "Prioritized performance and availability in recommendations for rapidly scaling teams.",
+      ],
+      tags: ["AWS", "Cloud Architecture", "Performance Engineering"],
+    },
+    {
+      company: "PSYLIQ",
+      role: "Data Analyst Intern",
+      period: "Jan 2024 — Feb 2024",
+      location: "Remote",
+      headline: "Transforming HR telemetry into decision-ready intelligence.",
+      description:
+        "Analyzed and visualized employee datasets with MySQL, Python, and Power BI to surface performance and retention insights.",
+      highlights: [
+        "Delivered dashboards that improved data comprehension for stakeholders by 25% within one month.",
+        "Automated cleaning workflows that accelerated HR reporting cadence.",
+        "Unified SQL and BI outputs into executive-ready narratives for leadership reviews.",
+      ],
+      tags: ["Data Analytics", "Power BI", "Storytelling"],
+    },
+    {
+      company: "AIESEC in Jalandhar",
+      role: "Senior & Junior Manager",
+      period: "Jul 2022 — Jan 2023",
+      location: "Jalandhar, Punjab, India",
+      headline: "Activating international exchange programs with tight-knit teams.",
+      description:
+        "Led outbound professional exchange operations, coordinating partner relationships and volunteer pods to deliver seamless participant experiences.",
+      highlights: [
+        "Directed cross-functional ceremonies and touchpoints to uphold program quality standards.",
+        "Mentored junior organizers, strengthening collaboration and ownership across the chapter.",
+        "Facilitated stakeholder communications that kept global partners aligned on deliverables.",
+      ],
+      tags: ["Leadership", "Program Management", "Team Operations"],
+    },
+  ];
+
   const moreProjects = [
     {
       title: "Portfolio Nexus",
@@ -190,8 +254,8 @@ export const Projects = () => {
   return (
     <section id="projects" className="relative bg-background py-3xl md:py-4xl overflow-x-hidden overflow-y-visible">
       <div className="container-portfolio">
-        {/* Presence Section */}
-        <div className="mb-24 grid gap-12 lg:grid-cols-[minmax(0,1.7fr),minmax(0,1fr)] overflow-hidden">
+        {/* Presence / About Section */}
+        <section id="about" className="mb-24 grid gap-12 lg:grid-cols-[minmax(0,1.7fr),minmax(0,1fr)] overflow-hidden">
           <div className="space-y-8 overflow-hidden">
             <span className="font-body text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">
               My Presence
@@ -200,9 +264,9 @@ export const Projects = () => {
               Marlakunta Kedhareswer Naidu
             </h2>
             <p className="max-w-2xl font-body text-base sm:text-lg text-gray-light">
-            I don’t fit into one box — I’m a Data Scientist, AI Engineer, Designer, and relentless experimenter.
-I design intelligence and shape it into experiences people actually feel.
-Exploring how AI-driven systems and human-centered design can coexist beautifully — and meaningfully.
+              I don’t fit into one box — I’m a Data Scientist, AI Engineer, Designer, and relentless experimenter.
+              I design intelligence and shape it into experiences people actually feel.
+              Exploring how AI-driven systems and human-centered design can coexist beautifully — and meaningfully.
             </p>
 
             <div className="grid gap-4 sm:grid-cols-2 overflow-hidden">
@@ -315,9 +379,210 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
               </div>
             </div>
           </div>
+        </section>
+
+        <div className="mb-24 space-y-8">
+          <div className="space-y-6">
+            <span className="font-body text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">
+              Experience
+            </span>
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr),minmax(0,1.4fr)]">
+              <h2
+                className="font-heading text-3xl sm:text-4xl md:text-5xl leading-[0.95] text-transparent"
+                style={{ WebkitTextStroke: "1.25px rgba(255,255,255,0.2)", color: "transparent" }}
+              >
+                Work Chronicle
+              </h2>
+              <p className="font-body text-base sm:text-lg text-gray-light">
+                Snapshots of the roles where I build with AI teams and keep momentum.
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-5">
+            {experiences.map((experience, index) => {
+              const isActive = activeExperience === index;
+              const label = String(index + 1).padStart(2, "0");
+
+              return (
+                <div
+                  key={experience.company}
+                  className={`group relative overflow-hidden border border-border/20 bg-card/35 backdrop-blur transition-all duration-normal ${
+                    isActive ? "ring-1 ring-primary/40" : "hover:border-primary/40 hover:bg-card/55"
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setActiveExperience(isActive ? null : index)}
+                    aria-expanded={isActive}
+                    className="w-full px-6 py-6 text-left sm:px-8"
+                  >
+                    <div className="flex flex-col gap-5 sm:grid sm:grid-cols-[auto,minmax(0,1.35fr),minmax(0,1.05fr),auto] sm:items-center sm:gap-x-8 sm:gap-y-0">
+                      <span className="font-heading text-3xl sm:text-4xl text-primary/75 leading-none">{label}</span>
+                      <div className="space-y-1 sm:space-y-1.5">
+                        <p className="font-heading text-xl sm:text-2xl text-foreground leading-tight">{experience.role}</p>
+                        <p className="font-body text-xs uppercase tracking-[0.3em] text-gray-light/70">{experience.company}</p>
+                      </div>
+                      <p className="font-body text-sm text-gray-light/80 sm:text-base sm:leading-relaxed">
+                        {experience.headline}
+                      </p>
+                      <div className="flex items-center justify-end gap-3 sm:flex-col sm:items-end sm:gap-2">
+                        <div className="text-right space-y-1">
+                          <p className="font-body text-xs uppercase tracking-[0.3em] text-gray-light/70">{experience.period}</p>
+                          <p className="font-body text-xs text-gray-light/60">{experience.location}</p>
+                        </div>
+                        <ChevronDown
+                          className={`h-5 w-5 text-primary transition-transform duration-normal ${isActive ? "-rotate-180" : ""}`}
+                        />
+                      </div>
+                    </div>
+                  </button>
+                  <div
+                    className={`overflow-hidden transition-all duration-500 ${isActive ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+                    style={{ maxHeight: isActive ? 2000 : 0 }}                  >
+                    <div className="grid gap-6 px-6 pb-6 sm:grid-cols-[minmax(0,1fr),minmax(0,1.25fr)] sm:px-8">
+                      <div className="space-y-5">
+                        <p className="font-body text-sm sm:text-base text-gray-light leading-relaxed">{experience.description}</p>
+                        <div className="space-y-3">
+                          <span className="font-body text-xs uppercase tracking-[0.3em] text-primary/70">Focus</span>
+                          <div className="flex flex-wrap gap-2">
+                            {experience.tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="font-body text-xs uppercase tracking-[0.25em] text-foreground/80 border border-border/30 bg-card/45 px-3 py-1"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="space-y-3">
+                        <span className="font-body text-xs uppercase tracking-[0.3em] text-gray-light/70">Highlights</span>
+                        <div className="space-y-3">
+                          {experience.highlights.map((highlight) => (
+                            <div key={highlight} className="flex items-start gap-3">
+                              <span className="mt-1 h-5 w-0.5 bg-primary/60" />
+                              <p className="font-body text-sm sm:text-base text-gray-light leading-snug">{highlight}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Education Section */}
+        <div className="mb-24 space-y-8">
+          <div className="space-y-6">
+            <span className="font-body text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">
+              Education
+            </span>
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr),minmax(0,1.4fr)]">
+              <h2
+                className="font-heading text-3xl sm:text-4xl md:text-5xl text-transparent"
+                style={{ WebkitTextStroke: "1.25px rgba(255,255,255,0.2)", color: "transparent" }}
+              >
+                Academic Chronicle
+              </h2>
+              <p className="font-body text-base sm:text-lg text-gray-light">
+                My academic background in computer science, data science, and artificial intelligence with specialized focus on machine learning.
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-8">
+            {[
+              {
+                institution: "Lovely Professional University",
+                degree: "Bachelor of Technology - Computer Science and Engineering",
+                specialization: "Data Science (AI & ML)",
+                period: "Sep 2021 - JUL 2025",
+                location: "Phagwara, Punjab, India",
+                grade: "CGPA: 7.74",
+                status: "Completed",
+                description: "Specialized in Data Science with focus on Artificial Intelligence and Machine Learning. Comprehensive coursework in algorithms, data structures, and advanced AI techniques."
+              },
+              {
+                institution: "Sri Siddhartha Junior College",
+                degree: "Intermediate",
+                specialization: "Science Stream",
+                period: "Jul 2019 - Jun 2021",
+                location: "Madanapalli, Andhra Pradesh, India",
+                grade: "Marks: 889",
+                status: "Completed",
+                description: "Strong foundation in mathematics, physics, and chemistry. Developed analytical thinking and problem-solving skills essential for technical education."
+              },
+              {
+                institution: "Vijaya Bharathi English Medium High School",
+                degree: "Matriculation",
+                specialization: "General Studies",
+                period: "Jun 2018 - Mar 2019",
+                location: "Madanapalli, Andhra Pradesh, India",
+                grade: "GPA: 9.5",
+                status: "Completed",
+                description: "Excellent academic performance with strong foundation in core subjects. Developed communication skills and leadership qualities through various activities."
+              }
+            ].map((edu, index) => (
+              <div
+                key={index}
+                className="group relative overflow-hidden border border-border/20 bg-card/40 backdrop-blur transition-all duration-normal hover:border-primary/40 hover:bg-card/60"
+              >
+                <div className="absolute left-0 top-0 h-full w-1 bg-primary/60" />
+                <div className="grid gap-6 p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr),minmax(0,1.35fr)]">
+                  <div className="flex flex-col justify-between gap-6">
+                    <div className="space-y-1.5">
+                      <h3 className="font-body text-sm font-semibold uppercase tracking-[0.25em] text-primary">
+                        {edu.institution}
+                      </h3>
+                      <div className="space-y-1">
+                        <p className="font-body text-xs uppercase tracking-[0.3em] text-gray-light/70">
+                          {edu.period}
+                        </p>
+                        <p className="font-body text-xs text-gray-light/60">
+                          {edu.location}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="space-y-1.5">
+                      <h4 className="font-heading text-xl sm:text-2xl font-semibold text-foreground leading-tight">
+                        {edu.degree}
+                      </h4>
+                      {edu.specialization && (
+                        <p className="font-body text-sm text-primary/80">
+                          {edu.specialization}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex flex-col justify-between gap-6">
+                    <p className="font-body text-sm sm:text-base text-gray-light leading-relaxed">
+                      {edu.description}
+                    </p>
+                    <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr),auto] sm:items-center">
+                      <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                        <span className="inline-flex h-px w-8 bg-primary/40" />
+                        <span className="font-body text-xs uppercase tracking-[0.3em] text-primary/70">
+                          {edu.status}
+                        </span>
+                      </div>
+                      <span className="font-body text-sm font-semibold text-foreground sm:text-base">
+                        {edu.grade}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Selected Work — Magazine/Poster Redesign */}
+        <section id="work" className="mt-24">
         <style>
           {`
             @keyframes marqueeX { from { transform: translateX(0); } to { transform: translateX(-100%); } }
@@ -448,7 +713,7 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
         <div className="mt-12 md:mt-16 grid grid-cols-12 gap-6 md:gap-8">
           {supportingProjects.map((project, index) => {
             const template = index % 3; // 0,1,2 => three different editorial layouts
-            const mocks = projectMockups[project.title] ?? [project.image, "/placeholder.svg"]; 
+            const mocks = projectMockups[project.title] ?? [project.image, "/placeholder.svg"];
             const primary = mocks[0] ?? project.image;
             const secondary = mocks[1] ?? "/placeholder.svg";
             const delay = `${120 * (index + 1)}ms`;
@@ -614,31 +879,31 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
                       <span className="font-body text-[10px] uppercase tracking-[0.35em] text-primary/70">{project.projectDate}</span>
                     </div>
                     <div className="mt-3 space-y-3">
-                    <motion.h4
-                      className="font-heading text-3xl md:text-[2.8rem] font-semibold uppercase tracking-tight text-foreground"
-                      whileHover={{ letterSpacing: "0.05em" }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {project.title}
-                    </motion.h4>
-                    <p className="font-body text-sm md:text-base text-gray-light/90">{project.description}</p>
-                    <div className="border-l border-border/40 pl-4">
-                      <p className="font-heading text-sm uppercase tracking-[0.4em] text-primary/70">Pull Quote</p>
-                      <p className="mt-2 font-body text-xs text-gray-light/70">
-                        "{project.title.split(" ").slice(0, 3).join(" ")}" delivers future-facing interactions for strategic teams.
-                      </p>
-                    </div>
-                    <div className="flex flex-wrap gap-2 pt-1">
-                      {project.tags.map((tag) => (
-                        <span key={tag} className="border border-primary/15 bg-primary/10 px-3 py-1 font-body text-[10px] md:text-xs uppercase tracking-[0.25em] text-primary/90">{tag}</span>
-                      ))}
-                    </div>
+                      <motion.h4
+                        className="font-heading text-3xl md:text-[2.8rem] font-semibold uppercase tracking-tight text-foreground"
+                        whileHover={{ letterSpacing: "0.05em" }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {project.title}
+                      </motion.h4>
+                      <p className="font-body text-sm md:text-base text-gray-light/90">{project.description}</p>
+                      <div className="border-l border-border/40 pl-4">
+                        <p className="font-heading text-sm uppercase tracking-[0.4em] text-primary/70">Pull Quote</p>
+                        <p className="mt-2 font-body text-xs text-gray-light/70">
+                          "{project.title.split(" ").slice(0, 3).join(" ")}" delivers future-facing interactions for strategic teams.
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        {project.tags.map((tag) => (
+                          <span key={tag} className="border border-primary/15 bg-primary/10 px-3 py-1 font-body text-[10px] md:text-xs uppercase tracking-[0.25em] text-primary/90">{tag}</span>
+                        ))}
+                      </div>
                     </div>
                     <div className="mt-auto flex items-center justify-between pt-6">
                       <a href={project.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-body text-xs font-semibold uppercase tracking-[0.32em] text-primary">
-                      View case
-                      <ArrowUpRight className="h-4 w-4" />
-                    </a>
+                        View case
+                        <ArrowUpRight className="h-4 w-4" />
+                      </a>
                       <span className="text-[11px] uppercase tracking-[0.35em] text-gray-light/60">{project.type}</span>
                     </div>
                   </div>
@@ -685,17 +950,17 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
                       <div className="mt-1 text-xs uppercase tracking-[0.25em] text-primary/70">{project.date}</div>
                     </div>
                   </div>
-                  
+
                   <p className="font-body text-sm text-gray-light leading-relaxed">
                     {project.description}
                   </p>
-                  
+
                   <div className="flex items-center gap-2">
                     <span className="inline-block border-l-2 border-primary/40 pl-3 font-body text-xs uppercase tracking-[0.25em] text-foreground/90">
                       {project.category}
                     </span>
                   </div>
-                  
+
                   <div className="flex items-center justify-between gap-4 pt-2">
                     <a
                       href={project.demo}
@@ -706,13 +971,12 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
                       Visit
                       <ArrowUpRight className="h-4 w-4" />
                     </a>
-                    <span className={`inline-flex border px-3 py-1.5 font-body text-xs font-semibold uppercase tracking-[0.2em] ${
-                      project.status === 'Live'
-                        ? 'border-primary/30 bg-primary/10 text-primary'
-                        : project.status === 'Research'
+                    <span className={`inline-flex border px-3 py-1.5 font-body text-xs font-semibold uppercase tracking-[0.2em] ${project.status === 'Live'
+                      ? 'border-primary/30 bg-primary/10 text-primary'
+                      : project.status === 'Research'
                         ? 'border-gray-light/30 bg-gray-light/10 text-gray-light'
                         : 'border-muted/30 bg-muted/10 text-muted-foreground'
-                    }`}>
+                      }`}>
                       {project.status}
                     </span>
                   </div>
@@ -773,13 +1037,12 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
                         </a>
                       </td>
                       <td className="whitespace-nowrap px-6 md:px-8 py-8 align-top text-center">
-                        <span className={`inline-flex border px-4 py-2 font-body text-xs font-semibold uppercase tracking-[0.25em] ${
-                          project.status === 'Live'
-                            ? 'border-primary/30 bg-primary/10 text-primary'
-                            : project.status === 'Research'
+                        <span className={`inline-flex border px-4 py-2 font-body text-xs font-semibold uppercase tracking-[0.25em] ${project.status === 'Live'
+                          ? 'border-primary/30 bg-primary/10 text-primary'
+                          : project.status === 'Research'
                             ? 'border-gray-light/30 bg-gray-light/10 text-gray-light'
                             : 'border-muted/30 bg-muted/10 text-muted-foreground'
-                        }`}>
+                          }`}>
                           {project.status}
                         </span>
                       </td>
@@ -812,11 +1075,10 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
                     <button
                       key={page}
                       onClick={() => setCurrentPage(page)}
-                      className={`border px-3 sm:px-4 py-2 sm:py-3 font-body text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] transition-all duration-300 ${
-                        currentPage === page
-                          ? 'border-primary bg-primary/20 text-primary'
-                          : 'border-border/40 bg-card/30 text-gray-light hover:border-primary/50 hover:bg-primary/5'
-                      }`}
+                      className={`border px-3 sm:px-4 py-2 sm:py-3 font-body text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] transition-all duration-300 ${currentPage === page
+                        ? 'border-primary bg-primary/20 text-primary'
+                        : 'border-border/40 bg-card/30 text-gray-light hover:border-primary/50 hover:bg-primary/5'
+                        }`}
                     >
                       {String(page).padStart(2, '0')}
                     </button>
@@ -835,6 +1097,7 @@ Exploring how AI-driven systems and human-centered design can coexist beautifull
             </div>
           </div>
         </div>
+      </section>
       </div>
 
       {/* Floating Particles - Ambient Micro Interaction */}

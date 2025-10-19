@@ -8,12 +8,12 @@ export const Navigation = () => {
   useEffect(() => {
     const handleScroll = () => {
       // Determine active section
-      const sections = ["home", "projects", "contact"];
+      const sections = ["home", "about", "work", "contact"];
       const current = sections.find((section) => {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
+          return rect.top <= 120 && rect.bottom >= 120;
         }
         return false;
       });
@@ -28,13 +28,16 @@ export const Navigation = () => {
     setMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const yOffset = -80;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
 
   const menuItems = [
     { id: "home", label: "HOME" },
-    { id: "projects", label: "PROJECTS" },
+    { id: "about", label: "ABOUT" },
+    { id: "work", label: "WORK" },
     { id: "contact", label: "CONTACT" },
   ];
 

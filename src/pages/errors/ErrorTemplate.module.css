@@ -1,0 +1,25 @@
+.marquee {
+  animation: error-marquee 28s linear infinite;
+}
+
+.marqueeReverse {
+  animation: error-marquee-reverse 28s linear infinite;
+}
+
+@keyframes error-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes error-marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
