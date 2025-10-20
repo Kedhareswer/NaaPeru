@@ -38,55 +38,66 @@
     
     "experience": [
       {
-        "role": "AI Evaluator, AI Trainer - Individual Contractor",
-        "company": "Outlier.AI, Data Annotation, Soul.AI",
-        "duration": "November 2024 - January 2025",
-        "location": "Remote",
+        "role": "Research Intern",
+        "company": "upGrad",
+        "duration": "January 2025 - April 2025 (4 months)",
+        "location": "India",
         "achievements": [
-          "Contributed to the training and improvement of generative AI models by evaluating mathematical content.",
-          "Assessed the factuality, relevance, and quality of AI-generated text within the mathematics domain.",
-          "Crafted and answered subject-specific questions to enhance the accuracy of AI outputs.",
-          "Evaluated and ranked AI-generated responses to ensure consistency and precision."
-        ]
-      },
-      {
-        "role": "AWS Solutions Architecture Intern",
-        "company": "The Forage (Virtual Experience)",
-        "duration": "December 2024 - January 2025",
-        "location": "Virtual",
-        "achievements": [
-          "Designed a simple and scalable hosting architecture based on Elastic Beanstalk for a client experiencing significant growth and slow response times.",
-          "Designed architecture in plain language ensuring client understanding of functionality and cost calculations.",
-          "Focused on performance optimization and clear cost communication for high-growth clients."
+          "Developed a hybrid system combining traditional Yara rules with advanced machine learning techniques for hybrid malware detection.",
+          "Collaborated with a team to address real-world security threats through research and implementation.",
+          "Enhanced skills in Python, data analysis, and machine learning, preparing for future challenges in cybersecurity."
         ]
       },
       {
         "role": "Data Analyst Intern",
-        "company": "PSYLIQ",
-        "duration": "January 2024 - February 2024",
-        "location": "Remote",
+        "company": "Psyliq",
+        "duration": "January 2024 - February 2024 (2 months)",
+        "location": "India",
         "achievements": [
-          "Worked on Employees HR Data - cleaned, stored and gathered insightful information made compelling visualizations using MySQL, Python and Power BI.",
-          "Developed data visualizations using Power BI to interpret complex datasets, enhancing decision-making processes and improving data comprehension by 25% within a month.",
-          "Analyzed HR data using MySQL, Python, and Power BI to create compelling visualizations."
+          "Cleaned and stored HR data, ensuring high-quality information for analysis.",
+          "Created visualizations with Power BI, making complex data easily understandable for stakeholders.",
+          "Leveraged MySQL and Python to streamline data processes, contributing to a more efficient workflow."
         ]
       },
       {
-        "role": "Senior & Junior Manager",
-        "company": "AIESEC in Jalandhar",
-        "duration": "July 2022 - January 2023",
-        "location": "Jalandhar, Punjab, India",
+        "role": "Senior Manager",
+        "company": "AIESEC",
+        "duration": "August 2023 - December 2023 (5 months)",
+        "location": "Phagwara, Punjab, India",
         "achievements": [
-          "Managed outbound professional exchange programs and led team interactions.",
-          "Demonstrated strong leadership in program execution and team building through collaborative projects.",
-          "Led team interactions and program coordination for international exchange initiatives."
+          "Successfully managed outbound professional exchange programs in Outgoing Global Talent Department (OGT).",
+          "Oversaw program execution, demonstrating strong leadership and commitment to participant satisfaction.",
+          "Fostered team building through collaborative projects, enhancing organizational effectiveness and teamwork."
+        ]
+      },
+      {
+        "role": "Junior Manager",
+        "company": "AIESEC",
+        "duration": "May 2023 - August 2023 (4 months)",
+        "location": "Phagwara, Punjab, India",
+        "achievements": [
+          "Actively contributed to the Outgoing Global Talent department, focusing on talent engagement and outreach initiatives.",
+          "Engaged potential candidates through cold calling, effectively pitching program benefits.",
+          "Enhanced marketing efforts by creating engaging content using Canva.",
+          "Strengthened time management skills to balance multiple responsibilities efficiently."
+        ]
+      },
+      {
+        "role": "Member",
+        "company": "AIESEC",
+        "duration": "January 2023 - May 2023 (5 months)",
+        "location": "Phagwara, Punjab, India",
+        "achievements": [
+          "Developed strong communication skills by participating in conferences and team-building exercises.",
+          "Enhanced knowledge sharing and experience sharing among team members through active collaboration.",
+          "Fostered cross-team engagement to promote a cohesive working environment."
         ]
       }
     ],
     
     "education": [
       {
-        "degree": "Bachelor of Technology - Computer Science and Engineering (Data Science - AI & ML)",
+        "degree": "Bachelor of Technology - BTech, Computer Science",
         "institution": "Lovely Professional University",
         "duration": "September 2021 - July 2025",
         "location": "Phagwara, Punjab, India",
@@ -95,7 +106,7 @@
         "status": "Completed"
       },
       {
-        "degree": "Intermediate",
+        "degree": "Higher Secondary",
         "institution": "Sri Siddhartha Junior College",
         "duration": "July 2019 - June 2021",
         "location": "Madanapalli, Andhra Pradesh, India",
@@ -149,6 +160,30 @@
     },
   
     "certifications": [
+      {
+        "name": "Introduction to Model Context Protocol",
+        "issuer": "LLM Foundations",
+        "date": "2025",
+        "description": "Comprehensive training on Vector Databases for Caching and Retrieval Augmented Generation (RAG)"
+      },
+      {
+        "name": "Build GANs and Diffusion Models with TensorFlow and PyTorch",
+        "issuer": "TensorFlow & PyTorch",
+        "date": "2025",
+        "description": "Advanced training in generative adversarial networks and diffusion models"
+      },
+      {
+        "name": "PyTorch Essential Training: Deep Learning",
+        "issuer": "PyTorch",
+        "date": "2025",
+        "description": "Comprehensive deep learning training using PyTorch framework"
+      },
+      {
+        "name": "Data Science Essentials",
+        "issuer": "Reliance Foundation, Skilling Academy",
+        "date": "2025",
+        "description": "Certified comprehensive data science program covering essential concepts and practices"
+      },
       {
         "name": "AWS APAC - Solutions Architecture Job Simulation",
         "issuer": "Forage",

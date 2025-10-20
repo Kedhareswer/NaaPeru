@@ -394,7 +394,7 @@ export const Projects = () => {
                 Work Chronicle
               </h2>
               <p className="font-body text-base sm:text-lg text-gray-light">
-                Snapshots of the roles where I build with AI teams and keep momentum.
+                Snapshots of the roles where I build with teams and keep momentum.
               </p>
             </div>
           </div>
