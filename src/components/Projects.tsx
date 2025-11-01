@@ -106,6 +106,36 @@ export const Projects = () => {
 
   const experiences = [
     {
+      company: "DiligenceVault",
+      role: "AI Engineer Intern",
+      period: "Oct 2025 — Present",
+      location: "India",
+      headline: "Building AI-driven solutions for digital fund due diligence ecosystem.",
+      description:
+        "Working on AI-driven solutions for digital fund due diligence ecosystem in the investment management industry, contributing to intelligent systems that support institutional and wealth investors.",
+      highlights: [
+        "Contributing to AI-engineered frameworks for structured dataset extraction and analysis.",
+        "Developing intelligent systems to support institutional and wealth investors in fund diligence processes.",
+        "Working with advanced AI technologies to streamline investment management workflows.",
+      ],
+      tags: ["AI Engineering", "Fund Diligence", "Investment Tech"],
+    },
+    {
+      company: "upGrad",
+      role: "Research Intern",
+      period: "Jan 2025 — Apr 2025",
+      location: "India",
+      headline: "Developing hybrid malware detection systems with ML techniques.",
+      description:
+        "Developed a hybrid system combining traditional Yara rules with advanced machine learning techniques for hybrid malware detection, addressing real-world security threats.",
+      highlights: [
+        "Collaborated with a team to address real-world security threats through research and implementation.",
+        "Enhanced skills in Python, data analysis, and machine learning for cybersecurity applications.",
+        "Integrated traditional rule-based systems with modern ML approaches for robust threat detection.",
+      ],
+      tags: ["Machine Learning", "Cybersecurity", "Research"],
+    },
+    {
       company: "Outlier.AI · Data Annotation · Soul.AI",
       role: "AI Evaluator & Trainer",
       period: "Nov 2024 — Jan 2025",
@@ -136,34 +166,49 @@ export const Projects = () => {
       tags: ["AWS", "Cloud Architecture", "Performance Engineering"],
     },
     {
-      company: "PSYLIQ",
+      company: "Psyliq",
       role: "Data Analyst Intern",
       period: "Jan 2024 — Feb 2024",
-      location: "Remote",
+      location: "India",
       headline: "Transforming HR telemetry into decision-ready intelligence.",
       description:
         "Analyzed and visualized employee datasets with MySQL, Python, and Power BI to surface performance and retention insights.",
       highlights: [
-        "Delivered dashboards that improved data comprehension for stakeholders by 25% within one month.",
-        "Automated cleaning workflows that accelerated HR reporting cadence.",
-        "Unified SQL and BI outputs into executive-ready narratives for leadership reviews.",
+        "Cleaned and stored HR data, ensuring high-quality information for analysis.",
+        "Created visualizations with Power BI, making complex data easily understandable for stakeholders.",
+        "Leveraged MySQL and Python to streamline data processes, contributing to a more efficient workflow.",
       ],
-      tags: ["Data Analytics", "Power BI", "Storytelling"],
+      tags: ["Data Analytics", "Power BI", "MySQL"],
     },
     {
-      company: "AIESEC in Jalandhar",
-      role: "Senior & Junior Manager",
-      period: "Jul 2022 — Jan 2023",
-      location: "Jalandhar, Punjab, India",
-      headline: "Activating international exchange programs with tight-knit teams.",
+      company: "AIESEC",
+      role: "Senior Manager",
+      period: "Aug 2023 — Dec 2023",
+      location: "Phagwara, Punjab, India",
+      headline: "Managing outbound professional exchange programs.",
       description:
-        "Led outbound professional exchange operations, coordinating partner relationships and volunteer pods to deliver seamless participant experiences.",
+        "Successfully managed outbound professional exchange programs in Outgoing Global Talent Department (OGT), demonstrating strong leadership and commitment to participant satisfaction.",
       highlights: [
-        "Directed cross-functional ceremonies and touchpoints to uphold program quality standards.",
-        "Mentored junior organizers, strengthening collaboration and ownership across the chapter.",
-        "Facilitated stakeholder communications that kept global partners aligned on deliverables.",
+        "Oversaw program execution, demonstrating strong leadership and commitment to participant satisfaction.",
+        "Fostered team building through collaborative projects, enhancing organizational effectiveness and teamwork.",
+        "Coordinated partner relationships and volunteer pods to deliver seamless participant experiences.",
       ],
       tags: ["Leadership", "Program Management", "Team Operations"],
+    },
+    {
+      company: "AIESEC",
+      role: "Junior Manager",
+      period: "May 2023 — Aug 2023",
+      location: "Phagwara, Punjab, India",
+      headline: "Contributing to talent engagement and outreach initiatives.",
+      description:
+        "Actively contributed to the Outgoing Global Talent department, focusing on talent engagement and outreach initiatives.",
+      highlights: [
+        "Engaged potential candidates through cold calling, effectively pitching program benefits.",
+        "Enhanced marketing efforts by creating engaging content using Canva.",
+        "Strengthened time management skills to balance multiple responsibilities efficiently.",
+      ],
+      tags: ["Talent Engagement", "Marketing", "Outreach"],
     },
   ];
 

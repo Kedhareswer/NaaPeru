@@ -38,6 +38,17 @@
     
     "experience": [
       {
+        "role": "AI Engineer Intern",
+        "company": "DiligenceVault",
+        "duration": "October 2025 - Present",
+        "location": "India",
+        "achievements": [
+          "Working on AI-driven solutions for digital fund due diligence ecosystem in the investment management industry.",
+          "Contributing to AI-engineered frameworks for structured dataset extraction and analysis.",
+          "Developing intelligent systems to support institutional and wealth investors in fund diligence processes."
+        ]
+      },
+      {
         "role": "Research Intern",
         "company": "upGrad",
         "duration": "January 2025 - April 2025 (4 months)",
