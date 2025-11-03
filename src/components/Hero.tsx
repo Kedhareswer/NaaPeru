@@ -60,18 +60,6 @@ export const Hero = () => {
             <div
               className="relative aspect-[3/4] overflow-hidden rounded sm:aspect-[4/3] lg:aspect-[3/4]"
             >
-              {/* Top Left - DOB */}
-              <div className="absolute left-3 top-3 sm:left-4 sm:top-4 md:left-6 md:top-6 z-20 flex flex-col gap-0.5 sm:gap-1">
-                <span className="font-heading text-[0.6rem] sm:text-xs uppercase tracking-widest text-primary/70">
-                  DOB
-                </span>
-                <span className="font-heading text-sm sm:text-base md:text-lg font-medium text-primary" style={{
-                  letterSpacing: '0.02em'
-                }}>
-                  09/09/2004
-                </span>
-              </div>
-
               {/* Top Right - HEIGHT */}
               <div className="absolute right-3 top-3 sm:right-4 sm:top-4 md:right-6 md:top-6 z-20 flex flex-col items-end gap-0.5 sm:gap-1">
                 <span className="font-heading text-[0.6rem] sm:text-xs uppercase tracking-widest text-primary/70">
@@ -125,17 +113,6 @@ export const Hero = () => {
                 </span>
               </div>
 
-              {/* Bottom Right - WEIGHT */}
-              <div className="absolute right-3 bottom-3 sm:right-4 sm:bottom-4 md:right-6 md:bottom-6 z-20 flex flex-col items-end gap-0.5 sm:gap-1">
-                <span className="font-heading text-[0.6rem] sm:text-xs uppercase tracking-widest text-primary/70">
-                  WEIGHT
-                </span>
-                <span className="font-heading text-sm sm:text-base md:text-lg font-medium text-primary" style={{
-                  letterSpacing: '0.02em'
-                }}>
-                  55 KG
-                </span>
-              </div>
             </div>
 
             {/* Floating Element */}
