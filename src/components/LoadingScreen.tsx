@@ -30,11 +30,6 @@ export const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
     return () => clearInterval(timer);
   }, [onComplete]);
 
-  const handleSkip = () => {
-    setProgress(100);
-    setTimeout(onComplete, 300);
-  };
-
   const ringStyle = useMemo(
     () => ({
       background: `conic-gradient(from 180deg at 50% 50%, hsl(var(--primary)) ${progress}%, hsl(var(--primary) / 0.15) ${progress}% 100%)`,
@@ -46,13 +41,6 @@ export const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
     <div className="fixed inset-0 z-50 overflow-hidden bg-background">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,hsla(var(--primary)/0.2),transparent_60%)] opacity-70" aria-hidden="true" />
       <div className="absolute inset-0 bg-[linear-gradient(140deg,hsla(var(--primary)/0.08),transparent,hsla(var(--primary)/0.12))]" aria-hidden="true" />
-
-      <button
-        onClick={handleSkip}
-        className="absolute top-8 right-8 z-20 font-body text-sm font-medium uppercase tracking-[0.35em] text-foreground/60 transition-colors hover:text-primary"
-      >
-        Skip intro
-      </button>
 
       <div className="relative z-10 flex h-full flex-col items-center justify-center gap-10 text-center">
         <div className="relative flex h-40 w-40 items-center justify-center">

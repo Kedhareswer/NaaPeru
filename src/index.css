@@ -164,6 +164,6 @@ All colors MUST be HSL.
   }
 
   .container-portfolio {
-    @apply max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32;
+    @apply max-w-[1440px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20;
   }
 }
