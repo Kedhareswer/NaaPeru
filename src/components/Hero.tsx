@@ -1,10 +1,27 @@
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
 import heroImage from "@/assets/me.png";
 
 export const Hero = () => {
   const tickerWords = ["CREATE", "INNOVATE", "DESIGN", "EXPERIMENT"];
   const legacyRoles = ["GEN AI", "DESIGNER", "DEVELOPER", "DATA SCIENTIST"];
   const legacyRolesLine = legacyRoles.join(" / ");
+  const socials = [
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/kedhareswernaidu/",
+      icon: Linkedin,
+    },
+    {
+      label: "Email",
+      href: "mailto:kedhareswer.12110626@gmail.com",
+      icon: Mail,
+    },
+    {
+      label: "GitHub",
+      href: "https://github.com/Kedhareswer",
+      icon: Github,
+    },
+  ];
 
   return (
     <section
@@ -52,6 +69,24 @@ export const Hero = () => {
             >
               Building experiences powered by intelligence, driven by design.
             </p>
+
+            <div
+              className="animate-slide-up flex flex-wrap items-center gap-4 pt-2"
+              style={{ animationDelay: "800ms" }}
+            >
+              {socials.map(({ label, href, icon: Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  aria-label={label}
+                  className="group rounded-full border border-foreground/20 p-2 transition-all duration-300 hover:border-primary/60"
+                >
+                  <Icon className="h-5 w-5 text-foreground/60 transition-colors duration-300 group-hover:text-primary fill-transparent group-hover:fill-primary" />
+                </a>
+              ))}
+            </div>
 
           </div>
 
@@ -122,13 +157,13 @@ export const Hero = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 sm:bottom-10 md:bottom-12 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 sm:gap-2">
+      <div className="absolute bottom-12 sm:bottom-14 md:bottom-16 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 sm:gap-2">
         <span className="font-body text-[0.6rem] sm:text-xs uppercase tracking-wider text-foreground/60">SCROLL</span>
         <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 animate-bounce text-foreground/60" />
       </div>
 
       {/* Legacy Roles Strip */}
-      <div className="absolute bottom-8 sm:bottom-10 md:bottom-12 left-0 hidden sm:block w-full">
+      <div className="absolute bottom-12 sm:bottom-14 md:bottom-16 left-0 hidden sm:block w-full">
         <div className="container-portfolio">
           <span className="font-heading text-[0.6rem] sm:text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] text-primary/70 whitespace-nowrap overflow-hidden text-ellipsis block">
             {legacyRolesLine}

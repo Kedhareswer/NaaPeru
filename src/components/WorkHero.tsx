@@ -4,26 +4,31 @@ export const WorkHero = () => {
       year: "2025",
       company: "DiligenceVault",
       role: "AI Engineer Intern",
+      url: "https://www.diligencevault.com/",
     },
     {
       year: "2025",
       company: "upGrad",
       role: "Research Intern",
+      url: "https://www.upgrad.com/",
     },
     {
       year: "2024",
       company: "Outlier.AI",
       role: "AI Evaluator & Trainer",
+      url: "https://outlier.ai/",
     },
     {
       year: "2024",
       company: "Psyliq",
       role: "Data Analyst Intern",
+      url: "https://www.linkedin.com/company/psyliq/?originalSubdomain=in",
     },
     {
       year: "2023",
       company: "AIESEC",
       role: "Senior Manager",
+      url: "https://aiesec.org/",
     },
   ];
 
@@ -54,18 +59,40 @@ export const WorkHero = () => {
 
                 {/* Mobile: Company + Role stacked */}
                 <div className="md:hidden -mt-0.5">
-                  <div className="font-body text-[15px] font-medium text-foreground leading-6">
-                    {exp.company}
-                  </div>
+                  {exp.url ? (
+                    <a
+                      href={exp.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-body text-[15px] font-medium text-foreground leading-6 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/60"
+                    >
+                      {exp.company}
+                    </a>
+                  ) : (
+                    <div className="font-body text-[15px] font-medium text-foreground leading-6">
+                      {exp.company}
+                    </div>
+                  )}
                   <div className="font-body text-sm text-foreground/55 leading-6">
                     {exp.role}
                   </div>
                 </div>
 
                 {/* Desktop: Inline company and role */}
-                <span className="hidden md:block font-body text-base font-medium text-foreground">
-                  {exp.company}
-                </span>
+                {exp.url ? (
+                  <a
+                    href={exp.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hidden md:inline font-body text-base font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/60"
+                  >
+                    {exp.company}
+                  </a>
+                ) : (
+                  <span className="hidden md:block font-body text-base font-medium text-foreground">
+                    {exp.company}
+                  </span>
+                )}
                 <span className="hidden md:block font-body text-sm text-foreground/50">
                   {exp.role}
                 </span>
