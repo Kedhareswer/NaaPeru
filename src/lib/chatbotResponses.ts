@@ -20,11 +20,17 @@ export class ChatbotResponseGenerator {
   // About/Who am I
   getAbout(): string {
     const responses = [
-      `I'm **Marlakunta Kedhareswer Naidu** (yeah, that's a mouthful - just call me Kedhar 😅). I'm an AI Engineer who also loves design. Currently working at **DiligenceVault** where I'm building AI systems that process financial documents.\n\nI'm from Madanapalli, Andhra Pradesh, but I'm studying in Punjab. I work at the intersection of AI and UX - basically, I make intelligent systems that people actually want to use! 🚀`,
+      `I'm **Marlakunta Kedhareswer Naidu** (yeah, that's a mouthful - just call me Kedhar 😅). I'm an AI Engineer who also loves design. Currently working at **DiligenceVault** where I'm building AI systems that process financial documents.
+
+I'm from Madanapalli, Andhra Pradesh, and I'm based in Punjab. I graduated from Lovely Professional University and work at the intersection of AI and UX - basically, I make intelligent systems that people actually want to use! 🚀`,
       
-      `Hey! I'm **Kedhar** - an AI/ML engineer with a passion for design. Right now I'm at **DiligenceVault**, building agent orchestration workflows and making AI read boring documents so humans don't have to 😴\n\nI'm that rare breed of engineer who can both build AI systems AND make them look good. Based in Punjab for studies, but originally from Madanapalli. I love working on projects that combine intelligence with great user experience! 💻`,
+      `Hey! I'm **Kedhar** - an AI/ML engineer with a passion for design. Right now I'm at **DiligenceVault**, building agent orchestration workflows and making AI read boring documents so humans don't have to 😴
+
+I'm that rare breed of engineer who can both build AI systems AND make them look good. Based in Punjab, originally from Madanapalli — and I graduated from LPU. I love working on projects that combine intelligence with great user experience! 💻`,
       
-      `I'm **Kedhar** - AI Engineer by day, design enthusiast by night (okay, also by day 😄). Currently at **DiligenceVault** where I'm working on some cool AI stuff.\n\nI graduated from Lovely Professional University with a focus on Data Science and AI/ML. I speak fluent Python, JavaScript, and sarcasm. My goal? Building AI systems that are both powerful and actually pleasant to use! 🎯`,
+      `I'm **Kedhar** - AI Engineer by day, design enthusiast by night (okay, also by day 😄). Currently at **DiligenceVault** where I'm working on some cool AI stuff.
+
+I graduated from Lovely Professional University with a focus on Data Science and AI/ML. I speak fluent Python, JavaScript, and sarcasm. My goal? Building AI systems that are both powerful and actually pleasant to use! 🎯`,
     ];
     return this.getRandomResponse(responses);
   }
