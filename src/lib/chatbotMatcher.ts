@@ -8,47 +8,81 @@ export class QueryMatcher {
 
   private matchesAny(query: string, patterns: string[]): boolean {
     const normalized = this.normalizeQuery(query);
-    return patterns.some(pattern => normalized.includes(pattern));
+    return patterns.some(pattern => {
+      // Use word boundary matching for better accuracy
+      const regex = new RegExp(`\\b${pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+      return regex.test(normalized) || normalized.includes(pattern);
+    });
+  }
+
+  private matchesExact(query: string, patterns: string[]): boolean {
+    const normalized = this.normalizeQuery(query);
+    return patterns.some(pattern => {
+      const regex = new RegExp(`\\b${pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+      return regex.test(normalized);
+    });
   }
 
   getResponse(query: string): string {
     const normalized = this.normalizeQuery(query);
 
-    // Greetings
+    // Experience/Work (check BEFORE about to avoid conflicts)
+    // More specific patterns for experience
     if (this.matchesAny(normalized, [
-      "hi", "hello", "hey", "yo", "sup", "greetings", "namaste", "hola", "hii", "heya"
-    ])) {
-      return responseGenerator.getGreeting();
-    }
-
-    // About/Who are you
-    if (this.matchesAny(normalized, [
-      "who are you", "who r u", "tell me about yourself", "about you",
-      "introduce yourself", "who's this", "what do you do", "what u do",
-      "about yourself", "your background", "who is kedhar", "who is this"
-    ])) {
-      return responseGenerator.getAbout();
-    }
-
-    // Experience/Work
-    if (this.matchesAny(normalized, [
-      "experience", "work", "job", "career", "worked", "working",
+      "experience", "work history", "work experience", "job", "career", "worked", "working",
       "employment", "intern", "internship", "company", "companies",
       "diligencevault", "upgrad", "outlier", "psyliq", "aiesec",
       "current job", "current work", "where do you work", "where u work",
-      "what's your job", "your job", "your work"
-    ])) {
-      return responseGenerator.getExperience();
+      "what's your job", "your job", "tell me about your experience",
+      "about your experience", "your experience", "work"
+    ]) && !this.matchesExact(normalized, ["your work", "my work", "show me your work"])) {
+      // Exclude if it's asking about projects ("your work" often means projects)
+      if (!normalized.includes("built") && !normalized.includes("project")) {
+        return responseGenerator.getExperience();
+      }
     }
 
-    // Projects
+    // Projects (check early to catch "your work" meaning projects)
     if (this.matchesAny(normalized, [
       "project", "projects", "built", "build", "created", "made",
       "thesisflow", "quantumpdf", "portfolio", "work samples",
       "what have you built", "github projects", "your projects",
-      "show me projects", "your work", "what did you build"
-    ])) {
+      "show me projects", "what did you build", "show me your work",
+      "your work", "my work"
+    ]) && (normalized.includes("project") || normalized.includes("built") || 
+           normalized.includes("build") || normalized.includes("created") ||
+           normalized.includes("made"))) {
       return responseGenerator.getProjects();
+    }
+
+    // Greetings (simple, unambiguous)
+    if (this.matchesExact(normalized, [
+      "hi", "hello", "hey", "yo", "sup", "greetings", "namaste", "hola", "hii", "heya"
+    ]) && normalized.split(" ").length <= 2) {
+      return responseGenerator.getGreeting();
+    }
+
+    // About/Who are you (more specific patterns)
+    if (this.matchesAny(normalized, [
+      "who are you", "who r u", "tell me about yourself", 
+      "introduce yourself", "who's this", "who is kedhar", "who is this",
+      "about yourself", "your background"
+    ]) && !normalized.includes("experience") && !normalized.includes("work")) {
+      return responseGenerator.getAbout();
+    }
+
+    // What do you do - could be about OR experience, use context
+    if (this.matchesAny(normalized, ["what do you do", "what u do"])) {
+      // If they mention work/job context, give experience
+      if (normalized.includes("work") || normalized.includes("job")) {
+        return responseGenerator.getExperience();
+      }
+      return responseGenerator.getAbout();
+    }
+
+    // Fallback for work/experience if not caught above
+    if (this.matchesAny(normalized, ["work", "job", "career"])) {
+      return responseGenerator.getExperience();
     }
 
     // Skills/Technologies
@@ -56,10 +90,20 @@ export class QueryMatcher {
       "skill", "skills", "technology", "technologies", "tech stack",
       "programming", "languages", "framework", "frameworks", "tools",
       "python", "javascript", "react", "ai", "ml", "machine learning",
-      "what can you do", "expertise", "proficient", "good at",
-      "know", "familiar with", "your skills", "tech"
+      "expertise", "proficient", "good at", "your skills", "tech",
+      "what technologies", "what languages", "what frameworks"
     ])) {
       return responseGenerator.getSkills();
+    }
+    
+    // "What can you do" - context-dependent
+    if (this.matchesAny(normalized, ["what can you do"])) {
+      // If asking about technical abilities, show skills
+      if (normalized.includes("tech") || normalized.includes("code") || normalized.includes("program")) {
+        return responseGenerator.getSkills();
+      }
+      // Otherwise show about
+      return responseGenerator.getAbout();
     }
 
     // Education
@@ -115,10 +159,11 @@ export class QueryMatcher {
       return responseGenerator.getJoke();
     }
 
-    // Location
+    // Location (more specific patterns)
     if (this.matchesAny(normalized, [
-      "where", "location", "from", "live", "based", "city", "place", "where are you"
-    ])) {
+      "where are you from", "where r u from", "location", "live", "based", 
+      "city", "place", "where are you", "where do you live", "hometown"
+    ]) && !normalized.includes("work") && !normalized.includes("study")) {
       return `I'm originally from **Madanapalli, Andhra Pradesh, India** 🏠 but currently studying in **Punjab, India** 🎓. That's like a 2000km journey! I'm basically a nomad at this point 😄`;
     }
 

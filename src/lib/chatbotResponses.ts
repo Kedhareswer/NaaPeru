@@ -32,9 +32,9 @@ export class ChatbotResponseGenerator {
   // Experience
   getExperience(): string {
     const responses = [
-      `Here's my journey so far:\n\n**🎯 DiligenceVault** (Current - AI Engineer Intern)\nBuilding agent orchestration workflows for document processing. We're talking 5,000+ chunks with 82% semantic precision. Cut manual work by 60% - efficiency is my middle name! 😎\n\n**🔒 upGrad** (Research Intern, Jan-Apr 2025)\nBuilt a hybrid malware detection system combining Yara rules with ML. Basically taught computers to catch bad guys!\n\n**🤖 Outlier.AI** (AI Evaluator, Nov 2024-Jan 2025)\nTrained AI models and evaluated their outputs. Yes, even AI needs tutoring 📚\n\n**📊 Psyliq** (Data Analyst, Jan-Feb 2024)\nTurned boring HR data into beautiful Power BI visualizations. Made data actually make sense!\n\n**🌍 AIESEC** (Senior Manager, 2023)\nManaged international exchange programs. Sent people around the world - like a travel agent for careers!`,
-      
       `Let me break down my work history:\n\n**Currently at DiligenceVault** 🚀\nAI Engineer Intern - Building document processing systems with RAG. 82% precision, <9.5s response time. Not bad, right?\n\n**Previously:**\n- **upGrad**: Research on hybrid malware detection (cybersecurity hero mode 🦸‍♂️)\n- **Outlier.AI**: AI training and evaluation (graded AI's homework)\n- **Psyliq**: Data analysis and Power BI magic ✨\n- **AIESEC**: Leadership and international program management\n\nI've been busy! Each role taught me something new about AI, data, and how to work with awesome teams. 💪`,
+      
+      `Here's my journey so far:\n\n**🎯 DiligenceVault** (Current - AI Engineer Intern)\nBuilding agent orchestration workflows for document processing. We're talking 5,000+ chunks with 82% semantic precision. Cut manual work by 60% - efficiency is my middle name! 😎\n\n**🔒 upGrad** (Research Intern, Jan-Apr 2025)\nBuilt a hybrid malware detection system combining Yara rules with ML. Basically taught computers to catch bad guys!\n\n**🤖 Outlier.AI** (AI Evaluator, Nov 2024-Jan 2025)\nTrained AI models and evaluated their outputs. Yes, even AI needs tutoring 📚\n\n**📊 Psyliq** (Data Analyst, Jan-Feb 2024)\nTurned boring HR data into beautiful Power BI visualizations. Made data actually make sense!\n\n**🌍 AIESEC** (Senior Manager, 2023)\nManaged international exchange programs. Sent people around the world - like a travel agent for careers!`,
       
       `My career speedrun:\n\n🎯 **DiligenceVault** (Now): Making AI smarter at reading financial docs\n🔐 **upGrad**: Caught malware with ML (cybersecurity FTW!)\n🤖 **Outlier.AI**: Trained AI models (the irony is not lost on me)\n📊 **Psyliq**: Data visualization wizard\n🌍 **AIESEC**: Managed global programs\n\nEach experience has been about solving real problems with AI and data. I love building things that actually work and make people's lives easier! 🚀`,
     ];
@@ -128,11 +128,11 @@ export class ChatbotResponseGenerator {
   // Default/fallback response
   getDefault(): string {
     const defaults = [
-      `Hmm, interesting question! 🤔 I'm not sure I have a specific answer for that, but I can tell you about:\n\n💼 My work experience and current role\n🚀 My projects (ThesisFlow-AI, QuantumPDF)\n🛠️ My technical skills\n🎓 My education and certifications\n📧 How to reach me\n🎮 What I do for fun\n\nWhat would you like to know? 😊`,
+      `Hmm, interesting question! 🤔 I'm not sure I have a specific answer for that, but I can tell you about:\n\n💼 **My work** - Current role at DiligenceVault and past experience\n🚀 **My projects** - ThesisFlow-AI, QuantumPDF, and more\n🛠️ **My skills** - AI/ML, full-stack development, and tech stack\n🎓 **My education** - LPU, certifications, and learning journey\n📧 **Contact** - How to reach me for opportunities\n🎮 **Fun stuff** - Hobbies, interests, and random facts\n\nWhat would you like to know? 😊`,
       
-      `Good question! Let me think... 🤔\n\nI can tell you about:\n- My AI/ML work and experience\n- My projects and what I've built\n- My skills and what I'm good at\n- How to contact me\n- Random fun facts about me\n\nWhat interests you? 🚀`,
+      `Good question! Let me think... 🤔\n\nI can tell you about:\n- **Work & Experience** - My AI/ML engineering journey\n- **Projects** - Cool stuff I've built (live demos available!)\n- **Skills** - Technologies I work with\n- **Education** - Academic background and certifications\n- **Contact** - Let's connect!\n- **Personal** - Fun facts and hobbies\n\nWhat interests you? 🚀`,
       
-      `Interesting! 🤔 I'm not sure about that specific thing, but I'm happy to chat about:\n\n✨ My work at DiligenceVault\n✨ Projects I've built\n✨ My technical skills\n✨ My education\n✨ How to reach me\n✨ What I do for fun\n\nWhat would you like to explore? 😊`,
+      `Interesting! 🤔 I'm not sure about that specific thing, but I'm happy to chat about:\n\n✨ My work at DiligenceVault and previous roles\n✨ Projects I've built (ThesisFlow-AI, QuantumPDF)\n✨ My technical skills and expertise\n✨ My education and certifications\n✨ How to reach me\n✨ What I do for fun\n\nTry asking about any of these! 😊`,
     ];
     return this.getRandomResponse(defaults);
   }
