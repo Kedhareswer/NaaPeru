@@ -13,7 +13,7 @@ export const ChatBot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hey there! 👋 Ready to know about the guy who makes AI do his bidding? Ask me anything!",
+      content: "Hey! I'm Kedhar 👋 Ask me anything - about my work, projects, or whatever you're curious about!",
     },
   ]);
   const [input, setInput] = useState("");
@@ -21,12 +21,12 @@ export const ChatBot = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const suggestedQuestions = [
-    "Who is Kedhar?",
+    "Who are you?",
     "What projects have you built?",
     "Tell me about your experience",
     "What are your skills?",
     "How can I contact you?",
-    "What are your hobbies?",
+    "What do you do for fun?",
   ];
 
   const scrollToBottom = () => {
@@ -155,7 +155,7 @@ export const ChatBot = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
-              placeholder="Ask me anything about Kedhar..."
+              placeholder="Ask me anything..."
               className="flex-1 px-4 py-3 bg-card/30 border border-border/30 rounded-lg font-body text-sm text-foreground placeholder:text-foreground/40 focus:outline-none focus:border-primary/50 focus:bg-card/50 transition-all"
             />
             <button
