@@ -70,14 +70,6 @@ export const ChatBot = () => {
             <h2 className="font-heading text-lg font-bold text-foreground">
               సంచారి?
             </h2>
-            <div className="relative">
-              <div className="px-3 py-1 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-full backdrop-blur-sm">
-                <span className="font-heading text-xs font-bold text-green-400 tracking-wider uppercase">
-                  Online
-                </span>
-              </div>
-              <div className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-green-400 animate-pulse shadow-lg shadow-green-400/50" />
-            </div>
           </div>
           <button
             onClick={closeChat}

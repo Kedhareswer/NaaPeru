@@ -23,6 +23,33 @@ export class QueryMatcher {
     });
   }
 
+  private getDetailedExperience(company: string): string {
+    const { experienceJourney } = require("./chatbotKnowledge").kedharProfile;
+    const exp = experienceJourney[company];
+    
+    if (!exp) return responseGenerator.getExperience();
+
+    return `**${exp.role}** at ${company.replace(/([A-Z])/g, ' $1').trim()}\n\n` +
+      `**My Journey:**\n${exp.journey}\n\n` +
+      `**What I Learned:**\n${exp.whatILearned.map((item: string) => `• ${item}`).join('\n')}\n\n` +
+      `**How I Felt:**\n${exp.howIFelt}\n\n` +
+      `**Impact:**\n${exp.impact} 🎯`;
+  }
+
+  private getDetailedProject(projectKey: string): string {
+    const { projectJourney } = require("./chatbotKnowledge").kedharProfile;
+    const project = projectJourney[projectKey];
+    
+    if (!project) return responseGenerator.getProjects();
+
+    return `**${project.name}**\n\n` +
+      `**My Journey:**\n${project.journey}\n\n` +
+      `**What I Learned:**\n${project.whatILearned.map((item: string) => `• ${item}`).join('\n')}\n\n` +
+      `**How I Felt:**\n${project.howIFelt}\n\n` +
+      `**Impact:**\n${project.impact}\n\n` +
+      `**Technical Highlights:**\n${project.technicalHighlights} 🚀`;
+  }
+
   getResponse(query: string): string {
     const normalized = this.normalizeQuery(query);
 
@@ -78,6 +105,71 @@ export class QueryMatcher {
         return responseGenerator.getExperience();
       }
       return responseGenerator.getAbout();
+    }
+
+    // Detailed experience journey questions
+    if (this.matchesAny(normalized, [
+      "tell me about diligencevault", "diligencevault experience", "diligencevault journey",
+      "what did you learn at diligencevault", "how was diligencevault"
+    ])) {
+      return this.getDetailedExperience("diligenceVault");
+    }
+
+    if (this.matchesAny(normalized, [
+      "tell me about upgrad", "upgrad experience", "upgrad journey",
+      "what did you learn at upgrad", "how was upgrad"
+    ])) {
+      return this.getDetailedExperience("upGrad");
+    }
+
+    if (this.matchesAny(normalized, [
+      "tell me about outlier", "outlier experience", "outlier journey",
+      "what did you learn at outlier", "how was outlier"
+    ])) {
+      return this.getDetailedExperience("outlierAI");
+    }
+
+    if (this.matchesAny(normalized, [
+      "tell me about psyliq", "psyliq experience", "psyliq journey",
+      "what did you learn at psyliq", "how was psyliq"
+    ])) {
+      return this.getDetailedExperience("psyliq");
+    }
+
+    if (this.matchesAny(normalized, [
+      "tell me about aiesec", "aiesec experience", "aiesec journey",
+      "what did you learn at aiesec", "how was aiesec"
+    ])) {
+      return this.getDetailedExperience("aiesec");
+    }
+
+    // Detailed project journey questions
+    if (this.matchesAny(normalized, [
+      "tell me about thesisflow", "thesisflow journey", "how did you build thesisflow",
+      "what did you learn from thesisflow", "thesisflow experience"
+    ])) {
+      return this.getDetailedProject("thesisFlow");
+    }
+
+    if (this.matchesAny(normalized, [
+      "tell me about quantumpdf", "quantumpdf journey", "how did you build quantumpdf",
+      "what did you learn from quantumpdf", "quantumpdf experience"
+    ])) {
+      return this.getDetailedProject("quantumPDF");
+    }
+
+    if (this.matchesAny(normalized, [
+      "tell me about data notebook", "data notebook journey", "how did you build data notebook",
+      "what did you learn from data notebook"
+    ])) {
+      return this.getDetailedProject("dataNotebook");
+    }
+
+    if (this.matchesAny(normalized, [
+      "tell me about image to sketch", "sketch project", "image conversion project",
+      "what did you learn from image to sketch"
+    ])) {
+      return this.getDetailedProject("imageToSketch");
     }
 
     // Fallback for work/experience if not caught above

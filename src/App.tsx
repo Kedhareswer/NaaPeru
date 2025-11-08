@@ -9,6 +9,7 @@ import Work from "./pages/Work";
 import Fun from "./pages/Fun";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
+import ChatbotTest from "./pages/ChatbotTest";
 import { CaseStudyQuantumPDF } from "./pages/CaseStudyQuantumPDF";
 import { CaseStudyThesisFlow } from "./pages/CaseStudyThesisFlow";
 import { CaseStudyDataNotebook } from "./pages/CaseStudyDataNotebook";

@@ -68,11 +68,56 @@ export class ChatbotResponseGenerator {
   // Education
   getEducation(): string {
     const responses = [
-      `I studied at **Lovely Professional University** in Punjab 🎓\n\n**Degree:** B.Tech in Computer Science & Engineering\n**Specialization:** Data Science (AI & ML)\n**CGPA:** 7.74\n**Duration:** September 2021 - July 2025\n**Status:** Completed! 🎉\n\nI also have a bunch of certifications:\n- Neo4j Certified Professional (July 2025)\n- Python for Data Science - Infosys (May 2025)\n- AWS Solutions Architecture - Forage (Dec 2024)\n- Responsible AI - Google (Nov 2024)\n- GANs and Diffusion Models (2025)\n\nI'm always learning new stuff! 📚`,
+      `I completed my education at **Lovely Professional University** in Punjab! 🎓
+
+**Degree:** B.Tech in Computer Science & Engineering
+**Specialization:** Data Science (AI & ML)
+**CGPA:** 7.74
+**Duration:** September 2021 - July 2025
+**Status:** ✅ Completed!
+
+I also have a bunch of certifications:
+- Neo4j Certified Professional (July 2025)
+- Python for Data Science - Infosys (May 2025)
+- AWS Solutions Architecture - Forage (Dec 2024)
+- Responsible AI - Google (Nov 2024)
+- GANs and Diffusion Models (2025)
+
+I'm always learning new stuff! 📚`,
       
-      `My academic journey:\n\n🎓 **Lovely Professional University, Punjab**\n- B.Tech in Computer Science\n- Specialized in Data Science (AI & ML)\n- CGPA: 7.74\n- Graduated: July 2025\n\n📜 **Certifications I've collected:**\n✅ Neo4j Certified Professional\n✅ Python for Data Science (Infosys)\n✅ AWS APAC Solutions Architecture\n✅ Introduction to Responsible AI (Google)\n✅ Build GANs and Diffusion Models\n\nEducation never stops in tech! Always learning, always growing 🌱`,
+      `My academic journey:
+
+🎓 **Lovely Professional University, Punjab**
+- B.Tech in Computer Science
+- Specialized in Data Science (AI & ML)
+- CGPA: 7.74
+- ✅ Completed: July 2025
+
+📜 **Certifications I've collected:**
+✅ Neo4j Certified Professional
+✅ Python for Data Science (Infosys)
+✅ AWS APAC Solutions Architecture
+✅ Introduction to Responsible AI (Google)
+✅ Build GANs and Diffusion Models
+
+Education never stops in tech! Always learning, always growing 🌱`,
       
-      `Here's my education background:\n\n**University:** Lovely Professional University, Punjab\n**Degree:** Bachelor of Technology - CSE\n**Focus:** Data Science, AI & ML\n**CGPA:** 7.74\n**Graduated:** July 2025 🎓\n\n**Bonus Certifications:**\n- Neo4j Certified Professional\n- Python for Data Science\n- AWS Solutions Architecture\n- Responsible AI by Google\n- GANs and Diffusion Models\n\nI've got more certificates than a kindergarten teacher 😄`,
+      `Here's my education background:
+
+**University:** Lovely Professional University, Punjab
+**Degree:** Bachelor of Technology - CSE
+**Focus:** Data Science, AI & ML
+**CGPA:** 7.74
+**Status:** ✅ Completed (July 2025) 🎓
+
+**Bonus Certifications:**
+- Neo4j Certified Professional
+- Python for Data Science
+- AWS Solutions Architecture
+- Responsible AI by Google
+- GANs and Diffusion Models
+
+I've got more certificates than a kindergarten teacher 😄`,
     ];
     return this.getRandomResponse(responses);
   }
