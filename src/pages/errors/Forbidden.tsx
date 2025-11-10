@@ -4,10 +4,10 @@ const Forbidden = () => (
   <ErrorTemplate
     statusCode="403"
     statusLabel="Forbidden"
-    title="That area is locked down."
-    description="Your account doesn’t have access to this resource. Request permissions or head back to safer ground."
-    callToAction={{ to: "/", label: "Return to Home" }}
-    patternWords={["ACCESS DENIED", "403", "FORBIDDEN", "×"]}
+    title="Access denied."
+    description="You don't have permission to access this resource. Contact support if you believe this is an error."
+    callToAction={{ to: "/", label: "Back to Home" }}
+    patternWords={["403", "×", "FORBIDDEN", "×", "ACCESS DENIED"]}
     logMessagePrefix="403 Error"
   />
 );

@@ -2,6 +2,45 @@ import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
 import heroImage from "@/assets/me.png";
 
 export const Hero = () => {
+  const KaggleIcon = ({ className = "" }: { className?: string }) => (
+    <svg
+      className={className}
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {/* Stylized 'K' */}
+      <path d="M6 4v16" />
+      <path d="M6 12l12-8" />
+      <path d="M10 12l8 8" />
+    </svg>
+  );
+  const Dev21Icon = ({ className = "" }: { className?: string }) => (
+    <svg
+      className={className}
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {/* Stylized '2' */}
+      <path d="M7 8c0-2 1.5-3 3.5-3S14 6 14 8c0 1.6-1 2.4-3 3.5C9 12.8 8 13.5 8 16h8" />
+      {/* Stylized '1' */}
+      <path d="M18 5v14" />
+      <path d="M16 7l2-2 2 2" />
+    </svg>
+  );
   const tickerWords = ["CREATE", "INNOVATE", "DESIGN", "EXPERIMENT"];
   const legacyRoles = ["GEN AI", "DESIGNER", "DEVELOPER", "DATA SCIENTIST"];
   const legacyRolesLine = legacyRoles.join(" / ");
@@ -20,6 +59,16 @@ export const Hero = () => {
       label: "GitHub",
       href: "https://github.com/Kedhareswer",
       icon: Github,
+    },
+    {
+      label: "Kaggle",
+      href: "https://www.kaggle.com/kedhareswernaidu",
+      icon: KaggleIcon,
+    },
+    {
+      label: "21st.dev",
+      href: "https://21st.dev/community/kedhar",
+      icon: Dev21Icon,
     },
   ];
 
@@ -54,7 +103,7 @@ export const Hero = () => {
       <div className="container-portfolio relative z-10">
         <div className="grid-12 items-start gap-6 sm:gap-8 md:gap-10 lg:items-center lg:gap-12">
           {/* Left Content */}
-          <div className="order-2 col-span-4 w-full space-y-4 sm:space-y-5 md:col-span-8 md:space-y-6 lg:order-1 lg:col-span-7 lg:space-y-8">
+          <div className="order-2 col-span-4 w-full mt-16 sm:mt-24 md:mt-32 lg:mt-40 xl:mt-48 space-y-4 sm:space-y-5 md:col-span-8 md:space-y-6 lg:order-1 lg:col-span-7 lg:space-y-8">
             {/* Headline */}
             <h1
               className="animate-slide-up max-w-3xl text-lg sm:text-xl md:text-2xl font-normal leading-snug sm:leading-tight"

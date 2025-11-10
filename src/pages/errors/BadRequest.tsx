@@ -4,10 +4,10 @@ const BadRequest = () => (
   <ErrorTemplate
     statusCode="400"
     statusLabel="Bad Request"
-    title="The request couldn’t be decoded."
-    description="Something in the payload felt off. Double-check the link or refresh the page before trying again."
+    title="Invalid request."
+    description="The request couldn't be processed. Check the URL or try again."
     callToAction={{ to: "/", label: "Back to Home" }}
-    patternWords={["CLIENT ERROR", "400", "CHECK INPUT", "×"]}
+    patternWords={["400", "×", "BAD REQUEST", "×", "ERROR"]}
     logMessagePrefix="400 Error"
   />
 );

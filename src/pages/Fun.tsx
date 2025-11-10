@@ -1,20 +1,15 @@
 import { useEffect, useState, type MouseEvent } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 
 type FunProject = {
   id: number;
   title: string;
   subtitle: string;
-  yearLabel: string;
-  yearValue?: number;
-  badge?: string;
-  badgeColor?: string;
-  badgeText?: string;
+  year: string;
   tags?: string[];
   link: string;
-  layout?: "hero" | "wide" | "tall" | "portrait" | "square";
   media: {
     type: "image" | "video" | "gif";
     src: string;
@@ -22,56 +17,8 @@ type FunProject = {
   };
 };
 
-const getActionLabel = (link: string) =>
-  link.includes("github.com") ? "View GitHub" : "View Website";
-
 const isCoarsePointer = () =>
   typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
-
-const parseProjectYear = (projectDate?: string) => {
-  if (!projectDate) {
-    return { label: "", value: undefined };
-  }
-
-  const yearMatch = projectDate.match(/(19|20)\d{2}/);
-  const numericYear = yearMatch ? Number(yearMatch[0]) : undefined;
-
-  return { label: projectDate, value: numericYear };
-};
-
-const determineMediaType = (source: string | undefined): FunProject["media"]["type"] => {
-  if (!source) return "image";
-  const extension = source.split(".").pop()?.toLowerCase();
-  if (extension === "mp4" || extension === "webm") return "video";
-  if (extension === "gif") return "gif";
-  return "image";
-};
-
-const computeLayout = (index: number, featured: boolean | undefined) => {
-  if (index === 0) return "hero" as const;
-  if (featured) return "wide" as const;
-  const sequence: Array<FunProject["layout"]> = ["portrait", "square", "tall", "wide"];
-  return sequence[(index - 1) % sequence.length];
-};
-
-const getBuildWindowLabel = (items: FunProject[]) => {
-  const years = items
-    .map((project) => project.yearValue)
-    .filter((value): value is number => typeof value === "number");
-
-  if (!years.length) {
-    return "—";
-  }
-
-  const minYear = Math.min(...years);
-  const maxYear = Math.max(...years);
-  return minYear === maxYear ? `${minYear}` : `${minYear}-${maxYear}`;
-};
-
-const formatProjectCount = (count: number) => {
-  if (!count) return "00";
-  return count < 10 ? `0${count}` : `${count}`;
-};
 
 const Fun = () => {
   const [projects, setProjects] = useState<FunProject[]>([]);
@@ -107,28 +54,29 @@ const Fun = () => {
             return dateB - dateA;
           })
           .map<FunProject>((item, index) => {
-            const { label, value } = parseProjectYear(item.project_date);
+            const yearMatch = item.project_date?.match(/(19|20)\d{2}/);
+            const year = yearMatch ? yearMatch[0] : "—";
             const imageSource = item.image?.startsWith("http")
               ? item.image
               : item.image
               ? item.image
               : "/placeholder.svg";
             const link = item.demo || item.github || "#";
+            
+            const extension = imageSource.split(".").pop()?.toLowerCase();
+            let mediaType: "image" | "video" | "gif" = "image";
+            if (extension === "mp4" || extension === "webm") mediaType = "video";
+            if (extension === "gif") mediaType = "gif";
 
             return {
               id: item.id ?? index,
               title: item.title,
               subtitle: item.description,
-              yearLabel: label,
-              yearValue: value,
-              badge: item.featured ? "Featured" : undefined,
-              badgeColor: item.featured ? "#FEE7F7" : undefined,
-              badgeText: item.featured ? "#0F0F0F" : undefined,
-              tags: item.technologies?.slice(0, 4) ?? [],
+              year,
+              tags: item.technologies?.slice(0, 3) ?? [],
               link,
-              layout: computeLayout(index, item.featured),
               media: {
-                type: determineMediaType(imageSource),
+                type: mediaType,
                 src: imageSource,
                 alt: item.title,
               },
@@ -139,7 +87,7 @@ const Fun = () => {
         setError(null);
       } catch (error) {
         console.error("Error loading fun projects:", error);
-        setError("Projects failed to load. Refresh to try again.");
+        setError("Failed to load projects");
       } finally {
         setIsLoading(false);
       }
@@ -180,89 +128,160 @@ const Fun = () => {
     setCursorState((prev) => ({ ...prev, visible: false }));
   };
 
-  const heroProject = projects[0];
-  const featureProjects = projects.slice(1, 4);
-  const galleryProjects = projects.slice(4);
-  const projectCountLabel = isLoading ? "··" : formatProjectCount(projects.length);
-  const buildWindowLabel = isLoading ? "····" : getBuildWindowLabel(projects);
-
   return (
-    <div className="overflow-x-hidden bg-background text-foreground">
+    <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
       <Navigation />
-      <main className="min-h-screen pt-32 pb-24">
+
+      {/* Background Gradients */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,_hsla(var(--primary)/0.15),transparent_50%)]" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,_hsla(var(--primary)/0.08),transparent_60%)]" aria-hidden="true" />
+
+      {/* Custom Cursor */}
+      {!isCoarsePointer() && (
         <div
-          className={`pointer-events-none fixed z-[120] hidden md:flex items-center justify-center bg-primary px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.35em] text-background transition-all duration-150 ${cursorState.visible ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}
+          className={`pointer-events-none fixed z-[120] flex items-center gap-2 bg-primary px-4 py-2.5 rounded-full font-body text-xs font-bold uppercase tracking-wider text-background shadow-xl transition-all duration-150 ${
+            cursorState.visible ? "opacity-100 scale-100" : "opacity-0 scale-90"
+          }`}
           style={{
             left: `${cursorState.x}px`,
             top: `${cursorState.y}px`,
             transform: "translate(-50%, -50%)",
           }}
         >
+          <ExternalLink className="w-4 h-4" />
           {cursorState.label}
         </div>
-        <section className="container-portfolio space-y-16">
-          <header className="grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-start">
-            <div className="space-y-5">
-              <span className="font-body text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">
-                Side Quests & Experiments
+      )}
+
+      <main className="relative z-10 px-6 py-32 sm:px-8 md:px-12">
+        <div className="container-portfolio w-full max-w-7xl">
+          
+          {/* Hero Section - CHAOTIC & FUN */}
+          <div className="mb-20 space-y-10 relative">
+            {/* Floating Accent Shapes */}
+            <div className="absolute -top-10 right-10 h-20 w-20 border-2 border-primary/20 rotate-12 animate-float" />
+            <div className="absolute top-32 -left-5 h-16 w-16 bg-primary/5 -rotate-6 animate-float" style={{ animationDelay: '1s' }} />
+            <div className="absolute top-64 right-1/4 h-3 w-3 bg-primary rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
+            
+            {/* Animated Badge with Pulse - MORE ENERGY */}
+            <div className="flex items-center gap-3 animate-fade-in">
+              <div className="flex gap-1">
+                <div className="h-2 w-2 bg-primary animate-pulse" style={{ animationDelay: '0ms' }} />
+                <div className="h-2 w-2 bg-primary animate-pulse" style={{ animationDelay: '200ms' }} />
+                <div className="h-2 w-2 bg-primary animate-pulse" style={{ animationDelay: '400ms' }} />
+              </div>
+              <span className="font-heading text-xs uppercase tracking-[0.6em] text-primary/75 animate-pulse">
+                • Experiments •
               </span>
-              <h1 className="font-heading text-4xl md:text-6xl leading-tight">
-                Experiments that refuse to stay in drafts.
+              <div className="h-px flex-1 bg-gradient-to-r from-primary/30 via-primary/10 to-transparent" />
+              <span className="font-body text-[10px] uppercase tracking-[0.4em] text-primary/50 animate-pulse">
+                {!isLoading && `${projects.length} wild ideas`}
+              </span>
+            </div>
+
+            {/* Title with CRAZY Ghost Typography */}
+            <div className="relative overflow-hidden">
+              {/* Multiple layered ghost text for depth */}
+              <h1 className="font-heading text-[6rem] leading-none tracking-tighter text-foreground/5 sm:text-[8rem] md:text-[10rem] lg:text-[14rem] select-none">
+                FUN
               </h1>
-              <p className="font-body text-base md:text-lg text-foreground/70 leading-relaxed max-w-2xl">
-                Welcome to the lab where I workshop interfaces, test AI workflows, and chase curiosity. Every project below is a sharp-edged capsule of energy—no fluff, just honest builds you can click, explore, and remix.
-              </p>
-            </div>
-
-            <div className="border border-border/30 bg-card/20 p-8 space-y-6">
-              <div className="space-y-2">
-                <p className="font-body text-sm uppercase tracking-[0.35em] text-foreground/60">
-                  How to explore
-                </p>
-                <p className="font-body text-base text-foreground/80 leading-relaxed">
-                  Hover to peek the vibe, tap to jump into the live build. These are scrappy by design—perfect for inspiration, teardown, or five-minute joyrides.
-                </p>
-              </div>
-              <div className="grid grid-cols-2 gap-4 text-left">
-                <div className="border border-border/30 p-4">
-                  <p className="font-heading text-3xl">{projectCountLabel}</p>
-                  <p className="font-body text-xs uppercase tracking-[0.3em] text-foreground/50">
-                    Projects
+              <h1 className="absolute inset-0 font-heading text-[6rem] leading-none tracking-tighter text-primary/5 sm:text-[8rem] md:text-[10rem] lg:text-[14rem] select-none translate-x-2 translate-y-2">
+                FUN
+              </h1>
+              
+              <div className="absolute inset-0 flex items-center">
+                <div className="space-y-6 animate-slide-up">
+                  <h2 className="font-heading text-3xl leading-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl">
+                    Side projects & <span className="text-primary italic">experiments</span>.
+                  </h2>
+                  <p className="max-w-2xl font-body text-base text-foreground/70 sm:text-lg md:text-xl">
+                    Quick builds, interface tests, and AI workflows. <span className="text-primary font-bold">Click to explore.</span>
                   </p>
-                </div>
-                <div className="border border-border/30 p-4">
-                  <p className="font-heading text-3xl">{buildWindowLabel}</p>
-                  <p className="font-body text-xs uppercase tracking-[0.3em] text-foreground/50">
-                    Build window
-                  </p>
+                  {/* Fun emoji indicators */}
+                  <div className="flex gap-3 text-2xl">
+                    <span className="animate-bounce" style={{ animationDelay: '0ms' }}>⚡</span>
+                    <span className="animate-bounce" style={{ animationDelay: '100ms' }}>🎨</span>
+                    <span className="animate-bounce" style={{ animationDelay: '200ms' }}>🚀</span>
+                    <span className="animate-bounce" style={{ animationDelay: '300ms' }}>✨</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </header>
 
+            {/* WILD Stats Strip with Ticker Effect */}
+            <div className="relative overflow-hidden border-y-2 border-primary/30 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5">
+              <div className="flex items-center gap-8 py-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-14 w-14 items-center justify-center border-2 border-primary/50 bg-primary/10 rotate-3 hover:rotate-0 transition-transform">
+                    <span className="font-heading text-2xl text-primary">{isLoading ? "?" : projects.length}</span>
+                  </div>
+                  <div>
+                    <p className="font-body text-xs uppercase tracking-[0.3em] text-foreground/50">Projects</p>
+                    <p className="font-body text-[10px] uppercase tracking-[0.3em] text-primary/50">⚡ Latest First</p>
+                  </div>
+                </div>
+                <div className="h-10 w-px bg-primary/30 -rotate-12" />
+                <div className="flex items-center gap-2">
+                  <div className="relative">
+                    <div className="h-3 w-3 rounded-full bg-primary animate-ping absolute" />
+                    <div className="h-3 w-3 rounded-full bg-primary" />
+                  </div>
+                  <span className="font-body text-xs uppercase tracking-[0.3em] text-foreground/50">Live Updates</span>
+                </div>
+                <div className="h-10 w-px bg-primary/30 rotate-12" />
+                <div className="flex items-center gap-2">
+                  <span className="font-body text-xs uppercase tracking-[0.3em] text-foreground/40">Made with ❤️ & ☕</span>
+                </div>
+              </div>
+              {/* Multiple animated lines for chaos */}
+              <div className="absolute bottom-0 left-0 h-[3px] w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 animate-pulse" />
+              <div className="absolute top-0 left-0 h-[2px] w-1/3 bg-primary opacity-30 animate-pulse" style={{ animationDelay: '0.5s' }} />
+            </div>
+          </div>
+
+          {/* Error State */}
           {error && (
-            <div className="border border-destructive/40 bg-destructive/10 px-6 py-4 text-sm uppercase tracking-[0.3em] text-destructive">
-              {error}
+            <div className="mb-12 border-l-4 border-primary bg-primary/10 px-6 py-4">
+              <p className="font-body text-sm uppercase tracking-[0.3em] text-primary">{error}</p>
             </div>
           )}
 
-          {heroProject && (
-            <section className="grid gap-12 xl:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)]">
+          {/* Projects Grid with CHAOTIC Staggered Animation */}
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {projects.map((project, index) => {
+              // Random subtle rotations for each card
+              const randomRotation = (index % 3 === 0 ? 1 : index % 3 === 1 ? -1 : 0.5);
+              const randomDelay = index * 100;
+              
+              return (
               <a
-                href={heroProject.link}
+                key={project.id}
+                href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Open ${heroProject.title} (${getActionLabel(heroProject.link)})`}
-                className="group/hero relative flex min-h-[520px] flex-col border border-border/40 bg-background md:cursor-none"
-                onMouseEnter={handleCursorEnter(getActionLabel(heroProject.link))}
-                onMouseMove={handleCursorMove(getActionLabel(heroProject.link))}
+                className="group relative flex flex-col overflow-hidden border-2 border-border/30 bg-background transition-all duration-300 hover:border-primary/50 hover:-translate-y-3 hover:shadow-[0_12px_40px_rgba(255,0,0,0.2)] animate-fade-in hover:z-10"
+                style={{ 
+                  animationDelay: `${randomDelay}ms`,
+                  transform: `rotate(${randomRotation * 0.5}deg)`
+                }}
+                onMouseEnter={handleCursorEnter("🚀 View Project")}
+                onMouseMove={handleCursorMove("🚀 View Project")}
                 onMouseLeave={handleCursorLeave}
               >
-                <div className="absolute inset-0">
-                  {heroProject.media.type === "video" ? (
+                {/* Multiple Corner Accents for CHAOS */}
+                <div className="absolute top-0 right-0 h-12 w-12 border-t-2 border-r-2 border-primary/0 group-hover:border-primary/50 transition-all duration-300" />
+                <div className="absolute bottom-0 left-0 h-8 w-8 border-b-2 border-l-2 border-primary/0 group-hover:border-primary/30 transition-all duration-500" style={{ transitionDelay: '100ms' }} />
+                
+                {/* Fun decorative elements */}
+                <div className="absolute top-2 left-2 h-2 w-2 bg-primary/0 group-hover:bg-primary transition-all duration-300 rotate-45" />
+                <div className="absolute top-4 left-2 h-2 w-2 bg-primary/0 group-hover:bg-primary/50 transition-all duration-300" style={{ transitionDelay: '50ms' }} />
+                
+                {/* Media */}
+                <div className="relative aspect-[16/10] overflow-hidden bg-foreground/5">
+                  {project.media.type === "video" ? (
                     <video
-                      className="h-full w-full object-cover opacity-75 transition duration-700 ease-out group-hover/hero:scale-[1.03] group-hover/hero:opacity-100"
-                      src={heroProject.media.src}
+                      className="h-full w-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
+                      src={project.media.src}
                       autoPlay
                       loop
                       muted
@@ -270,235 +289,110 @@ const Fun = () => {
                     />
                   ) : (
                     <img
-                      src={heroProject.media.src}
-                      alt={heroProject.media.alt}
+                      src={project.media.src}
+                      alt={project.media.alt}
                       loading="lazy"
-                      className="h-full w-full object-cover opacity-75 transition duration-700 ease-out group-hover/hero:scale-[1.03] group-hover/hero:opacity-100"
+                      className="h-full w-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
                     />
                   )}
+                  {/* Animated Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  {/* Year Badge on Image - FUN STYLE */}
+                  <div className="absolute top-4 left-4 bg-background/90 border-2 border-primary/30 px-3 py-1 backdrop-blur-sm -rotate-2 group-hover:rotate-0 transition-transform">
+                    <span className="font-body text-[10px] uppercase tracking-[0.4em] text-primary">
+                      ⚡ {project.year}
+                    </span>
+                  </div>
+                  
+                  {/* Fun random accent on image */}
+                  {index % 2 === 0 && (
+                    <div className="absolute bottom-4 right-4 h-8 w-8 border-2 border-primary/20 rotate-45 group-hover:rotate-90 transition-all duration-500" />
+                  )}
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/70 to-background/30 transition duration-500 group-hover/hero:from-background/85 group-hover/hero:via-background/60 group-hover/hero:to-background/20" />
 
-                <div className="relative z-10 flex h-full flex-col justify-between p-10">
-                  <div className="flex items-start justify-between">
-                    <div className="space-y-4">
-                      <span className="font-body text-xs uppercase tracking-[0.5em] text-foreground/60">
-                        {heroProject.yearLabel}
-                      </span>
-                      <h2 className="font-heading text-5xl uppercase leading-[1.05] tracking-tight">
-                        {heroProject.title}
-                      </h2>
-                    </div>
-                    {heroProject.badge && (
-                      <span
-                        className="border border-border/40 px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.35em]"
-                        style={{
-                          backgroundColor: heroProject.badgeColor,
-                          color: heroProject.badgeText,
-                        }}
-                      >
-                        {heroProject.badge}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="max-w-xl space-y-6">
-                    <p className="font-body text-lg leading-relaxed text-foreground/80">
-                      {heroProject.subtitle}
+                {/* Content */}
+                <div className="flex flex-1 flex-col gap-4 p-6 relative">
+                  {/* Animated Border - DOUBLE LAYER */}
+                  <div className="absolute top-0 left-0 h-[3px] w-0 bg-primary group-hover:w-full transition-all duration-500" />
+                  <div className="absolute top-0 left-0 h-[1px] w-0 bg-primary/50 group-hover:w-full transition-all duration-700" style={{ transitionDelay: '100ms' }} />
+                  
+                  {/* Title & Description */}
+                  <div className="space-y-2">
+                    <h3 className="font-heading text-xl leading-tight text-foreground group-hover:text-primary transition-colors duration-300 group-hover:translate-x-1">
+                      {project.title}
+                    </h3>
+                    <p className="font-body text-sm text-foreground/70 leading-relaxed line-clamp-2 group-hover:text-foreground/90 transition-colors">
+                      {project.subtitle}
                     </p>
-                    {heroProject.tags && (
-                      <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.35em] text-foreground/60">
-                        {heroProject.tags.map((tag) => (
-                          <span key={tag} className="border border-border/40 px-3 py-1">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
                   </div>
 
-                  <div className="flex items-center justify-between border-t border-border/30 pt-6 text-[11px] uppercase tracking-[0.35em] text-foreground/65">
-                    <span>{getActionLabel(heroProject.link)}</span>
-                    <ArrowUpRight className="h-6 w-6 transition-transform duration-200 group-hover/hero:translate-x-1 group-hover/hero:-translate-y-1" />
+                  {/* Tags with Hover Effect */}
+                  {project.tags && project.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag, tagIndex) => (
+                        <span
+                          key={tag}
+                          className="font-body text-[10px] uppercase tracking-[0.3em] text-foreground/50 border border-border/30 px-2 py-1 group-hover:border-primary/30 group-hover:text-foreground/70 transition-all duration-300"
+                          style={{ transitionDelay: `${tagIndex * 50}ms` }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* CTA with Animated Arrow */}
+                  <div className="mt-auto flex items-center justify-between border-t border-border/20 pt-4">
+                    <span className="font-body text-xs uppercase tracking-[0.3em] text-foreground/60 group-hover:text-primary transition-colors">
+                      View Project
+                    </span>
+                    <div className="relative">
+                      <ArrowRight className="h-4 w-4 text-foreground/60 transition-all group-hover:translate-x-2 group-hover:text-primary" />
+                      <ArrowRight className="absolute top-0 left-0 h-4 w-4 text-primary opacity-0 group-hover:opacity-100 group-hover:translate-x-4 transition-all" />
+                    </div>
                   </div>
                 </div>
               </a>
+              );
+            })}
+          </div>
 
-              <div className="flex flex-col border border-border/40 bg-background">
-                <div className="border-b border-border/40 px-8 py-6">
-                  <p className="font-body text-sm uppercase tracking-[0.45em] text-foreground/60">
-                    Dispatch Board
-                  </p>
-                  <p className="mt-3 font-heading text-3xl uppercase leading-snug">
-                    Fresh drops from the studio floor.
-                  </p>
-                </div>
-
-                <div className="flex-1 divide-y divide-border/30">
-                  {featureProjects.map((project) => {
-                    const actionLabel = getActionLabel(project.link);
-                    return (
-                      <a
-                        key={project.title}
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Open ${project.title} (${actionLabel})`}
-                        className="group/feature flex flex-col gap-4 px-8 py-6 transition-colors hover:bg-foreground/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 md:cursor-none"
-                        onMouseEnter={handleCursorEnter(actionLabel)}
-                        onMouseMove={handleCursorMove(actionLabel)}
-                        onMouseLeave={handleCursorLeave}
-                      >
-                        <div className="flex items-center justify-between gap-4">
-                          <span className="font-body text-xs uppercase tracking-[0.45em] text-foreground/55">
-                            {project.yearLabel}
-                          </span>
-                          {project.badge && (
-                            <span
-                              className="border border-border/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.35em]"
-                              style={{
-                                backgroundColor: project.badgeColor,
-                                color: project.badgeText,
-                              }}
-                            >
-                              {project.badge}
-                            </span>
-                          )}
-                        </div>
-                        <div className="flex items-start justify-between gap-6">
-                          <div className="space-y-2">
-                            <h3 className="font-heading text-2xl uppercase leading-tight">
-                              {project.title}
-                            </h3>
-                            <p className="font-body text-sm text-foreground/70 leading-relaxed">
-                              {project.subtitle}
-                            </p>
-                          </div>
-                          <ArrowUpRight className="h-5 w-5 flex-shrink-0 transition-transform duration-200 group-hover/feature:translate-x-1 group-hover/feature:-translate-y-1" />
-                        </div>
-                        {project.tags && (
-                          <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.35em] text-foreground/55">
-                            {project.tags.map((tag) => (
-                              <span key={tag} className="border border-border/40 px-3 py-1">
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                        <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.35em] text-foreground/60">
-                          <span>{actionLabel}</span>
-                        </div>
-                      </a>
-                    );
-                  })}
-                </div>
+          {/* Loading State with WILD Animation */}
+          {isLoading && (
+            <div className="py-20 text-center space-y-8">
+              <div className="flex items-center justify-center gap-3">
+                <div className="h-4 w-4 bg-primary animate-bounce" style={{ animationDelay: '0ms' }} />
+                <div className="h-4 w-4 bg-primary animate-bounce" style={{ animationDelay: '150ms' }} />
+                <div className="h-4 w-4 bg-primary animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
-            </section>
+              <div className="space-y-2">
+                <p className="font-heading text-2xl text-foreground/70 animate-pulse">⚡ Loading experiments...</p>
+                <p className="font-body text-xs uppercase tracking-[0.4em] text-foreground/40">Preparing the chaos</p>
+              </div>
+              {/* Fun loading bar */}
+              <div className="max-w-xs mx-auto h-2 bg-foreground/5 overflow-hidden">
+                <div className="h-full bg-primary animate-pulse" style={{ width: '60%' }} />
+              </div>
+            </div>
           )}
 
-          <section className="space-y-6">
-            <div className="flex items-baseline justify-between border-t border-border/30 pt-6">
+          {/* Empty State - PLAYFUL */}
+          {!isLoading && projects.length === 0 && !error && (
+            <div className="py-20 text-center space-y-6">
+              <div className="inline-block border-2 border-primary/30 bg-primary/5 p-8 -rotate-3 hover:rotate-0 transition-transform">
+                <p className="font-heading text-8xl text-foreground/10 animate-pulse">∅</p>
+              </div>
               <div className="space-y-2">
-                <span className="font-body text-xs uppercase tracking-[0.45em] text-foreground/60">
-                  Studio Archive
-                </span>
-                <h2 className="font-heading text-3xl uppercase leading-tight">
-                  Experiments to click, keep, and remix.
-                </h2>
-              </div>
-              <div className="hidden text-right md:block">
-                <p className="font-body text-xs uppercase tracking-[0.4em] text-foreground/40">
-                  Sorted by most recent energy
-                </p>
-                <p className="font-body text-sm uppercase tracking-[0.3em] text-foreground/50">
-                  {galleryProjects.length}+ entries
-                </p>
+                <p className="font-heading text-xl text-foreground/70">No experiments found</p>
+                <p className="font-body text-xs uppercase tracking-[0.4em] text-foreground/40">🎨 Time to build something!</p>
               </div>
             </div>
-
-            <div className="grid gap-10 md:grid-cols-2 xl:grid-cols-3">
-              {galleryProjects.map((project) => {
-                const actionLabel = getActionLabel(project.link);
-                return (
-                  <a
-                    key={project.title}
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Open ${project.title} (${actionLabel})`}
-                    className="group/card relative flex h-full flex-col border border-border/40 bg-background transition-transform duration-500 ease-out hover:-translate-y-1 hover:border-primary/55 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 md:cursor-none"
-                    onMouseEnter={handleCursorEnter(actionLabel)}
-                    onMouseMove={handleCursorMove(actionLabel)}
-                    onMouseLeave={handleCursorLeave}
-                  >
-                    <div className="relative h-64 border-b border-border/30">
-                      {project.media.type === "video" ? (
-                        <video
-                          className="h-full w-full object-cover opacity-80 transition duration-700 ease-out group-hover/card:scale-[1.04] group-hover/card:opacity-100"
-                          src={project.media.src}
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                        />
-                      ) : (
-                        <img
-                          src={project.media.src}
-                          alt={project.media.alt}
-                          loading="lazy"
-                          className="h-full w-full object-cover opacity-80 transition duration-700 ease-out group-hover/card:scale-[1.04] group-hover/card:opacity-100"
-                        />
-                      )}
-                    </div>
-
-                    <div className="flex flex-1 flex-col gap-6 p-7">
-                      <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.4em] text-foreground/55">
-                        <span>{project.yearLabel}</span>
-                        {project.badge && (
-                          <span
-                            className="border border-border/40 px-3 py-1 font-semibold"
-                            style={{
-                              backgroundColor: project.badgeColor,
-                              color: project.badgeText,
-                            }}
-                          >
-                            {project.badge}
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="space-y-3">
-                        <h3 className="font-heading text-2xl uppercase leading-tight">
-                          {project.title}
-                        </h3>
-                        <p className="font-body text-sm text-foreground/70 leading-relaxed">
-                          {project.subtitle}
-                        </p>
-                      </div>
-
-                      {project.tags && project.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.35em] text-foreground/60">
-                          {project.tags.map((tag) => (
-                            <span key={tag} className="border border-border/40 px-3 py-1">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-
-                      <div className="mt-auto flex items-center justify-between text-[11px] uppercase tracking-[0.35em] text-foreground/60">
-                        <span>{actionLabel}</span>
-                        <ArrowUpRight className="h-5 w-5 transition-transform duration-200 group-hover/card:translate-x-1 group-hover/card:-translate-y-1" />
-                      </div>
-                    </div>
-                  </a>
-                );
-              })}
-            </div>
-          </section>
-        </section>
+          )}
+        </div>
       </main>
-      <Footer quote="Even the smallest idea, acted upon daily, outshines the greatest one never started" />
+
+      <Footer quote="Made with ☕, 🎨, and a sprinkle of chaos ✨" />
     </div>
   );
 };

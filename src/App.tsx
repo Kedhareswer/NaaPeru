@@ -8,6 +8,7 @@ import { ChatBot } from "@/components/ChatBot";
 import Work from "./pages/Work";
 import Fun from "./pages/Fun";
 import About from "./pages/About";
+import Resume from "./pages/Resume";
 import NotFound from "./pages/NotFound";
 import ChatbotTest from "./pages/ChatbotTest";
 import { CaseStudyQuantumPDF } from "./pages/CaseStudyQuantumPDF";
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/" element={<Work />} />
             <Route path="/fun" element={<Fun />} />
             <Route path="/about" element={<About />} />
+            <Route path="/resume" element={<Resume />} />
             <Route path="/case-study/quantumpdf" element={<CaseStudyQuantumPDF />} />
             <Route path="/case-study/thesisflow" element={<CaseStudyThesisFlow />} />
             <Route path="/case-study/data-notebook" element={<CaseStudyDataNotebook />} />

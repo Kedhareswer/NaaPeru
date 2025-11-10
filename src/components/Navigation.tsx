@@ -35,7 +35,7 @@ export const Navigation = () => {
     { path: "/", label: "WORK" },
     { path: "/fun", label: "FUN" },
     { path: "/about", label: "ABOUT" },
-    { path: "/resume", label: "RESUME", external: true },
+    { path: "/resume", label: "RESUME" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -64,39 +64,23 @@ export const Navigation = () => {
           {/* Center - Desktop Navigation - Expanded (only visible when NOT scrolled) */}
           {!isScrolled && (
             <div className="hidden md:flex items-center gap-10 animate-fade-in absolute left-1/2 -translate-x-1/2">
-              {menuItems.map((item) => {
-                if (item.external) {
-                  return (
-                    <a
-                      key={item.path}
-                      href="/Kedhareswer_AIEnginner.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="relative font-body text-sm font-medium uppercase tracking-wider transition-colors duration-normal group text-foreground/70 hover:text-primary"
-                    >
-                      {item.label}
-                      <span className="absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-normal w-0 group-hover:w-full" />
-                    </a>
-                  );
-                }
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={`relative font-body text-sm font-medium uppercase tracking-wider transition-colors duration-normal group ${
-                      isActive(item.path) ? "text-primary" : "text-foreground/70 hover:text-primary"
+              {menuItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`relative font-body text-sm font-medium uppercase tracking-wider transition-colors duration-normal group ${
+                    isActive(item.path) ? "text-primary" : "text-foreground/70 hover:text-primary"
+                  }`}
+                >
+                  {item.label}
+                  {/* Active indicator */}
+                  <span
+                    className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-normal ${
+                      isActive(item.path) ? "w-full" : "w-0 group-hover:w-full"
                     }`}
-                  >
-                    {item.label}
-                    {/* Active indicator */}
-                    <span
-                      className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-normal ${
-                        isActive(item.path) ? "w-full" : "w-0 group-hover:w-full"
-                      }`}
-                    />
-                  </Link>
-                );
-              })}
+                  />
+                </Link>
+              ))}
             </div>
           )}
 
@@ -141,35 +125,19 @@ export const Navigation = () => {
         <div className="container-portfolio animate-fade-in">
           <div className="mt-2 flex justify-end">
             <div className="w-56 overflow-hidden rounded-lg border border-border/20 bg-background/95 py-3 shadow-xl backdrop-blur-md">
-              {menuItems.map((item) => {
-                if (item.external) {
-                  return (
-                    <a
-                      key={item.path}
-                      href="/Kedhareswer_AIEnginner.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setMenuOpen(false)}
-                      className="flex w-full items-center justify-between px-4 py-3 text-left font-body text-sm font-semibold uppercase tracking-wider transition-colors duration-normal text-foreground hover:bg-primary/10 hover:text-primary"
-                    >
-                      {item.label}
-                    </a>
-                  );
-                }
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setMenuOpen(false)}
-                    className={`flex w-full items-center justify-between px-4 py-3 text-left font-body text-sm font-semibold uppercase tracking-wider transition-colors duration-normal ${
-                      isActive(item.path) ? "text-primary" : "text-foreground hover:text-primary"
-                    }`}
-                  >
-                    {item.label}
-                    {isActive(item.path) && <span className="h-1 w-6 rounded-full bg-primary" />}
-                  </Link>
-                );
-              })}
+              {menuItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setMenuOpen(false)}
+                  className={`flex w-full items-center justify-between px-4 py-3 text-left font-body text-sm font-semibold uppercase tracking-wider transition-colors duration-normal ${
+                    isActive(item.path) ? "text-primary" : "text-foreground hover:text-primary"
+                  }`}
+                >
+                  {item.label}
+                  {isActive(item.path) && <span className="h-1 w-6 rounded-full bg-primary" />}
+                </Link>
+              ))}
             </div>
           </div>
         </div>

@@ -4,10 +4,10 @@ const Unauthorized = () => (
   <ErrorTemplate
     statusCode="401"
     statusLabel="Unauthorized"
-    title="You need the right clearance."
-    description="It looks like you’re signed out or missing credentials. Log in and try the request again."
-    callToAction={{ to: "/", label: "Head to Home" }}
-    patternWords={["AUTH", "CHECK LOGIN", "401", "×"]}
+    title="Authentication required."
+    description="You need to be logged in to access this resource. Please sign in and try again."
+    callToAction={{ to: "/", label: "Back to Home" }}
+    patternWords={["401", "×", "UNAUTHORIZED", "×", "AUTH ERROR"]}
     logMessagePrefix="401 Error"
   />
 );

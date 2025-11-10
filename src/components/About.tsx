@@ -63,131 +63,145 @@ export const About = () => {
   return (
     <div className="relative bg-background py-3xl md:py-4xl overflow-x-hidden overflow-y-visible">
       <div className="container-portfolio">
-        {/* My Presence Section */}
-        <section className="mb-24 grid gap-12 lg:grid-cols-[minmax(0,1.7fr),minmax(0,1fr)] overflow-hidden">
-          <div className="space-y-8 overflow-hidden">
-            <span className="font-body text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">
-              My Presence
-            </span>
-            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl text-foreground break-words">
-              Marlakunta Kedhareswer Naidu
+        {/* My Presence Section - REDESIGNED */}
+        <section className="mb-32 space-y-12 overflow-hidden">
+          
+          {/* Header with Ghost Typography */}
+          <div className="relative">
+            <h2 
+              className="font-heading text-[8rem] sm:text-[10rem] md:text-[12rem] lg:text-[14rem] leading-none tracking-tighter text-foreground/5 select-none"
+            >
+              ABOUT
             </h2>
-            <p className="max-w-2xl font-body text-base sm:text-lg text-gray-light">
-              I don't fit into one box — I'm a Data Scientist, AI Engineer, Designer, and relentless experimenter.
-              I design intelligence and shape it into experiences people actually feel.
-              Exploring how AI-driven systems and human-centered design can coexist beautifully — and meaningfully.
-            </p>
-
-            <div className="grid gap-4 sm:grid-cols-2 overflow-hidden">
-              {[
-                {
-                  icon: <Linkedin className="h-5 w-5" />,
-                  label: "LinkedIn",
-                  handle: "linkedin.com/in/kedhareswernaidu",
-                  href: "https://www.linkedin.com/in/kedhareswernaidu/",
-                },
-                {
-                  icon: <Github className="h-5 w-5" />,
-                  label: "GitHub",
-                  handle: "github.com/Kedhareswer",
-                  href: "https://github.com/Kedhareswer",
-                },
-                {
-                  icon: (
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full border border-primary/40 bg-primary/10 font-heading text-xs font-bold text-primary">
-                      K
-                    </span>
-                  ),
-                  label: "Kaggle",
-                  handle: "kaggle.com/kedhareswernaidu",
-                  href: "https://www.kaggle.com/kedhareswernaidu",
-                },
-                {
-                  icon: <ArrowUpRight className="h-5 w-5" />,
-                  label: "21st.dev",
-                  handle: "21st.dev/kedhareswer",
-                  href: "https://21st.dev/community/kedhar",
-                },
-              ].map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between rounded-lg border border-border/20 bg-card/50 p-4 sm:p-5 transition-all duration-normal hover:border-primary/50 hover:bg-card/70 overflow-hidden"
-                >
-                  <div className="flex items-center gap-2 sm:gap-3 font-body min-w-0 flex-1">
-                    <span className="rounded-full border border-primary/30 p-2 text-primary/90 flex-shrink-0">
-                      {item.icon}
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-light/80">{item.label}</p>
-                      <p className="text-sm sm:text-base font-semibold text-foreground truncate">{item.handle}</p>
-                    </div>
-                  </div>
-                  <ArrowUpRight className="h-4 w-4 text-primary transition-transform duration-normal group-hover:translate-x-1 group-hover:-translate-y-1 flex-shrink-0 ml-2" />
-                </a>
-              ))}
-            </div>
-
-            <div className="space-y-3 pt-2">
-              <span className="font-body text-xs font-semibold uppercase tracking-[0.3em] text-gray-light/70">
-                Focus Streams
-              </span>
-              <div className="grid gap-3 md:grid-cols-3">
-                {focusStreams.map((stream) => (
-                  <div
-                    key={stream}
-                    className="rounded-lg border border-border/20 bg-card/40 p-4 shadow-sm backdrop-blur transition-all duration-normal hover:border-primary/40 hover:bg-card/60"
-                  >
-                    <p className="font-body text-sm font-semibold text-foreground">{stream}</p>
-                    <span className="mt-2 block h-0.5 w-12 bg-primary/40" />
-                  </div>
-                ))}
+            <div className="absolute inset-0 flex items-center">
+              <div className="space-y-4">
+                <span className="font-body text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">
+                  My Presence
+                </span>
+                <h3 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-foreground max-w-4xl">
+                  Marlakunta Kedhareswer Naidu
+                </h3>
               </div>
             </div>
           </div>
 
-          <div className="relative overflow-hidden">
-            <div className="absolute inset-0 rounded-xl bg-primary/10 blur-3xl" />
-            <div className="relative flex h-full flex-col justify-between rounded-xl border border-border/25 bg-black/40 p-6 sm:p-8 backdrop-blur overflow-hidden">
-              <div className="space-y-3">
-                <span className="font-body text-xs font-semibold uppercase tracking-[0.3em] sm:tracking-[0.35em] text-primary/80">Availability</span>
-                <p className="font-heading text-xl sm:text-2xl text-foreground break-words">Open for applied AI & data leadership mandates.</p>
-                <p className="font-body text-sm text-gray-light">
-                  Collaborating with teams building intelligent research platforms, data products, and developer tooling.
-                </p>
+          {/* Bio & Stats Grid */}
+          <div className="grid gap-8 lg:grid-cols-[1.5fr,1fr]">
+            {/* Left: Bio */}
+            <div className="space-y-6">
+              <p className="font-body text-lg sm:text-xl text-gray-light leading-relaxed max-w-3xl">
+                I don't fit into one box — I'm a <span className="text-foreground font-semibold">Data Scientist</span>, <span className="text-foreground font-semibold">AI Engineer</span>, <span className="text-foreground font-semibold">Designer</span>, and relentless experimenter.
+              </p>
+              <p className="font-body text-base sm:text-lg text-gray-light/80 leading-relaxed max-w-3xl">
+                I design intelligence and shape it into experiences people actually feel. Exploring how AI-driven systems and human-centered design can coexist beautifully — and meaningfully.
+              </p>
+              
+              {/* Status Indicator */}
+              <div className="flex items-center gap-3 pt-4">
+                <span className="font-body text-sm uppercase tracking-[0.3em] text-foreground/80">Open to Collaborate</span>
+                <div className="relative">
+                  <div className="h-3 w-3 rounded-full bg-primary animate-ping absolute" />
+                  <div className="h-3 w-3 rounded-full bg-primary" />
+                </div>
               </div>
+            </div>
 
-              <div className="space-y-4 pt-6">
-                <span className="font-body text-xs font-semibold uppercase tracking-[0.25em] sm:tracking-[0.3em] text-gray-light/70">Open source contributions</span>
-                <div className="space-y-3">
-                  {openSourceContributions.map((contrib) => (
-                    <a
-                      key={contrib.name}
-                      href={contrib.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group flex items-start justify-between gap-3 sm:gap-6 rounded-lg border border-border/20 bg-card/35 p-3 sm:p-4 transition-all duration-normal hover:border-primary/40 hover:bg-card/60 overflow-hidden"
-                    >
-                      <div className="space-y-1 min-w-0 flex-1">
-                        <p className="font-body text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em] text-foreground break-words">{contrib.name}</p>
-                        <p className="font-body text-xs text-gray-light/80">{contrib.summary}</p>
+            {/* Right: Quick Stats */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="border-l-2 border-primary/50 pl-4 space-y-1">
+                <p className="font-heading text-4xl text-foreground">1+</p>
+                <p className="font-body text-xs uppercase tracking-[0.3em] text-gray-light/70">Years</p>
+              </div>
+              <div className="border-l-2 border-primary/30 pl-4 space-y-1">
+                <p className="font-heading text-4xl text-foreground">10+</p>
+                <p className="font-body text-xs uppercase tracking-[0.3em] text-gray-light/70">Projects</p>
+              </div>
+              <div className="border-l-2 border-primary/30 pl-4 space-y-1">
+                <p className="font-heading text-4xl text-foreground">4</p>
+                <p className="font-body text-xs uppercase tracking-[0.3em] text-gray-light/70">Domains</p>
+              </div>
+              <div className="border-l-2 border-primary/30 pl-4 space-y-1">
+                <p className="font-heading text-4xl text-foreground">∞</p>
+                <p className="font-body text-xs uppercase tracking-[0.3em] text-gray-light/70">Ideas</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Expertise & Focus Grid */}
+          <div className="grid gap-8 lg:grid-cols-2">
+            
+            {/* Expertise */}
+            <div className="border border-border/25 bg-card/30 p-8 backdrop-blur">
+              <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="h-px w-8 bg-primary/50" />
+                  <span className="font-body text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">Expertise</span>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="group">
+                    <h4 className="font-heading text-lg text-foreground group-hover:text-primary transition-colors">AI & Machine Learning</h4>
+                    <p className="font-body text-sm text-gray-light/70 mt-1">LLMs · RAG Systems · Prompt Engineering · Model Fine-tuning</p>
+                  </div>
+                  <div className="h-px bg-border/20" />
+                  
+                  <div className="group">
+                    <h4 className="font-heading text-lg text-foreground group-hover:text-primary transition-colors">Data Science</h4>
+                    <p className="font-body text-sm text-gray-light/70 mt-1">Analytics · Visualization · Statistical Modeling · Storytelling</p>
+                  </div>
+                  <div className="h-px bg-border/20" />
+                  
+                  <div className="group">
+                    <h4 className="font-heading text-lg text-foreground group-hover:text-primary transition-colors">Product Design</h4>
+                    <p className="font-body text-sm text-gray-light/70 mt-1">UX Research · Interface Design · Prototyping · Design Systems</p>
+                  </div>
+                  <div className="h-px bg-border/20" />
+                  
+                  <div className="group">
+                    <h4 className="font-heading text-lg text-foreground group-hover:text-primary transition-colors">Full-Stack Development</h4>
+                    <p className="font-body text-sm text-gray-light/70 mt-1">React · Node.js · Python · FastAPI · Cloud Platforms</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Focus & Current Work */}
+            <div className="space-y-8">
+              {/* Focus Streams */}
+              <div className="border border-border/25 bg-card/30 p-8 backdrop-blur">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="h-px w-8 bg-primary/50" />
+                    <span className="font-body text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">Focus Streams</span>
+                  </div>
+                  <div className="space-y-3">
+                    {focusStreams.map((stream, index) => (
+                      <div key={stream} className="flex items-start gap-3">
+                        <span className="font-heading text-primary text-sm mt-0.5">{String(index + 1).padStart(2, '0')}</span>
+                        <p className="font-body text-sm text-foreground">{stream}</p>
                       </div>
-                      <ArrowUpRight className="mt-1 h-4 w-4 text-primary transition-transform duration-normal group-hover:translate-x-1 group-hover:-translate-y-1 flex-shrink-0" />
-                    </a>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <div className="pt-6">
-                <span className="font-body text-xs font-semibold uppercase tracking-[0.3em] text-gray-light/70">Currently shipping</span>
-                <p className="mt-2 font-body text-sm text-gray-light">
-                  ThesisFlow-AI · Quater Master · Legal Ease
-                </p>
+              {/* Currently Building */}
+              <div className="border border-border/25 bg-card/30 p-8 backdrop-blur">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="h-px w-8 bg-primary/50" />
+                    <span className="font-body text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">Currently Building</span>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="font-body text-sm text-foreground">→ ThesisFlow-AI</p>
+                    <p className="font-body text-sm text-foreground">→ Quater Master</p>
+                    <p className="font-body text-sm text-foreground">→ Legal Ease</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+
         </section>
 
         {/* Education Section */}
@@ -249,8 +263,40 @@ export const About = () => {
                     <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr),auto] sm:items-center">
                       <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                         <span className="inline-flex h-px w-8 bg-primary/40" />
-                        <span className="font-body text-xs uppercase tracking-[0.3em] text-primary/70">
-                          {edu.status}
+                        <span className="relative inline-block h-16 w-16 sm:h-18 sm:w-18 select-none text-[#0b7a52]" aria-label={`${edu.status} stamp`} title={edu.status}>
+                          <svg viewBox="0 0 100 100" className="h-full w-full" aria-hidden>
+                            <defs>
+                              <filter id="roughen" x="-10%" y="-10%" width="120%" height="120%">
+                                <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="noise" />
+                                <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2" xChannelSelector="R" yChannelSelector="G" />
+                              </filter>
+                            </defs>
+                            <g filter="url(#roughen)">
+                              {/* faint ink fill */}
+                              <circle cx="50" cy="50" r="48" fill="currentColor" opacity="0.12" />
+                              {/* main ring */}
+                              <circle cx="50" cy="50" r="44" stroke="currentColor" strokeWidth="3.25" fill="none" opacity="0.95" />
+                              {/* secondary imperfect ring */}
+                              <g transform="translate(1 1)">
+                                <circle cx="49" cy="49" r="41" stroke="currentColor" strokeWidth="1.6" strokeDasharray="3 2" fill="none" opacity="0.55" />
+                              </g>
+                              {/* text */}
+                              <g transform="rotate(-8 50 50)">
+                                <text
+                                  x="50"
+                                  y="53"
+                                  textAnchor="middle"
+                                  fill="currentColor"
+                                  fontWeight="900"
+                                  dominantBaseline="middle"
+                                  fontSize={(edu.status?.length ?? 6) > 10 ? 10 : (edu.status?.length ?? 6) > 7 ? 12 : 15}
+                                  style={{ letterSpacing: (edu.status?.length ?? 6) > 10 ? '0.8px' : (edu.status?.length ?? 6) > 7 ? '1.2px' : '1.8px' }}
+                                >
+                                  {(edu.status?.toUpperCase?.() || 'STATUS') as unknown as string}
+                                </text>
+                              </g>
+                            </g>
+                          </svg>
                         </span>
                       </div>
                       <span className="font-body text-sm font-semibold text-foreground sm:text-base">
