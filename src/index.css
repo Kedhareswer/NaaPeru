@@ -167,27 +167,3 @@ All colors MUST be HSL.
     @apply max-w-[1440px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20;
   }
 }
-
-/* Print-specific rules for A4 resume */
-@media print {
-  @page {
-    size: A4;
-    margin: 0;
-  }
-
-  body {
-    background: #ffffff !important;
-  }
-
-  .no-print {
-    display: none !important;
-  }
-
-  .a4-paper {
-    width: 210mm !important;
-    height: 297mm !important;
-    box-shadow: none !important;
-    transform: none !important;
-    margin: 0 auto !important;
-  }
-}
