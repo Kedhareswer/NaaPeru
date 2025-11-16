@@ -128,6 +128,197 @@ I've got more certificates than a kindergarten teacher 😄`,
     return this.getRandomResponse(responses);
   }
 
+  // Resume / CV
+  getResume(): string {
+    const responses = [
+      `If you want the "official" version of me, here you go:
+
+**Visual resume on this site**
+- Use the **Resume** tab in the navigation
+- It's an A4-style layout with skills, experience, education and leadership
+
+**Direct PDF download**
+- There is a PDF at: "/Kedhareswer_AIEnginner.pdf" on this site
+
+**Quick summary**
+- AI Engineer with a Data Science (AI & ML) background
+- Experience at DiligenceVault, upGrad, Outlier.AI, Psyliq and AIESEC
+- Strong in AI/ML, full-stack web, and data storytelling
+
+So yes, I do have a proper resume. This chat is just the interactive version. 😄`,
+
+      `You want the paperwork version of me? Fair enough.
+
+**On this site**
+- Hit the **Resume** page in the navbar to see a full visual CV
+
+**PDF**
+- There's also a downloadable resume: "/Kedhareswer_AIEnginner.pdf"
+
+It has all the recruiter keywords:
+- Roles at DiligenceVault, upGrad, Outlier.AI, Psyliq, AIESEC
+- AI/ML + full-stack + data engineering skills
+- B.Tech in CSE (Data Science, AI & ML) from Lovely Professional University
+
+This chat is the vibe; the resume is the corporate version. 😏`,
+    ];
+    return this.getRandomResponse(responses);
+  }
+
+  // Portfolio / Website
+  getPortfolio(): string {
+    const responses = [
+      `You're literally inside my portfolio right now.
+
+**Pages**
+- **Work** → flagship AI/ML and product builds (with case studies)
+- **Fun** → side projects and experiments
+- **About** → background, education, and how I think
+- **Resume** → visual CV + PDF download
+- **Case studies** → deep dives on projects like ThesisFlow-AI, QuantumPDF, Data Notebook
+- **Chatbot** → me, giving you the tour
+
+From here you can jump to GitHub repos and live demos from each project card. This is basically my digital lab + CV + story in one place.`,
+
+      `This whole site *is* my portfolio.
+
+What you'll find:
+- **Work page** for serious, production-level projects
+- **Fun page** for experiments and quick builds
+- **About** for my journey and context
+- **Resume** for the classic CV format (plus a PDF)
+- Case study pages for ThesisFlow-AI, QuantumPDF, Data Notebook, etc.
+
+If you need a one-liner: it's a portfolio for an AI engineer who also cares about UX, storytelling and shipping real things.`,
+    ];
+    return this.getRandomResponse(responses);
+  }
+
+  // Favorite / Most Proud Project
+  getFavoriteProject(): string {
+    const responses = [
+      `Tough question! But if I had to pick one, it's **QuantumPDF ChatApp**.
+
+Why? Because it solves a real pain point I had: drowning in PDFs and spending hours Ctrl+F-ing through documents. I built a RAG system that actually works:
+- 82% semantic search precision
+- Handles 5,000+ chunks
+- <9.5s response time
+- Works with both Pinecone and local storage
+
+It's live at https://quantumn-pdf-chatapp.netlify.app/ and people actually use it. That's the dream, right? Building something useful that people want. 🚀`,
+
+      `I'm most proud of **ThesisFlow-AI** honestly.
+
+It's not just a tech demo—it's a full research collaboration platform with:
+- AI-powered literature exploration
+- Real-time collaboration (like Google Docs for research)
+- Smart summarization and project planning
+
+I built it because I saw researchers struggling with terrible tools. Now it's live at https://thesisflow-ai.vercel.app/ and actually helping people write better theses. That impact? That's what I'm here for. 💪`,
+    ];
+    return this.getRandomResponse(responses);
+  }
+
+  // Favorite Tech Stack
+  getFavoriteTech(): string {
+    const responses = [
+      `My go-to stack right now?
+
+**For AI/ML work:**
+- Python + PyTorch/TensorFlow for modeling
+- FastAPI for serving models
+- Pinecone or Neon for vector storage
+- LangChain for RAG pipelines
+
+**For web apps:**
+- React/Next.js for frontend (TypeScript always)
+- Tailwind CSS for styling (life's too short for vanilla CSS)
+- Vercel/Netlify for deployment
+
+Why? Because this stack lets me move fast and ship real products, not just demos. Speed + quality = my vibe. ⚡`,
+
+      `I'm a **Python + React + TypeScript** guy at heart.
+
+**Backend:** Python with FastAPI or Flask. Clean, fast, perfect for AI/ML integration.
+**Frontend:** React with TypeScript and Tailwind. Modern, type-safe, beautiful.
+**Data:** Pinecone for vectors, Neon for Postgres, MySQL when I need classic relational.
+**AI:** PyTorch for deep learning, LangChain for RAG, OpenAI/Anthropic APIs for LLMs.
+
+This combo lets me build full-stack AI products solo. One person, end-to-end. That's power. 💪`,
+    ];
+    return this.getRandomResponse(responses);
+  }
+
+  // Why Hire Me / Job Fit
+  getJobFit(): string {
+    const responses = [
+      `Why hire me? Let me be direct:
+
+**I ship.** Not just code—actual products people use. ThesisFlow-AI, QuantumPDF, Data Notebook—all live, all functional.
+
+**I bridge gaps.** I'm technical (AI/ML, full-stack) but I also care about UX and storytelling. I build things that work *and* feel good to use.
+
+**I move fast.** At DiligenceVault I cut manual work by 60%. At Psyliq I improved data comprehension by 25%. I don't just write code—I solve problems.
+
+**I'm versatile.** Need AI? I've built RAG systems with 82% precision. Need web? I've shipped Next.js apps. Need data? I've done Power BI dashboards.
+
+You're not hiring a specialist. You're hiring someone who can take an idea from concept to production. Solo if needed. 🚀`,
+
+      `Here's my pitch:
+
+**Technical chops:** AI/ML engineer with real production experience. Built RAG systems, trained models, deployed at scale.
+
+**Product mindset:** I don't just build features—I solve user problems. Every project I ship has a clear "why."
+
+**Full-stack capability:** I can handle backend (Python, FastAPI), frontend (React, TypeScript), databases (SQL, vector DBs), and deployment (Vercel, AWS).
+
+**Proven impact:** 60% reduction in manual work at DiligenceVault. 82% semantic precision in RAG systems. Multiple live products with real users.
+
+**Self-starter:** Most of my portfolio? Built solo. I don't need hand-holding—I need a problem worth solving.
+
+If you want someone who can own a feature end-to-end and ship it fast, I'm your person. 💪`,
+    ];
+    return this.getRandomResponse(responses);
+  }
+
+  // What Roles Are You Looking For
+  getRolesLookingFor(): string {
+    const responses = [
+      `I'm looking for roles where I can:
+
+**Build AI products, not just models.** I want to ship things people actually use, not just train models that sit in notebooks.
+
+**Work full-stack.** I love being able to touch the whole product—from the ML backend to the user-facing frontend.
+
+**Have real impact.** Give me a hard problem and let me solve it. I thrive when I can see my work making a difference.
+
+**Ideal titles:**
+- AI Engineer
+- ML Engineer (product-focused)
+- Full-Stack AI Developer
+- Founding Engineer (at AI startups)
+
+**What I'm NOT looking for:** Pure research roles or jobs where I'm just tweaking hyperparameters all day. I want to build and ship. 🚀`,
+
+      `Roles I'm targeting:
+
+**AI/ML Engineer** - Building production AI systems, RAG pipelines, agent workflows. Not just research—actual products.
+
+**Full-Stack AI Developer** - Where I can own features end-to-end: model training, API development, frontend integration.
+
+**Founding/Early Engineer at AI startups** - I love the 0→1 phase. Give me ambiguity and I'll ship clarity.
+
+**What matters to me:**
+- Ownership: I want to own problems, not just tickets
+- Impact: I want to see my work in production, helping real users
+- Growth: I want to work with people smarter than me
+- Tech: Modern stack (Python, React, TypeScript, cloud-native)
+
+If your company is building AI products that matter, let's talk. 💬`,
+    ];
+    return this.getRandomResponse(responses);
+  }
+
   // Contact
   getContact(): string {
     const responses = [

@@ -208,6 +208,57 @@ export class QueryMatcher {
       return responseGenerator.getEducation();
     }
 
+    // Resume / CV
+    if (this.matchesAny(normalized, [
+      "resume", "cv", "curriculum vitae", "your cv", "your resume",
+      "download resume", "download your resume", "pdf resume", "cv link"
+    ])) {
+      return responseGenerator.getResume();
+    }
+
+    // Portfolio / website
+    if (this.matchesAny(normalized, [
+      "portfolio", "your portfolio", "this portfolio", "website", "web site",
+      "your site", "this site", "portfolio site", "portfolio website"
+    ])) {
+      return responseGenerator.getPortfolio();
+    }
+
+    // Favorite project / Most proud of
+    if (this.matchesAny(normalized, [
+      "favorite project", "favourite project", "best project", "most proud",
+      "proudest", "which project", "top project", "favorite work"
+    ])) {
+      return responseGenerator.getFavoriteProject();
+    }
+
+    // Favorite tech stack / preferences
+    if (this.matchesAny(normalized, [
+      "favorite tech", "favourite tech", "favorite stack", "tech stack",
+      "preferred stack", "what stack", "technologies you use", "favorite language",
+      "best tech", "go-to stack"
+    ])) {
+      return responseGenerator.getFavoriteTech();
+    }
+
+    // Why hire / Job fit
+    if (this.matchesAny(normalized, [
+      "why hire", "why should we hire", "why hire you", "what makes you",
+      "why you", "your value", "what do you bring", "why choose you",
+      "convince me", "sell yourself"
+    ])) {
+      return responseGenerator.getJobFit();
+    }
+
+    // What roles looking for
+    if (this.matchesAny(normalized, [
+      "what role", "what roles", "looking for", "seeking", "job search",
+      "what position", "what kind of job", "what type of role",
+      "ideal role", "dream job", "next role"
+    ])) {
+      return responseGenerator.getRolesLookingFor();
+    }
+
     // Contact
     if (this.matchesAny(normalized, [
       "contact", "reach", "email", "phone", "call", "message",

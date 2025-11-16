@@ -64,12 +64,12 @@ export const About = () => {
     <div className="relative bg-background py-3xl md:py-4xl overflow-x-hidden overflow-y-visible">
       <div className="container-portfolio">
         {/* My Presence Section - REDESIGNED */}
-        <section className="mb-32 space-y-12 overflow-hidden">
+        <section className="mb-32 space-y-12 overflow-visible md:overflow-hidden">
           
           {/* Header with Ghost Typography */}
           <div className="relative">
             <h2 
-              className="font-heading text-[8rem] sm:text-[10rem] md:text-[12rem] lg:text-[14rem] leading-none tracking-tighter text-foreground/5 select-none"
+              className="font-heading text-[5rem] sm:text-[8rem] md:text-[12rem] lg:text-[14rem] leading-none tracking-tighter text-foreground/5 select-none"
             >
               ABOUT
             </h2>
