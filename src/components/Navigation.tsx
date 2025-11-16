@@ -33,7 +33,7 @@ export const Navigation = () => {
 
   const menuItems = [
     { path: "/", label: "WORK" },
-    { path: "/fun", label: "FUN" },
+    { path: "/fun", label: "EXPERIMENTOS" },
     { path: "/about", label: "ABOUT" },
     { path: "/resume", label: "RESUME" },
   ];
@@ -72,7 +72,7 @@ export const Navigation = () => {
                     isActive(item.path) ? "text-primary" : "text-foreground/70 hover:text-primary"
                   }`}
                 >
-                  {item.label}
+                  <span className={item.path === "/fun" ? "italic" : ""}>{item.label}</span>
                   {/* Active indicator */}
                   <span
                     className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-normal ${
