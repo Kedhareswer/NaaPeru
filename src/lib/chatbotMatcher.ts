@@ -259,6 +259,54 @@ export class QueryMatcher {
       return responseGenerator.getRolesLookingFor();
     }
 
+    // Personal details - full name
+    if (this.matchesAny(normalized, [
+      "full name", "your full name", "what is your name", "what's your name",
+      "whats your name", "real name", "complete name", "name please"
+    ])) {
+      return `I'm **Marlakunta Kedhareswer Naidu** but everyone just calls me **Kedhar**. Shorter, easier, and much kinder to forms 😄`;
+    }
+
+    // Personal details - parents' names (keep private, witty reply)
+    if (this.matchesAny(normalized, [
+      "father name", "fathers name", "father's name", "dad name", "dad's name",
+      "mother name", "mothers name", "mother's name", "mom name", "mom's name",
+      "parents name", "parents' names"
+    ])) {
+      return `If I start dropping my parents' full details on a public portfolio site, they'll personally unplug my Wi0Fi 😅\n\nLet's keep this chat focused on my **work, projects, and skills** instead.`;
+    }
+
+    // Personal details - address / current location privacy
+    if (this.matchesAny(normalized, [
+      "address", "current address", "home address", "house address", "door number",
+      "street", "where do you stay", "where is your house", "exact location",
+      "full address", "residential address"
+    ])) {
+      return `Nice try stalking skills 👀 but I'm not dropping my full address on a public website.\n\nYou can think of me as **internet-based with strong Andhra roots**. If you want to talk work, my contact info is on the site though!`;
+    }
+
+    // Personal details - phone number asked directly (keep playful + redirect)
+    if (this.matchesAny(normalized, [
+      "phone number", "your phone", "whats your phone", "what is your phone",
+      "mobile number", "whats your mobile", "contact number", "call you"
+    ])) {
+      return `Dropping raw phone numbers in a chat is how you speedrun spam calls 💀\n\nIf you genuinely want to reach out, use the **Contact** section on this site it has all the professional ways to get in touch.`;
+    }
+
+    // Current status / what are you doing now
+    if (this.matchesAny(normalized, [
+      "what are you doing now", "what r you doing now", "what r u doing now",
+      "what are you upto", "what are you up to", "what r u upto", "what r u up to",
+      "what do you do now", "current status", "what are you doing these days"
+    ])) {
+      return `Right now I'm an **AI Engineer** focused on building real-world AI products.
+\nDay to day I'm:
+- Working on document-intelligence systems at **DiligenceVault**
+- Experimenting with multi-agent and RAG setups
+- Polishing projects like ThesisFlow-AI and this portfolio itself
+\nSo short version: shipping AI things, breaking them, then making them better 🚀`;
+    }
+
     // Contact
     if (this.matchesAny(normalized, [
       "contact", "reach", "email", "phone", "call", "message",
@@ -269,12 +317,65 @@ export class QueryMatcher {
       return responseGenerator.getContact();
     }
 
-    // Hobbies/Interests
+    // Favourite game / book / music / place to travel (specific or combined)
+    if (this.matchesAny(normalized, [
+      "favorite game", "favourite game", "game you like", "game do you like",
+      "favorite book", "favourite book", "book you like", "book do you like",
+      "favorite music", "favourite music", "music you like", "music do you like",
+      "favorite place to travel", "favourite place to travel", "favorite travel place",
+      "favourite travel place", "place to travel", "place you like to travel"
+    ]) || (
+      (normalized.includes("favorite") || normalized.includes("favourite")) &&
+      (normalized.includes("game") || normalized.includes("book") || normalized.includes("music") || normalized.includes("travel"))
+    )) {
+      const wantsGame = normalized.includes("game");
+      const wantsBook = normalized.includes("book");
+      const wantsMusic = normalized.includes("music");
+      const wantsTravel = normalized.includes("travel") || normalized.includes("place to travel");
+
+      const parts: string[] = [];
+
+      // Light randomization so answers vary between calls
+      const variant = Math.floor(Math.random() * 2);
+
+      if (wantsGame || (!wantsBook && !wantsMusic && !wantsTravel)) {
+        parts.push(
+          variant === 0
+            ? "🎮 **Favourite game:** Strategy / tactical games where I can out-think opponents, not just spam buttons."
+            : "🎮 **Favourite games:** Anything that makes me think – strategy, tactics, and games where one clever move changes everything."
+        );
+      }
+      if (wantsBook || (!wantsGame && !wantsMusic && !wantsTravel)) {
+        parts.push(
+          variant === 0
+            ? "📚 **Favourite kind of books:** Sci‑fi and tech/non‑fiction – I like stories that bend reality but still teach me something."
+            : "📚 **Books I gravitate to:** Sci‑fi, tech, and creator/entrepreneur books – anything that mixes imagination with systems thinking."
+        );
+      }
+      if (wantsMusic || (!wantsGame && !wantsBook && !wantsTravel)) {
+        parts.push(
+          variant === 0
+            ? "🎵 **Favourite music:** A mix of lo‑fi, electronic and chill beats – perfect for deep‑work coding sessions."
+            : "🎵 **Music vibe:** No single genre – I rotate between lo‑fi, electronic, Indian indie, and whatever makes debugging less painful."
+        );
+      }
+      if (wantsTravel || (!wantsGame && !wantsBook && !wantsMusic)) {
+        parts.push(
+          variant === 0
+            ? "✈️ **Favourite kind of place to travel:** Quiet hill-ish places with good views and better coffee."
+            : "✈️ **Travel favourites:** Scenic, slightly cold places where I can walk a lot, think clearly, and find at least one great café."
+        );
+      }
+
+      return parts.join("\n\n") + "\n\nAsk about any one of them directly if you want more details 👀";
+    }
+
+    // Hobbies/Interests (exclude explicit favourite + fun-fact questions)
     if (this.matchesAny(normalized, [
       "hobby", "hobbies", "interest", "interests", "fun", "free time",
       "do for fun", "outside work", "personal", "like to do",
       "gaming", "reading", "music", "travel", "traveling", "hobbies"
-    ])) {
+    ]) && !normalized.includes("favorite") && !normalized.includes("favourite") && !normalized.includes("fun fact")) {
       return responseGenerator.getHobbies();
     }
 
@@ -307,7 +408,7 @@ export class QueryMatcher {
       "where are you from", "where r u from", "location", "live", "based", 
       "city", "place", "where are you", "where do you live", "hometown"
     ]) && !normalized.includes("work") && !normalized.includes("study")) {
-      return `I'm originally from **Madanapalli, Andhra Pradesh, India** 🏠 but currently studying in **Punjab, India** 🎓. That's like a 2000km journey! I'm basically a nomad at this point 😄`;
+      return `I'm originally from **Madanapalli, Andhra Pradesh, India** 🏠 and I graduated from university in July 2025. These days you can think of me as an **AI engineer based in India**, moving wherever interesting problems are 😄`;
     }
 
     // Age

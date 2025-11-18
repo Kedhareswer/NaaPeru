@@ -264,7 +264,7 @@ const Fun = () => {
   const unlockedAchievements = achievements.filter(a => a.unlocked);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
+    <div className="relative min-h-screen overflow-hidden bg-background text-foreground pt-24 pb-32 md:pt-28 md:pb-16">
       <Navigation />
 
       {/* Animated Background */}
@@ -394,7 +394,7 @@ const Fun = () => {
                 </div>
 
                 {/* Project Info */}
-                <div className="space-y-8">
+                <div className="space-y-8 pb-24 md:pb-0">
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <span className="font-body text-xs uppercase tracking-[0.4em] text-primary/70">
@@ -454,8 +454,8 @@ const Fun = () => {
             </div>
 
             {/* Navigation Controls */}
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-              <div className="flex items-center gap-4 px-6 py-3 bg-background/80 backdrop-blur-sm border border-border/40 rounded-full">
+            <div className="absolute inset-x-4 bottom-4 md:bottom-8 md:left-1/2 md:inset-x-auto md:-translate-x-1/2">
+              <div className="w-full max-w-xl mx-auto flex flex-wrap items-center justify-center gap-3 md:gap-4 px-4 py-3 md:px-6 bg-background/90 backdrop-blur-sm border border-border/40 rounded-2xl md:rounded-full">
                 {/* Previous */}
                 <button
                   onClick={goToPrevious}
@@ -497,7 +497,7 @@ const Fun = () => {
             </div>
 
             {/* Side Controls */}
-            <div className="absolute right-6 top-1/2 transform -translate-y-1/2">
+            <div className="hidden md:block absolute right-6 top-1/2 transform -translate-y-1/2">
               <div className="flex flex-col gap-3">
                 {/* Auto-play */}
                 <button
@@ -557,7 +557,7 @@ const Fun = () => {
 
           {/* Achievements Panel */}
           {showAchievements && (
-            <div className="fixed inset-y-0 right-0 w-80 bg-background/95 backdrop-blur-sm border-l border-border/40 z-40 overflow-y-auto">
+            <div className="fixed inset-y-0 right-0 w-full sm:w-80 bg-background/95 backdrop-blur-sm border-l border-border/40 z-40 overflow-y-auto">
               <div className="p-6 space-y-6">
                 <div className="flex items-center justify-between">
                   <h3 className="font-heading text-xl text-foreground">Achievements</h3>
@@ -611,7 +611,7 @@ const Fun = () => {
           )}
 
           {/* Keyboard Shortcuts Help */}
-          <div className="fixed bottom-4 left-4 text-xs text-foreground/40 space-y-1">
+          <div className="hidden md:block fixed bottom-4 left-4 text-xs text-foreground/40 space-y-1">
             <p>← → Navigate</p>
             <p>Space Auto-play</p>
             <p>R Random</p>

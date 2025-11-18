@@ -20,13 +20,13 @@ export class ChatbotResponseGenerator {
   // About/Who am I
   getAbout(): string {
     const responses = [
-      `I'm **Marlakunta Kedhareswer Naidu** (yeah, that's a mouthful - just call me Kedhar 😅). I'm an AI Engineer who also loves design. Currently working at **DiligenceVault** where I'm building AI systems that process financial documents.
+      `I'm **Marlakunta Kedhareswer Naidu** (yeah, that's a mouthful - just call me Kedhar 😅). I'm an AI Engineer who also loves design, currently working at **DiligenceVault** where I'm building AI systems that process financial documents.
 
-I'm from Madanapalli, Andhra Pradesh, and I'm based in Punjab. I graduated from Lovely Professional University and work at the intersection of AI and UX - basically, I make intelligent systems that people actually want to use! 🚀`,
+I'm from Madanapalli, Andhra Pradesh, and I graduated from Lovely Professional University in July 2025. I work at the intersection of AI and UX - basically, I make intelligent systems that people actually want to use! 🚀`,
       
       `Hey! I'm **Kedhar** - an AI/ML engineer with a passion for design. Right now I'm at **DiligenceVault**, building agent orchestration workflows and making AI read boring documents so humans don't have to 😴
 
-I'm that rare breed of engineer who can both build AI systems AND make them look good. Based in Punjab, originally from Madanapalli — and I graduated from LPU. I love working on projects that combine intelligence with great user experience! 💻`,
+I'm that rare breed of engineer who can both build AI systems AND make them look good. Originally from Madanapalli, I graduated from LPU in Punjab and now focus on projects that combine intelligence with great user experience! 💻`,
       
       `I'm **Kedhar** - AI Engineer by day, design enthusiast by night (okay, also by day 😄). Currently at **DiligenceVault** where I'm working on some cool AI stuff.
 
@@ -360,7 +360,7 @@ If your company is building AI products that matter, let's talk. 💬`,
     const funFacts = [
       `Fun facts about me:\n\n😄 My code is cleaner than my room (which isn't saying much)\n🗣️ I speak 3 human languages and 7+ programming languages\n📱 I've sent more API requests than text messages\n💪 My GitHub commits > my gym visits\n🐛 I debug code better than I debug my life\n🤖 I make AI do the boring stuff so I can do the fun stuff\n\nI'm basically a walking tech meme 😂`,
       
-      `Random facts about me:\n\n1. I'm from Madanapalli but study in Punjab (that's like 2000km!)\n2. My GitHub has 58 repos and 509 commits\n3. I use AI tools to build AI (meta AF 🤯)\n4. I speak Telugu natively, English professionally, Hindi... I'm working on it\n5. My portfolio is built with React, TypeScript, and way too much coffee ☕\n6. I'm 23 and already have more experience than some 30-year-olds\n\nOverachiever much? 😅`,
+      `Random facts about me:\n\n1. I'm from Madanapalli and did my engineering in Punjab (that's like 2000km!)\n2. My GitHub has 130+ repos and over 1.5k commits *just this year*\n3. I use AI tools to build AI (meta AF 🤯)\n4. I speak Telugu natively, English professionally, Hindi... I'm working on it\n5. My portfolio is built with React, TypeScript, and way too much coffee ☕\n\nOverachiever much? 😅`,
       
       `Things you didn't know about me:\n\n🎯 I call myself a "Vibe Coder" (yes, that's a real title)\n🌟 I built my portfolio from scratch (no templates here!)\n💻 I have 4 GitHub followers (quality over quantity, right?)\n📊 94% of my GitHub is Jupyter Notebooks (data science nerd confirmed)\n🎮 I'm probably better at gaming than you\n🎓 I graduated with a 7.74 CGPA while doing multiple internships\n\nI'm basically speedrunning life 🏃‍♂️💨`,
     ];
