@@ -1,5 +1,35 @@
 [
   {
+    "id": 14,
+    "title": "Internal Policy Chatbot Sandbox",
+    "description": "An open-source, learning-first prototype that lets you upload internal PDFs (policies, SOPs, handbooks) and interrogate them through a LangGraph Swarm of agents. Each specialist—Developer, Summarizer, Explainer, Analogy Maker, Vulnerability Checker—reads the same document and answers from its perspective, making multi-agent reasoning tangible for newcomers.",
+    "technologies": [
+      "LangChain",
+      "LangGraph Swarm",
+      "Python",
+      "Streamlit",
+      "Groq",
+      "PDF.js"
+    ],
+    "github": "https://lnkd.in/ehyETCjP",
+    "demo": null,
+    "category": "Multi-Agent AI",
+    "project_date": "Nov 2025",
+    "image": "/projects/internal-policy-chatbot.png",
+    "featured": false,
+    "created_at": "2025-11-18T00:00:00.000Z",
+    "objectives": [
+      "Showcase practical LangGraph Swarm multi-agent patterns",
+      "Provide a minimal, hackable reference for PDF QA workflows",
+      "Expose each agent’s reasoning style side-by-side"
+    ],
+    "outcomes": [
+      "Upload-to-chat sandbox with five cooperating agents",
+      "Covers Groq + LangChain setup, PDF chunking, and Streamlit UI",
+      "Clear guardrails around what’s included (no auth, no RBAC, no vector store) so builders can extend intentionally"
+    ]
+  },
+  {
     "id": 13,
     "title": "Multi-Provider AI Chat Application",
     "description": "A Next.js application that allows you to chat with multiple AI providers including OpenAI, Anthropic, Groq, Google Gemini, DeepSeek, and Fireworks AI.",

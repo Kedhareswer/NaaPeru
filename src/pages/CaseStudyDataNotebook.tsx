@@ -134,13 +134,16 @@ export const CaseStudyDataNotebook = () => {
           </div>
         </section>
 
-        {/* Main Image */}
+        {/* Main Embed */}
         <section className="container-portfolio mb-20 lg:ml-64">
           <div className="w-full aspect-[16/9] bg-gradient-to-br from-primary/10 via-background to-background rounded-lg overflow-hidden">
-            <img 
-              src="/projects/data-notebook.png" 
-              alt="Data Notebook Interface"
-              className="w-full h-full object-cover"
+            <iframe
+              src="https://app.getalai.com/view/EE6cEVQUTb-KHBYBErp9Tw"
+              title="Data Notebook Walkthrough"
+              className="w-full h-full"
+              allow="fullscreen; clipboard-write; encrypted-media"
+              loading="lazy"
+              style={{ border: "0" }}
             />
           </div>
         </section>
@@ -536,7 +539,7 @@ export const CaseStudyDataNotebook = () => {
         </section>
       </main>
 
-      <Footer />
+      <Footer quote="Turns out, the best data tool is the one you build yourself. Who knew?" />
     </div>
   );
 };

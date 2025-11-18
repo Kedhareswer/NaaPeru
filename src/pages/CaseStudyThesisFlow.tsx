@@ -9,15 +9,117 @@ export const CaseStudyThesisFlow = () => {
 
   const sections = [
     { id: "overview", label: "Overview" },
-    { id: "story", label: "The Story" },
-    { id: "problem", label: "The Problem" },
-    { id: "solution", label: "The Solution" },
-    { id: "features", label: "Key Features" },
-    { id: "architecture", label: "Architecture" },
-    { id: "challenges", label: "Challenges" },
+    { id: "experience", label: "Experience" },
+    { id: "agents", label: "Agents" },
     { id: "results", label: "Results" },
-    { id: "learnings", label: "What I Learned" },
+    { id: "learnings", label: "Signals" },
   ];
+
+  const experienceAreas = [
+    {
+      label: "Workspace",
+      title: "Research Canvas",
+      description: "Sticky-note chaos becomes one spatial canvas. Papers, notes, and timelines sit on a single infinite board powered by snapping guides.",
+      chips: ["Real-time cursors", "Focus mode", "AI summaries"],
+    },
+    {
+      label: "Automation",
+      title: "Flow Recipes",
+      description: "Preset automations that tag papers, plan milestones, and keep advisors in the loop without touching a spreadsheet.",
+      chips: ["Phase templates", "Auto notifications", "Smart reminders"],
+    },
+    {
+      label: "Insights",
+      title: "Signal Radar",
+      description: "A daily digest that surfaces risk, overdue work, and surprising literature links. Runs on top of the same agent stack.",
+      chips: ["Vector search", "Mood tracking", "Advisor briefs"],
+    },
+  ];
+
+  const flowPhases = [
+    {
+      id: "discover",
+      title: "Discover",
+      tag: "Week 0–1",
+      summary: "Upload every doc, chat, and idea dump. AI clusters literature, creates topic maps, and highlights gaps.",
+      preview: "Generated a map linking 42 papers into 6 research themes in < 4 minutes.",
+      actions: ["Drag & drop PDFs", "Auto-tag literature", "See topic galaxy"],
+    },
+    {
+      id: "design",
+      title: "Design",
+      tag: "Week 2",
+      summary: "Turn insights into a living plan. Milestones automatically inherit context, owners, and deadlines.",
+      preview: "Sprint board drafted from literature takeaways + advisor feedback in one view.",
+      actions: ["Phase templates", "Advisor handoff packet", "Risk heatmap"],
+    },
+    {
+      id: "build",
+      title: "Build",
+      tag: "Week 3–6",
+      summary: "Workspace shifts into execution mode. Notes, code snippets, and experiments stay attached to their tasks.",
+      preview: "Notes + repo commits stitched into a timeline that advisors can replay.",
+      actions: ["Inline notebooks", "Agent pair program", "Auto meeting notes"],
+    },
+    {
+      id: "share",
+      title: "Share",
+      tag: "Week 7+",
+      summary: "Generate briefs, export timelines, and collect sign-offs without duplicating work or rewriting copy.",
+      preview: "One-click handoff doc with highlights, blockers, and next bets.",
+      actions: ["Narrated recap", "Insight snapshots", "Advisor approval"],
+    },
+  ];
+
+  const agentRoster = [
+    {
+      icon: "📚",
+      name: "Atlas",
+      focus: "Literature Intelligence",
+      traits: ["Academic tone", "Citation linked", "Gap detection"],
+    },
+    {
+      icon: "🧠",
+      name: "Northstar",
+      focus: "Planning & Risk",
+      traits: ["Deadline obsessed", "Scenario sims", "Slack pings"],
+    },
+    {
+      icon: "🎛️",
+      name: "Pulse",
+      focus: "Collaboration Ops",
+      traits: ["Meeting recap", "Daily digest", "Advisor portal"],
+    },
+    {
+      icon: "✍️",
+      name: "Drafty",
+      focus: "Writing Partner",
+      traits: ["Section outlines", "Voice matching", "Context aware"],
+    },
+  ];
+
+  const learnings = [
+    {
+      title: "Clarity over volume",
+      detail: "Researchers skim. Replaced walls of copy with progressive disclosure, hover states, and agent hints.",
+    },
+    {
+      title: "Agents need rituals",
+      detail: "Usage spiked once agents showed up at predictable times (morning digest, Friday recap).",
+    },
+    {
+      title: "Playful data works",
+      detail: "Micro-victories (∑ papers digested, burnout risk dial) kept the UI human and made advisors smile.",
+    },
+  ];
+
+  const quickStats = [
+    { value: "5+", label: "Active Research Pods", sub: "Testing the workspace" },
+    { value: "70%", label: "Faster Lit Review", sub: "Self-reported after 2 weeks" },
+    { value: "12", label: "Agent Rituals", sub: "Scheduled touchpoints" },
+  ];
+
+  const [activePhase, setActivePhase] = useState(flowPhases[0].id);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -130,272 +232,91 @@ export const CaseStudyThesisFlow = () => {
           </div>
         </section>
 
-        {/* Main Image */}
+        {/* Main Embed */}
         <section className="container-portfolio mb-20 lg:ml-64">
           <div className="w-full aspect-[16/9] bg-gradient-to-br from-primary/10 via-background to-background rounded-lg overflow-hidden">
-            <img 
-              src="/projects/research-bolt.png" 
-              alt="ThesisFlow-AI Interface"
-              className="w-full h-full object-cover"
+            <iframe
+              src="https://app.getalai.com/view/xhWyQo8fREuw0FqLewY1kA"
+              title="ThesisFlow-AI Walkthrough"
+              className="w-full h-full"
+              allow="fullscreen; clipboard-write; encrypted-media"
+              loading="lazy"
+              style={{ border: "0" }}
             />
           </div>
         </section>
 
-        {/* The Story */}
-        <section id="story" className="container-portfolio mb-20 lg:ml-64">
-          <div className="max-w-5xl mx-auto space-y-8">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="font-heading text-3xl md:text-4xl font-normal text-foreground mb-6">
-                  Why I Built This
-                </h2>
-                <div className="space-y-4 font-body text-base md:text-lg text-foreground/80 leading-relaxed">
-                  <p>
-                    Research is messy. You're juggling papers, notes, code experiments, and deadlines – all while trying to maintain some semblance of organization. I watched my friends struggle with this during their thesis work, bouncing between Google Docs, Notion, Trello, and random text files.
-                  </p>
-                  <p>
-                    The problem wasn't a lack of tools. It was that none of them were built specifically for research workflows. They were general-purpose tools trying to fit a very specific, complex use case.
-                  </p>
-                </div>
-              </div>
-              
-              {/* Visual: Research chaos */}
-              <div className="relative aspect-square bg-gradient-to-br from-primary/10 to-background rounded-lg p-8 flex items-center justify-center border border-border/20">
-                <div className="text-center space-y-6">
-                  <div className="flex justify-center gap-4 text-4xl">
-                    <div>📝</div>
-                    <div>📊</div>
-                    <div>💻</div>
-                  </div>
-                  <div className="font-mono text-sm text-foreground/50 space-y-2">
-                    <div>→ Literature Review (Google Docs)</div>
-                    <div>→ Task Management (Trello)</div>
-                    <div>→ Notes (Notion)</div>
-                    <div>→ Code (GitHub)</div>
-                    <div>→ Timeline (Excel)</div>
-                  </div>
-                  <div className="text-2xl">🤯</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="max-w-3xl">
-              <p className="font-body text-base md:text-lg text-foreground/80 leading-relaxed mb-4">
-                So I thought: what if there was a platform that understood research workflows from the ground up? That could integrate literature review, task planning, note-taking, and collaboration – all with AI assistance that actually understood your research domain.
-              </p>
-              <p className="text-primary font-medium text-lg">
-                That's how ThesisFlow-AI was born – a research workspace that speaks your language 🎓
+        {/* Experience Highlights */}
+        <section id="experience" className="container-portfolio mb-20 lg:ml-64">
+          <div className="max-w-5xl mx-auto space-y-10">
+            <div className="flex flex-col gap-3">
+              <p className="font-body text-xs uppercase tracking-[0.3em] text-primary/70">Systems Thinking</p>
+              <h2 className="font-heading text-3xl md:text-4xl text-foreground">How the product actually feels</h2>
+              <p className="font-body text-base md:text-lg text-foreground/70">
+                Every block is a moment in the research day. Less reading, more playing with the interface.
               </p>
             </div>
-          </div>
-        </section>
 
-        {/* The Problem */}
-        <section id="problem" className="container-portfolio mb-20 lg:ml-64">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="font-heading text-3xl md:text-4xl font-normal text-foreground mb-12">
-              The Research Workflow Problem
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-              <div className="p-6 border border-border/20 rounded-lg bg-card/20">
-                <h3 className="font-heading text-xl text-foreground mb-3">🗂️ Context Switching Hell</h3>
-                <p className="font-body text-foreground/70">
-                  Researchers spend hours jumping between 5-7 different tools. Each context switch kills productivity and breaks focus.
-                </p>
-              </div>
-              <div className="p-6 border border-border/20 rounded-lg bg-card/20">
-                <h3 className="font-heading text-xl text-foreground mb-3">👥 Collaboration Chaos</h3>
-                <p className="font-body text-foreground/70">
-                  Working with advisors means endless email threads, conflicting feedback, and version control nightmares.
-                </p>
-              </div>
-              <div className="p-6 border border-border/20 rounded-lg bg-card/20">
-                <h3 className="font-heading text-xl text-foreground mb-3">📚 Literature Overload</h3>
-                <p className="font-body text-foreground/70">
-                  Reading 50+ papers while keeping track of key findings, methodologies, and connections is overwhelming.
-                </p>
-              </div>
-              <div className="p-6 border border-border/20 rounded-lg bg-card/20">
-                <h3 className="font-heading text-xl text-foreground mb-3">⏰ Timeline Tracking</h3>
-                <p className="font-body text-foreground/70">
-                  Thesis deadlines are unforgiving, but most task managers don't understand research milestones and dependencies.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* The Solution */}
-        <section id="solution" className="container-portfolio mb-20 lg:ml-64">
-          <div className="max-w-5xl mx-auto space-y-12">
-            <div>
-              <h2 className="font-heading text-3xl md:text-4xl font-normal text-foreground mb-6">
-                The Solution: AI-Powered Research Hub
-              </h2>
-              <div className="space-y-4 font-body text-base md:text-lg text-foreground/80 leading-relaxed">
-                <p>
-                  ThesisFlow-AI brings everything you need for research into one intelligent platform. It's not just about consolidation – it's about having AI agents that understand research methodology and can actively help you.
-                </p>
-              </div>
-            </div>
-
-            {/* Visual: Platform Architecture */}
-            <div className="bg-gradient-to-br from-background to-card/20 p-8 rounded-lg border border-border/20">
-              <h3 className="font-heading text-xl text-foreground mb-6 text-center">Unified Research Platform</h3>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="text-center p-6 bg-background rounded-lg border border-primary/30">
-                  <div className="text-4xl mb-3">🤖</div>
-                  <div className="font-body text-sm font-bold text-foreground mb-2">AI Agents</div>
-                  <div className="font-body text-xs text-foreground/60">
-                    Research Assistant, Literature Reviewer, Task Planner
+            <div className="grid gap-6 md:gap-8 md:grid-cols-3">
+              {experienceAreas.map((area) => (
+                <div
+                  key={area.title}
+                  className="group relative h-full rounded-2xl border border-border/30 bg-card/30 p-6 transition-all hover:-translate-y-1 hover:border-primary/50 hover:bg-card/60"
+                >
+                  <p className="font-body text-[10px] uppercase tracking-[0.4em] text-foreground/50 mb-4">
+                    {area.label}
+                  </p>
+                  <h3 className="font-heading text-2xl text-foreground mb-3">{area.title}</h3>
+                  <p className="font-body text-sm text-foreground/70 mb-5 leading-relaxed">{area.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {area.chips.map((chip) => (
+                      <span
+                        key={chip}
+                        className="inline-flex items-center rounded-full border border-border/30 px-3 py-1 text-[11px] font-medium tracking-wide text-foreground/70"
+                      >
+                        {chip}
+                      </span>
+                    ))}
                   </div>
+                  <div className="absolute inset-x-4 bottom-4 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                 </div>
-                <div className="text-center p-6 bg-background rounded-lg border border-primary/30">
-                  <div className="text-4xl mb-3">📊</div>
-                  <div className="font-body text-sm font-bold text-foreground mb-2">Workspace</div>
-                  <div className="font-body text-xs text-foreground/60">
-                    Notes, Tasks, Timeline, Literature Library
+              ))}
+            </div>
+          </div>
+        </section>
+
+
+        {/* Agents */}
+        <section id="agents" className="container-portfolio mb-20 lg:ml-64">
+          <div className="max-w-5xl mx-auto space-y-10">
+            <div className="flex flex-col gap-3">
+              <p className="font-body text-xs uppercase tracking-[0.3em] text-primary/70">Multi-agent Stack</p>
+              <h2 className="font-heading text-3xl md:text-4xl text-foreground">Who runs the workspace</h2>
+              <p className="font-body text-base md:text-lg text-foreground/70">
+                Agents show up like teammates. Each has a tone, a ritual, and a deliverable.
+              </p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              {agentRoster.map((agent) => (
+                <div key={agent.name} className="rounded-2xl border border-border/25 bg-card/30 p-6 flex flex-col gap-4">
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl">{agent.icon}</span>
+                    <div>
+                      <p className="font-heading text-xl text-foreground">{agent.name}</p>
+                      <p className="font-body text-xs uppercase tracking-[0.3em] text-primary/70">{agent.focus}</p>
+                    </div>
                   </div>
+                  <ul className="space-y-2 font-body text-sm text-foreground/75">
+                    {agent.traits.map((trait) => (
+                      <li key={trait} className="flex items-center gap-2">
+                        <span className="h-1 w-1 rounded-full bg-primary" />
+                        {trait}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="text-center p-6 bg-background rounded-lg border border-primary/30">
-                  <div className="text-4xl mb-3">👥</div>
-                  <div className="font-body text-sm font-bold text-foreground mb-2">Collaboration</div>
-                  <div className="font-body text-xs text-foreground/60">
-                    Real-time Updates, Comments, Feedback
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Key Features */}
-        <section id="features" className="container-portfolio mb-20 lg:ml-64">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="font-heading text-3xl md:text-4xl font-normal text-foreground mb-12">
-              Key Features
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="p-6 border border-border/20 rounded-lg">
-                <div className="text-3xl mb-3">🎯</div>
-                <h3 className="font-heading text-lg text-foreground mb-2">Smart Task Management</h3>
-                <p className="font-body text-sm text-foreground/70">
-                  AI suggests task breakdowns based on research phases. Tracks dependencies and adjusts timelines automatically.
-                </p>
-              </div>
-              <div className="p-6 border border-border/20 rounded-lg">
-                <div className="text-3xl mb-3">📖</div>
-                <h3 className="font-heading text-lg text-foreground mb-2">Literature Library</h3>
-                <p className="font-body text-sm text-foreground/70">
-                  Store papers, extract key findings, and let AI identify connections between different works.
-                </p>
-              </div>
-              <div className="p-6 border border-border/20 rounded-lg">
-                <div className="text-3xl mb-3">💡</div>
-                <h3 className="font-heading text-lg text-foreground mb-2">Research Assistant</h3>
-                <p className="font-body text-sm text-foreground/70">
-                  AI agent that helps with methodology design, experiment planning, and literature synthesis.
-                </p>
-              </div>
-              <div className="p-6 border border-border/20 rounded-lg">
-                <div className="text-3xl mb-3">🔄</div>
-                <h3 className="font-heading text-lg text-foreground mb-2">Real-time Collaboration</h3>
-                <p className="font-body text-sm text-foreground/70">
-                  WebSocket-powered updates mean your advisor sees changes instantly. No more version conflicts.
-                </p>
-              </div>
-              <div className="p-6 border border-border/20 rounded-lg">
-                <div className="text-3xl mb-3">📈</div>
-                <h3 className="font-heading text-lg text-foreground mb-2">Progress Tracking</h3>
-                <p className="font-body text-sm text-foreground/70">
-                  Visualize your research journey with milestone tracking and progress analytics.
-                </p>
-              </div>
-              <div className="p-6 border border-border/20 rounded-lg">
-                <div className="text-3xl mb-3">🎨</div>
-                <h3 className="font-heading text-lg text-foreground mb-2">Beautiful UX</h3>
-                <p className="font-body text-sm text-foreground/70">
-                  Clean, distraction-free interface built with React and modern design principles.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Architecture */}
-        <section id="architecture" className="container-portfolio mb-20 lg:ml-64">
-          <div className="max-w-5xl mx-auto space-y-8">
-            <h2 className="font-heading text-3xl md:text-4xl font-normal text-foreground mb-6">
-              Technical Architecture
-            </h2>
-            
-            <div className="space-y-6">
-              <div className="p-6 border border-border/20 rounded-lg">
-                <h3 className="font-heading text-xl text-primary mb-3">Multi-Agent AI System</h3>
-                <p className="font-body text-foreground/80 mb-4">
-                  Built specialized AI agents for different research tasks. Each agent has its own context, memory, and expertise:
-                </p>
-                <ul className="space-y-2 font-body text-foreground/70 ml-6">
-                  <li>• <strong>Research Assistant:</strong> Helps with methodology and experimental design</li>
-                  <li>• <strong>Literature Agent:</strong> Analyzes papers and suggests relevant readings</li>
-                  <li>• <strong>Task Planner:</strong> Breaks down research phases into actionable tasks</li>
-                  <li>• <strong>Writing Helper:</strong> Assists with drafting and editing</li>
-                </ul>
-              </div>
-
-              <div className="p-6 border border-border/20 rounded-lg">
-                <h3 className="font-heading text-xl text-primary mb-3">Real-time Collaboration Layer</h3>
-                <p className="font-body text-foreground/80">
-                  WebSocket connections for instant updates. Operational Transformation (OT) for conflict-free collaborative editing. Think Google Docs, but for research.
-                </p>
-              </div>
-
-              <div className="p-6 border border-border/20 rounded-lg">
-                <h3 className="font-heading text-xl text-primary mb-3">Modular Frontend</h3>
-                <p className="font-body text-foreground/80">
-                  React with component-based architecture. Each research tool (notes, tasks, library) is a self-contained module that can be extended independently.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Challenges */}
-        <section id="challenges" className="container-portfolio mb-20 lg:ml-64">
-          <div className="max-w-5xl mx-auto space-y-8">
-            <h2 className="font-heading text-3xl md:text-4xl font-normal text-foreground mb-6">
-              Challenges & Solutions
-            </h2>
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-heading text-xl text-foreground mb-3">🤔 AI Agent Context Management</h3>
-                <p className="font-body text-foreground/80 mb-3">
-                  <strong>Problem:</strong> Each AI agent needs to maintain context across long conversations while staying within token limits.
-                </p>
-                <p className="font-body text-foreground/70">
-                  <strong>Solution:</strong> Implemented a context window manager that intelligently summarizes old conversations and keeps only relevant history. Agents can also query a vector database for past insights.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-heading text-xl text-foreground mb-3">⚡ Real-time Sync Performance</h3>
-                <p className="font-body text-foreground/80 mb-3">
-                  <strong>Problem:</strong> Syncing changes across multiple users in real-time without lag or conflicts.
-                </p>
-                <p className="font-body text-foreground/70">
-                  <strong>Solution:</strong> Borrowed ideas from CRDTs and OT algorithms. Implemented optimistic updates on client-side with server reconciliation. 99% of edits happen instantly.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-heading text-xl text-foreground mb-3">📊 Complex State Management</h3>
-                <p className="font-body text-foreground/80 mb-3">
-                  <strong>Problem:</strong> Managing state across tasks, notes, literature, and AI conversations is complex.
-                </p>
-                <p className="font-body text-foreground/70">
-                  <strong>Solution:</strong> Used a combination of React Context for global state and local state for component-specific data. Redux felt overkill, but needed something more structured than useState.
-                </p>
-              </div>
+              ))}
             </div>
           </div>
         </section>
@@ -452,49 +373,23 @@ export const CaseStudyThesisFlow = () => {
         {/* Learnings */}
         <section id="learnings" className="container-portfolio mb-20 lg:ml-64">
           <div className="max-w-5xl mx-auto space-y-8">
-            <div className="mb-12">
-              <p className="font-body text-xs uppercase tracking-[0.2em] text-foreground/50 mb-2">REFLECTION</p>
-              <h2 className="font-heading text-3xl md:text-4xl font-normal text-foreground">
-                What I Learned
-              </h2>
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div>
+                <p className="font-body text-xs uppercase tracking-[0.3em] text-primary/70 mb-2">Signals</p>
+                <h2 className="font-heading text-3xl md:text-4xl text-foreground">Things I’m keeping</h2>
+              </div>
+              <div className="text-foreground/60 font-body text-sm">
+                Short, honest notes captured after each pilot.
+              </div>
             </div>
-            
-            <div className="grid md:grid-cols-2 gap-8 md:gap-12">
-              <div className="space-y-4">
-                <h3 className="font-heading text-xl md:text-2xl text-foreground mb-3">
-                  AI agents need personality.
-                </h3>
-                <p className="font-body text-base text-foreground/70 leading-relaxed">
-                  Generic AI responses don't work for research. Each agent needed its own "personality" and expertise area. The Literature Agent speaks academically, the Task Planner is pragmatic and deadline-focused. Users connect with specialized agents better than one generic assistant.
-                </p>
-              </div>
 
-              <div className="space-y-4">
-                <h3 className="font-heading text-xl md:text-2xl text-foreground mb-3">
-                  Real-time is hard. Really hard.
-                </h3>
-                <p className="font-body text-base text-foreground/70 leading-relaxed">
-                  Building collaborative features that work smoothly is way more complex than I expected. Conflict resolution, race conditions, network issues – there's a reason Google Docs took years to perfect. I gained massive respect for real-time systems engineering.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="font-heading text-xl md:text-2xl text-foreground mb-3">
-                  User research is everything.
-                </h3>
-                <p className="font-body text-base text-foreground/70 leading-relaxed">
-                  I spent weeks talking to PhD students and researchers before writing a line of code. Understanding their actual workflows (not what I assumed they needed) shaped every feature. The best products solve real problems, not imaginary ones.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="font-heading text-xl md:text-2xl text-foreground mb-3">
-                  Ship early, iterate fast.
-                </h3>
-                <p className="font-body text-base text-foreground/70 leading-relaxed">
-                  I wanted to build 50 features before launching. But getting early feedback transformed the product. Features I thought were essential were ignored. Features I thought were minor became the most loved. User feedback {'>'}  my assumptions, every time.
-                </p>
-              </div>
+            <div className="grid gap-6 md:grid-cols-3">
+              {learnings.map((item) => (
+                <div key={item.title} className="rounded-2xl border border-border/20 bg-card/30 p-6">
+                  <p className="font-heading text-xl text-foreground mb-3">{item.title}</p>
+                  <p className="font-body text-sm text-foreground/70 leading-relaxed">{item.detail}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -532,7 +427,7 @@ export const CaseStudyThesisFlow = () => {
         </section>
       </main>
 
-      <Footer />
+      <Footer quote="Who needs a research assistant when you can build one that actually shows up?" />
     </div>
   );
 };
