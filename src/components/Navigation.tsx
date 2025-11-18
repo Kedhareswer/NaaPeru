@@ -89,7 +89,7 @@ export const Navigation = () => {
             <div className="hidden md:flex items-center gap-3 ml-auto">
               <button
                 onClick={openChat}
-                className="group flex items-center gap-2 font-heading text-base font-bold text-primary transition-all hover:animate-glow-pulse cursor-pointer"
+                className="group flex items-center gap-2 font-sanchari text-xl font-bold text-primary transition-all hover:animate-glow-pulse cursor-pointer"
               >
                 సంచారి?
               </button>
@@ -111,7 +111,7 @@ export const Navigation = () => {
 
               <button
                 onClick={openChat}
-                className="group flex items-center gap-2 font-heading text-base sm:text-lg font-bold text-primary transition-all hover:animate-glow-pulse cursor-pointer"
+                className="group flex items-center gap-2 font-sanchari text-lg sm:text-2xl font-bold text-primary transition-all hover:animate-glow-pulse cursor-pointer"
               >
                 సంచారి?
               </button>
