@@ -495,6 +495,36 @@ export class QueryMatcher {
       return responseGenerator.getConfused();
     }
 
+    // Out of scope - general knowledge, unrelated topics, or things clearly not about Kedhar
+    if (this.matchesAny(normalized, [
+      // General knowledge / trivia
+      "capital of", "president of", "prime minister", "who invented", "what is the",
+      "how does", "explain", "define", "meaning of", "history of", "when was",
+      "how many", "how much", "calculate", "solve", "equation",
+      // Current events / news
+      "news", "latest", "today", "yesterday", "election", "politics", "war",
+      "stock", "market", "crypto", "bitcoin", "weather",
+      // Other people / celebrities
+      "elon musk", "mark zuckerberg", "jeff bezos", "bill gates", "sam altman",
+      "taylor swift", "celebrity", "famous", "actor", "actress", "singer",
+      // Random requests
+      "write me", "write a", "generate", "create a story", "poem", "essay",
+      "code for", "help me with", "can you make", "build me",
+      // Philosophy / existential
+      "meaning of life", "god", "religion", "believe in", "afterlife", "soul",
+      // Medical / legal advice
+      "doctor", "medical", "symptom", "disease", "lawyer", "legal", "sue",
+      // Recipes / how-to unrelated
+      "recipe", "cook", "how to make food", "ingredients",
+      // Comparisons with others
+      "better than", "vs", "versus", "compared to",
+      // Meta questions about AI in general
+      "are you sentient", "are you conscious", "do you have feelings", "are you real",
+      "chatgpt", "openai", "anthropic", "gemini", "llama", "gpt-4", "gpt-5"
+    ])) {
+      return responseGenerator.getOutOfScope();
+    }
+
     // Default response
     return responseGenerator.getDefault();
   }

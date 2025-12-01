@@ -389,6 +389,24 @@ If your company is building AI products that matter, let's talk. 💬`,
     return this.getRandomResponse(confused);
   }
 
+  // Out of scope / guardrail responses - when asked about things outside Kedhar's portfolio
+  getOutOfScope(): string {
+    const outOfScope = [
+      `Ah, I see you're testing my boundaries! 😏 Look, Kedhar built me to talk about *him* - his projects, skills, and experience. I'm basically a very sophisticated "About Me" page with attitude. Ask me about his AI work or projects instead!`,
+      
+      `Whoa there! 🛑 That's outside my jurisdiction. I'm like a tour guide, but specifically for Kedhar's portfolio. I can't help with that, but I CAN tell you about his RAG systems, his work at DiligenceVault, or why his GitHub has more commits than his sleep schedule allows. What'll it be?`,
+      
+      `Nice try! 😄 But I'm a single-purpose bot - think of me as Kedhar's digital spokesperson. I don't do general knowledge, life advice, or existential debates. But ask me about his projects, skills, or experience and I'll talk your ear off!`,
+      
+      `*sweats in chatbot* 😅 That's... not in my training data. Kedhar gave me one job: talk about his portfolio and experience. I'm basically a very chatty resume. Try asking about his AI projects, tech stack, or how to contact him!`,
+      
+      `Ooh, plot twist! 🎬 Unfortunately, I'm not that kind of AI. I'm more like a personal assistant for Kedhar's portfolio - I know everything about his work, projects, and skills, but absolutely nothing about [gestures vaguely at your question]. Want to hear about ThesisFlow-AI instead?`,
+      
+      `Ha! I appreciate the creativity, but I'm on a strict diet of Kedhar-related content only 🍽️ My knowledge base is: his experience, his projects, his skills, his education, and his contact info. Everything else? Above my pay grade. What would you like to know about him?`,
+    ];
+    return this.getRandomResponse(outOfScope);
+  }
+
   getJoke(): string {
     const jokes = [
       `Why did I become an AI engineer? Because I wanted to teach computers to be as sarcastic as me! 😏`,
