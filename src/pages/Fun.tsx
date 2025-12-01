@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
-import { ArrowRight, ArrowLeft, Play, Pause, Shuffle, Trophy, Lock, Unlock, Volume2, VolumeX } from "lucide-react";
+import { ArrowRight, ArrowLeft, Play, Pause, Shuffle, ExternalLink } from "lucide-react";
 
 type FunProject = {
   id: number;
@@ -18,38 +17,18 @@ type FunProject = {
   };
 };
 
-type Achievement = {
-  id: string;
-  title: string;
-  description: string;
-  unlocked: boolean;
-  icon: string;
-};
-
 const Fun = () => {
   const [projects, setProjects] = useState<FunProject[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(false);
-  const [showAchievements, setShowAchievements] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(false);
-  const [konamiUnlocked, setKonamiUnlocked] = useState(false);
-  const [achievements, setAchievements] = useState<Achievement[]>([
-    { id: "first_view", title: "First Steps", description: "Viewed your first project", unlocked: false, icon: "👀" },
-    { id: "explorer", title: "Explorer", description: "Viewed 5 different projects", unlocked: false, icon: "🗺️" },
-    { id: "completionist", title: "Completionist", description: "Viewed all projects", unlocked: false, icon: "🏆" },
-    { id: "speed_runner", title: "Speed Runner", description: "Navigated through 3 projects in 10 seconds", unlocked: false, icon: "⚡" },
-    { id: "konami_master", title: "Konami Master", description: "Found the secret code", unlocked: false, icon: "🎮" },
-    { id: "random_explorer", title: "Random Explorer", description: "Used random project 3 times", unlocked: false, icon: "🎲" },
-  ]);
-  const [viewedProjects, setViewedProjects] = useState<Set<number>>(new Set());
-  const [randomCount, setRandomCount] = useState(0);
-  const [navigationSpeed, setNavigationSpeed] = useState<number[]>([]);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showControls, setShowControls] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
   
   const autoPlayRef = useRef<NodeJS.Timeout>();
-  const konamiSequence = useRef<string[]>([]);
-  const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+  const controlsTimeoutRef = useRef<NodeJS.Timeout>();
 
   // Load projects
   useEffect(() => {
@@ -118,81 +97,39 @@ const Fun = () => {
     loadProjects();
   }, []);
 
-  // Achievement system
-  const unlockAchievement = useCallback((achievementId: string) => {
-    setAchievements(prev => prev.map(achievement => 
-      achievement.id === achievementId 
-        ? { ...achievement, unlocked: true }
-        : achievement
-    ));
-  }, []);
-
-  // Track project views for achievements
-  useEffect(() => {
-    if (projects.length > 0 && currentIndex >= 0) {
-      const projectId = projects[currentIndex]?.id;
-      if (projectId) {
-        setViewedProjects(prev => {
-          const newViewed = new Set(prev);
-          newViewed.add(projectId);
-          
-          // Check achievements
-          if (newViewed.size === 1) {
-            unlockAchievement("first_view");
-          } else if (newViewed.size >= 5) {
-            unlockAchievement("explorer");
-          }
-          if (newViewed.size === projects.length) {
-            unlockAchievement("completionist");
-          }
-          
-          return newViewed;
-        });
-      }
-    }
-  }, [currentIndex, projects, unlockAchievement]);
-
-  // Navigation functions
+  // Navigation with cinematic transition
   const goToNext = useCallback(() => {
-    if (projects.length === 0) return;
-    setCurrentIndex(prev => (prev + 1) % projects.length);
-    setNavigationSpeed(prev => [...prev, Date.now()]);
-  }, [projects.length]);
+    if (projects.length === 0 || isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentIndex(prev => (prev + 1) % projects.length);
+      setTimeout(() => setIsTransitioning(false), 100);
+    }, 300);
+  }, [projects.length, isTransitioning]);
 
   const goToPrevious = useCallback(() => {
-    if (projects.length === 0) return;
-    setCurrentIndex(prev => (prev - 1 + projects.length) % projects.length);
-    setNavigationSpeed(prev => [...prev, Date.now()]);
-  }, [projects.length]);
+    if (projects.length === 0 || isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentIndex(prev => (prev - 1 + projects.length) % projects.length);
+      setTimeout(() => setIsTransitioning(false), 100);
+    }, 300);
+  }, [projects.length, isTransitioning]);
 
   const goToRandom = useCallback(() => {
-    if (projects.length === 0) return;
-    const randomIndex = Math.floor(Math.random() * projects.length);
-    setCurrentIndex(randomIndex);
-    setRandomCount(prev => {
-      const newCount = prev + 1;
-      if (newCount >= 3) {
-        unlockAchievement("random_explorer");
-      }
-      return newCount;
-    });
-  }, [projects.length, unlockAchievement]);
-
-  // Speed runner achievement check
-  useEffect(() => {
-    if (navigationSpeed.length >= 3) {
-      const recent = navigationSpeed.slice(-3);
-      const timeDiff = recent[recent.length - 1] - recent[0];
-      if (timeDiff <= 10000) { // 10 seconds
-        unlockAchievement("speed_runner");
-      }
-    }
-  }, [navigationSpeed, unlockAchievement]);
+    if (projects.length === 0 || isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      const randomIndex = Math.floor(Math.random() * projects.length);
+      setCurrentIndex(randomIndex);
+      setTimeout(() => setIsTransitioning(false), 100);
+    }, 300);
+  }, [projects.length, isTransitioning]);
 
   // Auto-play functionality
   useEffect(() => {
     if (isAutoPlay && projects.length > 0) {
-      autoPlayRef.current = setInterval(goToNext, 4000);
+      autoPlayRef.current = setInterval(goToNext, 5000);
     } else {
       if (autoPlayRef.current) {
         clearInterval(autoPlayRef.current);
@@ -205,25 +142,16 @@ const Fun = () => {
     };
   }, [isAutoPlay, goToNext, projects.length]);
 
-  // Konami code detection
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      konamiSequence.current.push(event.code);
-      if (konamiSequence.current.length > konamiCode.length) {
-        konamiSequence.current.shift();
-      }
-      
-      if (konamiSequence.current.length === konamiCode.length &&
-          konamiSequence.current.every((key, index) => key === konamiCode[index])) {
-        setKonamiUnlocked(true);
-        unlockAchievement("konami_master");
-        konamiSequence.current = [];
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [unlockAchievement]);
+  // Show controls on mouse move, hide after delay
+  const handleMouseMove = useCallback(() => {
+    setShowControls(true);
+    if (controlsTimeoutRef.current) {
+      clearTimeout(controlsTimeoutRef.current);
+    }
+    controlsTimeoutRef.current = setTimeout(() => {
+      setShowControls(false);
+    }, 3000);
+  }, []);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -248,11 +176,6 @@ const Fun = () => {
           event.preventDefault();
           goToRandom();
           break;
-        case 's':
-        case 'S':
-          event.preventDefault();
-          setSoundEnabled(prev => !prev);
-          break;
       }
     };
 
@@ -261,379 +184,286 @@ const Fun = () => {
   }, [goToNext, goToPrevious, goToRandom]);
 
   const currentProject = projects[currentIndex];
-  const unlockedAchievements = achievements.filter(a => a.unlocked);
+  const nextProject = projects[(currentIndex + 1) % projects.length];
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background text-foreground pt-24 pb-32 md:pt-28 md:pb-16">
-      <Navigation />
-
-      {/* Animated Background */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,_hsla(var(--primary)/0.15),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,_hsla(var(--primary)/0.08),transparent_60%)]" />
-        {/* Floating particles */}
-        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary/20 rounded-full animate-float" />
-        <div className="absolute top-3/4 right-1/3 w-1 h-1 bg-primary/30 rounded-full animate-float" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 right-1/4 w-1.5 h-1.5 bg-primary/25 rounded-full animate-float" style={{ animationDelay: '4s' }} />
+    <div 
+      className="relative min-h-screen overflow-hidden bg-black text-white sm:cursor-none"
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setShowControls(true)}
+    >
+      {/* Navigation - Always visible */}
+      <div className={`fixed top-0 left-0 right-0 z-50 transition-opacity duration-500 ${showControls ? 'opacity-100' : 'opacity-0'}`}>
+        <Navigation />
       </div>
 
       {/* Loading State */}
       {isLoading && (
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center space-y-6">
-            <div className="flex items-center justify-center gap-2">
-              <div className="h-4 w-4 rounded-full bg-primary animate-bounce" />
-              <div className="h-4 w-4 rounded-full bg-primary/80 animate-bounce" style={{ animationDelay: "120ms" }} />
-              <div className="h-4 w-4 rounded-full bg-primary/60 animate-bounce" style={{ animationDelay: "240ms" }} />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
+          <div className="text-center space-y-8">
+            <div className="relative w-24 h-24 mx-auto">
+              <div className="absolute inset-0 border-2 border-white/10 rounded-full" />
+              <div className="absolute inset-0 border-2 border-t-primary rounded-full animate-spin" />
             </div>
-            <div className="space-y-2">
-              <p className="font-heading text-2xl text-foreground/80">Loading the Lab...</p>
-              <p className="font-body text-xs uppercase tracking-[0.35em] text-foreground/40">
-                Preparing interactive experiments
-              </p>
-            </div>
+            <p className="font-body text-sm uppercase tracking-[0.4em] text-white/40">
+              Loading Experiments
+            </p>
           </div>
         </div>
       )}
 
       {/* Error State */}
       {error && (
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center space-y-4 max-w-md">
-            <div className="text-6xl">⚠️</div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
+          <div className="text-center space-y-4 max-w-md px-6">
             <p className="font-heading text-xl text-primary">{error}</p>
-            <p className="font-body text-sm text-foreground/70">
-              Something went wrong loading the experiments. Try refreshing the page.
+            <p className="font-body text-sm text-white/50">
+              Try refreshing the page.
             </p>
           </div>
         </div>
       )}
 
-      {/* Main Carousel Interface */}
+      {/* Main Immersive Gallery */}
       {!isLoading && !error && projects.length > 0 && (
         <>
-          {/* Welcome Splash (only on first load) */}
-          {currentIndex === 0 && viewedProjects.size === 0 && (
-            <div className="absolute inset-0 z-50 bg-background/95 backdrop-blur-sm flex items-center justify-center animate-fade-in">
-              <div className="text-center space-y-8 max-w-2xl px-6">
-                <div className="space-y-4">
-                  <h1 className="font-heading text-6xl md:text-8xl text-foreground animate-slide-up">
-                    Welcome to the <span className="text-primary">Lab</span>
-                  </h1>
-                  <p className="font-body text-lg text-foreground/70 animate-slide-up" style={{ animationDelay: '200ms' }}>
-                    Interactive experiments, playful projects, and digital chaos.
-                  </p>
+          {/* Welcome Overlay - First time only */}
+          {!hasInteracted && (
+            <div 
+              className="fixed inset-0 z-40 flex items-center justify-center bg-black/90 backdrop-blur-sm cursor-pointer"
+              onClick={() => setHasInteracted(true)}
+            >
+              <div className="text-center space-y-8 max-w-xl px-6">
+                <h1 className="font-heading text-5xl md:text-7xl text-white">
+                  <span className="text-primary">Experiments</span>
+                </h1>
+                <p className="font-body text-lg text-white/60">
+                  Click anywhere to begin
+                </p>
+                <div className="flex items-center justify-center gap-6 text-white/30 text-sm">
+                  <span><kbd className="px-2 py-1 border border-white/20 rounded">←→</kbd> Navigate</span>
+                  <span><kbd className="px-2 py-1 border border-white/20 rounded">Space</kbd> Auto-play</span>
                 </div>
-                
-                <div className="space-y-4 animate-slide-up" style={{ animationDelay: '400ms' }}>
-                  <p className="font-body text-sm text-foreground/60">
-                    Use <kbd className="px-2 py-1 bg-primary/20 rounded text-primary">←→</kbd> arrows, 
-                    <kbd className="px-2 py-1 bg-primary/20 rounded text-primary ml-2">Space</kbd> for auto-play, 
-                    <kbd className="px-2 py-1 bg-primary/20 rounded text-primary ml-2">R</kbd> for random
-                  </p>
-                  <button
-                    onClick={() => setViewedProjects(new Set([projects[0].id]))}
-                    className="inline-flex items-center gap-2 px-8 py-3 bg-primary text-background font-heading text-sm uppercase tracking-wider rounded-lg hover:bg-primary/90 transition-colors"
-                  >
-                    Start Exploring
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
+              </div>
+            </div>
+          )}
 
-                {konamiUnlocked && (
-                  <div className="absolute top-4 right-4 text-2xl animate-bounce">
-                    🎮 Secret Unlocked!
-                  </div>
+          {/* Full-Screen Background Media */}
+          <div className={`fixed inset-0 transition-opacity duration-700 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+            {currentProject?.media.type === "video" ? (
+              <video
+                key={currentProject.id}
+                className="w-full h-full object-cover"
+                src={currentProject.media.src}
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            ) : (
+              <img
+                key={currentProject?.id}
+                src={currentProject?.media.src}
+                alt={currentProject?.media.alt}
+                className="w-full h-full object-cover"
+              />
+            )}
+            
+            {/* Cinematic Gradient Overlays - Stronger on mobile for readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 sm:via-black/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/90 sm:from-black/80 via-black/30 sm:via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-black/30 sm:bg-black/20" />
+          </div>
+
+          {/* Floating Info Card - Glassmorphism - Mobile Optimized */}
+          <div 
+            className={`fixed z-30 transition-all duration-500 
+              inset-x-4 bottom-20 
+              sm:inset-x-auto sm:left-6 sm:right-auto sm:bottom-24 sm:max-w-sm
+              md:left-12 md:bottom-20 md:max-w-md
+              lg:left-16 lg:bottom-24 lg:max-w-lg
+              ${showControls ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          >
+            <div className="backdrop-blur-xl bg-black/60 sm:bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-5 md:p-6 lg:p-8 space-y-3 sm:space-y-4 md:space-y-5">
+              {/* Category & Counter */}
+              <div className="flex items-center justify-between sm:justify-start gap-3 sm:gap-4">
+                <span className="px-2 py-0.5 sm:px-3 sm:py-1 bg-primary text-black text-[10px] sm:text-xs font-heading uppercase tracking-wider rounded-full">
+                  {currentProject?.category}
+                </span>
+                <span className="text-white/40 text-xs sm:text-sm font-body">
+                  {String(currentIndex + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+                </span>
+              </div>
+
+              {/* Title */}
+              <h2 className="font-heading text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white leading-tight">
+                {currentProject?.title}
+              </h2>
+
+              {/* Description - Hidden on very small screens */}
+              <p className="hidden sm:block font-body text-sm md:text-base text-white/60 leading-relaxed line-clamp-2 md:line-clamp-3">
+                {currentProject?.subtitle}
+              </p>
+
+              {/* Tech Tags - Scrollable on mobile */}
+              {currentProject?.tags && currentProject.tags.length > 0 && (
+                <div className="flex flex-nowrap sm:flex-wrap gap-1.5 sm:gap-2 overflow-x-auto pb-1 scrollbar-hide">
+                  {currentProject.tags.slice(0, 3).map((tag) => (
+                    <span
+                      key={tag}
+                      className="flex-shrink-0 px-2 py-0.5 sm:px-3 sm:py-1 bg-white/5 border border-white/10 text-[10px] sm:text-xs font-body uppercase tracking-wider text-white/50 rounded-full"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {/* CTA Button */}
+              <a
+                href={currentProject?.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 sm:gap-3 px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 bg-white text-black font-heading text-xs sm:text-sm uppercase tracking-wider rounded-full hover:bg-primary transition-colors group"
+              >
+                View Project
+                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            </div>
+          </div>
+
+          {/* Year Badge - Top Right - Hidden on mobile */}
+          <div 
+            className={`hidden sm:block fixed top-20 sm:top-24 right-4 sm:right-8 md:right-16 z-30 transition-all duration-500 ${
+              showControls ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <span className="font-heading text-4xl sm:text-6xl md:text-8xl text-white/10">
+              {currentProject?.year}
+            </span>
+          </div>
+
+          {/* Navigation Arrows - Visible on mobile, hover on desktop */}
+          <button
+            onClick={goToPrevious}
+            className={`fixed left-2 sm:left-0 top-1/2 sm:top-0 -translate-y-1/2 sm:translate-y-0 sm:bottom-0 w-12 h-12 sm:w-16 sm:h-auto md:w-24 z-20 flex items-center justify-center cursor-pointer group transition-opacity duration-500 ${
+              showControls ? 'opacity-100' : 'opacity-0'
+            }`}
+            disabled={isTransitioning}
+          >
+            <div className="p-2.5 sm:p-3 md:p-4 rounded-full bg-black/40 sm:bg-white/5 backdrop-blur-sm border border-white/20 sm:border-white/10 sm:opacity-0 sm:group-hover:opacity-100 transition-all sm:group-hover:scale-110">
+              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
+            </div>
+          </button>
+
+          <button
+            onClick={goToNext}
+            className={`fixed right-2 sm:right-0 top-1/2 sm:top-0 -translate-y-1/2 sm:translate-y-0 sm:bottom-0 w-12 h-12 sm:w-16 sm:h-auto md:w-24 z-20 flex items-center justify-center cursor-pointer group transition-opacity duration-500 ${
+              showControls ? 'opacity-100' : 'opacity-0'
+            }`}
+            disabled={isTransitioning}
+          >
+            <div className="p-2.5 sm:p-3 md:p-4 rounded-full bg-black/40 sm:bg-white/5 backdrop-blur-sm border border-white/20 sm:border-white/10 sm:opacity-0 sm:group-hover:opacity-100 transition-all sm:group-hover:scale-110">
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
+            </div>
+          </button>
+
+          {/* Bottom Controls Bar - Centered on mobile */}
+          <div 
+            className={`fixed bottom-4 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-6 md:right-12 lg:right-16 sm:bottom-6 md:bottom-12 lg:bottom-16 z-30 transition-all duration-500 ${
+              showControls ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
+            <div className="flex items-center gap-2 sm:gap-3 backdrop-blur-xl bg-black/60 sm:bg-white/5 border border-white/20 sm:border-white/10 rounded-full p-1.5 sm:p-2">
+              {/* Progress Dots - Limited on mobile */}
+              <div className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3">
+                {projects.slice(0, 8).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      if (!isTransitioning) {
+                        setIsTransitioning(true);
+                        setTimeout(() => {
+                          setCurrentIndex(index);
+                          setTimeout(() => setIsTransitioning(false), 100);
+                        }, 300);
+                      }
+                    }}
+                    className={`h-1 rounded-full transition-all duration-300 ${
+                      index === currentIndex 
+                        ? 'bg-primary w-4 sm:w-6' 
+                        : 'bg-white/30 w-1 hover:bg-white/50'
+                    }`}
+                  />
+                ))}
+                {projects.length > 8 && (
+                  <span className="text-white/30 text-[10px] ml-1">+{projects.length - 8}</span>
                 )}
               </div>
-            </div>
-          )}
 
-          {/* Main Carousel */}
-          <div className="relative min-h-screen flex items-center justify-center">
-            {/* Project Display */}
-            <div className="relative w-full max-w-7xl mx-auto px-6">
-              <div className="grid md:grid-cols-2 gap-12 items-center min-h-[80vh]">
-                {/* Project Media */}
-                <div className="relative group">
-                  <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-foreground/5 border border-border/25">
-                    {currentProject?.media.type === "video" ? (
-                      <video
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        src={currentProject.media.src}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                      />
-                    ) : (
-                      <img
-                        src={currentProject?.media.src}
-                        alt={currentProject?.media.alt}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                    )}
-                    
-                    {/* Media Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
-                    
-                    {/* Category Badge */}
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-primary/90 text-background text-xs font-heading uppercase tracking-wider rounded-full">
-                        {currentProject?.category}
-                      </span>
-                    </div>
+              <div className="w-px h-5 sm:h-6 bg-white/10" />
 
-                    {/* Year Badge */}
-                    <div className="absolute top-4 right-4">
-                      <span className="px-3 py-1 bg-background/90 text-foreground text-xs font-heading uppercase tracking-wider rounded-full border border-border/40">
-                        {currentProject?.year}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+              {/* Auto-play */}
+              <button
+                onClick={() => setIsAutoPlay(!isAutoPlay)}
+                className={`p-2 sm:p-3 rounded-full transition-all ${
+                  isAutoPlay 
+                    ? 'bg-primary text-black' 
+                    : 'text-white/60 hover:text-white hover:bg-white/10'
+                }`}
+                title="Auto-play (Space)"
+              >
+                {isAutoPlay ? <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
+              </button>
 
-                {/* Project Info */}
-                <div className="space-y-8 pb-24 md:pb-0">
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <span className="font-body text-xs uppercase tracking-[0.4em] text-primary/70">
-                        Experiment {currentIndex + 1} of {projects.length}
-                      </span>
-                      <div className="h-px flex-1 bg-gradient-to-r from-primary/40 to-transparent" />
-                    </div>
-                    
-                    <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl text-foreground leading-tight">
-                      {currentProject?.title}
-                    </h2>
-                    
-                    <p className="font-body text-lg text-foreground/70 leading-relaxed">
-                      {currentProject?.subtitle}
-                    </p>
-                  </div>
-
-                  {/* Tech Stack */}
-                  {currentProject?.tags && currentProject.tags.length > 0 && (
-                    <div className="space-y-3">
-                      <p className="font-body text-xs uppercase tracking-[0.35em] text-foreground/50">
-                        Tech Stack
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {currentProject.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-3 py-1 border border-border/40 text-xs font-body uppercase tracking-wider text-foreground/70 hover:border-primary/40 hover:text-primary transition-colors"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* CTA */}
-                  <div className="flex items-center gap-4">
-                    <a
-                      href={currentProject?.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-3 px-6 py-3 bg-primary text-background font-heading text-sm uppercase tracking-wider rounded-lg hover:bg-primary/90 transition-colors group"
-                    >
-                      Explore Project
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </a>
-                    
-                    {konamiUnlocked && (
-                      <button className="px-4 py-2 border border-primary/40 text-primary text-xs uppercase tracking-wider rounded-lg hover:bg-primary/10 transition-colors">
-                        🎮 Secret Mode
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Navigation Controls */}
-            <div className="absolute inset-x-4 bottom-4 md:bottom-8 md:left-1/2 md:inset-x-auto md:-translate-x-1/2">
-              <div className="w-full max-w-xl mx-auto flex flex-wrap items-center justify-center gap-3 md:gap-4 px-4 py-3 md:px-6 bg-background/90 backdrop-blur-sm border border-border/40 rounded-2xl md:rounded-full">
-                {/* Previous */}
-                <button
-                  onClick={goToPrevious}
-                  className="p-2 hover:bg-primary/10 rounded-full transition-colors group"
-                  title="Previous (←)"
-                >
-                  <ArrowLeft className="w-5 h-5 text-foreground/70 group-hover:text-primary" />
-                </button>
-
-                {/* Progress Dots */}
-                <div className="flex items-center gap-2">
-                  {projects.slice(0, 5).map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentIndex(index)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        index === currentIndex 
-                          ? 'bg-primary w-6' 
-                          : 'bg-foreground/30 hover:bg-foreground/50'
-                      }`}
-                    />
-                  ))}
-                  {projects.length > 5 && (
-                    <span className="text-xs text-foreground/50 ml-2">
-                      +{projects.length - 5} more
-                    </span>
-                  )}
-                </div>
-
-                {/* Next */}
-                <button
-                  onClick={goToNext}
-                  className="p-2 hover:bg-primary/10 rounded-full transition-colors group"
-                  title="Next (→)"
-                >
-                  <ArrowRight className="w-5 h-5 text-foreground/70 group-hover:text-primary" />
-                </button>
-              </div>
-            </div>
-
-            {/* Side Controls */}
-            <div className="hidden md:block absolute right-6 top-1/2 transform -translate-y-1/2">
-              <div className="flex flex-col gap-3">
-                {/* Auto-play */}
-                <button
-                  onClick={() => setIsAutoPlay(!isAutoPlay)}
-                  className={`p-3 rounded-full border transition-colors ${
-                    isAutoPlay 
-                      ? 'bg-primary text-background border-primary' 
-                      : 'bg-background/80 text-foreground/70 border-border/40 hover:border-primary/40'
-                  }`}
-                  title={`${isAutoPlay ? 'Pause' : 'Play'} Auto-play (Space)`}
-                >
-                  {isAutoPlay ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                </button>
-
-                {/* Random */}
-                <button
-                  onClick={goToRandom}
-                  className="p-3 bg-background/80 text-foreground/70 border border-border/40 rounded-full hover:border-primary/40 hover:text-primary transition-colors"
-                  title="Random Project (R)"
-                >
-                  <Shuffle className="w-4 h-4" />
-                </button>
-
-                {/* Achievements */}
-                <button
-                  onClick={() => setShowAchievements(!showAchievements)}
-                  className={`p-3 rounded-full border transition-colors relative ${
-                    showAchievements
-                      ? 'bg-primary text-background border-primary'
-                      : 'bg-background/80 text-foreground/70 border-border/40 hover:border-primary/40'
-                  }`}
-                  title="Achievements"
-                >
-                  <Trophy className="w-4 h-4" />
-                  {unlockedAchievements.length > 0 && (
-                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-background text-xs rounded-full flex items-center justify-center">
-                      {unlockedAchievements.length}
-                    </span>
-                  )}
-                </button>
-
-                {/* Sound Toggle */}
-                <button
-                  onClick={() => setSoundEnabled(!soundEnabled)}
-                  className={`p-3 rounded-full border transition-colors ${
-                    soundEnabled
-                      ? 'bg-primary text-background border-primary'
-                      : 'bg-background/80 text-foreground/70 border-border/40 hover:border-primary/40'
-                  }`}
-                  title={`${soundEnabled ? 'Disable' : 'Enable'} Sound (S)`}
-                >
-                  {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-                </button>
-              </div>
+              {/* Random */}
+              <button
+                onClick={goToRandom}
+                className="p-2 sm:p-3 text-white/60 hover:text-white hover:bg-white/10 rounded-full transition-all"
+                title="Random (R)"
+                disabled={isTransitioning}
+              >
+                <Shuffle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              </button>
             </div>
           </div>
 
-          {/* Achievements Panel */}
-          {showAchievements && (
-            <div className="fixed inset-y-0 right-0 w-full sm:w-80 bg-background/95 backdrop-blur-sm border-l border-border/40 z-40 overflow-y-auto">
-              <div className="p-6 space-y-6">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-heading text-xl text-foreground">Achievements</h3>
-                  <button
-                    onClick={() => setShowAchievements(false)}
-                    className="p-2 hover:bg-foreground/10 rounded-full transition-colors"
-                  >
-                    ✕
-                  </button>
-                </div>
+          {/* Mobile hint removed - arrows are now visible */}
 
-                <div className="space-y-4">
-                  {achievements.map((achievement) => (
-                    <div
-                      key={achievement.id}
-                      className={`p-4 rounded-lg border transition-all ${
-                        achievement.unlocked
-                          ? 'bg-primary/10 border-primary/40 text-foreground'
-                          : 'bg-foreground/5 border-border/25 text-foreground/50'
-                      }`}
-                    >
-                      <div className="flex items-start gap-3">
-                        <span className="text-2xl">{achievement.icon}</span>
-                        <div className="space-y-1">
-                          <h4 className="font-heading text-sm">{achievement.title}</h4>
-                          <p className="font-body text-xs">{achievement.description}</p>
-                        </div>
-                        {achievement.unlocked ? (
-                          <Unlock className="w-4 h-4 text-primary ml-auto" />
-                        ) : (
-                          <Lock className="w-4 h-4 text-foreground/30 ml-auto" />
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="pt-4 border-t border-border/25 space-y-2">
-                  <p className="font-body text-xs text-foreground/60">
-                    Progress: {viewedProjects.size}/{projects.length} projects viewed
-                  </p>
-                  <div className="w-full bg-foreground/10 rounded-full h-2">
-                    <div 
-                      className="bg-primary h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${(viewedProjects.size / projects.length) * 100}%` }}
-                    />
-                  </div>
-                </div>
-              </div>
+          {/* Next Project Preview - Subtle hint */}
+          {nextProject && (
+            <div 
+              className={`fixed bottom-8 right-8 md:bottom-auto md:top-1/2 md:right-16 md:-translate-y-1/2 z-10 transition-all duration-500 hidden md:block ${
+                showControls ? 'opacity-30 hover:opacity-60' : 'opacity-0'
+              }`}
+            >
+              <p className="text-white/40 text-xs uppercase tracking-widest mb-2">Next</p>
+              <p className="text-white/60 text-sm font-heading max-w-[150px] truncate">{nextProject.title}</p>
             </div>
           )}
-
-          {/* Keyboard Shortcuts Help */}
-          <div className="hidden md:block fixed bottom-4 left-4 text-xs text-foreground/40 space-y-1">
-            <p>← → Navigate</p>
-            <p>Space Auto-play</p>
-            <p>R Random</p>
-            <p>S Sound</p>
-          </div>
         </>
       )}
 
       {/* Empty State */}
       {!isLoading && !error && projects.length === 0 && (
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center space-y-6">
-            <div className="text-8xl">🧪</div>
-            <div className="space-y-2">
-              <p className="font-heading text-2xl text-foreground/70">Lab is Empty</p>
-              <p className="font-body text-sm text-foreground/50">
-                No experiments found. Time to build something!
-              </p>
-            </div>
+        <div className="fixed inset-0 flex items-center justify-center bg-black">
+          <div className="text-center space-y-4">
+            <p className="font-heading text-2xl text-white/50">No experiments yet</p>
+            <p className="font-body text-sm text-white/30">Check back soon</p>
           </div>
         </div>
       )}
+
+      {/* Custom styles */}
+      <style>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   );
 };
