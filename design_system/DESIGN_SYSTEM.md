@@ -305,9 +305,32 @@ Use this pattern when you introduce a new top-level section (e.g. a future “Wr
   - Media card on opposite side with zoom-on-hover.
 - No random rotation; only staggered order per row.
 
+**Experimentos index** – `src/pages/Experimentos.tsx` (index-style grid)
+- Overall feel: calm, library/index view. Low motion, lots of negative space.
+- Layout (desktop):
+  - Left column: narrow, fixed-width index.
+    - Section label on top: `Index` in tiny uppercase meta style.
+    - Title below: `Projects` (or "Experimentos") in heading style.
+    - Vertical list of experiment names with line numbers on the left.
+      - Numbers: tiny, low-contrast (`text-foreground/40`).
+      - Project labels: body size, aligned in a single column.
+  - Right area: 4x3 grid of experiment tiles.
+    - Equal-size cards with a neutral placeholder thumbnail (no busy UI inside).
+    - Caption under each tile: experiment name in small text, center-aligned.
+- Layout (mobile/tablet):
+  - Index stacks on top of the grid.
+  - Keep list and tile order the same; reduce columns to 2 or 3 depending on width.
+- Spacing:
+  - Large padding around the whole canvas to keep the white panel floating inside the dark background.
+  - Comfortable gaps between tiles so the grid never feels cramped.
+- Behavior:
+  - Hover state: subtle border + elevation change only (no scale explosions).
+  - Click opens the detailed experiment view (case study or Fun-style layout).
+
 Rule: 
 - Use **Work pattern** for flagship / case-study projects.
 - Use **Fun pattern** for smaller, fast experiments and side projects.
+- Use **Experimentos index** when you need a calm overview of many experiments at once.
 
 ### 5.4 Case Study Layout
 
@@ -439,5 +462,8 @@ Use shadcn’s `Button` or a simple custom pattern:
 
 5. **Consistency over cleverness**  
    New layouts should reuse existing patterns (hero, card, case-study layout) instead of inventing one-offs.
+
+6. **Experiments first as an index, then as stories**  
+   The Experimentos page is a calm index: left-side list, right-side grid of tiles. Use it to browse; use Fun or case-study layouts to go deep.
 
 If you stick to these constraints, anything you add will feel like it’s from the same universe as the current site.
