@@ -41,7 +41,8 @@ export const Hero = () => {
       <path d="M16 7l2-2 2 2" />
     </svg>
   );
-  const tickerWords = ["CREATE", "INNOVATE", "DESIGN", "EXPERIMENT"];
+  const tickerWords = ["CREATE", "INNOVATE", "DESIGN", "EXPERIMENT",""];
+  const tickerRepeatCount = 8;
   const legacyRoles = ["GEN AI", "DESIGNER", "DEVELOPER", "DATA SCIENTIST"];
   const legacyRolesLine = legacyRoles.join(" / ");
   const socials = [
@@ -84,16 +85,20 @@ export const Hero = () => {
       <div className="pointer-events-none absolute inset-x-0 top-[32%] z-0 xs:top-[34%] sm:top-[32%] md:top-[28%] lg:top-[29%]">
         <div className="transform-gpu sm:-rotate-1 lg:-rotate-3">
           <div className="ticker-strip">
-            <div className="ticker-content flex min-w-[200%] items-center gap-4 sm:gap-6 md:gap-8 whitespace-nowrap py-2 sm:py-3 md:py-4 text-[0.6rem] sm:text-xs md:text-sm font-semibold uppercase tracking-[0.25em] sm:tracking-[0.35em] text-black animate-ticker">
-              {Array.from({ length: 6 }).map((_, index) => (
-                <span key={index} className="flex items-center gap-4 sm:gap-6">
-                  {tickerWords.map((word, wordIndex) => (
-                    <span key={`${word}-${wordIndex}`} className="flex items-center gap-4 sm:gap-6">
-                      {word}
-                      {wordIndex < tickerWords.length - 1 && <span className="text-black">•</span>}
+            <div className="ticker-content flex w-max items-center whitespace-nowrap py-2 sm:py-3 md:py-4 text-[0.6rem] sm:text-xs md:text-sm font-semibold uppercase tracking-[0.25em] sm:tracking-[0.35em] text-black animate-ticker">
+              {[0, 1].map((duplicateIndex) => (
+                <div key={duplicateIndex} className="flex shrink-0 items-center gap-4 sm:gap-6 md:gap-8">
+                  {Array.from({ length: tickerRepeatCount }).map((_, blockIndex) => (
+                    <span key={`${duplicateIndex}-${blockIndex}`} className="flex items-center gap-4 sm:gap-6 md:gap-8">
+                      {tickerWords.map((word, wordIndex) => (
+                        <span key={`${duplicateIndex}-${blockIndex}-${word}-${wordIndex}`} className="flex items-center gap-4 sm:gap-6 md:gap-8">
+                          {word}
+                          {wordIndex < tickerWords.length - 1 && <span className="text-black">•</span>}
+                        </span>
+                      ))}
                     </span>
                   ))}
-                </span>
+                </div>
               ))}
             </div>
           </div>

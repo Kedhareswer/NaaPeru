@@ -147,7 +147,7 @@ export default {
         "glow-pulse": "glow-pulse 2s ease-in-out infinite",
         "float": "float 3s ease-in-out infinite",
         "progress": "progress 2.5s var(--ease-confident) forwards",
-        ticker: "ticker 18s linear infinite",
+        ticker: "ticker 55s linear infinite",
       },
     },
   },
