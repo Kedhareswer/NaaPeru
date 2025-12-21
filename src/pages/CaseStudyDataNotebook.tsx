@@ -138,11 +138,13 @@ export const CaseStudyDataNotebook = () => {
         <section className="container-portfolio mb-20 lg:ml-64">
           <div className="w-full aspect-[16/9] bg-gradient-to-br from-primary/10 via-background to-background rounded-lg overflow-hidden">
             <iframe
-              src="https://app.getalai.com/view/EE6cEVQUTb-KHBYBErp9Tw"
+              src="https://www.canva.com/design/DAG8HFLTrLM/jYRFzSdodC6VPQMD5M6HUA/view?embed"
               title="Data Notebook Walkthrough"
               className="w-full h-full"
               allow="fullscreen; clipboard-write; encrypted-media"
+              allowFullScreen
               loading="lazy"
+              referrerPolicy="no-referrer"
               style={{ border: "0" }}
             />
           </div>
