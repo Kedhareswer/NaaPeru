@@ -22,6 +22,7 @@ const Fun = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isSubtitleExpanded, setIsSubtitleExpanded] = useState(false);
 
   // Load projects
   useEffect(() => {
@@ -122,6 +123,10 @@ const Fun = () => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [goToNext, goToPrevious]);
 
+  useEffect(() => {
+    setIsSubtitleExpanded(false);
+  }, [currentIndex]);
+
   const currentProject = projects[currentIndex];
   const nextProject = projects[(currentIndex + 1) % projects.length];
 
@@ -180,9 +185,25 @@ const Fun = () => {
                       <h2 className="font-heading text-lg sm:text-xl text-foreground leading-tight">
                         {currentProject.title}
                       </h2>
-                      <p className="font-body text-xs text-foreground/60 line-clamp-3">
-                        {currentProject.subtitle}
-                      </p>
+                      <div>
+                        <p
+                          className={`font-body text-xs text-foreground/60 ${
+                            isSubtitleExpanded ? "" : "line-clamp-3"
+                          }`}
+                        >
+                          {currentProject.subtitle}
+                        </p>
+                        {typeof currentProject.subtitle === "string" &&
+                          currentProject.subtitle.trim().length > 140 && (
+                            <button
+                              type="button"
+                              onClick={() => setIsSubtitleExpanded((prev) => !prev)}
+                              className="mt-2 inline-flex text-[11px] font-body uppercase tracking-[0.28em] text-primary hover:text-primary/80"
+                            >
+                              {isSubtitleExpanded ? "Read less" : "Read more"}
+                            </button>
+                          )}
+                      </div>
                       <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] font-body text-foreground/50">
                         {currentProject.year !== "—" && (
                           <span className="px-2 py-0.5 rounded-full border border-border/30">
@@ -257,16 +278,16 @@ const Fun = () => {
                           className="group flex flex-col items-stretch"
                         >
                           <div
-                            className={`relative aspect-[3/4] w-full overflow-hidden border bg-card/60 transition-all duration-300 ${
+                            className={`relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden border bg-card/60 transition-all duration-300 ${
                               isActive
                                 ? "border-primary/70 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]"
                                 : "border-border/30 hover:border-primary/40"
                             }`}
                           >
-                            {/* Actual media with sharp edges - fills container */}
+                            {/* Actual media - contained to avoid awkward cropping */}
                             {project.media.type === "video" ? (
                               <video
-                                className="absolute inset-0 h-full w-full object-cover"
+                                className="h-full w-full object-contain"
                                 src={project.media.src}
                                 muted
                                 loop
@@ -275,7 +296,7 @@ const Fun = () => {
                               />
                             ) : (
                               <img
-                                className="absolute inset-0 h-full w-full object-cover"
+                                className="h-full w-full object-contain"
                                 src={project.media.src}
                                 alt={project.media.alt}
                               />

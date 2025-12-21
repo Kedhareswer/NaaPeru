@@ -80,9 +80,9 @@ const Resume = () => {
                     <h3 className="font-heading text-xs font-bold uppercase text-[#1a1a1a]">AI Engineer Intern</h3>
                     <p className="font-body text-[10px] uppercase tracking-[0.15em] text-[#666]">DiligenceVault · October 2025 - Present</p>
                     <ul className="mt-2 space-y-1 font-body text-xs leading-relaxed text-[#333]">
-                      <li>• Working on AI-driven solutions for digital fund due diligence ecosystem</li>
-                      <li>• Contributing to AI-engineered frameworks for structured dataset extraction</li>
-                      <li>• Developing intelligent systems to support institutional investors</li>
+                      <li>• Delivered AI-driven intelligence systems for continuous monitoring across dozens of entities, improving signal quality, prioritization, and operational reliability</li>
+                      <li>• Built high-volume structured information workflows that reduced noise and manual review effort across internal analytical pipelines</li>
+                      <li>• Developed a document intelligence engine for loss-aware transformation and AI-assisted regeneration of complex enterprise documents while preserving structure and formatting fidelity</li>
                     </ul>
                   </div>
                   <div>

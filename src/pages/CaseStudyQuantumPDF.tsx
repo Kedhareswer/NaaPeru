@@ -200,11 +200,13 @@ export const CaseStudyQuantumPDF = () => {
         <section className="container-portfolio mb-20 lg:ml-64">
           <div className="w-full aspect-[16/9] bg-gradient-to-br from-primary/10 via-background to-background rounded-lg overflow-hidden">
             <iframe
-              src="https://app.getalai.com/view/twmjEM9sSL6E8Y7Yler3uw"
+              src="https://www.canva.com/design/DAG8G87f9Zc/geWJbg050_BPR2JGm27xWg/view?embed"
               title="QuantumPDF Walkthrough"
               className="w-full h-full"
               allow="fullscreen; clipboard-write; encrypted-media"
+              allowFullScreen
               loading="lazy"
+              referrerPolicy="no-referrer"
               style={{ border: "0" }}
             />
           </div>

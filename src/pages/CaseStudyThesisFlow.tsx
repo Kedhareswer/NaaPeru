@@ -236,11 +236,13 @@ export const CaseStudyThesisFlow = () => {
         <section className="container-portfolio mb-20 lg:ml-64">
           <div className="w-full aspect-[16/9] bg-gradient-to-br from-primary/10 via-background to-background rounded-lg overflow-hidden">
             <iframe
-              src="https://app.getalai.com/view/xhWyQo8fREuw0FqLewY1kA"
+              src="https://www.canva.com/design/DAG8G7ym8Ms/RnHo4khSch3Grqr6Zuallw/view?embed"
               title="ThesisFlow-AI Walkthrough"
               className="w-full h-full"
               allow="fullscreen; clipboard-write; encrypted-media"
+              allowFullScreen
               loading="lazy"
+              referrerPolicy="no-referrer"
               style={{ border: "0" }}
             />
           </div>
