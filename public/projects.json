@@ -1,5 +1,66 @@
 [
   {
+    "id": 16,
+    "title": "LLM Chess Tournament",
+    "description": "A chess tournament system powered by Large Language Models, featuring automated gameplay between different AI models (Groq, Google Gemini, OpenAI, and more). Includes an ELO rating system to track and compare model performance, real-time tournament management, an interactive game viewer with move-by-move analysis, and configurable game settings and timeouts.",
+    "technologies": [
+      "Next.js",
+      "TypeScript",
+      "LLM APIs",
+      "Groq",
+      "Google Gemini",
+      "OpenAI",
+      "ELO Rating",
+      "Chess Engine"
+    ],
+    "github": "https://github.com/Kedhareswer/llm-chess-agentic",
+    "demo": "https://llm-chess-agentic.vercel.app/",
+    "category": "Multi-Agent AI",
+    "project_date": "Jan 2026",
+    "image": "/projects/llm-chess.png",
+    "featured": false,
+    "created_at": "2026-01-15T00:00:00.000Z",
+    "objectives": [
+      "Automate chess games between competing LLM agents",
+      "Track and compare model performance via ELO ratings",
+      "Provide real-time tournament management and game viewer"
+    ],
+    "outcomes": [
+      "Automated multi-LLM chess arena with live game viewer",
+      "ELO-based leaderboard comparing AI model chess strength",
+      "Configurable matchups across Groq, Gemini, and OpenAI providers"
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Dream Home Design",
+    "description": "A modern web application for designing and visualising dream home interiors and layouts. Built with a clean, responsive UI that lets users explore room configurations, styles, and design options interactively.",
+    "technologies": [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "Tailwind CSS",
+      "Vercel"
+    ],
+    "github": "https://github.com/Kedhareswer/dream-home-design",
+    "demo": "https://dream-home-design.vercel.app/",
+    "category": "Web Development",
+    "project_date": "Jan 2026",
+    "image": "/projects/dream-home-design.png",
+    "featured": false,
+    "created_at": "2026-01-10T00:00:00.000Z",
+    "objectives": [
+      "Create an interactive home design and visualisation tool",
+      "Deliver a clean, responsive UI across all devices",
+      "Enable users to explore and configure room layouts and styles"
+    ],
+    "outcomes": [
+      "Fully responsive home design web app deployed on Vercel",
+      "Interactive room and style configuration interface",
+      "Modern UI built with Next.js and Tailwind CSS"
+    ]
+  },
+  {
     "id": 14,
     "title": "Internal Policy Chatbot Sandbox",
     "description": "An open-source, learning-first prototype that lets you upload internal PDFs (policies, SOPs, handbooks) and interrogate them through a LangGraph Swarm of agents. Each specialist—Developer, Summarizer, Explainer, Analogy Maker, Vulnerability Checker—reads the same document and answers from its perspective, making multi-agent reasoning tangible for newcomers.",

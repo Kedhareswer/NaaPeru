@@ -1,6 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { Navigation } from "@/components/Navigation";
 import { ExternalLink } from "lucide-react";
+import { ShiftCard } from "@/components/ui/shift-card";
+import { motion } from "motion/react";
 
 type FunProject = {
   id: number;
@@ -162,180 +164,217 @@ const Fun = () => {
         </div>
       )}
 
-      {/* Main Experimentos Index Layout - Full screen */}
+      {/* Main Experimentos Index Layout */}
       {!isLoading && !error && projects.length > 0 && (
-        <main className="pt-28 pb-16">
+        <main className="pt-24 sm:pt-28 pb-16">
           <div className="container-portfolio">
-            <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 xl:gap-20">
-              {/* Left: Index list */}
-              <section className="w-full max-w-sm lg:max-w-[280px] xl:max-w-[320px] shrink-0">
-                  <p className="font-body text-[10px] uppercase tracking-[0.35em] text-foreground/40 mb-2">
-                    Index
-                  </p>
-                  <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl text-foreground mb-6">
-                    Experimentos
-                  </h1>
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 xl:gap-20">
 
-                  {/* Current selection summary */}
-                  {currentProject && (
-                    <div className="mb-8 space-y-2">
-                      <p className="font-body text-xs uppercase tracking-[0.28em] text-primary/80">
-                        Selected
+              {/* Left: Index panel */}
+              <section className="w-full lg:max-w-[280px] xl:max-w-[320px] lg:shrink-0">
+                <p className="font-body text-[10px] uppercase tracking-[0.35em] text-foreground/40 mb-2">
+                  Index
+                </p>
+                <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl text-foreground mb-6">
+                  Experimentos
+                </h1>
+
+                {/* Current selection summary */}
+                {currentProject && (
+                  <div className="mb-6 lg:mb-8 space-y-2">
+                    <p className="font-body text-xs uppercase tracking-[0.28em] text-primary/80">
+                      Selected
+                    </p>
+                    <h2 className="font-heading text-lg sm:text-xl text-foreground leading-tight">
+                      {currentProject.title}
+                    </h2>
+                    <div>
+                      <p
+                        className={`font-body text-xs text-foreground/60 ${
+                          isSubtitleExpanded ? "" : "line-clamp-3"
+                        }`}
+                      >
+                        {currentProject.subtitle}
                       </p>
-                      <h2 className="font-heading text-lg sm:text-xl text-foreground leading-tight">
-                        {currentProject.title}
-                      </h2>
-                      <div>
-                        <p
-                          className={`font-body text-xs text-foreground/60 ${
-                            isSubtitleExpanded ? "" : "line-clamp-3"
-                          }`}
-                        >
-                          {currentProject.subtitle}
-                        </p>
-                        {typeof currentProject.subtitle === "string" &&
-                          currentProject.subtitle.trim().length > 140 && (
-                            <button
-                              type="button"
-                              onClick={() => setIsSubtitleExpanded((prev) => !prev)}
-                              className="mt-2 inline-flex text-[11px] font-body uppercase tracking-[0.28em] text-primary hover:text-primary/80"
-                            >
-                              {isSubtitleExpanded ? "Read less" : "Read more"}
-                            </button>
-                          )}
-                      </div>
-                      <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] font-body text-foreground/50">
-                        {currentProject.year !== "—" && (
-                          <span className="px-2 py-0.5 rounded-full border border-border/30">
-                            {currentProject.year}
-                          </span>
+                      {typeof currentProject.subtitle === "string" &&
+                        currentProject.subtitle.trim().length > 140 && (
+                          <button
+                            type="button"
+                            onClick={() => setIsSubtitleExpanded((prev) => !prev)}
+                            className="mt-2 inline-flex text-[11px] font-body uppercase tracking-[0.28em] text-primary hover:text-primary/80"
+                          >
+                            {isSubtitleExpanded ? "Read less" : "Read more"}
+                          </button>
                         )}
-                        {currentProject.tags?.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2 py-0.5 rounded-full border border-border/30"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      {currentProject.link !== "#" && (
-                        <a
-                          href={currentProject.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-4 inline-flex items-center gap-2 text-[11px] font-body uppercase tracking-[0.3em] text-primary hover:text-primary/80"
-                        >
-                          View project
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
                     </div>
-                  )}
+                    <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] font-body text-foreground/50">
+                      {currentProject.year !== "—" && (
+                        <span className="px-2 py-0.5 border border-border/30">
+                          {currentProject.year}
+                        </span>
+                      )}
+                      {currentProject.tags?.slice(0, 3).map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2 py-0.5 border border-border/30"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    {currentProject.link !== "#" && (
+                      <a
+                        href={currentProject.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 inline-flex items-center gap-2 text-[11px] font-body uppercase tracking-[0.3em] text-primary hover:text-primary/80"
+                      >
+                        View project
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
+                  </div>
+                )}
 
-                  {/* Scrollable index list */}
-                  <div className="max-h-[360px] pr-3 overflow-y-auto space-y-1">
-                    {projects.map((project, index) => {
-                      const lineNumber = index * 3 + 1; // loose nod to the wireframe spacing
-                      const isActive = index === currentIndex;
-                      return (
-                        <button
-                          key={project.id}
-                          type="button"
-                          onClick={() => setCurrentIndex(index)}
-                          className={`group flex w-full items-baseline gap-3 rounded-md px-2 py-1 text-left transition-colors ${
-                            isActive ? "bg-primary/5" : "hover:bg-foreground/5"
+                {/* Index list — scrollable on desktop, full on mobile */}
+                <div className="space-y-1">
+                  {projects.map((project, index) => {
+                    const lineNumber = index * 3 + 1;
+                    const isActive = index === currentIndex;
+                    return (
+                      <button
+                        key={project.id}
+                        type="button"
+                        onClick={() => setCurrentIndex(index)}
+                        className={`group flex w-full items-baseline gap-3 px-2 py-1 text-left transition-colors ${
+                          isActive ? "bg-primary/5" : "hover:bg-foreground/5"
+                        }`}
+                      >
+                        <span className="w-6 font-body text-[10px] tabular-nums text-foreground/35">
+                          {lineNumber.toString().padStart(2, "0")}
+                        </span>
+                        <span
+                          className={`flex-1 font-body text-xs sm:text-sm ${
+                            isActive
+                              ? "text-foreground"
+                              : "text-foreground/70 group-hover:text-foreground"
                           }`}
                         >
-                          <span className="w-6 font-body text-[10px] tabular-nums text-foreground/35">
-                            {lineNumber.toString().padStart(2, "0")}
-                          </span>
-                          <span
-                            className={`flex-1 font-body text-xs sm:text-sm ${
-                              isActive
-                                ? "text-foreground"
-                                : "text-foreground/70 group-hover:text-foreground"
-                            }`}
-                          >
-                            {project.title}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </section>
-
-                {/* Right: Grid of experiment tiles */}
-                <section className="flex-1">
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
-                    {projects.map((project, index) => {
-                      const isActive = index === currentIndex;
-                      return (
-                        <button
-                          key={project.id}
-                          type="button"
-                          onClick={() => setCurrentIndex(index)}
-                          className="group flex flex-col items-stretch"
-                        >
-                          <div
-                            className={`relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden border bg-card/60 transition-all duration-300 ${
-                              isActive
-                                ? "border-primary/70 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]"
-                                : "border-border/30 hover:border-primary/40"
-                            }`}
-                          >
-                            {/* Actual media - contained to avoid awkward cropping */}
-                            {project.media.type === "video" ? (
-                              <video
-                                className="h-full w-full object-contain"
-                                src={project.media.src}
-                                muted
-                                loop
-                                autoPlay
-                                playsInline
-                              />
-                            ) : (
-                              <img
-                                className="h-full w-full object-contain"
-                                src={project.media.src}
-                                alt={project.media.alt}
-                              />
-                            )}
-                          </div>
-                          <p
-                            className={`mt-2 text-center font-body text-[11px] sm:text-xs ${
-                              isActive ? "text-foreground" : "text-foreground/70"
-                            }`}
-                          >
-                            {project.title}
-                          </p>
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* Keyboard hint / next label */}
-                  {nextProject && (
-                    <div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-[11px] font-body text-foreground/45">
-                      <p>
-                        <span className="mr-2 uppercase tracking-[0.28em]">Next</span>
-                        <span className="text-foreground/70">{nextProject.title}</span>
-                      </p>
-                      <p className="flex items-center gap-3">
-                        <span className="hidden sm:inline">Use</span>
-                        <span className="flex items-center gap-1">
-                          <kbd className="rounded border border-border/40 px-1.5 py-0.5 text-[10px]">←</kbd>
-                          <kbd className="rounded border border-border/40 px-1.5 py-0.5 text-[10px]">→</kbd>
-                          <span>to move</span>
+                          {project.title}
                         </span>
-                      </p>
-                    </div>
-                  )}
-                </section>
-              </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
+
+              {/* Right: Grid of ShiftCards */}
+              <section className="flex-1 min-w-0">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+                  {projects.map((project, index) => {
+                    const isActive = index === currentIndex;
+                    return (
+                      <div
+                        key={project.id}
+                        onClick={() => setCurrentIndex(index)}
+                        className="cursor-pointer"
+                      >
+                        <ShiftCard
+                          className={`!w-full !min-h-[200px] sm:!min-h-[240px] md:!min-h-[280px] bg-card/60 ${
+                            isActive
+                              ? "ring-1 ring-primary/70 shadow-[0_0_0_1px_rgba(255,255,255,0.08)]"
+                              : ""
+                          }`}
+                          topContent={
+                            <div className="bg-surface-elevated border border-border/30 px-2 py-1.5 w-full">
+                              <p className="font-body text-[10px] uppercase tracking-[0.25em] text-foreground/50 truncate">
+                                {project.category}
+                              </p>
+                            </div>
+                          }
+                          topAnimateContent={
+                            <motion.img
+                              layoutId={`project-img-${project.id}`}
+                              src={project.media.src}
+                              alt={project.media.alt}
+                              width={70}
+                              height={90}
+                              className="absolute top-1 right-1 object-contain shadow-lg"
+                              transition={{ duration: 0.3, ease: "circIn" }}
+                            />
+                          }
+                          middleContent={
+                            <motion.img
+                              layoutId={`project-img-${project.id}`}
+                              src={project.media.src}
+                              alt={project.media.alt}
+                              className="max-h-[110px] sm:max-h-[130px] md:max-h-[155px] w-full object-contain"
+                              transition={{ duration: 0.3, ease: "circIn" }}
+                            />
+                          }
+                          bottomContent={
+                            <div className="pb-3">
+                              <div className="flex w-full flex-col gap-1.5 bg-surface-elevated border-t border-t-border/30 px-3 pb-3 pt-2">
+                                <h3 className="font-heading text-[13px] text-foreground leading-tight">
+                                  {project.title}
+                                </h3>
+                                <p className="font-body text-[11px] leading-[1.3] text-foreground/50 line-clamp-2">
+                                  {project.subtitle}
+                                </p>
+                                <div className="flex flex-wrap gap-1 mt-1">
+                                  {project.tags?.slice(0, 2).map((tag) => (
+                                    <span
+                                      key={tag}
+                                      className="px-1.5 py-0.5 border border-border/30 text-[9px] font-body text-foreground/45"
+                                    >
+                                      {tag}
+                                    </span>
+                                  ))}
+                                </div>
+                                {project.link !== "#" && (
+                                  <a
+                                    href={project.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="mt-1 inline-flex items-center gap-1 text-[10px] font-body uppercase tracking-[0.2em] text-primary hover:text-primary/80"
+                                  >
+                                    View
+                                    <ExternalLink className="w-2.5 h-2.5" />
+                                  </a>
+                                )}
+                              </div>
+                            </div>
+                          }
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Keyboard hint */}
+                {nextProject && (
+                  <div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-[11px] font-body text-foreground/45">
+                    <p>
+                      <span className="mr-2 uppercase tracking-[0.28em]">Next</span>
+                      <span className="text-foreground/70">{nextProject.title}</span>
+                    </p>
+                    <p className="flex items-center gap-3">
+                      <span className="hidden sm:inline">Use</span>
+                      <span className="flex items-center gap-1">
+                        <kbd className="border border-border/40 px-1.5 py-0.5 text-[10px]">←</kbd>
+                        <kbd className="border border-border/40 px-1.5 py-0.5 text-[10px]">→</kbd>
+                        <span>to move</span>
+                      </span>
+                    </p>
+                  </div>
+                )}
+              </section>
+
             </div>
-          </main>
-        )}
+          </div>
+        </main>
+      )}
 
       {/* Empty State */}
       {!isLoading && !error && projects.length === 0 && (
