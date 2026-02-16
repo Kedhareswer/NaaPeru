@@ -1,345 +1,435 @@
 {
-    "personalInfo": {
-      "name": "Marlakunta Kedhareswer Naidu",
-      "title": "AI/ML & Data Science Enthusiast",
-      "alternativeTitles": ["Data Scientist", "ML Engineer", "AI Specialist", "Problem Solver", "Vibe Coder"],
-      "location": "Madanapalli, Andhra Pradesh, India",
-      "currentLocation": "Punjab, India (Study)",
-      "email": "kedhareswer.12110626@gmail.com",
-      "phone": "+91-9398911432",
-      "linkedin": "https://www.linkedin.com/in/kedhareswernaidu/",
-      "github": "https://github.com/Kedhareswer",
-      "kaggle": "https://www.kaggle.com/kedhareswernaidu",
-      "21st.dev": "https://21st.dev/community/kedhar",
-      "availability": {
-        "status": "Available for new opportunities",
-        "responseTime": "24-48 hours",
-        "openToOpportunities": true
-      }
-    },
-    
-    "summary": "Passionate AI/ML and Data Science enthusiast with hands-on experience in machine learning, data analysis, and web development. Currently a final year student with expertise in building intelligent systems and optimizing machine learning workflows, with a focus on computer vision, NLP, and AI-driven automation. Skilled in transforming complex data challenges into clear, actionable insights that drive meaningful business results through innovative AI solutions and cutting-edge machine learning techniques.",
-    
-    "skills": {
-      "programmingLanguages": ["Python", "SQL", "HTML", "CSS", "JavaScript", "R", "TypeScript"],
-      "aiMlFrameworks": ["TensorFlow", "PyTorch", "Scikit-learn", "Pandas", "NumPy", "OpenCV"],
-      "webTechnologies": ["React", "Next.js", "Tailwind CSS", "FastAPI", "Node.js", "Vue.js", "WebSocket", "Express.js", "Svelte", "SvelteKit", "Remix"],
-      "databases": ["MySQL", "Neon"],
-      "dataVisualization": ["Tableau", "Power BI", "Recharts"],
-      "cloudPlatforms": ["AWS", "Azure", "Vercel"],
-      "aiTools": ["Vercel", "Lovable", "Bolt", "Jules", "Cursor", "Windsurf", "Wix Studio", "Relume", "Gemini Studio", "ChatGPT", "Claude", "Hugging Face"],
-      "developerTools": ["Git", "GitHub"],
-      "libraries": [
-          "Radix UI", "shadcn/ui", "Framer Motion", "Lucide React", "Zod", "React Hook Form", "Tailwind CSS Animate", "date-fns", "Day.js", "clsx", "tailwind-merge"
-      ],
-      "specializations": ["Computer Vision", "NLP", "Deep Learning", "Machine Learning", "Data Analysis", "Statistical Modeling", "Medical Imaging", "Neural Style Transfer"],
-      "softSkills": ["Leadership", "Team Player", "Communication", "Adaptability", "Problem Solving", "Project Management", "Critical Thinking", "Time Management"]
-    },
-    
-    "experience": [
-      {
-        "role": "AI Engineer Intern",
-        "company": "DiligenceVault",
-        "duration": "October 2025 - Present",
-        "location": "India",
-        "achievements": [
-          "Working on AI-driven solutions for digital fund due diligence ecosystem in the investment management industry.",
-          "Contributing to AI-engineered frameworks for structured dataset extraction and analysis.",
-          "Developing intelligent systems to support institutional and wealth investors in fund diligence processes."
-        ]
-      },
-      {
-        "role": "Research Intern",
-        "company": "upGrad",
-        "duration": "January 2025 - April 2025 (4 months)",
-        "location": "India",
-        "achievements": [
-          "Developed a hybrid system combining traditional Yara rules with advanced machine learning techniques for hybrid malware detection.",
-          "Collaborated with a team to address real-world security threats through research and implementation.",
-          "Enhanced skills in Python, data analysis, and machine learning, preparing for future challenges in cybersecurity."
-        ]
-      },
-      {
-        "role": "Data Analyst Intern",
-        "company": "Psyliq",
-        "duration": "January 2024 - February 2024 (2 months)",
-        "location": "India",
-        "achievements": [
-          "Cleaned and stored HR data, ensuring high-quality information for analysis.",
-          "Created visualizations with Power BI, making complex data easily understandable for stakeholders.",
-          "Leveraged MySQL and Python to streamline data processes, contributing to a more efficient workflow."
-        ]
-      },
-      {
-        "role": "Senior Manager",
-        "company": "AIESEC",
-        "duration": "August 2023 - December 2023 (5 months)",
-        "location": "Phagwara, Punjab, India",
-        "achievements": [
-          "Successfully managed outbound professional exchange programs in Outgoing Global Talent Department (OGT).",
-          "Oversaw program execution, demonstrating strong leadership and commitment to participant satisfaction.",
-          "Fostered team building through collaborative projects, enhancing organizational effectiveness and teamwork."
-        ]
-      },
-      {
-        "role": "Junior Manager",
-        "company": "AIESEC",
-        "duration": "May 2023 - August 2023 (4 months)",
-        "location": "Phagwara, Punjab, India",
-        "achievements": [
-          "Actively contributed to the Outgoing Global Talent department, focusing on talent engagement and outreach initiatives.",
-          "Engaged potential candidates through cold calling, effectively pitching program benefits.",
-          "Enhanced marketing efforts by creating engaging content using Canva.",
-          "Strengthened time management skills to balance multiple responsibilities efficiently."
-        ]
-      },
-      {
-        "role": "Member",
-        "company": "AIESEC",
-        "duration": "January 2023 - May 2023 (5 months)",
-        "location": "Phagwara, Punjab, India",
-        "achievements": [
-          "Developed strong communication skills by participating in conferences and team-building exercises.",
-          "Enhanced knowledge sharing and experience sharing among team members through active collaboration.",
-          "Fostered cross-team engagement to promote a cohesive working environment."
-        ]
-      }
+  "personalInfo": {
+    "name": "Marlakunta Kedhareswer Naidu",
+    "title": "Software Developer",
+    "alternativeTitles": [
+      "AI Engineer",
+      "Data Scientist",
+      "ML Engineer",
+      "Full-Stack Developer",
+      "Problem Solver"
     ],
-    
-    "education": [
-      {
-        "degree": "Bachelor of Technology - BTech, Computer Science",
-        "institution": "Lovely Professional University",
-        "duration": "September 2021 - July 2025",
-        "location": "Phagwara, Punjab, India",
-        "cgpa": "7.74",
-        "specialization": "Data Science (AI & ML)",
-        "status": "Completed"
-      },
-      {
-        "degree": "Higher Secondary",
-        "institution": "Sri Siddhartha Junior College",
-        "duration": "July 2019 - June 2021",
-        "location": "Madanapalli, Andhra Pradesh, India",
-        "marks": "889"
-      },
-      {
-        "degree": "Matriculation",
-        "institution": "Vijaya Bharathi English Medium High School",
-        "duration": "June 2018 - March 2019",
-        "location": "Madanapalli, Andhra Pradesh, India",
-        "gpa": "9.5"
-      }
+    "location": "Madanapalli, Andhra Pradesh, India",
+    "currentLocation": "Punjab, India (Study)",
+    "email": "kedhareswer.12110626@gmail.com",
+    "phone": "+91-9398911432",
+    "linkedin": "https://www.linkedin.com/in/kedhareswernaidu/",
+    "github": "https://github.com/Kedhareswer",
+    "kaggle": "https://www.kaggle.com/kedhareswernaidu",
+    "21st.dev": "https://21st.dev/community/kedhar",
+    "availability": {
+      "status": "Available for new opportunities",
+      "responseTime": "24-48 hours",
+      "openToOpportunities": true
+    }
+  },
+  "summary": "Software developer with a background in AI and machine learning. Has built web applications, worked on document processing systems, and created data tools during internships. Likes solving problems with code and is always learning something new. Believes in building things that actually work rather than just talking about them.",
+  "skills": {
+    "programmingLanguages": [
+      "Python",
+      "SQL",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "R",
+      "TypeScript"
     ],
-    
-    "participations": [
-      {
-        "title": "Hackathons & Competitions",
-        "items": [
-          {
-            "name": "AI/ML Hackathon 2023",
-            "description": "Developed an innovative solution for real-time emotion recognition using computer vision and deep learning techniques.",
-            "type": "hackathon",
-            "date": "2023",
-            "achievement": "Innovative Solution Award"
-          },
-          {
-            "name": "Data Science Challenge",
-            "description": "Created predictive models for business optimization, focusing on data-driven decision making and performance improvement.",
-            "type": "competition",
-            "date": "2023",
-            "achievement": "Top Performance"
-          }
-        ]
-      }
+    "aiMlFrameworks": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Pandas",
+      "NumPy",
+      "OpenCV"
     ],
-    
-    "githubStats": {
-      "username": "Kedhareswer",
-      "repos": 58,
-      "stars": 17,
-      "followers": 4,
-      "following": 2,
-      "pullRequests": 32,
-      "issues": 11,
-      "commits": 509,
-      "forks": 5,
-      "topLanguages": [
-        { "name": "Jupyter Notebook", "percentage": 94.05 },
-        { "name": "TypeScript", "percentage": 5.17 }
+    "webTechnologies": [
+      "React",
+      "Next.js",
+      "Tailwind CSS",
+      "FastAPI",
+      "Node.js",
+      "Vue.js",
+      "WebSocket",
+      "Express.js",
+      "Svelte",
+      "SvelteKit",
+      "Remix"
+    ],
+    "databases": [
+      "MySQL",
+      "Neon"
+    ],
+    "dataVisualization": [
+      "Tableau",
+      "Power BI",
+      "Recharts"
+    ],
+    "cloudPlatforms": [
+      "AWS",
+      "Azure",
+      "Vercel"
+    ],
+    "aiTools": [
+      "Vercel",
+      "Lovable",
+      "Bolt",
+      "Jules",
+      "Cursor",
+      "Windsurf",
+      "Wix Studio",
+      "Relume",
+      "Gemini Studio",
+      "ChatGPT",
+      "Claude",
+      "Hugging Face"
+    ],
+    "developerTools": [
+      "Git",
+      "GitHub"
+    ],
+    "libraries": [
+      "Radix UI",
+      "shadcn/ui",
+      "Framer Motion",
+      "Lucide React",
+      "Zod",
+      "React Hook Form",
+      "Tailwind CSS Animate",
+      "date-fns",
+      "Day.js",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "specializations": [
+      "Computer Vision",
+      "NLP",
+      "Deep Learning",
+      "Machine Learning",
+      "Data Analysis",
+      "Statistical Modeling",
+      "Medical Imaging",
+      "Neural Style Transfer"
+    ],
+    "softSkills": [
+      "Leadership",
+      "Team Player",
+      "Communication",
+      "Adaptability",
+      "Problem Solving",
+      "Project Management",
+      "Critical Thinking",
+      "Time Management"
+    ]
+  },
+  "experience": [
+    {
+      "role": "Software Developer",
+      "company": "DiligenceVault",
+      "duration": "January 2026 - Present",
+      "location": "Bengaluru, Karnataka, India",
+      "achievements": [
+        "Building scalable web applications and AI-powered features for enterprise platform.",
+        "Developing full-stack solutions using React, Next.js, and modern web technologies.",
+        "Working on AI-driven solutions for digital fund due diligence ecosystem."
       ]
     },
-  
-    "certifications": [
+    {
+      "role": "AI Engineer Intern",
+      "company": "DiligenceVault",
+      "duration": "October 2025 - December 2025",
+      "location": "India",
+      "achievements": [
+        "Worked on AI-driven solutions for digital fund due diligence ecosystem in the investment management industry.",
+        "Contributed to AI-engineered frameworks for structured dataset extraction and analysis.",
+        "Developed intelligent systems to support institutional and wealth investors in fund diligence processes."
+      ]
+    },
+    {
+      "role": "Research Intern",
+      "company": "upGrad",
+      "duration": "January 2025 - April 2025 (4 months)",
+      "location": "India",
+      "achievements": [
+        "Developed a hybrid system combining traditional Yara rules with advanced machine learning techniques for hybrid malware detection.",
+        "Collaborated with a team to address real-world security threats through research and implementation.",
+        "Enhanced skills in Python, data analysis, and machine learning, preparing for future challenges in cybersecurity."
+      ]
+    },
+    {
+      "role": "Data Analyst Intern",
+      "company": "Psyliq",
+      "duration": "January 2024 - February 2024 (2 months)",
+      "location": "India",
+      "achievements": [
+        "Cleaned and stored HR data, ensuring high-quality information for analysis.",
+        "Created visualizations with Power BI, making complex data easily understandable for stakeholders.",
+        "Leveraged MySQL and Python to streamline data processes, contributing to a more efficient workflow."
+      ]
+    },
+    {
+      "role": "Senior Manager",
+      "company": "AIESEC",
+      "duration": "August 2023 - December 2023 (5 months)",
+      "location": "Phagwara, Punjab, India",
+      "achievements": [
+        "Successfully managed outbound professional exchange programs in Outgoing Global Talent Department (OGT).",
+        "Oversaw program execution, demonstrating strong leadership and commitment to participant satisfaction.",
+        "Fostered team building through collaborative projects, enhancing organizational effectiveness and teamwork."
+      ]
+    },
+    {
+      "role": "Junior Manager",
+      "company": "AIESEC",
+      "duration": "May 2023 - August 2023 (4 months)",
+      "location": "Phagwara, Punjab, India",
+      "achievements": [
+        "Actively contributed to the Outgoing Global Talent department, focusing on talent engagement and outreach initiatives.",
+        "Engaged potential candidates through cold calling, effectively pitching program benefits.",
+        "Enhanced marketing efforts by creating engaging content using Canva.",
+        "Strengthened time management skills to balance multiple responsibilities efficiently."
+      ]
+    },
+    {
+      "role": "Member",
+      "company": "AIESEC",
+      "duration": "January 2023 - May 2023 (5 months)",
+      "location": "Phagwara, Punjab, India",
+      "achievements": [
+        "Developed strong communication skills by participating in conferences and team-building exercises.",
+        "Enhanced knowledge sharing and experience sharing among team members through active collaboration.",
+        "Fostered cross-team engagement to promote a cohesive working environment."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Technology - BTech, Computer Science",
+      "institution": "Lovely Professional University",
+      "duration": "September 2021 - July 2025",
+      "location": "Phagwara, Punjab, India",
+      "cgpa": "7.74",
+      "specialization": "Data Science (AI & ML)",
+      "status": "Completed"
+    },
+    {
+      "degree": "Higher Secondary",
+      "institution": "Sri Siddhartha Junior College",
+      "duration": "July 2019 - June 2021",
+      "location": "Madanapalli, Andhra Pradesh, India",
+      "marks": "889"
+    },
+    {
+      "degree": "Matriculation",
+      "institution": "Vijaya Bharathi English Medium High School",
+      "duration": "June 2018 - March 2019",
+      "location": "Madanapalli, Andhra Pradesh, India",
+      "gpa": "9.5"
+    }
+  ],
+  "participations": [
+    {
+      "title": "Hackathons & Competitions",
+      "items": [
+        {
+          "name": "AI/ML Hackathon 2023",
+          "description": "Developed an innovative solution for real-time emotion recognition using computer vision and deep learning techniques.",
+          "type": "hackathon",
+          "date": "2023",
+          "achievement": "Innovative Solution Award"
+        },
+        {
+          "name": "Data Science Challenge",
+          "description": "Created predictive models for business optimization, focusing on data-driven decision making and performance improvement.",
+          "type": "competition",
+          "date": "2023",
+          "achievement": "Top Performance"
+        }
+      ]
+    }
+  ],
+  "githubStats": {
+    "username": "Kedhareswer",
+    "repos": 58,
+    "stars": 17,
+    "followers": 4,
+    "following": 2,
+    "pullRequests": 32,
+    "issues": 11,
+    "commits": 509,
+    "forks": 5,
+    "topLanguages": [
       {
-        "name": "Introduction to Model Context Protocol",
-        "issuer": "LLM Foundations",
-        "date": "2025",
-        "description": "Comprehensive training on Vector Databases for Caching and Retrieval Augmented Generation (RAG)"
+        "name": "Jupyter Notebook",
+        "percentage": 94.05
       },
       {
-        "name": "Build GANs and Diffusion Models with TensorFlow and PyTorch",
-        "issuer": "TensorFlow & PyTorch",
-        "date": "2025",
-        "description": "Advanced training in generative adversarial networks and diffusion models"
-      },
-      {
-        "name": "PyTorch Essential Training: Deep Learning",
-        "issuer": "PyTorch",
-        "date": "2025",
-        "description": "Comprehensive deep learning training using PyTorch framework"
-      },
-      {
-        "name": "Data Science Essentials",
-        "issuer": "Reliance Foundation, Skilling Academy",
-        "date": "2025",
-        "description": "Certified comprehensive data science program covering essential concepts and practices"
-      },
-      {
-        "name": "AWS APAC - Solutions Architecture Job Simulation",
-        "issuer": "Forage",
-        "date": "December 2024",
-        "description": "Completed virtual experience program focusing on cloud architecture and solutions design."
-      },
-      {
-        "name": "Certified Data Science Essentials",
-        "issuer": "RF Skilling Academy",
-        "date": "December 2024",
-        "description": "Comprehensive certification covering fundamental data science concepts and practices."
-      },
-      {
-        "name": "Introduction to Responsible AI",
-        "issuer": "Google",
-        "date": "November 2024",
-        "description": "Understanding ethical considerations and responsible practices in AI development."
-      },
-      {
-        "name": "Neo4j Certified Professional",
-        "issuer": "Neo4j",
-        "date": "July 2025",
-        "description": "Demonstrated proficiency in graph databases, Cypher querying, and Neo4j data modeling."
-      },
-      {
-        "name": "Python for Data Science",
-        "issuer": "Infosys",
-        "date": "May 2025",
-        "description": "Completed comprehensive coursework covering Python programming, data analysis, and visualization for data science applications."
+        "name": "TypeScript",
+        "percentage": 5.17
       }
-    ],
-    
-    "testimonials": [
-      {
-        "name": "Jagadesh Chilla",
-        "role": "Founder and Developer Of DIVA AIA",
-        "text": "An exceptional colleague with deep expertise in machine learning and data visualization. His innovative approaches to problem-solving have significantly impacted our project.",
-        "linkedin": "https://www.linkedin.com/in/chilla-jagadesh-532246223/"
-      },
-      {
-        "name": "Manish Chetla",
-        "role": "Video Game Developer at MC Studios",
-        "text": "Outstanding analytical skills and a natural talent for explaining complex concepts. His contributions to our team have been invaluable.",
-        "linkedin": "https://www.linkedin.com/in/manish-chetla/"
-      },
-      {
-        "name": "Ajay Sharma",
-        "role": "Senior Tech Mentor at upGrad Campus",
-        "text": "His attention to detail and technical skills have consistently impressed me. As his professor and mentor for nearly a year, I witnessed his growth and dedication. I am confident he will achieve great success in the future.",
-        "linkedin": "https://www.linkedin.com/in/ajay-sharma-%F0%9F%87%AE%F0%9F%87%B3-52879b88/"
-      },
-      {
-        "name": "Suhail Mahamad",
-        "role": "ML Operations Engineer",
-        "text": "A brilliant problem-solver who consistently delivers innovative solutions. His deep understanding of AI systems and ability to optimize workflows has transformed our deployment pipeline.",
-        "linkedin": "https://www.linkedin.com/in/mahamad-suhail/"
-      },
-      {
-        "name": "Aman Kumar",
-        "role": "Assistant Manager at upGrad",
-        "text": "Exceptional talent in both technical implementation and strategic thinking. Their contributions to our data infrastructure have been foundational to our success in AI initiatives.",
-        "linkedin": "https://www.linkedin.com/in/aman-kumar-27073b249/"
-      }
-    ],
-    
-    "hobbies": [
-      {
-        "name": "Gaming",
-        "description": "Strategic gaming and virtual world exploration",
-        "icon": "gamepad"
-      },
-      {
-        "name": "Reading",
-        "description": "Science fiction and technical literature enthusiast",
-        "icon": "book"
-      },
-      {
-        "name": "Music",
-        "description": "Listening to music and exploring new genres",
-        "icon": "music"
-      },
-      {
-        "name": "Traveling",
-        "description": "Exploring new cultures and destinations",
-        "icon": "plane"
-      }
-    ],
-    
-    "languages": [
-      {
-        "name": "English",
-        "proficiency": "Professional Working Proficiency"
-      },
-      {
-        "name": "Telugu",
-        "proficiency": "Native or Bilingual Proficiency"
-      },
-      {
-        "name": "Hindi",
-        "proficiency": "Limited Working Proficiency"
-      }
-    ],
-    
-    "achievements": [
-      {
-        "title": "Real-time Emotion Recognition System",
-        "description": "Developed innovative AI solution during hackathon",
-        "year": "2023"
-      },
-      {
-        "title": "25% Improvement in Data Comprehension",
-        "description": "Enhanced decision-making processes through Power BI visualizations at PSYLIQ",
-        "year": "2024"
-      },
-      {
-        "title": "90% Accuracy in Image-to-Sketch Conversion",
-        "description": "Achieved high accuracy in deep learning model for image transformation",
-        "year": "2025"
-      },
-      {
-        "title": "Leadership in International Exchange Programs",
-        "description": "Successfully managed outbound professional exchange programs at AIESEC",
-        "year": "2022-2023"
-      }
-    ],
-    
-    "interests": [
-      "Artificial Intelligence",
-      "Machine Learning",
-      "Deep Learning",
-      "Computer Vision",
-      "Natural Language Processing",
-      "Data Science",
-      "Web Development",
-      "Cloud Computing",
-      "Open Source Contribution",
-      "Research and Innovation"
-    ],
-    
-    "currentFocus": [
-      "Completing Bachelor's degree in Data Science and AI/ML",
-      "Building innovative AI solutions",
-      "Contributing to open-source projects",
-      "Exploring career opportunities in AI/ML field",
-      "Continuous learning in emerging technologies"
     ]
-  }
-  
+  },
+  "certifications": [
+    {
+      "name": "Introduction to Model Context Protocol",
+      "issuer": "LLM Foundations",
+      "date": "2025",
+      "description": "Comprehensive training on Vector Databases for Caching and Retrieval Augmented Generation (RAG)"
+    },
+    {
+      "name": "Build GANs and Diffusion Models with TensorFlow and PyTorch",
+      "issuer": "TensorFlow & PyTorch",
+      "date": "2025",
+      "description": "Advanced training in generative adversarial networks and diffusion models"
+    },
+    {
+      "name": "PyTorch Essential Training: Deep Learning",
+      "issuer": "PyTorch",
+      "date": "2025",
+      "description": "Comprehensive deep learning training using PyTorch framework"
+    },
+    {
+      "name": "Data Science Essentials",
+      "issuer": "Reliance Foundation, Skilling Academy",
+      "date": "2025",
+      "description": "Certified comprehensive data science program covering essential concepts and practices"
+    },
+    {
+      "name": "AWS APAC - Solutions Architecture Job Simulation",
+      "issuer": "Forage",
+      "date": "December 2024",
+      "description": "Completed virtual experience program focusing on cloud architecture and solutions design."
+    },
+    {
+      "name": "Certified Data Science Essentials",
+      "issuer": "RF Skilling Academy",
+      "date": "December 2024",
+      "description": "Comprehensive certification covering fundamental data science concepts and practices."
+    },
+    {
+      "name": "Introduction to Responsible AI",
+      "issuer": "Google",
+      "date": "November 2024",
+      "description": "Understanding ethical considerations and responsible practices in AI development."
+    },
+    {
+      "name": "Neo4j Certified Professional",
+      "issuer": "Neo4j",
+      "date": "July 2025",
+      "description": "Demonstrated proficiency in graph databases, Cypher querying, and Neo4j data modeling."
+    },
+    {
+      "name": "Python for Data Science",
+      "issuer": "Infosys",
+      "date": "May 2025",
+      "description": "Completed comprehensive coursework covering Python programming, data analysis, and visualization for data science applications."
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "Jagadesh Chilla",
+      "role": "Founder and Developer Of DIVA AIA",
+      "text": "An exceptional colleague with deep expertise in machine learning and data visualization. His innovative approaches to problem-solving have significantly impacted our project.",
+      "linkedin": "https://www.linkedin.com/in/chilla-jagadesh-532246223/"
+    },
+    {
+      "name": "Manish Chetla",
+      "role": "Video Game Developer at MC Studios",
+      "text": "Outstanding analytical skills and a natural talent for explaining complex concepts. His contributions to our team have been invaluable.",
+      "linkedin": "https://www.linkedin.com/in/manish-chetla/"
+    },
+    {
+      "name": "Ajay Sharma",
+      "role": "Senior Tech Mentor at upGrad Campus",
+      "text": "His attention to detail and technical skills have consistently impressed me. As his professor and mentor for nearly a year, I witnessed his growth and dedication. I am confident he will achieve great success in the future.",
+      "linkedin": "https://www.linkedin.com/in/ajay-sharma-%F0%9F%87%AE%F0%9F%87%B3-52879b88/"
+    },
+    {
+      "name": "Suhail Mahamad",
+      "role": "ML Operations Engineer",
+      "text": "A brilliant problem-solver who consistently delivers innovative solutions. His deep understanding of AI systems and ability to optimize workflows has transformed our deployment pipeline.",
+      "linkedin": "https://www.linkedin.com/in/mahamad-suhail/"
+    },
+    {
+      "name": "Aman Kumar",
+      "role": "Assistant Manager at upGrad",
+      "text": "Exceptional talent in both technical implementation and strategic thinking. Their contributions to our data infrastructure have been foundational to our success in AI initiatives.",
+      "linkedin": "https://www.linkedin.com/in/aman-kumar-27073b249/"
+    }
+  ],
+  "hobbies": [
+    {
+      "name": "Gaming",
+      "description": "Strategic gaming and virtual world exploration",
+      "icon": "gamepad"
+    },
+    {
+      "name": "Reading",
+      "description": "Science fiction and technical literature enthusiast",
+      "icon": "book"
+    },
+    {
+      "name": "Music",
+      "description": "Listening to music and exploring new genres",
+      "icon": "music"
+    },
+    {
+      "name": "Traveling",
+      "description": "Exploring new cultures and destinations",
+      "icon": "plane"
+    }
+  ],
+  "languages": [
+    {
+      "name": "English",
+      "proficiency": "Professional Working Proficiency"
+    },
+    {
+      "name": "Telugu",
+      "proficiency": "Native or Bilingual Proficiency"
+    },
+    {
+      "name": "Hindi",
+      "proficiency": "Limited Working Proficiency"
+    }
+  ],
+  "achievements": [
+    {
+      "title": "Real-time Emotion Recognition System",
+      "description": "Developed innovative AI solution during hackathon",
+      "year": "2023"
+    },
+    {
+      "title": "25% Improvement in Data Comprehension",
+      "description": "Enhanced decision-making processes through Power BI visualizations at PSYLIQ",
+      "year": "2024"
+    },
+    {
+      "title": "90% Accuracy in Image-to-Sketch Conversion",
+      "description": "Achieved high accuracy in deep learning model for image transformation",
+      "year": "2025"
+    },
+    {
+      "title": "Leadership in International Exchange Programs",
+      "description": "Successfully managed outbound professional exchange programs at AIESEC",
+      "year": "2022-2023"
+    }
+  ],
+  "interests": [
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Deep Learning",
+    "Computer Vision",
+    "Natural Language Processing",
+    "Data Science",
+    "Web Development",
+    "Cloud Computing",
+    "Open Source Contribution",
+    "Research and Innovation"
+  ],
+  "currentFocus": [
+    "Building software solutions as a Developer at DiligenceVault",
+    "Working on full-stack development with React and Next.js",
+    "Applying AI/ML techniques to real-world problems",
+    "Continuous learning in software engineering"
+  ]
+}

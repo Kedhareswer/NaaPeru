@@ -1,9 +1,9 @@
 export const WorkHero = () => {
   const experiences = [
     {
-      year: "2025",
+      year: "Current",
       company: "DiligenceVault",
-      role: "AI Engineer Intern",
+      role: "Software Developer",
       url: "https://www.diligencevault.com/",
     },
     {
