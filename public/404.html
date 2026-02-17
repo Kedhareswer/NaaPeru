@@ -63,7 +63,7 @@
         letter-spacing: -0.02em;
         color: hsla(0 0% 100% / 0.06);
         font-size: clamp(12rem, 28vw, 24rem);
-        user-select: none;
+        -webkit-user-select: none; user-select: none;
       }
       .overlay {
         position: absolute;
@@ -125,6 +125,16 @@
       .arrow { display: inline-block; transition: transform .2s ease; }
       .cta:hover .arrow { transform: translateX(-4px); }
     </style>
+    <script>
+      // SPA fallback: if a deep link returns static 404, redirect to the app root
+      // with the original path so client-side routing can restore it.
+      (function () {
+        var path = window.location.pathname + window.location.search + window.location.hash;
+        if (path === "/404" || path === "/404/") return;
+        var target = "/?__spa=" + encodeURIComponent(path);
+        window.location.replace(target);
+      })();
+    </script>
   </head>
   <body>
     <main class="wrap">
@@ -156,3 +166,4 @@
     </main>
   </body>
 </html>
+

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { queryMatcher } from "@/lib/chatbotMatcher";
+import { createInitialSessionState, type ChatSessionState } from "@/lib/chatbotTypes";
 
 interface TestResult {
   query: string;
@@ -12,6 +13,7 @@ export default function ChatbotTest() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<TestResult[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [session, setSession] = useState<ChatSessionState>(createInitialSessionState());
 
   const testQueries = {
     greeting: [
@@ -88,10 +90,11 @@ export default function ChatbotTest() {
   };
 
   const handleTest = (testQuery: string, category: string) => {
-    const response = queryMatcher.getResponse(testQuery);
+    const response = queryMatcher.getResponse(testQuery, session);
+    setSession(response.session);
     const result: TestResult = {
       query: testQuery,
-      response,
+      response: response.text,
       category,
       timestamp: new Date(),
     };
@@ -180,7 +183,12 @@ export default function ChatbotTest() {
 
         {/* Filter */}
         <div className="mb-4">
+          <label htmlFor="chatbot-category-filter" className="sr-only">
+            Filter test results by category
+          </label>
           <select
+            id="chatbot-category-filter"
+            aria-label="Filter test results by category"
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
             className="px-4 py-2 bg-card border border-border rounded-lg text-foreground focus:outline-none focus:border-primary"

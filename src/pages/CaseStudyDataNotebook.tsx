@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Seo } from "@/components/Seo";
 
 export const CaseStudyDataNotebook = () => {
   const [activeSection, setActiveSection] = useState("overview");
@@ -47,6 +48,46 @@ export const CaseStudyDataNotebook = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Data Notebook Case Study | Collaborative Data Analysis Platform"
+        description="Case study for Data Notebook, an interactive platform for no-code visualization, collaboration, and faster analytics workflows."
+        path="/case-study/data-notebook"
+        type="article"
+        image="/og-data-notebook.png"
+        imageAlt="Data Notebook case study cover"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: "Data Notebook Case Study",
+            description:
+              "How Data Notebook was designed to reduce analysis friction and improve collaboration for modern data teams.",
+            author: {
+              "@type": "Person",
+              name: "Kedhar",
+            },
+            url: "https://kedhar.vercel.app/case-study/data-notebook",
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://kedhar.vercel.app/",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Case Study",
+                item: "https://kedhar.vercel.app/case-study/data-notebook",
+              },
+            ],
+          },
+        ]}
+      />
       <Navigation />
       
       <main className="pt-32 pb-20">

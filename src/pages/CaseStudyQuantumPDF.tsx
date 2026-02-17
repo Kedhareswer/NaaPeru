@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Seo } from "@/components/Seo";
 
 export const CaseStudyQuantumPDF = () => {
   const [activeSection, setActiveSection] = useState("overview");
@@ -115,6 +116,46 @@ export const CaseStudyQuantumPDF = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="QuantumPDF Case Study | RAG PDF Chat Application"
+        description="Case study of QuantumPDF, a privacy-first RAG application for semantic PDF chat with vector search and fast cited answers."
+        path="/case-study/quantumpdf"
+        type="article"
+        image="/og-quantumpdf.png"
+        imageAlt="QuantumPDF RAG case study cover"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: "QuantumPDF Case Study",
+            description:
+              "How QuantumPDF uses retrieval-augmented generation, adaptive chunking, and vector databases for PDF question answering.",
+            author: {
+              "@type": "Person",
+              name: "Kedhar",
+            },
+            url: "https://kedhar.vercel.app/case-study/quantumpdf",
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://kedhar.vercel.app/",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Case Study",
+                item: "https://kedhar.vercel.app/case-study/quantumpdf",
+              },
+            ],
+          },
+        ]}
+      />
       <Navigation />
       
       <main className="pt-32 pb-20">

@@ -2,6 +2,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Download } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
+import { Seo } from "@/components/Seo";
 
 const Resume = () => {
   const [scale, setScale] = useState(1);
@@ -51,6 +52,19 @@ const Resume = () => {
 
   return (
     <div className="relative min-h-screen bg-[#1a1a1a] flex flex-col overflow-x-hidden">
+      <Seo
+        title="Resume | Kedhar - AI Engineer and Software Developer"
+        description="View and download Kedhar's resume, including experience in AI engineering, software development, and data systems."
+        path="/resume"
+        image="/og-resume.png"
+        imageAlt="Resume page for Kedhar"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "Resume - Kedhar",
+          url: "https://kedhar.vercel.app/resume",
+        }}
+      />
       <Navigation />
 
       <main className="relative z-10 flex-grow flex flex-col items-center pt-8 pb-12 w-full overflow-hidden">

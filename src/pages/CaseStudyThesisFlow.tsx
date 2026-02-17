@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Seo } from "@/components/Seo";
 
 export const CaseStudyThesisFlow = () => {
   const [activeSection, setActiveSection] = useState("overview");
@@ -150,6 +151,46 @@ export const CaseStudyThesisFlow = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="ThesisFlow-AI Case Study | Collaborative Research Workspace"
+        description="Case study of ThesisFlow-AI, a multi-agent collaborative workspace that accelerates literature review and research execution."
+        path="/case-study/thesisflow"
+        type="article"
+        image="/og-thesisflow.png"
+        imageAlt="ThesisFlow AI case study cover"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: "ThesisFlow-AI Case Study",
+            description:
+              "Design and engineering decisions behind a collaborative AI research platform with multi-agent workflows.",
+            author: {
+              "@type": "Person",
+              name: "Kedhar",
+            },
+            url: "https://kedhar.vercel.app/case-study/thesisflow",
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://kedhar.vercel.app/",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Case Study",
+                item: "https://kedhar.vercel.app/case-study/thesisflow",
+              },
+            ],
+          },
+        ]}
+      />
       <Navigation />
       
       <main className="pt-32 pb-20">

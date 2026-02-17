@@ -3,6 +3,7 @@ import { Navigation } from "@/components/Navigation";
 import { ExternalLink } from "lucide-react";
 import { ShiftCard } from "@/components/ui/shift-card";
 import { motion } from "motion/react";
+import { Seo } from "@/components/Seo";
 
 type FunProject = {
   id: number;
@@ -134,6 +135,20 @@ const Fun = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <Seo
+        title="Experimentos | Kedhar's Creative and AI Side Projects"
+        description="A curated index of experiments, creative prototypes, and AI side projects built by Kedhar."
+        path="/fun"
+        image="/og-fun.png"
+        imageAlt="Experimentos project index by Kedhar"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Experimentos",
+          url: "https://kedhar.vercel.app/fun",
+          description: "Creative and technical experiments by Kedhar.",
+        }}
+      />
       {/* Navigation - standard portfolio navigation */}
       <Navigation />
 

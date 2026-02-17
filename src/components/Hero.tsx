@@ -1,5 +1,5 @@
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
-import heroImage from "@/assets/me.png";
+import heroImage from "@/assets/me.webp";
 
 export const Hero = () => {
   const KaggleIcon = ({ className = "" }: { className?: string }) => (
@@ -164,6 +164,9 @@ export const Hero = () => {
               <img
                 src={heroImage}
                 alt="Professional portrait"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
                 className="h-full w-full object-cover"
                 style={{
                   filter: "grayscale(100%) contrast(1.2)",
