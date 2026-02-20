@@ -6,6 +6,12 @@ import rehypeSanitize from "rehype-sanitize";
 import { useChat } from "@/contexts/ChatContext";
 import { queryMatcher } from "@/lib/chatbotMatcher";
 import {
+  buildNextQuotaState,
+  fetchAiFallbackReply,
+  shouldUseAiFallback,
+  type FallbackQuotaState,
+} from "@/lib/chatbotAiFallback";
+import {
   collapseWhitespace,
   isMeaningfulText,
   normalizeQuery,
@@ -54,10 +60,15 @@ export const ChatBot = () => {
   const [session, setSession] = useState<ChatSessionState>(createInitialSessionState());
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [fallbackQuota, setFallbackQuota] = useState<FallbackQuotaState>({
+    totalTurns: 0,
+    aiTurns: 0,
+  });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const responseTimerRef = useRef<number | null>(null);
   const sessionRef = useRef(session);
+  const fallbackQuotaRef = useRef(fallbackQuota);
   const clarifyStateRef = useRef<{ query: string; count: number }>({ query: "", count: 0 });
 
   const scrollToBottom = () => {
@@ -78,6 +89,10 @@ export const ChatBot = () => {
   useEffect(() => {
     sessionRef.current = session;
   }, [session]);
+
+  useEffect(() => {
+    fallbackQuotaRef.current = fallbackQuota;
+  }, [fallbackQuota]);
 
   useEffect(() => {
     if (!isChatOpen) {
@@ -128,29 +143,50 @@ export const ChatBot = () => {
 
     clearPendingResponseTimer();
     responseTimerRef.current = window.setTimeout(() => {
-      const reply = queryMatcher.getResponse(collapsed, sessionRef.current);
-      let finalText = reply.text;
+      void (async () => {
+        const reply = queryMatcher.getResponse(collapsed, sessionRef.current);
+        let finalText = reply.text;
+        let usedAiFallback = false;
 
-      const signature = normalizeQuery(collapsed).normalized;
+        const signature = normalizeQuery(collapsed).normalized;
 
-      if (reply.intent === "clarify") {
-        if (clarifyStateRef.current.query === signature) {
-          clarifyStateRef.current.count += 1;
+        if (reply.intent === "clarify") {
+          if (clarifyStateRef.current.query === signature) {
+            clarifyStateRef.current.count += 1;
+          } else {
+            clarifyStateRef.current = { query: signature, count: 1 };
+          }
+
+          const canUseFallback = shouldUseAiFallback(reply, fallbackQuotaRef.current);
+
+          if (canUseFallback) {
+            const aiReply = await fetchAiFallbackReply({
+              question: collapsed,
+              matcherReply: reply.text,
+            });
+
+            if (aiReply) {
+              finalText = aiReply;
+              usedAiFallback = true;
+              clarifyStateRef.current = { query: "", count: 0 };
+            }
+          }
+
+          if (!usedAiFallback && clarifyStateRef.current.count >= 2) {
+            finalText = repeatedClarifyMessage;
+          }
         } else {
-          clarifyStateRef.current = { query: signature, count: 1 };
+          clarifyStateRef.current = { query: "", count: 0 };
         }
 
-        if (clarifyStateRef.current.count >= 2) {
-          finalText = repeatedClarifyMessage;
-        }
-      } else {
-        clarifyStateRef.current = { query: "", count: 0 };
-      }
-
-      setSession(reply.session);
-      setMessages((prev) => [...prev, { role: "assistant", content: finalText }]);
-      setIsLoading(false);
-      responseTimerRef.current = null;
+        const nextQuota = buildNextQuotaState(fallbackQuotaRef.current, usedAiFallback);
+        fallbackQuotaRef.current = nextQuota;
+        setFallbackQuota(nextQuota);
+        setSession(reply.session);
+        setMessages((prev) => [...prev, { role: "assistant", content: finalText }]);
+        setIsLoading(false);
+        responseTimerRef.current = null;
+      })();
     }, 700 + Math.floor(Math.random() * 400));
   };
 
@@ -293,7 +329,9 @@ export const ChatBot = () => {
               <Send className="h-4 w-4" />
             </button>
           </div>
-          <p className="mt-2 text-xs text-foreground/40 font-body">Matcher-only. Still human-ish.</p>
+          <p className="mt-2 text-xs text-foreground/40 font-body">
+            Portfolio-first answers. AI fallback only when matcher is unclear (capped).
+          </p>
         </div>
       </div>
     </div>

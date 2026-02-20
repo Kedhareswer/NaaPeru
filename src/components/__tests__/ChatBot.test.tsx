@@ -156,4 +156,51 @@ describe("ChatBot component", () => {
       expect(screen.getByText(/I see the same unclear ask again, so let me help directly\./i)).toBeInTheDocument();
     }, { timeout: 2000 });
   });
+
+  it("uses AI fallback endpoint when matcher cannot confidently resolve intent", async () => {
+    vi.spyOn(queryMatcher, "getResponse").mockReturnValue(makeReply("not sure", "clarify"));
+    const fetchSpy = vi
+      .spyOn(globalThis, "fetch")
+      .mockResolvedValue(
+        new Response(JSON.stringify({ text: "AI fallback answer from our data." }), { status: 200 }),
+      );
+    const user = userEvent.setup();
+
+    renderChatbot();
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText("Ask me anything...")).toBeInTheDocument();
+    });
+
+    await user.type(screen.getByPlaceholderText("Ask me anything..."), "what exactly did you do there?");
+    await user.click(screen.getByLabelText("Send message"));
+
+    await waitFor(() => {
+      expect(screen.getByText("AI fallback answer from our data.")).toBeInTheDocument();
+    }, { timeout: 2500 });
+    expect(fetchSpy).toHaveBeenCalledWith(
+      "/api/chat",
+      expect.objectContaining({
+        method: "POST",
+      }),
+    );
+  });
+
+  it("does not call AI fallback endpoint for a confidently matched intent", async () => {
+    vi.spyOn(queryMatcher, "getResponse").mockReturnValue(makeReply("local intent reply", "about"));
+    const fetchSpy = vi.spyOn(globalThis, "fetch");
+    const user = userEvent.setup();
+
+    renderChatbot();
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText("Ask me anything...")).toBeInTheDocument();
+    });
+
+    await user.type(screen.getByPlaceholderText("Ask me anything..."), "who are you");
+    await user.click(screen.getByLabelText("Send message"));
+
+    await waitFor(() => {
+      expect(screen.getByText("local intent reply")).toBeInTheDocument();
+    }, { timeout: 2500 });
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
 });
