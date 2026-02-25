@@ -227,11 +227,10 @@ export const ChatBot = () => {
               className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[85%] rounded-lg px-4 py-3 ${
-                  message.role === "user"
+                className={`max-w-[85%] rounded-lg px-4 py-3 ${message.role === "user"
                     ? "bg-primary/10 border border-primary/20 text-foreground"
                     : "bg-card/50 border border-border/20 text-foreground/90"
-                }`}
+                  }`}
               >
                 {message.role === "assistant" ? (
                   <div className="font-body text-sm leading-relaxed break-words">
@@ -329,9 +328,6 @@ export const ChatBot = () => {
               <Send className="h-4 w-4" />
             </button>
           </div>
-          <p className="mt-2 text-xs text-foreground/40 font-body">
-            Portfolio-first answers. AI fallback only when matcher is unclear (capped).
-          </p>
         </div>
       </div>
     </div>
