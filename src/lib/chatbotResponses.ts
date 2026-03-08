@@ -26,8 +26,8 @@ const RESPONSE_TEMPLATES: Record<IntentId, string[]> = {
     "Short version: I build AI products that people can actually use. Long version: same thing, just with more architecture diagrams and coffee.",
   ],
   experience: [
-    "Here is the professional arc: I currently work as an AI Engineer Intern at DiligenceVault, and before that I worked across research, AI evaluation, analytics, and leadership roles. If you want, ask me about one company and I will break down what I learned there.",
-    "Work summary: DiligenceVault right now, with prior experience at upGrad, Outlier.AI, Psyliq, and AIESEC. Different domains, same pattern: solve messy problems and ship practical outcomes.",
+    "Here is the professional arc: I currently work as a Software Developer at DiligenceVault, and before that I worked across research, AI evaluation, analytics, and leadership roles. If you want, ask me about one company and I will break down what I learned there.",
+    "Work summary: DiligenceVault right now as Software Developer, with prior experience at upGrad, Outlier.AI, Psyliq, and AIESEC. Different domains, same pattern: solve messy problems and ship practical outcomes.",
     "I have worked in AI engineering, security research, model evaluation, data analytics, and team leadership. Ask for any specific stop in that journey and I will give you a focused answer.",
   ],
   project: [
@@ -148,12 +148,13 @@ const getCompanyDetail = (entity: string): string | null => {
     return null;
   }
 
+  const learnedList = detail.whatILearned.map((item) => `- ${item}`).join("\n");
+
   return [
     `Good one. Here is the ${detail.role} story in short:`,
     detail.journey,
-    "What I learned:",
-    ...detail.whatILearned.map((item) => `- ${item}`),
-    `Impact: ${detail.impact}`,
+    `**What I learned:**\n${learnedList}`,
+    `**Impact:** ${detail.impact}`,
   ].join("\n\n");
 };
 
@@ -163,12 +164,13 @@ const getProjectDetail = (entity: string): string | null => {
     return null;
   }
 
+  const learnedList = detail.whatILearned.map((item) => `- ${item}`).join("\n");
+
   return [
     `Solid pick. ${detail.name} in one pass:`,
     detail.journey,
-    "What I learned:",
-    ...detail.whatILearned.map((item) => `- ${item}`),
-    `Technical highlights: ${detail.technicalHighlights}`,
+    `**What I learned:**\n${learnedList}`,
+    `**Technical highlights:** ${detail.technicalHighlights}`,
   ].join("\n\n");
 };
 

@@ -179,4 +179,62 @@ All colors MUST be HSL.
     font-family: "DhurjatiItalic", "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     letter-spacing: 0.05em;
   }
+
+  /* 404 Game — Starfield background */
+  .game-stars-bg {
+    box-shadow:
+      20px 40px 0 0 rgba(255,255,255,0.3),
+      80px 120px 0 0 rgba(255,255,255,0.2),
+      150px 60px 0 0 rgba(255,255,255,0.4),
+      240px 180px 0 0 rgba(255,255,255,0.15),
+      320px 30px 0 0 rgba(255,255,255,0.3),
+      400px 200px 0 0 rgba(255,255,255,0.2),
+      500px 90px 0 0 rgba(255,255,255,0.35),
+      600px 160px 0 0 rgba(255,255,255,0.25),
+      700px 50px 0 0 rgba(255,255,255,0.3),
+      800px 140px 0 0 rgba(255,255,255,0.2),
+      60px 300px 0 0 rgba(255,255,255,0.15),
+      180px 350px 0 0 rgba(255,255,255,0.3),
+      350px 280px 0 0 rgba(255,255,255,0.2),
+      520px 320px 0 0 rgba(255,255,255,0.35),
+      680px 290px 0 0 rgba(255,255,255,0.2),
+      100px 450px 0 0 rgba(255,255,255,0.3),
+      300px 500px 0 0 rgba(255,255,255,0.15),
+      550px 420px 0 0 rgba(255,255,255,0.25),
+      750px 380px 0 0 rgba(255,255,255,0.2),
+      900px 250px 0 0 rgba(255,255,255,0.3);
+    animation: game-move-stars 80s linear infinite;
+  }
+
+  /* 404 Game — CRT scanline overlay */
+  .game-hud-scanline {
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.06) 2px,
+      rgba(0, 0, 0, 0.06) 4px
+    );
+  }
+}
+
+/* 404 Game Keyframes */
+@keyframes game-move-stars {
+  from { transform: translateY(0); }
+  to { transform: translateY(-500px); }
+}
+
+@keyframes game-float-ship {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes game-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes game-enemy-wiggle {
+  0% { transform: translateX(-4px); }
+  100% { transform: translateX(4px); }
 }

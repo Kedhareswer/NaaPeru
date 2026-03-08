@@ -22,8 +22,8 @@ export const kedharProfile = {
   experience: [
     {
       company: "DiligenceVault",
-      role: "AI Engineer Intern",
-      duration: "October 2025 - Present",
+      role: "Software Developer",
+      duration: "January 2026 - Present",
       highlights: [
         "Building agent orchestration workflows",
         "Processing 5,000+ document chunks with 82% semantic retrieval precision",
@@ -132,8 +132,8 @@ export const kedharProfile = {
   // Detailed journey and learnings for each experience
   experienceJourney: {
     diligenceVault: {
-      role: "AI Engineer Intern",
-      journey: "Currently working on cutting-edge AI solutions in the investment management industry. This role has been transformative - I'm building agent orchestration workflows that process thousands of financial documents with incredible precision.",
+      role: "Software Developer",
+      journey: "I joined DiligenceVault as an AI Engineer Intern in October 2025, then stepped up to Software Developer in January 2026. I build agent orchestration workflows that process thousands of financial documents with high precision — turning what used to be hours of manual review into automated, reliable pipelines.",
       whatILearned: [
         "Advanced RAG (Retrieval-Augmented Generation) architecture and implementation",
         "Building production-grade AI systems that handle real financial data",
