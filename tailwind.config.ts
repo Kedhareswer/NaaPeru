@@ -121,8 +121,8 @@ export default {
           "100%": { transform: "scale(1)", opacity: "1" },
         },
         "glow-pulse": {
-          "0%, 100%": { textShadow: "0 0 20px rgba(255, 0, 0, 0.5)" },
-          "50%": { textShadow: "0 0 30px rgba(255, 0, 0, 0.8)" },
+          "0%, 100%": { textShadow: "0 0 20px hsla(5, 78%, 42%, 0.5)" },
+          "50%": { textShadow: "0 0 30px hsla(5, 78%, 42%, 0.8)" },
         },
         "float": {
           "0%, 100%": { transform: "translateY(0px)" },

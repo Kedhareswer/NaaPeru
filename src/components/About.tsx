@@ -1,5 +1,6 @@
 import { ArrowUpRight, Github, Linkedin, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { GitHubActivity } from "./GitHubActivity";
 
 export const About = () => {
 
@@ -203,6 +204,9 @@ export const About = () => {
           </div>
 
         </section>
+
+        {/* GitHub Activity Heatmap */}
+        <GitHubActivity />
 
         {/* Education Section */}
         <div className="mb-24 space-y-8">

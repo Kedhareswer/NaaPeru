@@ -29,11 +29,11 @@ All colors MUST be HSL.
     --popover: 220 26% 7%;
     --popover-foreground: 0 0% 100%;
 
-    /* Red Primary - Bold Energy */
-    --primary: 0 100% 50%;
+    /* Brand Crimson — aligned with logo (#C0261A) */
+    --primary: 5 78% 42%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 0 100% 45%;
-    --primary-glow: 0 100% 50%;
+    --primary-hover: 5 82% 36%;
+    --primary-glow: 5 78% 42%;
 
     /* White Secondary */
     --secondary: 0 0% 100%;
@@ -45,7 +45,7 @@ All colors MUST be HSL.
     --gray-light: 0 0% 54%;
     --gray-dark: 0 0% 20%;
 
-    --accent: 0 100% 50%;
+    --accent: 5 78% 42%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -53,7 +53,7 @@ All colors MUST be HSL.
 
     --border: 0 0% 20%;
     --input: 0 0% 20%;
-    --ring: 0 100% 50%;
+    --ring: 5 78% 42%;
 
     --radius: 0.25rem;
 
@@ -82,7 +82,7 @@ All colors MUST be HSL.
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.6);
     --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.8);
-    --shadow-glow: 0 0 40px rgba(255, 0, 0, 0.3);
+    --shadow-glow: 0 0 40px hsla(5, 78%, 42%, 0.3);
   }
 }
 
@@ -145,7 +145,7 @@ All colors MUST be HSL.
   }
 
   .glow-red {
-    text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    text-shadow: 0 0 20px hsla(5, 78%, 42%, 0.5);
   }
 
   .ticker-strip {
@@ -157,7 +157,7 @@ All colors MUST be HSL.
 
   .ticker-content {
     position: relative;
-    background-color: hsl(1 90% 24%);
+    background-color: hsl(5 82% 24%);
     background-image:
       linear-gradient(135deg, hsla(0 0% 100% / 0.08), transparent 55%),
       repeating-linear-gradient(45deg, hsla(0 0% 100% / 0.08) 0px, hsla(0 0% 100% / 0.08) 3px, transparent 3px, transparent 9px),

@@ -169,14 +169,14 @@ const EnemySprite = () => (
 );
 
 const ShipSprite = () => (
-  <svg viewBox="0 0 16 16" className="w-full h-full drop-shadow-[0_0_12px_rgba(255,0,0,0.5)]">
+  <svg viewBox="0 0 16 16" className="w-full h-full drop-shadow-[0_0_12px_hsla(5,78%,42%,0.5)]">
     <rect x="7" y="0" width="2" height="4" fill="#ffffff" />
-    <rect x="6" y="4" width="4" height="6" fill="hsl(0, 100%, 50%)" />
-    <rect x="4" y="6" width="8" height="4" fill="hsl(0, 100%, 50%)" />
+    <rect x="6" y="4" width="4" height="6" fill="hsl(5, 78%, 42%)" />
+    <rect x="4" y="6" width="8" height="4" fill="hsl(5, 78%, 42%)" />
     <rect x="2" y="10" width="12" height="2" fill="hsl(0, 100%, 28%)" />
     <rect x="0" y="12" width="4" height="4" fill="hsl(0, 100%, 65%)" />
     <rect x="12" y="12" width="4" height="4" fill="hsl(0, 100%, 65%)" />
-    <rect x="7" y="10" width="2" height="6" fill="hsl(0, 100%, 50%)" />
+    <rect x="7" y="10" width="2" height="6" fill="hsl(5, 78%, 42%)" />
   </svg>
 );
 

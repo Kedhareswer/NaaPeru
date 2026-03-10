@@ -1,10 +1,11 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ChatProvider } from "@/contexts/ChatContext";
+import { PageTransition } from "@/components/PageTransition";
 
 const Work = lazy(() => import("./pages/Work"));
 const Fun = lazy(() => import("./pages/Fun"));
@@ -34,6 +35,32 @@ const CaseStudyDataNotebook = lazy(() =>
 
 const queryClient = new QueryClient();
 
+const AnimatedRoutes = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  return (
+    <Suspense fallback={null}>
+      <PageTransition key={location.pathname}>
+        <Routes location={location}>
+          <Route path="/" element={<Work />} />
+          <Route path="/fun" element={<Fun />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/resume" element={<Resume />} />
+          <Route path="/case-study/quantumpdf" element={<CaseStudyQuantumPDF />} />
+          <Route path="/case-study/thesisflow" element={<CaseStudyThesisFlow />} />
+          <Route path="/case-study/data-notebook" element={<CaseStudyDataNotebook />} />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </PageTransition>
+    </Suspense>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -41,19 +68,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Suspense fallback={null}>
-            <Routes>
-              <Route path="/" element={<Work />} />
-              <Route path="/fun" element={<Fun />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/resume" element={<Resume />} />
-              <Route path="/case-study/quantumpdf" element={<CaseStudyQuantumPDF />} />
-              <Route path="/case-study/thesisflow" element={<CaseStudyThesisFlow />} />
-              <Route path="/case-study/data-notebook" element={<CaseStudyDataNotebook />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
+          <AnimatedRoutes />
         </BrowserRouter>
         <Suspense fallback={null}>
           <ChatBot />

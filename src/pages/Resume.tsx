@@ -88,7 +88,7 @@ const Resume = () => {
             <a
               href="/Kedhareswer_AIEnginner.pdf"
               download
-              className="fixed top-24 sm:top-32 right-4 sm:right-8 z-50 flex items-center gap-2 border-2 border-[#ff0000] bg-white/90 backdrop-blur-sm px-3 py-2 sm:px-4 sm:py-2 font-body text-xs sm:text-sm uppercase tracking-[0.15em] text-[#ff0000] hover:bg-[#ff0000] hover:text-white transition-all rounded-md shadow-lg cursor-pointer"
+              className="fixed top-24 sm:top-32 right-4 sm:right-8 z-50 flex items-center gap-2 border-2 border-[#C0261A] bg-white/90 backdrop-blur-sm px-3 py-2 sm:px-4 sm:py-2 font-body text-xs sm:text-sm uppercase tracking-[0.15em] text-[#C0261A] hover:bg-[#C0261A] hover:text-white transition-all rounded-md shadow-lg cursor-pointer"
             >
               <Download className="h-4 w-4 sm:h-5 sm:w-5" />
               <span className="hidden sm:inline">PDF</span>
@@ -102,21 +102,21 @@ const Resume = () => {
                   <span className="font-body text-xs uppercase tracking-[0.2em] text-[#666]">Software Developer</span>
                 </div>
               </div>
-              <h1 className="mt-3 font-heading text-4xl font-bold uppercase tracking-tight text-[#ff0000] leading-none">
+              <h1 className="mt-3 font-heading text-4xl font-bold uppercase tracking-tight text-[#C0261A] leading-none">
                 MARLAKUNTA KEDHARESWER NAIDU
               </h1>
               <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-body text-xs text-[#666]">
-                <a href="mailto:kedhareswer.12110626@gmail.com" className="hover:text-[#ff0000] transition-colors">kedhareswer.12110626@gmail.com</a>
+                <a href="mailto:kedhareswer.12110626@gmail.com" className="hover:text-[#C0261A] transition-colors">kedhareswer.12110626@gmail.com</a>
                 <span>·</span>
-                <a href="https://linkedin.com/in/kedhareswernaidu" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff0000] transition-colors">linkedin.com/in/kedhareswernaidu</a>
+                <a href="https://linkedin.com/in/kedhareswernaidu" target="_blank" rel="noopener noreferrer" className="hover:text-[#C0261A] transition-colors">linkedin.com/in/kedhareswernaidu</a>
                 <span>·</span>
-                <a href="https://github.com/Kedhareswer" target="_blank" rel="noopener noreferrer" className="hover:text-[#ff0000] transition-colors">github.com/Kedhareswer</a>
+                <a href="https://github.com/Kedhareswer" target="_blank" rel="noopener noreferrer" className="hover:text-[#C0261A] transition-colors">github.com/Kedhareswer</a>
               </div>
             </div>
 
             {/* Profile Summary */}
             <section className="mb-6">
-              <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-[0.2em] text-[#ff0000]">Profile Summary</h2>
+              <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-[0.2em] text-[#C0261A]">Profile Summary</h2>
               <p className="font-body text-xs leading-relaxed text-[#333] text-justify">
                 Software developer with a background in AI and machine learning. Has built web applications, worked on document processing systems, and created data tools during internships. Likes solving problems with code and is always learning something new. Believes in building things that actually work rather than just talking about them.
               </p>
@@ -128,7 +128,7 @@ const Resume = () => {
               <div className="space-y-6">
                 {/* Skills */}
                 <section>
-                  <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-[0.2em] text-[#ff0000]">Skills</h2>
+                  <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-[0.2em] text-[#C0261A]">Skills</h2>
                   <ul className="space-y-1 font-body text-xs text-[#333]">
                     <li>• Python, SQL, JavaScript, TypeScript, R</li>
                     <li>• React, Next.js, FastAPI, Node.js</li>
@@ -140,7 +140,7 @@ const Resume = () => {
 
                 {/* Work Experience */}
                 <section>
-                  <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-[0.2em] text-[#ff0000]">Work Experience</h2>
+                  <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-[0.2em] text-[#C0261A]">Work Experience</h2>
                   <div className="space-y-4">
                     {/* DiligenceVault */}
                     <div>
@@ -192,7 +192,7 @@ const Resume = () => {
               <div className="space-y-6">
                 {/* Certifications */}
                 <section>
-                  <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-[0.2em] text-[#ff0000]">Certifications</h2>
+                  <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-[0.2em] text-[#C0261A]">Certifications</h2>
                   <ul className="space-y-1.5 font-body text-[11px] text-[#333]">
                     <li>• Neo4j Certified Professional</li>
                     <li>• AWS APAC Solutions Architecture</li>
@@ -202,7 +202,7 @@ const Resume = () => {
 
                 {/* Education */}
                 <section>
-                  <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-[0.2em] text-[#ff0000]">Education</h2>
+                  <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-[0.2em] text-[#C0261A]">Education</h2>
                   <div className="space-y-3">
                     {/* Lovely Professional University */}
                     <div>
@@ -235,7 +235,7 @@ const Resume = () => {
 
                 {/* Leadership */}
                 <section>
-                  <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-[0.2em] text-[#ff0000]">Leadership</h2>
+                  <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-[0.2em] text-[#C0261A]">Leadership</h2>
                   <div className="space-y-3">
                     {/* AIESEC */}
                     <div>

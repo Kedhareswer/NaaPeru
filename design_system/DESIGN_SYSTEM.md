@@ -31,10 +31,10 @@ All colors are HSL, then wired into Tailwind via `tailwind.config.ts`.
 - `--popover`, `--popover-foreground`
   - Overlays and popovers.
 
-**Primary (brand red)**
-- `--primary: 0 100% 50%`
-- `--primary-hover: 0 100% 45%`
-- `--primary-glow: 0 100% 50%`
+**Primary (brand crimson — aligned with logo #C0261A)**
+- `--primary: 5 78% 42%`
+- `--primary-hover: 5 82% 36%`
+- `--primary-glow: 5 78% 42%`
 
 Usage:
 - Call-to-action text, highlights, hero accents.

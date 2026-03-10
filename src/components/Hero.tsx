@@ -186,7 +186,7 @@ export const Hero = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/40 via-transparent to-transparent mix-blend-multiply" />
 
               {/* Circular Badge */}
-              <div className="absolute left-4 bottom-32 sm:left-6 sm:bottom-36 md:left-8 md:bottom-40 lg:left-10 lg:bottom-48 flex h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 rotate-[-8deg] items-center justify-center rounded-full border border-primary/60 bg-background/60 text-center font-heading text-[0.5rem] sm:text-[0.6rem] md:text-[0.65rem] uppercase tracking-[0.3em] sm:tracking-[0.4em] text-primary/90 shadow-[0_18px_40px_rgba(255,0,0,0.25)] backdrop-blur z-20">
+              <div className="absolute left-4 bottom-32 sm:left-6 sm:bottom-36 md:left-8 md:bottom-40 lg:left-10 lg:bottom-48 flex h-20 w-20 sm:h-24 sm:w-24 md:h-28 md:w-28 rotate-[-8deg] items-center justify-center rounded-full border border-primary/60 bg-background/60 text-center font-heading text-[0.5rem] sm:text-[0.6rem] md:text-[0.65rem] uppercase tracking-[0.3em] sm:tracking-[0.4em] text-primary/90 shadow-[0_18px_40px_hsla(5,78%,42%,0.25)] backdrop-blur z-20">
                 <div className="absolute inset-1 rounded-full border border-dashed border-primary/50" aria-hidden="true" />
                 <span className="relative block px-2 sm:px-3 leading-tight">
                   Kedharewer
