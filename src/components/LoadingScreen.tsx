@@ -6,15 +6,8 @@ interface LoadingScreenProps {
 
 export const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   const [progress, setProgress] = useState(0);
-  const [maskReady, setMaskReady] = useState(false);
 
   const logoSrc = useMemo(() => "/logo.png", []);
-
-  // Trigger mask wipe after a brief delay
-  useEffect(() => {
-    const timer = setTimeout(() => setMaskReady(true), 300);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     const duration = 2500;
@@ -57,18 +50,10 @@ export const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           <img
             src={logoSrc}
             alt="BoldCraft mark"
-            className="relative h-16 w-16 object-contain drop-shadow-[0_15px_35px_hsla(5,78%,42%,0.35)]"
+            className="relative h-16 w-16 object-contain drop-shadow-[0_15px_35px_hsla(5,78%,42%,0.35)] animate-logo-wipe"
             style={{
               transform: progress === 100 ? "scale(1)" : "scale(0.96)",
-              transition: "transform var(--transition-slow) var(--ease-smooth), mask-size 1.5s cubic-bezier(0.4, 0, 0.2, 1), -webkit-mask-size 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
-              maskImage: "radial-gradient(circle, #000 50%, transparent 51%)",
-              WebkitMaskImage: "radial-gradient(circle, #000 50%, transparent 51%)",
-              maskSize: maskReady ? "300% 300%" : "0% 0%",
-              WebkitMaskSize: maskReady ? "300% 300%" : "0% 0%",
-              maskPosition: "center",
-              WebkitMaskPosition: "center",
-              maskRepeat: "no-repeat",
-              WebkitMaskRepeat: "no-repeat",
+              transition: "transform var(--transition-slow) var(--ease-smooth)",
             }}
           />
         </div>

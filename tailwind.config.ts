@@ -148,6 +148,7 @@ export default {
         "float": "float 3s ease-in-out infinite",
         "progress": "progress 2.5s var(--ease-confident) forwards",
         ticker: "ticker 55s linear infinite",
+        "logo-wipe": "logo-wipe 1.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both",
       },
     },
   },

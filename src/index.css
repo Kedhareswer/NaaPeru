@@ -218,6 +218,21 @@ All colors MUST be HSL.
   }
 }
 
+/* Logo Brushstroke Wipe */
+@keyframes logo-wipe {
+  0% {
+    clip-path: circle(0% at 50% 50%);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    clip-path: circle(80% at 50% 50%);
+    opacity: 1;
+  }
+}
+
 /* 404 Game Keyframes */
 @keyframes game-move-stars {
   from { transform: translateY(0); }
