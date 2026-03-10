@@ -1,7 +1,17 @@
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
+import { useMemo } from "react";
 import heroImage from "@/assets/me.webp";
 
+function getTeluguGreeting(): { text: string; transliteration: string } {
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour < 12) return { text: "శుభోదయం", transliteration: "Shubhodayam" };
+  if (hour >= 12 && hour < 17) return { text: "నమస్కారం", transliteration: "Namaskaram" };
+  if (hour >= 17 && hour < 21) return { text: "శుభ సాయంత్రం", transliteration: "Shubha Sayantram" };
+  return { text: "శుభ రాత్రి", transliteration: "Shubha Ratri" };
+}
+
 export const Hero = () => {
+  const greeting = useMemo(() => getTeluguGreeting(), []);
   const KaggleIcon = ({ className = "" }: { className?: string }) => (
     <svg
       className={className}
@@ -109,6 +119,19 @@ export const Hero = () => {
         <div className="grid-12 items-start gap-6 sm:gap-8 md:gap-10 lg:items-center lg:gap-12">
           {/* Left Content */}
           <div className="order-2 col-span-4 w-full mt-16 sm:mt-24 md:mt-32 lg:mt-40 xl:mt-48 space-y-4 sm:space-y-5 md:col-span-8 md:space-y-6 lg:order-1 lg:col-span-7 lg:space-y-8">
+            {/* Telugu Greeting */}
+            <div
+              className="animate-slide-up"
+              style={{ animationDelay: "100ms" }}
+            >
+              <span
+                className="font-sanchari text-2xl sm:text-3xl md:text-4xl text-primary/50"
+                title={greeting.transliteration}
+              >
+                {greeting.text}
+              </span>
+            </div>
+
             {/* Headline */}
             <h1
               className="animate-slide-up max-w-3xl text-lg sm:text-xl md:text-2xl font-normal leading-snug sm:leading-tight"

@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ChatProvider } from "@/contexts/ChatContext";
 import { PageTransition } from "@/components/PageTransition";
+import { CustomCursor } from "@/components/CustomCursor";
 
 const Work = lazy(() => import("./pages/Work"));
 const Fun = lazy(() => import("./pages/Fun"));
@@ -67,6 +68,7 @@ const App = () => (
       <ChatProvider>
         <Toaster />
         <Sonner />
+        <CustomCursor />
         <BrowserRouter>
           <AnimatedRoutes />
         </BrowserRouter>
