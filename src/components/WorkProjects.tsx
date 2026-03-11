@@ -1,11 +1,7 @@
 import { Eye } from "lucide-react";
-import { useState, type MouseEvent as ReactMouseEvent } from "react";
 import { Link } from "react-router-dom";
 
 export const WorkProjects = () => {
-  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-
   const projects = [
     {
       number: "01",
@@ -45,102 +41,55 @@ export const WorkProjects = () => {
     },
   ];
 
-  const handleMouseMove = (e: ReactMouseEvent<HTMLAnchorElement>, projectTitle: string) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setCursorPosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-    setHoveredProject(projectTitle);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredProject(null);
-  };
-
   return (
     <section id="work" className="relative bg-background pt-0 pb-20 md:pb-32">
       <div className="container-portfolio">
-        <style>
-          {`
-            .custom-cursor-hidden {
-              cursor: none;
-            }
-          `}
-        </style>
-
-        {/* Projects Grid - Simplified Layout */}
+        {/* Projects Grid */}
         <div className="space-y-16 md:space-y-24">
           {projects.map((project) => {
             return (
               <article key={project.number} className="group">
-                {/* Media Container with Custom Cursor */}
+                {/* Media Container */}
                 {project.caseStudy ? (
                   <Link
                     to={project.caseStudy}
-                    className="relative block w-full aspect-[16/9] overflow-hidden bg-gradient-to-br from-primary/10 via-background to-background mb-6 custom-cursor-hidden"
-                    onMouseMove={(e) => handleMouseMove(e as any, project.title)}
-                    onMouseLeave={handleMouseLeave}
+                    className="relative block w-full aspect-[16/9] overflow-hidden bg-gradient-to-br from-primary/10 via-background to-background mb-6"
                   >
                     <img
                       src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    
-                    {/* Custom Cursor */}
-                    {hoveredProject === project.title && (
-                      <div
-                        className="absolute pointer-events-none z-50 -translate-x-1/2 -translate-y-1/2"
-                        style={{
-                          left: `${cursorPosition.x}px`,
-                          top: `${cursorPosition.y}px`,
-                        }}
-                      >
-                        <div className="flex items-center gap-2 bg-primary text-background px-4 py-2.5 rounded-full font-body text-xs font-bold uppercase tracking-wider whitespace-nowrap shadow-xl">
-                          <Eye className="w-4 h-4" />
-                          View Case Study
-                        </div>
-                      </div>
-                    )}
 
-                    {/* Overlay gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    {/* Hover overlay with label */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-start p-6 md:p-8">
+                      <span className="flex items-center gap-2 font-body text-xs font-bold uppercase tracking-wider text-foreground/90">
+                        <Eye className="w-4 h-4" />
+                        View Case Study
+                      </span>
+                    </div>
                   </Link>
                 ) : (
                   <a
                     href={project.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative block w-full aspect-[16/9] overflow-hidden bg-gradient-to-br from-primary/10 via-background to-background mb-6 custom-cursor-hidden"
-                    onMouseMove={(e) => handleMouseMove(e, project.title)}
-                    onMouseLeave={handleMouseLeave}
+                    className="relative block w-full aspect-[16/9] overflow-hidden bg-gradient-to-br from-primary/10 via-background to-background mb-6"
                   >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  
-                  {/* Custom Cursor */}
-                  {hoveredProject === project.title && (
-                    <div
-                      className="absolute pointer-events-none z-50 -translate-x-1/2 -translate-y-1/2"
-                      style={{
-                        left: `${cursorPosition.x}px`,
-                        top: `${cursorPosition.y}px`,
-                      }}
-                    >
-                      <div className="flex items-center gap-2 bg-primary text-background px-4 py-2.5 rounded-full font-body text-xs font-bold uppercase tracking-wider whitespace-nowrap shadow-xl">
-                        <Eye className="w-4 h-4" />
-                        View Case Study
-                      </div>
-                    </div>
-                  )}
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
 
-                  {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </a>
+                    {/* Hover overlay with label */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-start p-6 md:p-8">
+                      <span className="flex items-center gap-2 font-body text-xs font-bold uppercase tracking-wider text-foreground/90">
+                        <Eye className="w-4 h-4" />
+                        View Project
+                      </span>
+                    </div>
+                  </a>
                 )}
 
                 {/* Text Below - Title Left, Metadata Right */}

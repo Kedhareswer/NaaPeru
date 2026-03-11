@@ -21,6 +21,7 @@ const PROJECT_ENTITIES: Record<string, string[]> = {
   quantumPDF: ["quantumpdf", "quantum pdf", "pdf chatapp", "pdf chatbot"],
   dataNotebook: ["data notebook", "datanotebook", "ml notebook", "ml-notebook"],
   imageToSketch: ["image to sketch", "sketch converter", "sketch project"],
+  chefSpeak: ["chefspeak", "chef speak", "cooking assistant", "voice assistant"],
 };
 
 export const INTENT_RULES: IntentRule[] = [
@@ -71,6 +72,8 @@ export const INTENT_RULES: IntentRule[] = [
       "tell me about thesisflow",
       "tell me about data notebook",
       "tell me about image to sketch",
+      "tell me about chefspeak",
+      "tell me about chef speak",
     ],
     keywords: ["project", "projects", "built", "build", "created", "made", "about", "work"],
     entityAliases: PROJECT_ENTITIES,

@@ -294,7 +294,7 @@ Use this pattern when you introduce a new top-level section (e.g. a future “Wr
 
 **Work page** – `src/components/WorkProjects.tsx`
 - Hero projects, visually heavy.
-- Large image, custom cursor, overlay CTA.
+- Large image, overlay CTA.
 - Title/subtitle below, metadata to the right.
 
 **Fun page** – `src/pages/Fun.tsx` (new version)

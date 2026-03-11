@@ -1,8 +1,11 @@
+# Allow legitimate search engines
 User-agent: Googlebot
 Allow: /
+Disallow: /design_system/
 
 User-agent: Bingbot
 Allow: /
+Disallow: /design_system/
 
 User-agent: Twitterbot
 Allow: /
@@ -10,7 +13,86 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+# AI crawlers — allow site, block design system
+User-agent: GPTBot
+Allow: /
+Disallow: /design_system/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /design_system/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /design_system/
+
+User-agent: CCBot
+Allow: /
+Disallow: /design_system/
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /design_system/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /design_system/
+
+User-agent: Bytespider
+Allow: /
+Disallow: /design_system/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /design_system/
+
+User-agent: Cohere-ai
+Allow: /
+Disallow: /design_system/
+
+User-agent: Meta-ExternalAgent
+Allow: /
+Disallow: /design_system/
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+Disallow: /design_system/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /design_system/
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /design_system/
+
+User-agent: YouBot
+Allow: /
+Disallow: /design_system/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /design_system/
+
+User-agent: AI2Bot
+Allow: /
+Disallow: /design_system/
+
+User-agent: Diffbot
+Allow: /
+Disallow: /design_system/
+
+User-agent: Omgilibot
+Allow: /
+Disallow: /design_system/
+
+User-agent: FacebookBot
+Allow: /
+Disallow: /design_system/
+
+# All other bots — allow site, block design system
 User-agent: *
 Allow: /
+Disallow: /design_system/
 
 Sitemap: https://kedhar.vercel.app/sitemap.xml

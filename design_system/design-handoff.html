@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NaaPeru — Design Handoff</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          hsl(220,26%,7%);
+      --surface:     hsl(220,22%,10%);
+      --elevated:    hsl(220,20%,14%);
+      --text:        #fff;
+      --text-dim:    rgba(255,255,255,.65);
+      --text-muted:  rgba(255,255,255,.35);
+      --border:      rgba(255,255,255,.10);
+      --brand:       hsl(0,100%,50%);
+      --brand-dim:   rgba(255,0,0,.15);
+      --ff-head:     'Space Grotesk', sans-serif;
+      --ff-body:     'Inter', sans-serif;
+      --ff-mono:     'JetBrains Mono', monospace;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--ff-body);
+           line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    /* ── Layout ── */
+    .shell { display: flex; min-height: 100vh; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+      overflow-y: auto; background: var(--surface); border-right: 1px solid var(--border);
+      padding: 32px 0;
+    }
+    .sidebar-logo { padding: 0 24px 24px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+    .sidebar-logo .mark { font-family: var(--ff-head); font-size: 1rem; font-weight: 700; }
+    .sidebar-logo .mark span { color: var(--brand); }
+    .sidebar-logo .sub { font-size: 10px; text-transform: uppercase; letter-spacing: .3em;
+                          color: var(--text-muted); margin-top: 4px; }
+    .nav-section { padding: 8px 24px 4px; font-size: 10px; text-transform: uppercase;
+                   letter-spacing: .3em; color: var(--brand); opacity: .6; }
+    .nav-link { display: block; padding: 7px 24px; font-size: 13px; color: var(--text-dim);
+                text-decoration: none; transition: color .2s, background .2s; }
+    .nav-link:hover { color: var(--text); background: var(--brand-dim); }
+    .nav-link.active { color: var(--brand); border-left: 2px solid var(--brand); }
+
+    /* Main */
+    .main { flex: 1; min-width: 0; padding: 48px 56px 80px; max-width: 960px; }
+
+    /* Page header */
+    .page-header { margin-bottom: 64px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+    .page-header .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: .35em;
+                             color: hsl(0,100%,50%,.7); margin-bottom: 10px; }
+    .page-header h1 { font-family: var(--ff-head); font-size: 2.5rem; font-weight: 700; line-height: 1; }
+    .page-header .meta { margin-top: 16px; display: flex; gap: 24px; flex-wrap: wrap; }
+    .page-header .meta-item { font-size: 12px; font-family: var(--ff-mono); color: var(--text-muted); }
+    .page-header .meta-item span { color: var(--text-dim); }
+
+    /* Sections */
+    .section { margin-bottom: 72px; scroll-margin-top: 24px; }
+    .section-header { margin-bottom: 24px; }
+    .section-num { font-size: 11px; text-transform: uppercase; letter-spacing: .35em;
+                   color: hsl(0,100%,50%,.6); margin-bottom: 6px; }
+    .section-title { font-family: var(--ff-head); font-size: 1.5rem; font-weight: 700; }
+    .sub-section { margin-top: 40px; }
+    .sub-title { font-family: var(--ff-head); font-size: 1rem; font-weight: 600;
+                 color: var(--text-dim); margin-bottom: 16px; padding-bottom: 8px;
+                 border-bottom: 1px solid var(--border); }
+
+    /* Tables */
+    .table-wrap { overflow-x: auto; margin-bottom: 24px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; padding: 10px 14px; font-size: 10px; text-transform: uppercase;
+         letter-spacing: .25em; color: var(--text-muted); border-bottom: 1px solid var(--border);
+         font-weight: 500; }
+    td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,.05);
+         color: var(--text-dim); vertical-align: middle; }
+    tr:hover td { background: var(--brand-dim); }
+    td code { font-family: var(--ff-mono); font-size: 12px; color: var(--text); }
+    .swatch-cell { display: flex; align-items: center; gap: 10px; }
+    .swatch-dot { width: 20px; height: 20px; flex-shrink: 0; border: 1px solid rgba(255,255,255,.15); }
+
+    /* Code blocks */
+    pre {
+      background: var(--elevated); border: 1px solid var(--border); padding: 20px 24px;
+      font-family: var(--ff-mono); font-size: 12.5px; line-height: 1.7; overflow-x: auto;
+      margin-bottom: 16px; color: var(--text-dim);
+    }
+    pre .kw  { color: hsl(210,90%,72%); }
+    pre .str { color: hsl(120,50%,65%); }
+    pre .cmt { color: var(--text-muted); font-style: italic; }
+    pre .cls { color: hsl(40,90%,70%); }
+    pre .val { color: hsl(0,100%,70%); }
+    code { font-family: var(--ff-mono); font-size: 12px; background: var(--elevated);
+           padding: 2px 6px; color: var(--text); }
+
+    /* Component demos */
+    .demo-box { background: var(--surface); border: 1px solid var(--border);
+                padding: 32px; margin-bottom: 24px; }
+    .demo-label { font-size: 10px; text-transform: uppercase; letter-spacing: .3em;
+                  color: var(--text-muted); margin-bottom: 16px; }
+    .demo-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+    /* State grid */
+    .state-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .state-card { padding: 16px; background: var(--elevated); border: 1px solid var(--border); }
+    .state-card .state-label { font-size: 10px; text-transform: uppercase; letter-spacing: .25em;
+                                color: var(--text-muted); margin-bottom: 10px; }
+
+    /* Token pill */
+    .token { display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px;
+             background: var(--elevated); border: 1px solid var(--border);
+             font-family: var(--ff-mono); font-size: 11px; color: var(--text-dim); }
+    .token .dot { width: 10px; height: 10px; flex-shrink: 0; }
+
+    /* Buttons (demo) */
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;
+           font-family: var(--ff-body); font-size: 12px; font-weight: 700;
+           text-transform: uppercase; letter-spacing: .25em; border: none; cursor: pointer;
+           transition: all .15s ease; }
+    .btn-primary { background: var(--brand); color: var(--bg); }
+    .btn-primary:hover { background: hsl(0,100%,45%); }
+    .btn-ghost { background: transparent; color: var(--text); border: 1px solid rgba(255,255,255,.2); }
+    .btn-ghost:hover { border-color: var(--brand); color: var(--brand); }
+
+    /* Cards (demo) */
+    .demo-card { padding: 24px; background: rgba(14,16,23,.4); border: 1px solid rgba(51,51,51,.25);
+                 transition: border-color .3s, background .3s; max-width: 280px; }
+    .demo-card:hover { border-color: rgba(255,0,0,.4); background: rgba(14,16,23,.6); }
+    .demo-card .card-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: .35em;
+                            color: rgba(255,255,255,.35); margin-bottom: 6px; }
+    .demo-card .card-ttl { font-family: var(--ff-head); font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
+    .demo-card .card-bod { font-size: 13px; color: var(--text-dim); }
+
+    /* Tag (demo) */
+    .tag { padding: 3px 8px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+           font-size: 10px; letter-spacing: .1em; color: rgba(255,255,255,.5); }
+
+    /* Input (demo) */
+    .demo-input { height: 40px; padding: 0 12px; background: var(--surface);
+                  border: 1px solid rgba(255,255,255,.2); color: var(--text);
+                  font-family: var(--ff-body); font-size: 14px; outline: none;
+                  transition: border-color .15s; width: 240px; }
+    .demo-input:focus { border-color: var(--brand); }
+    .demo-input::placeholder { color: rgba(255,255,255,.3); }
+
+    /* Spacing viz */
+    .space-row { display: flex; align-items: center; gap: 16px; padding: 6px 0;
+                 border-bottom: 1px solid rgba(255,255,255,.04); }
+    .space-bar { height: 10px; background: var(--brand); opacity: .55; }
+    .space-meta { display: flex; justify-content: space-between; width: 200px;
+                  flex-shrink: 0; font-family: var(--ff-mono); font-size: 11px; color: var(--text-dim); }
+
+    /* Motion bars */
+    .motion-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .motion-card { padding: 20px; background: var(--elevated); border: 1px solid var(--border); }
+    .motion-card .m-label { font-size: 10px; text-transform: uppercase; letter-spacing: .25em;
+                             color: var(--brand); opacity: .7; margin-bottom: 6px; }
+    .motion-card .m-val { font-family: var(--ff-mono); font-size: 11px; color: var(--text-dim); margin-bottom: 12px; }
+    .motion-bar-wrap { height: 4px; background: rgba(255,255,255,.1); }
+    .motion-bar-fill { height: 100%; background: var(--brand); opacity: .7; }
+    @keyframes bar-fast    { 0%,100%{width:10%} 50%{width:90%} }
+    @keyframes bar-normal  { 0%,100%{width:10%} 50%{width:90%} }
+    @keyframes bar-slow    { 0%,100%{width:10%} 50%{width:90%} }
+    @keyframes bar-bounce  { 0%{width:10%} 60%{width:95%} 75%{width:82%} 100%{width:90%} }
+    .anim-fast   { animation: bar-fast   .3s  cubic-bezier(.4,0,.2,1) infinite alternate; }
+    .anim-normal { animation: bar-normal .6s  cubic-bezier(.4,0,.2,1) infinite alternate; }
+    .anim-slow   { animation: bar-slow   1s   cubic-bezier(.25,.46,.45,.94) infinite alternate; }
+    .anim-bounce { animation: bar-bounce .8s  cubic-bezier(.68,-.55,.265,1.55) infinite alternate; }
+
+    /* Callouts */
+    .callout { padding: 14px 20px; border-left: 3px solid var(--brand); background: var(--brand-dim);
+               font-size: 13px; color: var(--text-dim); margin-bottom: 16px; }
+    .callout strong { color: var(--text); }
+
+    /* Rule badges */
+    .rule-list { display: flex; flex-direction: column; gap: 10px; }
+    .rule { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px;
+            background: var(--elevated); border: 1px solid var(--border); }
+    .rule-num { font-family: var(--ff-mono); font-size: 11px; color: var(--brand); opacity: .8;
+                flex-shrink: 0; padding-top: 2px; min-width: 24px; }
+    .rule-text { font-size: 13px; color: var(--text-dim); }
+    .rule-text strong { color: var(--text); }
+
+    /* Snippet card */
+    .snippet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .snippet-card { background: var(--elevated); border: 1px solid var(--border); overflow: hidden; }
+    .snippet-card .snip-label { padding: 10px 16px; border-bottom: 1px solid var(--border);
+                                  font-size: 11px; text-transform: uppercase; letter-spacing: .2em;
+                                  color: var(--text-muted); }
+    .snippet-card pre { border: none; margin: 0; padding: 16px; }
+
+    /* Nav active tracking */
+    .section[data-active] .section-num { color: var(--brand); opacity: 1; }
+
+    /* Footer */
+    .page-footer { border-top: 1px solid var(--border); padding-top: 32px; margin-top: 80px;
+                   display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .page-footer .mark { font-family: var(--ff-head); font-weight: 700; }
+    .page-footer .mark span { color: var(--brand); }
+    .page-footer .meta { font-family: var(--ff-mono); font-size: 11px; color: var(--text-muted); }
+
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .main { padding: 32px 24px 64px; }
+      .motion-grid { grid-template-columns: repeat(2, 1fr); }
+      .snippet-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="mark"><span>NAA</span>PERU</div>
+      <div class="sub">Design Handoff</div>
+    </div>
+    <div class="nav-section">Tokens</div>
+    <a class="nav-link" href="#colors">Colors</a>
+    <a class="nav-link" href="#typography">Typography</a>
+    <a class="nav-link" href="#spacing">Spacing</a>
+    <a class="nav-link" href="#radius">Border Radius</a>
+    <a class="nav-link" href="#shadows">Shadows</a>
+    <a class="nav-link" href="#motion">Motion</a>
+    <div class="nav-section">Layout</div>
+    <a class="nav-link" href="#layout">Container & Grid</a>
+    <a class="nav-link" href="#breakpoints">Breakpoints</a>
+    <div class="nav-section">Components</div>
+    <a class="nav-link" href="#navigation">Navigation</a>
+    <a class="nav-link" href="#hero">Hero</a>
+    <a class="nav-link" href="#work-projects">Work Projects</a>
+    <a class="nav-link" href="#card">Card</a>
+    <a class="nav-link" href="#buttons">Buttons</a>
+    <a class="nav-link" href="#inputs">Form Inputs</a>
+    <a class="nav-link" href="#footer-comp">Footer</a>
+    <a class="nav-link" href="#chatbot">ChatBot</a>
+    <div class="nav-section">Patterns</div>
+    <a class="nav-link" href="#states">Interactive States</a>
+    <a class="nav-link" href="#pages">Pages & Routes</a>
+    <a class="nav-link" href="#assets">Assets</a>
+    <a class="nav-link" href="#rules">Design Rules</a>
+    <a class="nav-link" href="#snippets">Code Snippets</a>
+  </aside>
+
+  <!-- ── Main ── -->
+  <main class="main">
+
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="eyebrow">Developer Handoff Document</div>
+      <h1><span style="color:var(--brand)">NAA</span>PERU Portfolio</h1>
+      <div class="meta">
+        <div class="meta-item">Stack <span>React 18 · Vite 5 · TypeScript · Tailwind CSS 3</span></div>
+        <div class="meta-item">Date <span>2026-03-10</span></div>
+        <div class="meta-item">Source <span>Live codebase — src/ + design_system/</span></div>
+      </div>
+    </header>
+
+    <!-- ════════════════════════════════════════
+         1. COLORS
+    ════════════════════════════════════════ -->
+    <section class="section" id="colors">
+      <div class="section-header">
+        <div class="section-num">01 — Design Tokens</div>
+        <h2 class="section-title">Colors</h2>
+      </div>
+
+      <div class="callout">
+        <strong>Note:</strong> Logo red is <code>hsl(5,78%,42%) = #C0261A</code>. The CSS <code>--primary</code> is intentionally vivid (<code>#FF0000</code>) for display-weight use. Both are documented in <code>design_system/brand-tokens.css</code>.
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Token</th><th>Value</th><th>Hex</th><th>Usage</th></tr></thead>
+          <tbody>
+            <tr><td><code>--background</code></td><td>220 26% 7%</td><td><div class="swatch-cell"><div class="swatch-dot" style="background:hsl(220,26%,7%)"></div>#0E1017</div></td><td>Page background</td></tr>
+            <tr><td><code>--foreground</code></td><td>0 0% 100%</td><td><div class="swatch-cell"><div class="swatch-dot" style="background:#fff;border-color:rgba(255,255,255,.3)"></div>#FFFFFF</div></td><td>Primary text</td></tr>
+            <tr><td><code>--surface-subtle</code></td><td>220 22% 10%</td><td><div class="swatch-cell"><div class="swatch-dot" style="background:hsl(220,22%,10%)"></div>#151922</div></td><td>Hover areas, subtle panels</td></tr>
+            <tr><td><code>--surface-elevated</code></td><td>220 20% 14%</td><td><div class="swatch-cell"><div class="swatch-dot" style="background:hsl(220,20%,14%)"></div>#1D2230</div></td><td>Cards, chatbot panel</td></tr>
+            <tr><td><code>--primary</code></td><td>0 100% 50%</td><td><div class="swatch-cell"><div class="swatch-dot" style="background:#f00"></div>#FF0000</div></td><td>Brand red — CTA, accents, borders</td></tr>
+            <tr><td><code>--primary-hover</code></td><td>0 100% 45%</td><td><div class="swatch-cell"><div class="swatch-dot" style="background:hsl(0,100%,45%)"></div>#E60000</div></td><td>Button hover</td></tr>
+            <tr><td><code>--muted-foreground</code></td><td>0 0% 54%</td><td><div class="swatch-cell"><div class="swatch-dot" style="background:#8a8a8a"></div>#8A8A8A</div></td><td>De-emphasized text</td></tr>
+            <tr><td><code>--border</code></td><td>0 0% 20%</td><td><div class="swatch-cell"><div class="swatch-dot" style="background:#333"></div>#333333</div></td><td>Dividers, card edges</td></tr>
+            <tr><td><code>--ring</code></td><td>0 100% 50%</td><td><div class="swatch-cell"><div class="swatch-dot" style="background:#f00"></div>#FF0000</div></td><td>Focus rings</td></tr>
+            <tr><td><code>--destructive</code></td><td>0 84.2% 60.2%</td><td><div class="swatch-cell"><div class="swatch-dot" style="background:#ef4444"></div>#EF4444</div></td><td>Error states</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-section">
+        <div class="sub-title">Common Opacity Modifiers</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span class="token"><span class="dot" style="background:rgba(255,255,255,.7)"></span>foreground/70</span>
+          <span class="token"><span class="dot" style="background:rgba(255,255,255,.6)"></span>foreground/60</span>
+          <span class="token"><span class="dot" style="background:rgba(255,255,255,.5)"></span>foreground/50</span>
+          <span class="token"><span class="dot" style="background:rgba(255,255,255,.4)"></span>foreground/40</span>
+          <span class="token"><span class="dot" style="background:rgba(51,51,51,.25)"></span>border/25</span>
+          <span class="token"><span class="dot" style="background:rgba(255,0,0,.4)"></span>primary/40</span>
+          <span class="token"><span class="dot" style="background:rgba(255,0,0,.1)"></span>primary/5</span>
+          <span class="token"><span class="dot" style="background:rgba(14,16,23,.4)"></span>card/40</span>
+          <span class="token"><span class="dot" style="background:rgba(14,16,23,.6)"></span>card/60</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         2. TYPOGRAPHY
+    ════════════════════════════════════════ -->
+    <section class="section" id="typography">
+      <div class="section-header">
+        <div class="section-num">01 — Design Tokens</div>
+        <h2 class="section-title">Typography</h2>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Role</th><th>Font</th><th>Tailwind class</th><th>Usage</th></tr></thead>
+          <tbody>
+            <tr><td>Heading</td><td>Space Grotesk</td><td><code>font-heading</code></td><td>All headings, hero copy, labels</td></tr>
+            <tr><td>Body</td><td>Inter</td><td><code>font-body</code></td><td>Paragraphs, meta text, UI labels</td></tr>
+            <tr><td>Mark</td><td>DhurjatiItalic → Space Grotesk fallback</td><td><code>font-sanchari</code></td><td><code>సంచారి?</code> brand word only</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-section">
+        <div class="sub-title">Type Scale Utilities</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Class</th><th>Tailwind</th><th>Range</th><th>Usage</th></tr></thead>
+            <tbody>
+              <tr><td><code>.text-hero</code></td><td>text-6xl→8xl font-bold tracking-tight</td><td>60–96px</td><td>Largest hero lines</td></tr>
+              <tr><td><code>.text-section</code></td><td>text-5xl→7xl font-bold tracking-tight</td><td>48–72px</td><td>Page section titles</td></tr>
+              <tr><td><code>.text-project</code></td><td>text-3xl→5xl font-bold</td><td>30–48px</td><td>Major project titles</td></tr>
+              <tr><td><code>.text-body-lg</code></td><td>text-xl→2xl font-medium</td><td>20–24px</td><td>Important paragraphs</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sub-section">
+        <div class="sub-title">Section Label Pattern (used everywhere)</div>
+        <pre><span class="cmt">/* font-body text-xs uppercase tracking-[0.35em] text-primary/70 */</span>
+<span class="cls">font-family</span>: Inter;
+<span class="cls">font-size</span>: <span class="val">11px</span>;
+<span class="cls">text-transform</span>: <span class="val">uppercase</span>;
+<span class="cls">letter-spacing</span>: <span class="val">0.35em</span>;
+<span class="cls">color</span>: <span class="val">hsl(0 100% 50% / 0.7)</span>;</pre>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         3. SPACING
+    ════════════════════════════════════════ -->
+    <section class="section" id="spacing">
+      <div class="section-header">
+        <div class="section-num">01 — Design Tokens</div>
+        <h2 class="section-title">Spacing (8px base)</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="space-row"><span class="space-meta"><span>--spacing-xs / space-2</span><span>8px</span></span><div style="flex:1"><div class="space-bar" style="width:8px"></div></div></div>
+        <div class="space-row"><span class="space-meta"><span>--spacing-sm / space-4</span><span>16px</span></span><div style="flex:1"><div class="space-bar" style="width:16px"></div></div></div>
+        <div class="space-row"><span class="space-meta"><span>--spacing-md / space-6</span><span>24px</span></span><div style="flex:1"><div class="space-bar" style="width:24px"></div></div></div>
+        <div class="space-row"><span class="space-meta"><span>--spacing-lg / space-8</span><span>32px</span></span><div style="flex:1"><div class="space-bar" style="width:32px"></div></div></div>
+        <div class="space-row"><span class="space-meta"><span>--spacing-xl / space-12</span><span>48px</span></span><div style="flex:1"><div class="space-bar" style="width:48px"></div></div></div>
+        <div class="space-row"><span class="space-meta"><span>--spacing-2xl / space-16</span><span>64px</span></span><div style="flex:1"><div class="space-bar" style="width:64px"></div></div></div>
+        <div class="space-row"><span class="space-meta"><span>--spacing-3xl / space-24</span><span>96px</span></span><div style="flex:1"><div class="space-bar" style="width:96px"></div></div></div>
+        <div class="space-row"><span class="space-meta"><span>--spacing-4xl / space-32</span><span>128px</span></span><div style="flex:1"><div class="space-bar" style="width:128px"></div></div></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         4. BORDER RADIUS
+    ════════════════════════════════════════ -->
+    <section class="section" id="radius">
+      <div class="section-header">
+        <div class="section-num">01 — Design Tokens</div>
+        <h2 class="section-title">Border Radius</h2>
+      </div>
+      <div class="callout"><strong>Design rule:</strong> Cards and panels always use <code>rounded-none</code> (0px). Only floating overlays and circular elements use radius.</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Context</th><th>Value</th><th>Class</th></tr></thead>
+          <tbody>
+            <tr><td>Cards / panels</td><td>0px</td><td><code>rounded-none</code></td></tr>
+            <tr><td>Nav dropdown</td><td>8px (--radius)</td><td><code>rounded-lg</code></td></tr>
+            <tr><td>Social icon buttons</td><td>9999px</td><td><code>rounded-full</code></td></tr>
+            <tr><td>Circular badge (Hero)</td><td>9999px</td><td><code>rounded-full</code></td></tr>
+            <tr><td>Glow blob (Hero)</td><td>9999px</td><td><code>rounded-full</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         5. SHADOWS
+    ════════════════════════════════════════ -->
+    <section class="section" id="shadows">
+      <div class="section-header">
+        <div class="section-num">01 — Design Tokens</div>
+        <h2 class="section-title">Shadows</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Token</th><th>CSS</th><th>Tailwind</th></tr></thead>
+          <tbody>
+            <tr><td><code>--shadow-sm</code></td><td><code>0 2px 8px rgba(0,0,0,0.40)</code></td><td><code>shadow-sm</code></td></tr>
+            <tr><td><code>--shadow-md</code></td><td><code>0 8px 32px rgba(0,0,0,0.60)</code></td><td><code>shadow</code> / <code>shadow-md</code></td></tr>
+            <tr><td><code>--shadow-lg</code></td><td><code>0 16px 48px rgba(0,0,0,0.80)</code></td><td><code>shadow-lg</code></td></tr>
+            <tr><td><code>--shadow-glow</code></td><td><code>0 0 40px rgba(255,0,0,0.30)</code></td><td><code>shadow-glow</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         6. MOTION
+    ════════════════════════════════════════ -->
+    <section class="section" id="motion">
+      <div class="section-header">
+        <div class="section-num">01 — Design Tokens</div>
+        <h2 class="section-title">Motion</h2>
+      </div>
+      <div class="motion-grid" style="margin-bottom:32px;">
+        <div class="motion-card">
+          <div class="m-label">Fast</div>
+          <div class="m-val">150ms ease-smooth</div>
+          <div class="motion-bar-wrap"><div class="motion-bar-fill anim-fast"></div></div>
+        </div>
+        <div class="motion-card">
+          <div class="m-label">Normal</div>
+          <div class="m-val">300ms ease-smooth</div>
+          <div class="motion-bar-wrap"><div class="motion-bar-fill anim-normal"></div></div>
+        </div>
+        <div class="motion-card">
+          <div class="m-label">Slow</div>
+          <div class="m-val">500ms ease-confident</div>
+          <div class="motion-bar-wrap"><div class="motion-bar-fill anim-slow"></div></div>
+        </div>
+        <div class="motion-card">
+          <div class="m-label">Bounce</div>
+          <div class="m-val">400ms ease-bounce</div>
+          <div class="motion-bar-wrap"><div class="motion-bar-fill anim-bounce"></div></div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Name</th><th>Duration</th><th>Tailwind class</th><th>Usage</th></tr></thead>
+          <tbody>
+            <tr><td><code>fade-in</code></td><td>300ms</td><td><code>animate-fade-in</code></td><td>Nav items, chatbot panel</td></tr>
+            <tr><td><code>slide-up</code></td><td>800ms confident</td><td><code>animate-slide-up</code></td><td>Hero headline, copy</td></tr>
+            <tr><td><code>scale-in</code></td><td>500ms confident</td><td><code>animate-scale-in</code></td><td>Badges, overlays</td></tr>
+            <tr><td><code>glow-pulse</code></td><td>2s infinite</td><td><code>animate-glow-pulse</code></td><td>సంచారి? button</td></tr>
+            <tr><td><code>float</code></td><td>3s infinite</td><td><code>animate-float</code></td><td>Hero glow blob</td></tr>
+            <tr><td><code>ticker</code></td><td>55s linear infinite</td><td><code>animate-ticker</code></td><td>Hero strip scroll</td></tr>
+            <tr><td><code>progress</code></td><td>2.5s confident</td><td><code>animate-progress</code></td><td>Loading bar</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         7. LAYOUT
+    ════════════════════════════════════════ -->
+    <section class="section" id="layout">
+      <div class="section-header">
+        <div class="section-num">02 — Layout System</div>
+        <h2 class="section-title">Container & Grid</h2>
+      </div>
+      <pre><span class="cmt">/* .container-portfolio */</span>
+<span class="cls">max-width</span>: <span class="val">1440px</span>;
+<span class="cls">margin</span>: <span class="val">0 auto</span>;
+<span class="cls">padding-inline</span>: <span class="val">24px</span>;   <span class="cmt">/* mobile (px-6)  */</span>
+<span class="cls">padding-inline</span>: <span class="val">32px</span>;   <span class="cmt">/* sm     (px-8)  */</span>
+<span class="cls">padding-inline</span>: <span class="val">48px</span>;   <span class="cmt">/* md     (px-12) */</span>
+<span class="cls">padding-inline</span>: <span class="val">64px</span>;   <span class="cmt">/* lg     (px-16) */</span>
+<span class="cls">padding-inline</span>: <span class="val">80px</span>;   <span class="cmt">/* xl     (px-20) */</span></pre>
+      <pre><span class="cmt">/* .grid-12 */</span>
+<span class="cls">grid-template-columns</span>: <span class="val">repeat(4,  1fr)</span>; <span class="cmt">/* mobile */</span>
+<span class="cls">grid-template-columns</span>: <span class="val">repeat(8,  1fr)</span>; <span class="cmt">/* md     */</span>
+<span class="cls">grid-template-columns</span>: <span class="val">repeat(12, 1fr)</span>; <span class="cmt">/* lg     */</span>
+<span class="cls">gap</span>: <span class="val">16px / 24px / 32px</span>;</pre>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         8. BREAKPOINTS
+    ════════════════════════════════════════ -->
+    <section class="section" id="breakpoints">
+      <div class="section-header">
+        <div class="section-num">02 — Layout System</div>
+        <h2 class="section-title">Breakpoints</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Name</th><th>Min-width</th><th>Key changes</th></tr></thead>
+          <tbody>
+            <tr><td><code>sm</code></td><td>640px</td><td>Typography step-up, ticker font size, portrait aspect</td></tr>
+            <tr><td><code>md</code></td><td>768px</td><td>Nav collapse threshold, 2-col grids, horizontal layouts</td></tr>
+            <tr><td><code>lg</code></td><td>1024px</td><td>Hero horizontal, full 12-col grid, case study sidebar</td></tr>
+            <tr><td><code>xl</code></td><td>1280px</td><td>Container reaches max horizontal padding (80px)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         9. NAVIGATION
+    ════════════════════════════════════════ -->
+    <section class="section" id="navigation">
+      <div class="section-header">
+        <div class="section-num">03 — Components</div>
+        <h2 class="section-title">Navigation</h2>
+      </div>
+      <div class="state-grid">
+        <div class="state-card">
+          <div class="state-label">Expanded (default)</div>
+          <div style="font-size:12px;color:var(--text-dim);">Height: <strong style="color:var(--text)">96px</strong><br/>Brand visible (left)<br/>Nav items (center)<br/>సంచారి? (right)</div>
+        </div>
+        <div class="state-card">
+          <div class="state-label">Compact (scrolled)</div>
+          <div style="font-size:12px;color:var(--text-dim);">Height: <strong style="color:var(--text)">80px</strong><br/>Brand hidden<br/>Menu icon (right)<br/>సంచారి? (right)</div>
+        </div>
+        <div class="state-card">
+          <div class="state-label">Mobile (&lt;768px)</div>
+          <div style="font-size:12px;color:var(--text-dim);">Always compact<br/>Dropdown menu<br/>224px wide panel</div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nav Item State</th><th>Text color</th><th>Bottom border</th></tr></thead>
+          <tbody>
+            <tr><td>Default</td><td><code>text-foreground/70</code></td><td>w-0 (hidden)</td></tr>
+            <tr><td>Hover</td><td><code>text-primary</code></td><td>w-full (300ms)</td></tr>
+            <tr><td>Active</td><td><code>text-primary</code></td><td>w-full (persistent)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         10. HERO
+    ════════════════════════════════════════ -->
+    <section class="section" id="hero">
+      <div class="section-header">
+        <div class="section-num">03 — Components</div>
+        <h2 class="section-title">Hero</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Slot</th><th>Spec</th></tr></thead>
+          <tbody>
+            <tr><td>Section</td><td><code>min-h-screen</code>, flex col → <code>lg:flex-row lg:items-center</code></td></tr>
+            <tr><td>Left column</td><td><code>lg:col-span-7</code>, stagger animated (<code>animate-slide-up</code> 200/600/800ms delays)</td></tr>
+            <tr><td>Headline initial</td><td><code>font-heading text-4xl→xl:text-8xl text-primary</code></td></tr>
+            <tr><td>Headline body</td><td><code>text-lg→md:text-2xl font-normal</code></td></tr>
+            <tr><td>Sub-copy</td><td><code>italic text-sm→base</code> Inter, color <code>#8A8A8A</code></td></tr>
+            <tr><td>Social icons</td><td><code>rounded-full border border-foreground/20 p-2</code> → hover <code>border-primary/60</code></td></tr>
+            <tr><td>Right column</td><td><code>lg:col-span-5</code>, <code>aspect-[3/4]</code></td></tr>
+            <tr><td>Portrait</td><td><code>grayscale(100%) contrast(1.2)</code>, radial-gradient mask, <code>opacity:0.9</code></td></tr>
+            <tr><td>Overlay</td><td><code>from-primary/40 via-transparent mix-blend-multiply</code></td></tr>
+            <tr><td>Circular badge</td><td><code>h-20→md:h-28 w-20→md:w-28 rotate-[-8deg] rounded-full border-primary/60 bg-background/60 backdrop-blur</code></td></tr>
+            <tr><td>Glow blob</td><td><code>h-24→h-32 w-24→w-32 animate-float rounded-full bg-primary/20 blur-3xl</code></td></tr>
+            <tr><td>Ticker strip</td><td>absolute, <code>top-[32%]</code>, <code>sm:-rotate-1 lg:-rotate-3</code>, 55s loop</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         11. WORK PROJECTS
+    ════════════════════════════════════════ -->
+    <section class="section" id="work-projects">
+      <div class="section-header">
+        <div class="section-num">03 — Components</div>
+        <h2 class="section-title">Work Projects</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Element</th><th>Spec</th></tr></thead>
+          <tbody>
+            <tr><td>List gap</td><td><code>space-y-16 md:space-y-24</code></td></tr>
+            <tr><td>Media container</td><td><code>w-full aspect-[16/9] overflow-hidden</code></td></tr>
+            <tr><td>Image</td><td><code>object-cover</code>, hover <code>scale-105</code> over 700ms</td></tr>
+            <tr><td>Hover overlay</td><td><code>bg-gradient-to-t from-background/60</code>, opacity 0→1 over 500ms</td></tr>
+            <tr><td>Title</td><td><code>font-heading text-2xl→lg:text-4xl font-normal text-foreground</code></td></tr>
+            <tr><td>Subtitle</td><td><code>font-body text-sm→base text-foreground/60</code></td></tr>
+            <tr><td>Metadata</td><td><code>font-body text-xs→sm uppercase tracking-[0.15em] text-foreground/50</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         12. CARD
+    ════════════════════════════════════════ -->
+    <section class="section" id="card">
+      <div class="section-header">
+        <div class="section-num">03 — Components</div>
+        <h2 class="section-title">Card</h2>
+      </div>
+      <div class="demo-box">
+        <div class="demo-label">Live Preview</div>
+        <div class="demo-card">
+          <div class="card-lbl">Multi-Agent AI · Jan 2026</div>
+          <div class="card-ttl">ThesisFlow AI</div>
+          <div class="card-bod">Autonomous multi-agent system for academic research — planning, retrieval, synthesis.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;">
+            <span class="tag">LangGraph</span><span class="tag">Python</span><span class="tag">RAG</span>
+          </div>
+        </div>
+      </div>
+      <pre><span class="cmt">/* Default */</span>
+<span class="cls">background</span>: <span class="val">hsl(220 26% 7% / 0.4)</span>;
+<span class="cls">border</span>: <span class="val">1px solid hsl(0 0% 20% / 0.25)</span>;
+<span class="cls">border-radius</span>: <span class="val">0</span>;
+<span class="cls">padding</span>: <span class="val">24px</span>;
+<span class="cls">transition</span>: <span class="val">border-color 300ms, background 300ms</span>;
+
+<span class="cmt">/* Hover */</span>
+<span class="cls">border-color</span>: <span class="val">hsl(0 100% 50% / 0.4)</span>;
+<span class="cls">background</span>: <span class="val">hsl(220 26% 7% / 0.6)</span>;</pre>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         13. BUTTONS
+    ════════════════════════════════════════ -->
+    <section class="section" id="buttons">
+      <div class="section-header">
+        <div class="section-num">03 — Components</div>
+        <h2 class="section-title">Buttons</h2>
+      </div>
+      <div class="demo-box">
+        <div class="demo-label">Live Preview</div>
+        <div class="demo-row">
+          <button class="btn btn-primary" style="padding:8px 14px;font-size:11px;">Small</button>
+          <button class="btn btn-primary">Primary CTA</button>
+          <button class="btn btn-primary" style="padding:14px 28px;font-size:13px;">Large</button>
+          <button class="btn btn-ghost" style="padding:8px 14px;font-size:11px;">Ghost</button>
+          <button class="btn btn-ghost">Ghost Default</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Property</th><th>Primary</th><th>Ghost</th></tr></thead>
+          <tbody>
+            <tr><td>Background</td><td><code>hsl(0,100%,50%)</code></td><td>transparent</td></tr>
+            <tr><td>Text color</td><td><code>hsl(220,26%,7%)</code></td><td><code>#fff</code></td></tr>
+            <tr><td>Border</td><td>none</td><td><code>1px solid border/25</code></td></tr>
+            <tr><td>Hover bg</td><td><code>hsl(0,100%,45%)</code></td><td>transparent</td></tr>
+            <tr><td>Hover border</td><td>—</td><td><code>primary</code></td></tr>
+            <tr><td>Hover text</td><td>—</td><td><code>primary</code></td></tr>
+            <tr><td>Font</td><td colspan="2">Inter, font-bold, uppercase, tracking-[0.25–0.3em]</td></tr>
+            <tr><td>Border radius</td><td colspan="2">0 (design rule)</td></tr>
+            <tr><td>Transition</td><td colspan="2">150ms ease-smooth</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         14. INPUTS
+    ════════════════════════════════════════ -->
+    <section class="section" id="inputs">
+      <div class="section-header">
+        <div class="section-num">03 — Components</div>
+        <h2 class="section-title">Form Inputs</h2>
+      </div>
+      <div class="demo-box">
+        <div class="demo-label">Live Preview</div>
+        <div class="demo-row">
+          <input class="demo-input" type="text" placeholder="Ask Kedhar anything…" />
+          <input class="demo-input" type="text" value="Multi-Agent AI" />
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Property</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Height</td><td>40px</td></tr>
+            <tr><td>Padding X</td><td>12px</td></tr>
+            <tr><td>Background</td><td><code>hsl(220,22%,10%)</code> (surface-subtle)</td></tr>
+            <tr><td>Border (default)</td><td><code>1px solid rgba(255,255,255,.20)</code></td></tr>
+            <tr><td>Border (focus)</td><td><code>1px solid hsl(0,100%,50%)</code> (ring)</td></tr>
+            <tr><td>Placeholder</td><td><code>rgba(255,255,255,.30)</code></td></tr>
+            <tr><td>Border radius</td><td>1px (near-flat)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         15. FOOTER
+    ════════════════════════════════════════ -->
+    <section class="section" id="footer-comp">
+      <div class="section-header">
+        <div class="section-num">03 — Components</div>
+        <h2 class="section-title">Footer</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Property</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Border top</td><td><code>border-t border-border/10</code></td></tr>
+            <tr><td>Padding</td><td><code>py-8</code> (32px)</td></tr>
+            <tr><td>Layout</td><td>flex col → <code>md:flex-row md:items-center gap-6</code></td></tr>
+            <tr><td>Quote text</td><td>Inter, italic, <code>text-sm md:text-base text-foreground/60 max-w-3xl</code></td></tr>
+            <tr><td>Brand mark</td><td><code>font-sanchari text-2xl font-bold text-primary</code>, hover <code>animate-glow-pulse</code></td></tr>
+            <tr><td>Background overlay</td><td><code>gradient-to-t from-primary/5 to-transparent</code> absolute</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         16. CHATBOT
+    ════════════════════════════════════════ -->
+    <section class="section" id="chatbot">
+      <div class="section-header">
+        <div class="section-num">03 — Components</div>
+        <h2 class="section-title">ChatBot (సంచారి?)</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Property</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Trigger</td><td>సంచారి? in Nav + Footer</td></tr>
+            <tr><td>Animation</td><td><code>AnimatePresence</code> from <code>motion/react</code> — slide from right</td></tr>
+            <tr><td>Panel width</td><td>~384px desktop / full-width mobile</td></tr>
+            <tr><td>Z-index</td><td>above nav (z > 40)</td></tr>
+            <tr><td>Max input</td><td>500 characters</td></tr>
+            <tr><td>Markdown rendering</td><td><code>ReactMarkdown</code> + <code>remark-gfm</code> + <code>rehype-sanitize</code></td></tr>
+            <tr><td>Knowledge source</td><td><code>src/lib/chatbotKnowledge.ts</code></td></tr>
+            <tr><td>Response templates</td><td><code>src/lib/chatbotResponses.ts</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         17. STATES
+    ════════════════════════════════════════ -->
+    <section class="section" id="states">
+      <div class="section-header">
+        <div class="section-num">04 — Patterns</div>
+        <h2 class="section-title">Interactive States</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Element</th><th>Default</th><th>Hover</th><th>Active / Focus</th></tr></thead>
+          <tbody>
+            <tr><td>Nav link</td><td>foreground/70, border w-0</td><td>primary, border w-full</td><td>primary, border w-full</td></tr>
+            <tr><td>Nav menu button</td><td>border/30 bg/60</td><td>border-primary text-primary</td><td>—</td></tr>
+            <tr><td>సంచారి? button</td><td>text-primary</td><td>glow-pulse</td><td>—</td></tr>
+            <tr><td>Card</td><td>border/25 bg/40</td><td>border-primary/40 bg/60</td><td>—</td></tr>
+            <tr><td>Social icon</td><td>border/20 fill-transparent</td><td>border-primary/60 fill-primary</td><td>—</td></tr>
+            <tr><td>Project image</td><td>scale-100</td><td>scale-105 (700ms)</td><td>—</td></tr>
+            <tr><td>Primary button</td><td>bg-primary</td><td>bg-primary/90</td><td>bg-primary/80</td></tr>
+            <tr><td>Ghost button</td><td>border-border</td><td>border-primary text-primary</td><td>—</td></tr>
+            <tr><td>Input</td><td>border rgba(255,255,255,.20)</td><td>—</td><td>border-primary (ring)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         18. PAGES
+    ════════════════════════════════════════ -->
+    <section class="section" id="pages">
+      <div class="section-header">
+        <div class="section-num">04 — Patterns</div>
+        <h2 class="section-title">Pages & Routes</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>URL</th><th>Component</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>/</code></td><td>Work.tsx</td><td>Hero + WorkProjects (3 featured)</td></tr>
+            <tr><td><code>/fun</code></td><td>Fun.tsx</td><td>Experimentos — ShiftCard grid</td></tr>
+            <tr><td><code>/about</code></td><td>About.tsx</td><td>Timeline, skills, bio</td></tr>
+            <tr><td><code>/resume</code></td><td>Resume.tsx</td><td>Resume viewer</td></tr>
+            <tr><td><code>/case-study/thesisflow</code></td><td>CaseStudyThesisFlow.tsx</td><td>Sticky sidebar + 9 sections</td></tr>
+            <tr><td><code>/case-study/quantumpdf</code></td><td>CaseStudyQuantumPDF.tsx</td><td>Same structure</td></tr>
+            <tr><td><code>/case-study/data-notebook</code></td><td>CaseStudyDataNotebook.tsx</td><td>Same structure</td></tr>
+            <tr><td><code>*</code></td><td>NotFound.tsx</td><td>404 with space shooter game</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         19. ASSETS
+    ════════════════════════════════════════ -->
+    <section class="section" id="assets">
+      <div class="section-header">
+        <div class="section-num">04 — Patterns</div>
+        <h2 class="section-title">Assets</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Asset</th><th>Path</th><th>Format</th></tr></thead>
+          <tbody>
+            <tr><td>Logo mark</td><td><code>/public/logo.png</code></td><td>PNG 500×500 — Telugu glyph, crimson on white</td></tr>
+            <tr><td>Portrait</td><td><code>/src/assets/me.webp</code></td><td>WebP — grayscale mask applied in CSS</td></tr>
+            <tr><td>Custom font</td><td><code>/public/fonts/dhurjati-italic.otf</code></td><td>OTF — font-sanchari only</td></tr>
+            <tr><td>Project screenshots</td><td><code>/public/projects/*.png</code></td><td>PNG — 3 featured projects</td></tr>
+            <tr><td>Brand kit</td><td><code>/design_system/brand-kit.html</code></td><td>Visual reference page</td></tr>
+            <tr><td>Design tokens</td><td><code>/design_system/brand-tokens.css</code></td><td>Full 3-tier CSS token system</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         20. DESIGN RULES
+    ════════════════════════════════════════ -->
+    <section class="section" id="rules">
+      <div class="section-header">
+        <div class="section-num">04 — Patterns</div>
+        <h2 class="section-title">Design Rules</h2>
+      </div>
+      <div class="rule-list">
+        <div class="rule"><span class="rule-num">01</span><span class="rule-text"><strong>No rounded corners on cards or panels.</strong> Use <code>rounded-none</code>. Exceptions: nav dropdown <code>rounded-lg</code>, circular elements <code>rounded-full</code>.</span></div>
+        <div class="rule"><span class="rule-num">02</span><span class="rule-text"><strong>One red, one dark.</strong> Don't introduce new brand colors. The only accent is <code>--primary</code> red.</span></div>
+        <div class="rule"><span class="rule-num">03</span><span class="rule-text"><strong><code>container-portfolio</code> always.</strong> Never build a section without wrapping content in <code>.container-portfolio</code>.</span></div>
+        <div class="rule"><span class="rule-num">04</span><span class="rule-text"><strong>Font roles are strict.</strong> <code>font-heading</code> (Space Grotesk) for headings. <code>font-body</code> (Inter) for body/meta. <code>font-sanchari</code> only for the <code>సంచారి?</code> wordmark.</span></div>
+        <div class="rule"><span class="rule-num">05</span><span class="rule-text"><strong>Background is global.</strong> The gradient+noise lives in <code>body</code>. Never recreate a textured background per-section. Use semi-transparent panel bg (<code>bg-card/40</code>) to let it breathe.</span></div>
+        <div class="rule"><span class="rule-num">06</span><span class="rule-text"><strong>Motion with intent.</strong> Animations signal importance — hero, interactive states, key transitions. Don't stack too many on one element.</span></div>
+        <div class="rule"><span class="rule-num">07</span><span class="rule-text"><strong><code>public/projects.json</code> is the data source.</strong> Featured projects on Work page (<code>featured: true</code>). Non-featured on Fun page (<code>featured: false</code>).</span></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         21. SNIPPETS
+    ════════════════════════════════════════ -->
+    <section class="section" id="snippets">
+      <div class="section-header">
+        <div class="section-num">05 — Implementation</div>
+        <h2 class="section-title">Code Snippets</h2>
+      </div>
+      <div class="snippet-grid">
+        <div class="snippet-card">
+          <div class="snip-label">New Page Shell</div>
+          <pre><span class="kw">import</span> { Navigation } <span class="kw">from</span> <span class="str">"@/components/Navigation"</span>;
+<span class="kw">import</span> { Footer } <span class="kw">from</span> <span class="str">"@/components/Footer"</span>;
+
+<span class="kw">export default function</span> <span class="cls">NewPage</span>() {
+  <span class="kw">return</span> (
+    &lt;<span class="cls">div</span> className=<span class="str">"min-h-screen bg-background"</span>&gt;
+      &lt;<span class="cls">Navigation</span> /&gt;
+      &lt;<span class="cls">main</span>&gt;
+        &lt;<span class="cls">section</span> className=<span class="str">"relative bg-background py-20"</span>&gt;
+          &lt;<span class="cls">div</span> className=<span class="str">"container-portfolio"</span>&gt;
+            &lt;<span class="cls">p</span> className=<span class="str">"font-body text-xs uppercase
+              tracking-[0.35em] text-primary/70"</span>&gt;
+              Label
+            &lt;/<span class="cls">p</span>&gt;
+            &lt;<span class="cls">h1</span> className=<span class="str">"font-heading text-3xl
+              sm:text-4xl md:text-5xl
+              text-foreground mt-2"</span>&gt;
+              Page Title
+            &lt;/<span class="cls">h1</span>&gt;
+          &lt;/<span class="cls">div</span>&gt;
+        &lt;/<span class="cls">section</span>&gt;
+      &lt;/<span class="cls">main</span>&gt;
+      &lt;<span class="cls">Footer</span> /&gt;
+    &lt;/<span class="cls">div</span>&gt;
+  );
+}</pre>
+        </div>
+        <div class="snippet-card">
+          <div class="snip-label">On-brand Card</div>
+          <pre>&lt;<span class="cls">div</span> className=<span class="str">"border border-border/25
+  bg-card/40 p-6 transition-colors
+  hover:border-primary/40
+  hover:bg-card/60"</span>&gt;
+  &lt;<span class="cls">p</span> className=<span class="str">"font-body text-[11px]
+    uppercase tracking-[0.35em]
+    text-foreground/40 mb-2"</span>&gt;
+    Meta Label
+  &lt;/<span class="cls">p</span>&gt;
+  &lt;<span class="cls">h3</span> className=<span class="str">"font-heading text-xl
+    sm:text-2xl text-foreground mb-2"</span>&gt;
+    Card Title
+  &lt;/<span class="cls">h3</span>&gt;
+  &lt;<span class="cls">p</span> className=<span class="str">"font-body text-sm
+    text-foreground/70"</span>&gt;
+    Supporting copy.
+  &lt;/<span class="cls">p</span>&gt;
+&lt;/<span class="cls">div</span>&gt;</pre>
+        </div>
+        <div class="snippet-card">
+          <div class="snip-label">Primary Button</div>
+          <pre>&lt;<span class="cls">button</span> className=<span class="str">"inline-flex items-center
+  gap-2 px-6 py-3 bg-primary
+  text-background font-body text-sm
+  font-bold uppercase tracking-[0.3em]
+  hover:bg-primary/90
+  transition-colors"</span>&gt;
+  Label
+&lt;/<span class="cls">button</span>&gt;</pre>
+        </div>
+        <div class="snippet-card">
+          <div class="snip-label">Ghost Button</div>
+          <pre>&lt;<span class="cls">button</span> className=<span class="str">"inline-flex items-center
+  gap-2 px-6 py-3 border
+  border-border/25 text-foreground
+  font-body text-sm uppercase
+  tracking-[0.2em]
+  hover:border-primary
+  hover:text-primary
+  transition-colors"</span>&gt;
+  Label
+&lt;/<span class="cls">button</span>&gt;</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="page-footer">
+      <div class="mark"><span>NAA</span>PERU — Design Handoff</div>
+      <div class="meta">Generated 2026-03-10 · design-handoff.html</div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // Sidebar active link tracking
+  const links = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('.section[id]');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const a = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

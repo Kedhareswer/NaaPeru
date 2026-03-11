@@ -1,0 +1,228 @@
+/**
+ * NaaPeru Brand Tokens
+ * ====================
+ * Derived from the logo mark: a textured Telugu-style character
+ * in deep crimson — hsl(5, 78%, 42%) ≈ #C0261A
+ *
+ * Brand color note:
+ *   Logo red  → hsl(5, 78%, 42%) = #C0261A  (authoritative)
+ *   CSS red   → hsl(0, 100%, 50%) = #FF0000  (current override — intentionally vivid)
+ *   Both are valid; the CSS red is a high-energy display-weight version.
+ *
+ * Mood: Bold · Artisan · Tech-Personal
+ */
+
+/* ==========================================================================
+   PRIMARY PALETTE — Crimson Red (logo-extracted)
+   Base: hsl(5, 78%, 42%)
+   ========================================================================== */
+:root {
+  --brand-red-50:  hsl(5, 74%, 97%);   /* #FEF2F1 */
+  --brand-red-100: hsl(5, 72%, 93%);   /* #FCD9D7 */
+  --brand-red-200: hsl(5, 68%, 86%);   /* #F7B4AF */
+  --brand-red-300: hsl(5, 64%, 74%);   /* #EE8680 */
+  --brand-red-400: hsl(5, 59%, 60%);   /* #DE554D */
+  --brand-red-500: hsl(5, 78%, 42%);   /* #C0261A  ← logo red */
+  --brand-red-600: hsl(5, 82%, 36%);   /* #A41E13 */
+  --brand-red-700: hsl(5, 84%, 30%);   /* #8A1710 */
+  --brand-red-800: hsl(5, 86%, 24%);   /* #6F110C */
+  --brand-red-900: hsl(5, 89%, 17%);   /* #4F0C08 */
+  --brand-red-950: hsl(5, 92%, 10%);   /* #310705 */
+}
+
+/* ==========================================================================
+   NEUTRAL PALETTE — Blue-gray with 5% brand hue tint
+   Base: hsl(220, 8%, L)  — keeps the site's existing cool-dark mood
+   ========================================================================== */
+:root {
+  --brand-neutral-50:  hsl(220, 8%, 97%);   /* #F5F6F9 */
+  --brand-neutral-100: hsl(220, 8%, 93%);   /* #ECEEF3 */
+  --brand-neutral-200: hsl(220, 8%, 85%);   /* #D4D8E3 */
+  --brand-neutral-300: hsl(220, 8%, 72%);   /* #B0B6C8 */
+  --brand-neutral-400: hsl(220, 8%, 55%);   /* #848DAA */
+  --brand-neutral-500: hsl(220, 8%, 40%);   /* #5E677E */
+  --brand-neutral-600: hsl(220, 10%, 28%);  /* #404A60 */
+  --brand-neutral-700: hsl(220, 14%, 20%);  /* #2C3449 */
+  --brand-neutral-800: hsl(220, 20%, 14%);  /* #1D2230 */
+  --brand-neutral-900: hsl(220, 22%, 10%);  /* #151922 */
+  --brand-neutral-950: hsl(220, 26%, 7%);   /* #0E1017 */
+}
+
+/* ==========================================================================
+   SEMANTIC COLORS — Functional states
+   ========================================================================== */
+:root {
+  --brand-success:          hsl(158, 64%, 38%);   /* #22A06B */
+  --brand-success-subtle:   hsl(158, 64%, 12%);
+  --brand-warning:          hsl(38, 92%, 50%);    /* #F59E0B */
+  --brand-warning-subtle:   hsl(38, 92%, 12%);
+  --brand-error:            hsl(0, 84%, 60%);     /* #EF4444 */
+  --brand-error-subtle:     hsl(0, 84%, 12%);
+  --brand-info:             hsl(213, 94%, 68%);   /* #60A5FA */
+  --brand-info-subtle:      hsl(213, 94%, 12%);
+}
+
+/* ==========================================================================
+   SEMANTIC SURFACES — Dark mode (primary theme)
+   ========================================================================== */
+:root {
+  /* Backgrounds */
+  --brand-bg-base:     var(--brand-neutral-950);  /* hsl(220,26%,7%)  page */
+  --brand-bg-subtle:   var(--brand-neutral-900);  /* hsl(220,22%,10%) hover areas */
+  --brand-bg-elevated: var(--brand-neutral-800);  /* hsl(220,20%,14%) cards/panels */
+
+  /* Text */
+  --brand-text-primary:   hsl(0, 0%, 100%);       /* headings, strong copy */
+  --brand-text-secondary: hsl(0, 0%, 70%);        /* supporting copy */
+  --brand-text-muted:     hsl(220, 8%, 54%);      /* metadata, labels */
+  --brand-text-brand:     var(--brand-red-500);   /* brand accents */
+
+  /* Borders */
+  --brand-border-default:  hsl(0, 0%, 20%);       /* dividers */
+  --brand-border-subtle:   hsl(0, 0%, 20%, 0.25); /* low-profile card edges */
+  --brand-border-active:   hsl(5, 78%, 42%, 0.6); /* hover / active states */
+  --brand-border-focus:    var(--brand-red-500);  /* focus ring */
+
+  /* Brand accents */
+  --brand-accent:       var(--brand-red-500);
+  --brand-accent-hover: var(--brand-red-600);
+  --brand-accent-glow:  var(--brand-red-500);
+}
+
+/* ==========================================================================
+   TYPOGRAPHY
+   ========================================================================== */
+:root {
+  --brand-font-heading: 'Space Grotesk', sans-serif;
+  --brand-font-body:    'Inter', sans-serif;
+  --brand-font-mark:    'DhurjatiItalic', 'Space Grotesk', sans-serif; /* சஂஓchari? */
+
+  /* Scale */
+  --brand-text-2xs:  0.625rem;   /* 10px — micro labels */
+  --brand-text-xs:   0.75rem;    /* 12px */
+  --brand-text-sm:   0.875rem;   /* 14px */
+  --brand-text-base: 1rem;       /* 16px */
+  --brand-text-lg:   1.125rem;   /* 18px */
+  --brand-text-xl:   1.25rem;    /* 20px */
+  --brand-text-2xl:  1.5rem;     /* 24px */
+  --brand-text-3xl:  1.875rem;   /* 30px */
+  --brand-text-4xl:  2.25rem;    /* 36px */
+  --brand-text-5xl:  3rem;       /* 48px */
+  --brand-text-6xl:  3.75rem;    /* 60px */
+  --brand-text-7xl:  4.5rem;     /* 72px */
+  --brand-text-8xl:  6rem;       /* 96px */
+
+  /* Weight */
+  --brand-weight-light:    300;
+  --brand-weight-regular:  400;
+  --brand-weight-medium:   500;
+  --brand-weight-semibold: 600;
+  --brand-weight-bold:     700;
+
+  /* Letter-spacing */
+  --brand-tracking-tight:  -0.02em;
+  --brand-tracking-normal:  0;
+  --brand-tracking-wide:    0.08em;
+  --brand-tracking-wider:   0.12em;
+  --brand-tracking-widest:  0.35em;  /* uppercase micro labels */
+}
+
+/* ==========================================================================
+   SPACING (8px base)
+   ========================================================================== */
+:root {
+  --brand-space-0:   0;
+  --brand-space-px:  1px;
+  --brand-space-0-5: 2px;
+  --brand-space-1:   4px;
+  --brand-space-1-5: 6px;
+  --brand-space-2:   8px;
+  --brand-space-3:   12px;
+  --brand-space-4:   16px;
+  --brand-space-5:   20px;
+  --brand-space-6:   24px;
+  --brand-space-8:   32px;
+  --brand-space-10:  40px;
+  --brand-space-12:  48px;
+  --brand-space-16:  64px;
+  --brand-space-20:  80px;
+  --brand-space-24:  96px;
+  --brand-space-32:  128px;
+}
+
+/* ==========================================================================
+   COMPONENT TOKENS
+   ========================================================================== */
+:root {
+  /* Buttons */
+  --btn-height-sm:     32px;
+  --btn-height-md:     40px;
+  --btn-height-lg:     48px;
+  --btn-padding-x:     var(--brand-space-6);    /* 24px */
+  --btn-padding-y:     var(--brand-space-3);    /* 12px */
+  --btn-radius:        0;                       /* sharp — design rule */
+  --btn-font-size:     var(--brand-text-sm);
+  --btn-font-weight:   var(--brand-weight-bold);
+  --btn-tracking:      var(--brand-tracking-wider);
+
+  /* Primary button */
+  --btn-primary-bg:    var(--brand-accent);
+  --btn-primary-fg:    var(--brand-bg-base);
+  --btn-primary-hover: var(--brand-accent-hover);
+
+  /* Ghost button */
+  --btn-ghost-border:  var(--brand-border-default);
+  --btn-ghost-fg:      var(--brand-text-primary);
+  --btn-ghost-hover-border: var(--brand-accent);
+  --btn-ghost-hover-fg:     var(--brand-text-brand);
+
+  /* Cards */
+  --card-padding:   var(--brand-space-6);       /* 24px */
+  --card-radius:    0;                          /* sharp — design rule */
+  --card-bg:        hsl(220 26% 7% / 0.4);
+  --card-border:    hsl(0 0% 20% / 0.25);
+  --card-hover-bg:  hsl(220 26% 7% / 0.6);
+  --card-hover-border: hsl(5 78% 42% / 0.4);
+
+  /* Inputs */
+  --input-height:    40px;
+  --input-padding-x: var(--brand-space-3);      /* 12px */
+  --input-radius:    var(--brand-space-px);
+  --input-border:    var(--brand-border-default);
+  --input-bg:        var(--brand-bg-subtle);
+  --input-text:      var(--brand-text-primary);
+  --input-placeholder: var(--brand-text-muted);
+  --input-focus-border: var(--brand-border-focus);
+
+  /* Tags / Badges */
+  --tag-padding-x:  var(--brand-space-2);       /* 8px */
+  --tag-padding-y:  var(--brand-space-1);       /* 4px */
+  --tag-font-size:  var(--brand-text-xs);
+  --tag-tracking:   var(--brand-tracking-wide);
+  --tag-bg:         hsl(0 0% 20% / 0.5);
+  --tag-fg:         hsl(0 0% 100% / 0.6);
+  --tag-border:     hsl(0 0% 20% / 0.4);
+
+  /* Navigation */
+  --nav-height:         96px;
+  --nav-height-compact: 80px;
+  --nav-tracking:       var(--brand-tracking-wider);
+
+  /* Section labels */
+  --section-label-size:    var(--brand-text-xs);
+  --section-label-tracking: var(--brand-tracking-widest);
+  --section-label-color:   hsl(5 78% 42% / 0.7);
+
+  /* Shadows */
+  --shadow-sm:   0 2px  8px rgba(0,0,0,0.4);
+  --shadow-md:   0 8px  32px rgba(0,0,0,0.6);
+  --shadow-lg:   0 16px 48px rgba(0,0,0,0.8);
+  --shadow-glow: 0 0   40px hsl(5 78% 42% / 0.35);
+
+  /* Motion */
+  --motion-fast:    150ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  --motion-normal:  300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+  --motion-slow:    500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --motion-slower:  800ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --motion-bounce:  400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}

@@ -1,0 +1,312 @@
+/**
+ * NaaPeru Design Tokens
+ * =====================
+ * 3-tier token architecture: Primitives → Semantic → Component
+ *
+ * Usage: import this file or reference tokens via CSS custom properties.
+ * All colors are HSL. Tailwind wiring lives in tailwind.config.ts.
+ *
+ * Tier 1 — Primitives   raw values, no meaning attached
+ * Tier 2 — Semantic     purpose-mapped (what does it do?)
+ * Tier 3 — Component    scoped to specific UI elements
+ */
+
+/* ==========================================================================
+   TIER 1 — PRIMITIVES
+   Raw palette, scale values, and base constants.
+   ========================================================================== */
+
+:root {
+
+  /* --- Color Primitives --- */
+
+  /* Dark blue-gray ramp (backgrounds) */
+  --color-dark-900: 210 40% 2%;   /* deepest */
+  --color-dark-800: 215 32% 6%;   /* near-black */
+  --color-dark-700: 220 28% 10%;  /* base page bg */
+  --color-dark-600: 220 26% 7%;   /* card / panel */
+  --color-dark-500: 220 22% 10%;  /* subtle surface */
+  --color-dark-400: 220 20% 14%;  /* elevated surface */
+
+  /* Red ramp (brand) */
+  --color-red-500: 0 100% 50%;    /* pure brand red */
+  --color-red-400: 0 100% 45%;    /* hover / pressed */
+  --color-red-300: 0 84% 60%;     /* destructive states */
+  --color-red-800: 1 90% 24%;     /* ticker strip bg */
+
+  /* White / gray scale */
+  --color-white: 0 0% 100%;
+  --color-black: 0 0% 0%;
+  --color-gray-600: 0 0% 20%;     /* muted, border, input */
+  --color-gray-400: 0 0% 54%;     /* de-emphasized text */
+
+  /* --- Spacing Scale (8px base) --- */
+  --space-1: 0.25rem;   /*  4px */
+  --space-2: 0.5rem;    /*  8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-24: 6rem;     /* 96px */
+  --space-32: 8rem;     /* 128px */
+
+  /* --- Typography Scale --- */
+  --font-family-heading: 'Space Grotesk', sans-serif;
+  --font-family-body: 'Inter', sans-serif;
+  --font-family-sanchari: 'DhurjatiItalic', 'Space Grotesk', sans-serif;
+
+  --font-size-10: 0.625rem;   /* 10px — micro labels */
+  --font-size-11: 0.6875rem;  /* 11px */
+  --font-size-12: 0.75rem;    /* 12px */
+  --font-size-14: 0.875rem;   /* 14px */
+  --font-size-16: 1rem;       /* 16px */
+  --font-size-18: 1.125rem;   /* 18px */
+  --font-size-20: 1.25rem;    /* 20px */
+  --font-size-24: 1.5rem;     /* 24px */
+  --font-size-30: 1.875rem;   /* 30px */
+  --font-size-36: 2.25rem;    /* 36px */
+  --font-size-48: 3rem;       /* 48px */
+  --font-size-60: 3.75rem;    /* 60px */
+  --font-size-72: 4.5rem;     /* 72px */
+  --font-size-96: 6rem;       /* 96px */
+
+  /* --- Border Radius --- */
+  --radius-none: 0;
+  --radius-sm: calc(0.25rem - 4px);   /* 0px */
+  --radius-md: calc(0.25rem - 2px);   /* 2px */
+  --radius-lg: 0.25rem;               /* 4px */
+
+  /* --- Shadow Primitives --- */
+  --shadow-alpha-sm: rgba(0, 0, 0, 0.4);
+  --shadow-alpha-md: rgba(0, 0, 0, 0.6);
+  --shadow-alpha-lg: rgba(0, 0, 0, 0.8);
+  --shadow-alpha-glow: rgba(255, 0, 0, 0.3);
+
+  /* --- Transition Primitives --- */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 800ms;
+
+  --ease-smooth: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-confident: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+
+/* ==========================================================================
+   TIER 2 — SEMANTIC TOKENS
+   Purpose-driven. "What is this color FOR?" not "What color is it?"
+   ========================================================================== */
+
+:root {
+
+  /* --- Surfaces --- */
+  --background: var(--color-dark-600);          /* page background   */
+  --foreground: var(--color-white);             /* primary text      */
+
+  --surface-subtle: var(--color-dark-500);      /* slight elevation  */
+  --surface-elevated: var(--color-dark-400);    /* cards / panels    */
+
+  --card: var(--color-dark-600);
+  --card-foreground: var(--color-white);
+
+  --popover: var(--color-dark-600);
+  --popover-foreground: var(--color-white);
+
+  /* --- Brand --- */
+  --primary: var(--color-red-500);              /* brand accent / CTA          */
+  --primary-foreground: var(--color-white);
+  --primary-hover: var(--color-red-400);        /* interactive pressed state   */
+  --primary-glow: var(--color-red-500);         /* glow fx source color        */
+
+  /* --- Secondary / Neutral --- */
+  --secondary: var(--color-white);
+  --secondary-foreground: var(--color-black);
+
+  --muted: var(--color-gray-600);               /* muted bg tints              */
+  --muted-foreground: var(--color-gray-400);    /* low-contrast text           */
+
+  --gray-light: var(--color-gray-400);
+  --gray-dark: var(--color-gray-600);
+
+  /* --- Accent (alias for primary in current system) --- */
+  --accent: var(--color-red-500);
+  --accent-foreground: var(--color-white);
+
+  /* --- Feedback --- */
+  --destructive: var(--color-red-300);
+  --destructive-foreground: var(--color-white);
+
+  /* --- Chrome --- */
+  --border: var(--color-gray-600);              /* default divider line        */
+  --input: var(--color-gray-600);               /* form input border           */
+  --ring: var(--color-red-500);                 /* focus ring                  */
+
+  /* --- Semantic Spacing --- */
+  --spacing-xs:  var(--space-2);    /* 8px  */
+  --spacing-sm:  var(--space-4);    /* 16px */
+  --spacing-md:  var(--space-6);    /* 24px */
+  --spacing-lg:  var(--space-8);    /* 32px */
+  --spacing-xl:  var(--space-12);   /* 48px */
+  --spacing-2xl: var(--space-16);   /* 64px */
+  --spacing-3xl: var(--space-24);   /* 96px */
+  --spacing-4xl: var(--space-32);   /* 128px */
+
+  /* --- Semantic Shadows --- */
+  --shadow-sm:   0 2px  8px var(--shadow-alpha-sm);
+  --shadow-md:   0 8px  32px var(--shadow-alpha-md);
+  --shadow-lg:   0 16px 48px var(--shadow-alpha-lg);
+  --shadow-glow: 0 0   40px var(--shadow-alpha-glow);
+
+  /* --- Semantic Transitions --- */
+  --transition-fast:   var(--duration-fast)   var(--ease-smooth);
+  --transition-normal: var(--duration-normal) var(--ease-smooth);
+  --transition-slow:   var(--duration-slow)   var(--ease-confident);
+  --transition-slower: var(--duration-slower) var(--ease-confident);
+
+  /* --- Border Radius (semantic alias) --- */
+  --radius: var(--radius-lg);   /* 4px — near-flat, design rule = no rounded cards */
+}
+
+
+/* ==========================================================================
+   TIER 3 — COMPONENT TOKENS
+   Scoped to specific UI components.
+   ========================================================================== */
+
+:root {
+
+  /* --- Navigation --- */
+  --nav-height-default: 6rem;         /* h-24 */
+  --nav-height-scrolled: 5rem;        /* h-20 */
+  --nav-bg: hsl(var(--background) / 0.9);
+  --nav-border: hsl(var(--border) / 0.3);
+  --nav-item-color: hsl(var(--foreground) / 0.7);
+  --nav-item-active-color: hsl(var(--primary));
+  --nav-item-font: var(--font-family-body);
+  --nav-item-tracking: 0.12em;
+
+  /* --- Cards --- */
+  --card-bg: hsl(var(--card) / 0.4);
+  --card-border: hsl(var(--border) / 0.25);
+  --card-hover-border: hsl(var(--primary) / 0.4);
+  --card-hover-bg: hsl(var(--card) / 0.6);
+  --card-radius: var(--radius-none);        /* design rule: no rounded cards */
+  --card-padding: var(--space-6);           /* 24px */
+  --card-transition: border-color var(--transition-normal), background-color var(--transition-normal);
+
+  /* --- Buttons (primary CTA) --- */
+  --btn-primary-bg: hsl(var(--primary));
+  --btn-primary-fg: hsl(var(--background));
+  --btn-primary-hover-bg: hsl(var(--primary-hover));
+  --btn-primary-font: var(--font-family-body);
+  --btn-primary-tracking: 0.3em;
+  --btn-primary-padding-x: var(--space-6);  /* 24px */
+  --btn-primary-padding-y: var(--space-3);  /* 12px */
+  --btn-primary-font-size: var(--font-size-14);
+  --btn-primary-transition: background-color var(--transition-fast);
+
+  /* --- Section Layout --- */
+  --section-padding-y: var(--space-16);     /* 64px  */
+  --section-hero-padding-y: var(--space-32); /* 128px */
+  --section-label-size: var(--font-size-12);
+  --section-label-tracking: 0.35em;
+  --section-label-color: hsl(var(--primary) / 0.7);
+
+  /* --- Ticker Strip --- */
+  --ticker-bg: hsl(1 90% 24%);
+  --ticker-text: hsl(var(--foreground));
+  --ticker-duration: 55s;
+
+  /* --- Chatbot Panel --- */
+  --chatbot-width: 24rem;                   /* 384px */
+  --chatbot-bg: hsl(var(--surface-elevated));
+  --chatbot-border: hsl(var(--border) / 0.4);
+  --chatbot-header-font: var(--font-family-sanchari);
+
+  /* --- Form Inputs --- */
+  --input-bg: hsl(var(--surface-subtle));
+  --input-border: hsl(var(--input));
+  --input-border-focus: hsl(var(--ring));
+  --input-text: hsl(var(--foreground));
+  --input-placeholder: hsl(var(--muted-foreground));
+  --input-radius: var(--radius);
+
+  /* --- Ghost Typography (overlay pattern) --- */
+  --ghost-text-color: hsl(var(--foreground) / 0.05);
+  --ghost-text-font: var(--font-family-heading);
+
+  /* --- Hero Strip (e.g. accent bg band) --- */
+  --hero-strip-bg: hsl(var(--primary) / 0.05);
+  --hero-strip-border: hsl(var(--primary) / 0.3);
+
+  /* --- Tag / Badge chips --- */
+  --tag-bg: hsl(var(--muted) / 0.5);
+  --tag-text: hsl(var(--foreground) / 0.6);
+  --tag-border: hsl(var(--border) / 0.4);
+  --tag-font-size: var(--font-size-11);
+  --tag-tracking: 0.08em;
+  --tag-padding-x: var(--space-2);
+  --tag-padding-y: var(--space-1);
+}
+
+
+/* ==========================================================================
+   UTILITY — Component class examples using tokens
+   (Reference for implementing new components consistently)
+   ========================================================================== */
+
+/*
+  On-brand card:
+  ─────────────────────────────────────────────
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--card-radius);
+    padding: var(--card-padding);
+    transition: var(--card-transition);
+  }
+  .card:hover {
+    border-color: var(--card-hover-border);
+    background: var(--card-hover-bg);
+  }
+
+  Primary CTA button:
+  ─────────────────────────────────────────────
+  .btn-primary {
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-fg);
+    font-family: var(--btn-primary-font);
+    font-size: var(--btn-primary-font-size);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--btn-primary-tracking);
+    padding: var(--btn-primary-padding-y) var(--btn-primary-padding-x);
+    transition: var(--btn-primary-transition);
+  }
+  .btn-primary:hover {
+    background: var(--btn-primary-hover-bg);
+  }
+
+  Section label (microcopy):
+  ─────────────────────────────────────────────
+  .section-label {
+    font-family: var(--font-family-body);
+    font-size: var(--section-label-size);
+    text-transform: uppercase;
+    letter-spacing: var(--section-label-tracking);
+    color: var(--section-label-color);
+  }
+
+  Ghost background word:
+  ─────────────────────────────────────────────
+  .ghost-word {
+    font-family: var(--ghost-text-font);
+    color: var(--ghost-text-color);
+    user-select: none;
+    pointer-events: none;
+  }
+*/

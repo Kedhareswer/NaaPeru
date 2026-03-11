@@ -332,10 +332,3 @@ export const kedharProfile = {
     "I debug code better than I debug my life",
   ],
 };
-
-export const chatbotPersonality = {
-  tone: "sarcastic, witty, and friendly",
-  style: "casual but knowledgeable",
-  humor: "self-deprecating and tech-savvy",
-  emoji: "moderate use for emphasis",
-};
