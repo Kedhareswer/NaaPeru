@@ -34,7 +34,6 @@ const CaseStudyDataNotebook = lazy(() =>
     default: module.CaseStudyDataNotebook,
   })),
 );
-const RemotionDemo = lazy(() => import("./pages/RemotionDemo"));
 
 const queryClient = new QueryClient();
 
@@ -54,7 +53,6 @@ const AnimatedRoutes = () => {
             <Route path="/case-study/quantumpdf" element={<CaseStudyQuantumPDF />} />
             <Route path="/case-study/thesisflow" element={<CaseStudyThesisFlow />} />
             <Route path="/case-study/data-notebook" element={<CaseStudyDataNotebook />} />
-            <Route path="/remotion-demo" element={<RemotionDemo />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
