@@ -1,5 +1,5 @@
 import { Eye } from "lucide-react";
-import { Link } from "react-router-dom";
+import { TransitionLink } from "@/components/TransitionLink";
 
 export const WorkProjects = () => {
   const projects = [
@@ -51,7 +51,7 @@ export const WorkProjects = () => {
               <article key={project.number} className="group">
                 {/* Media Container */}
                 {project.caseStudy ? (
-                  <Link
+                  <TransitionLink
                     to={project.caseStudy}
                     className="relative block w-full aspect-[16/9] overflow-hidden bg-gradient-to-br from-primary/10 via-background to-background mb-6"
                   >
@@ -68,7 +68,7 @@ export const WorkProjects = () => {
                         View Case Study
                       </span>
                     </div>
-                  </Link>
+                  </TransitionLink>
                 ) : (
                   <a
                     href={project.demo}

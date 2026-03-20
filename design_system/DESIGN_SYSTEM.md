@@ -352,7 +352,48 @@ When adding a new case study:
 - Reuse this structure.
 - Stick to the same section ordering or a subset, for consistency.
 
-### 5.5 ChatBot
+### 5.5 Poreia (The Path) Page
+
+Files:
+- `src/pages/Poreia.tsx` — main React page
+- `public/poreia-data.json` — all data (milestones, skills, radar) — edit here, no code changes needed
+
+Route: `/poreia`
+
+**Data-driven architecture:**
+All milestones, skill levels, radar values, and copy are loaded from `poreia-data.json` at runtime via `fetch`. To update content (add a milestone, adjust a skill level, change text), edit the JSON file only.
+
+**Sections (top to bottom):**
+1. **Hero** — ghost watermark "ΠΟΡΕΙΑ", heading with accent word in `text-primary`, subtitle, stats row (milestone counts).
+2. **18-Month Roadmap** — horizontal timeline with three domain tracks (AI/ML, Engineering, Career). Nodes are clickable. Legend uses the same red/glow/outline dot pattern as the prototype.
+3. **Detail Panel** — split grid (left: status, title, description, meta; right: progress bar, aim quote with `border-l-2 border-primary`, ideas list). Uses `AnimatePresence` for smooth transitions between milestones.
+4. **Radar Chart (Am I Good?)** — SVG with three polygon layers:
+   - Red solid (current) — `hsl(5,78%,42%)`
+   - Blue dashed (target) — `hsl(210,65%,55%)`
+   - Gold dashed faint (miracle) — `hsl(45,80%,55%)` at low opacity
+5. **Skill Bars (Where I Am → Where I Want to Be)** — grouped by domain (Core, ML & AI, Engineering). Each bar shows:
+   - Red fill = current level
+   - Blue zone + marker = target
+   - Gold zone + marker = miracle (faint)
+   - Triple value display: `75 → 82 → 88`
+
+**Additional colors used (not in main palette but scoped to this page):**
+- Target blue: `hsl(210, 65%, 55%)` — for target polygons, markers, and values.
+- Miracle gold: `hsl(45, 80%, 55%)` — always at low opacity (0.15–0.4), never dominant.
+
+**Design rules specific to this page:**
+- No rounded corners (consistent with global rules).
+- All panels use `border border-border/20 bg-card/40`.
+- First-person diary voice in all copy.
+- Stats use `font-heading` (Space Grotesk) for numbers, tiny uppercase labels below.
+
+**Adding a new milestone:**
+Add an object to the `milestones` array in `poreia-data.json`. Required fields: `id`, `domain`, `month` (0–18), `status` (done/active/planned), `title`, `desc`, `aim`, `progress` (0–100), `ideas` (string array), `date`, `cat`.
+
+**Updating skill levels:**
+Edit the `radar.now`, `radar.target`, `radar.miracle` arrays (matched by index to `radar.domains`) and the corresponding entries in `skills.groups[].skills[]`.
+
+### 5.6 ChatBot
 
 Files:
 - `src/components/ChatBot.tsx`

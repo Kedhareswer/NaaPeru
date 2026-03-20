@@ -1,0 +1,158 @@
+{
+  "hero": {
+    "heading": "I came. I build.",
+    "headingAccent": "I will conquer.",
+    "subtitle": "I don't have a five-year plan. I have a list of things I can't stop thinking about, a job that's teaching me more than college ever did, and the stubbornness to keep moving."
+  },
+  "timeline": {
+    "totalMonths": 18,
+    "currentMonth": 2,
+    "startLabel": "Jan 2026",
+    "endLabel": "Jun 2027",
+    "domains": ["AI / ML", "Engineering", "Career"]
+  },
+  "milestones": [
+    {
+      "id": 1, "domain": "AI / ML", "month": 0, "status": "done",
+      "title": "LLM Chess Tournament",
+      "desc": "I wanted to see what happens when you pit LLMs against each other in chess. Turns out, they're terrible — but watching Gemini blunder a queen against GPT-4 is genuinely entertaining. Built a whole ELO rating system around it.",
+      "aim": "I just wanted to know: can these things actually think strategically?",
+      "progress": 100,
+      "ideas": ["Wired up Groq, Gemini, OpenAI to play each other", "Built an ELO leaderboard from scratch", "Move-by-move viewer so you can watch the chaos"],
+      "date": "Jan 2026", "cat": "Multi-Agent AI"
+    },
+    {
+      "id": 2, "domain": "Engineering", "month": 0, "status": "done",
+      "title": "Dream Home Design",
+      "desc": "Took a break from AI and built something completely different — an interior design visualizer. Honestly? I needed to prove to myself I could ship a clean frontend without hiding behind a model API.",
+      "aim": "Ship something that has nothing to do with AI. Just good UI.",
+      "progress": 100,
+      "ideas": ["Room configurator with drag-and-drop", "Responsive layout that doesn't suck on mobile", "Deployed to Vercel in one night"],
+      "date": "Jan 2026", "cat": "Web Dev"
+    },
+    {
+      "id": 3, "domain": "Career", "month": 0, "status": "done",
+      "title": "Got promoted at DiligenceVault",
+      "desc": "Started as an AI Engineer Intern in October. Three months later they made me a Software Developer. I'm processing 5,000+ financial document chunks daily — the RAG pipeline I built hits 82% precision. Not perfect, but it cut manual review by 60%.",
+      "aim": "Prove I can ship in a real team, not just in my room at 2am.",
+      "progress": 100,
+      "ideas": ["Built agent orchestration workflows from scratch", "Delivered production REST APIs that people actually depend on", "Learned what 'code review' really means when your senior has opinions"],
+      "date": "Jan 2026", "cat": "Work"
+    },
+    {
+      "id": 4, "domain": "Engineering", "month": 2, "status": "done",
+      "title": "This portfolio",
+      "desc": "I hated every portfolio template I saw. So I made this — film shutter transitions, a chatbot that talks like me, and a page where I publicly track my goals (you're looking at it). No rounded corners. That's a hill I'll die on.",
+      "aim": "Make something that actually feels like me, not a Dribbble shot.",
+      "progress": 100,
+      "ideas": ["Film shutter page transitions because why not", "Chatbot that's sarcastic on purpose", "This Poreia page — accountability in public"],
+      "date": "Mar 2026", "cat": "Web Dev"
+    },
+    {
+      "id": 5, "domain": "AI / ML", "month": 2, "status": "active",
+      "title": "TGG — Vectorless RAG",
+      "desc": "This is the one I can't stop thinking about. Everyone does RAG the same way — chunk documents, embed them, cosine similarity, pray. I think that's broken. So I'm building something that parses documents into trees and navigates them deterministically. No embeddings. No vector DB. Just structure.",
+      "aim": "I want to prove there's a better way to do retrieval. If I'm wrong, at least I'll understand why embeddings won.",
+      "progress": 40,
+      "ideas": ["Parse documents into actual trees, not chunks", "3-step LLM query enrichment before retrieval", "Deterministic fetch — no cosine similarity gambling", "Learning Rust for this (it's humbling)", "SQLite because vector DBs are overkill for this"],
+      "date": "Mar 2026", "cat": "Research"
+    },
+    {
+      "id": 6, "domain": "Career", "month": 2, "status": "active",
+      "title": "Surviving production code",
+      "desc": "Every day at DiligenceVault I ship something. Some days it's clean. Some days I stare at a PR review wondering how I ever thought that code was good. But I'm learning faster here than I did in four years of college.",
+      "aim": "Become the engineer who doesn't need hand-holding. Not there yet.",
+      "progress": 35,
+      "ideas": ["Getting faster at debugging other people's code", "Learning that 'it works' isn't the same as 'it's good'", "CI/CD finally makes sense to me", "My seniors are patient and I don't deserve it"],
+      "date": "Ongoing", "cat": "Work"
+    },
+    {
+      "id": 7, "domain": "Career", "month": 3, "status": "active",
+      "title": "Stop being invisible",
+      "desc": "I build stuff but nobody knows. That's my fault. Started going to meetups, posting on LinkedIn (it feels weird), and actually talking to other engineers instead of just reading their tweets.",
+      "aim": "If a tree falls in a forest and nobody hears it — that's my GitHub right now.",
+      "progress": 15,
+      "ideas": ["Showed up to two AI meetups (didn't die)", "Started posting about TGG on LinkedIn", "Replied to some open-source threads instead of just lurking", "Still terrible at small talk"],
+      "date": "2026", "cat": "Growth"
+    },
+    {
+      "id": 8, "domain": "AI / ML", "month": 7, "status": "planned",
+      "title": "Actually fine-tune an LLM",
+      "desc": "I've been calling myself an AI engineer but I've never trained a model from scratch. That bothers me. Planning to LoRA fine-tune something small on a domain I care about. Maybe academic papers, maybe financial docs from work.",
+      "aim": "I need to understand what happens below the API layer. I can't keep being a 'prompt engineer with extra steps.'",
+      "progress": 0,
+      "ideas": ["LoRA/QLoRA because I don't have infinite GPUs", "Curate a dataset that actually matters", "Build an eval pipeline so I know if it's better or just different", "Compare honestly against the base model"],
+      "date": "Aug 2026", "cat": "Deep Learning"
+    },
+    {
+      "id": 9, "domain": "Career", "month": 9, "status": "planned",
+      "title": "Give a talk (terrifying)",
+      "desc": "I want to talk about TGG at a meetup or online conference. The thought makes my stomach drop. But if I can build a vectorless RAG system, I can survive 20 minutes on a stage. Probably.",
+      "aim": "Say something useful to a room of people who know more than me. Try not to pass out.",
+      "progress": 0,
+      "ideas": ["Write a proposal that doesn't sound like a student presentation", "Build a live demo that won't crash (famous last words)", "Practice until I stop saying 'umm' every three seconds", "Getting rejected is fine — the prep alone will be worth it"],
+      "date": "Oct 2026", "cat": "Growth"
+    },
+    {
+      "id": 10, "domain": "Engineering", "month": 10, "status": "planned",
+      "title": "Open-source something real",
+      "desc": "I want to extract something from TGG or this portfolio and actually package it for others. Not a tutorial repo with 3 stars — a real library with docs, tests, and a reason to exist.",
+      "aim": "Stop only consuming open-source. Contribute something back that someone actually installs.",
+      "progress": 0,
+      "ideas": ["Figure out what's actually worth extracting", "Write documentation that I'd want to read", "Set up proper CI, versioning, changelog", "Merge my first external PR without panicking"],
+      "date": "Nov 2026", "cat": "Open Source"
+    },
+    {
+      "id": 11, "domain": "AI / ML", "month": 14, "status": "planned",
+      "title": "SLM Agentic Coding Tool",
+      "desc": "This is the big dream. A coding assistant that runs on small language models, fully local, no cloud dependency. I use AI tools every day — I want to build one that works the way I think. Still mostly a napkin sketch right now.",
+      "aim": "Build the tool I wish existed. If it's good enough for me, maybe it's good enough for others.",
+      "progress": 0,
+      "ideas": ["Find the right SLM that's fast enough to not be annoying", "Agent loop with actual tool use, not just autocomplete", "Everything runs locally — privacy isn't optional", "IDE integration that doesn't feel bolted on"],
+      "date": "Mar 2027", "cat": "Planning Phase"
+    }
+  ],
+  "radar": {
+    "title": "Am I Good?",
+    "titleAccentWord": "I",
+    "subtitle": "I sat down and rated myself honestly. It hurt a little. The blue line is where I think I'll be in eighteen months if I keep showing up. Some of these gaps keep me up at night.",
+    "domains": ["RAG Systems", "Python", "Automation", "Frontend", "ML / DL", "System Design"],
+    "now":     [75, 55, 65, 50, 50, 35],
+    "target":  [82, 63, 72, 55, 58, 48],
+    "miracle": [88, 68, 78, 58, 70, 55]
+  },
+  "skills": {
+    "title": "Where I Am → Where I Want to Be",
+    "titleAccentWords": "Want to Be",
+    "subtitle": "Red is where I am. Blue is where I think I can get. The space between is eighteen months of not sleeping enough.",
+    "groups": [
+      {
+        "domain": "Core",
+        "skills": [
+          { "name": "RAG Systems",  "now": 75, "target": 82, "miracle": 88 },
+          { "name": "Automation",   "now": 65, "target": 72, "miracle": 78 },
+          { "name": "Python",       "now": 55, "target": 63, "miracle": 70 },
+          { "name": "LangChain",    "now": 70, "target": 76, "miracle": 82 }
+        ]
+      },
+      {
+        "domain": "ML & AI",
+        "skills": [
+          { "name": "Deep Learning", "now": 50, "target": 58, "miracle": 65 },
+          { "name": "Fine-tuning",   "now": 20, "target": 40, "miracle": 55 },
+          { "name": "Multi-Agent",   "now": 50, "target": 55, "miracle": 62 },
+          { "name": "NLP",           "now": 45, "target": 52, "miracle": 60 }
+        ]
+      },
+      {
+        "domain": "Engineering",
+        "skills": [
+          { "name": "React / TS",    "now": 50, "target": 55, "miracle": 62 },
+          { "name": "Rust",           "now": 15, "target": 30, "miracle": 42 },
+          { "name": "System Design",  "now": 35, "target": 48, "miracle": 55 },
+          { "name": "CI/CD",          "now": 30, "target": 42, "miracle": 50 }
+        ]
+      }
+    ]
+  }
+}

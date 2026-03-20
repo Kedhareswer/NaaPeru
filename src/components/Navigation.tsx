@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { MoreHorizontal } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useChat } from "@/contexts/ChatContext";
+import { TransitionLink } from "@/components/TransitionLink";
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -35,7 +36,7 @@ export const Navigation = () => {
     { path: "/", label: "WORK" },
     { path: "/fun", label: "EXPERIMENTOS" },
     { path: "/about", label: "ABOUT" },
-    { path: "/resume", label: "RESUME" },
+    { path: "/poreia", label: "\u03A0\u039F\u03A1\u0395\u0399\u0391" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -65,9 +66,10 @@ export const Navigation = () => {
           {!isScrolled && (
             <div className="hidden md:flex items-center gap-10 animate-fade-in absolute left-1/2 -translate-x-1/2">
               {menuItems.map((item) => (
-                <Link
+                <TransitionLink
                   key={item.path}
                   to={item.path}
+                  label={item.label}
                   className={`relative font-body text-sm font-medium uppercase tracking-wider transition-colors duration-normal group ${
                     isActive(item.path) ? "text-primary" : "text-foreground/70 hover:text-primary"
                   }`}
@@ -79,7 +81,7 @@ export const Navigation = () => {
                       isActive(item.path) ? "w-full" : "w-0 group-hover:w-full"
                     }`}
                   />
-                </Link>
+                </TransitionLink>
               ))}
             </div>
           )}
@@ -126,9 +128,10 @@ export const Navigation = () => {
           <div className="mt-2 flex justify-end">
             <div className="w-56 overflow-hidden rounded-lg border border-border/20 bg-background/95 py-3 shadow-xl backdrop-blur-md">
               {menuItems.map((item) => (
-                <Link
+                <TransitionLink
                   key={item.path}
                   to={item.path}
+                  label={item.label}
                   onClick={() => setMenuOpen(false)}
                   className={`flex w-full items-center justify-between px-4 py-3 text-left font-body text-sm font-semibold uppercase tracking-wider transition-colors duration-normal ${
                     isActive(item.path) ? "text-primary" : "text-foreground hover:text-primary"
@@ -136,7 +139,7 @@ export const Navigation = () => {
                 >
                   {item.label}
                   {isActive(item.path) && <span className="h-1 w-6 rounded-full bg-primary" />}
-                </Link>
+                </TransitionLink>
               ))}
             </div>
           </div>

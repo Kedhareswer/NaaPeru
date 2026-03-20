@@ -45,6 +45,9 @@ src/
 │   ├── ChatBot.tsx                # Sliding chatbot panel (సంచారి?)
 │   ├── InfiniteMarquee.tsx        # Horizontal ticker strip
 │   ├── LoadingScreen.tsx          # Full-screen loader
+│   ├── FilmShutterOverlay.tsx     # Cinematic page transition (7 horizontal bars)
+│   ├── TransitionLink.tsx         # Nav link wrapper that triggers film shutter transition
+│   ├── PageTransition.tsx         # Wraps page content for transition coordination
 │   └── ui/                        # shadcn/ui primitives + custom additions
 │       ├── shift-card.tsx         # cult-ui ShiftCard — used on Experimentos page
 │       └── [50+ shadcn components]
@@ -52,7 +55,7 @@ src/
 │   ├── Work.tsx                   # "/" — main work page
 │   ├── Fun.tsx                    # "/fun" — Experimentos index (ShiftCard grid)
 │   ├── About.tsx                  # "/about"
-│   ├── Resume.tsx                 # "/resume"
+│   ├── Poreia.tsx                 # "/poreia" — Πορεία (The Path) roadmap page
 │   ├── CaseStudyThesisFlow.tsx    # "/case-study/thesisflow"
 │   ├── CaseStudyQuantumPDF.tsx    # "/case-study/quantumpdf"
 │   ├── CaseStudyDataNotebook.tsx  # "/case-study/data-notebook"
@@ -63,12 +66,14 @@ src/
 │   ├── chatbotMatcher.ts          # Intent matching logic
 │   └── chatbotResponses.ts        # Response templates (sarcastic, first-person)
 ├── contexts/
-│   └── ChatContext.tsx            # Global chatbot open/close state
+│   ├── ChatContext.tsx            # Global chatbot open/close state
+│   └── TransitionContext.tsx      # Film shutter transition state machine
 └── hooks/
     ├── use-mobile.tsx
     └── useScrollTrigger.tsx
 public/
 ├── projects.json                  # All project data (source of truth for Work + Fun pages)
+├── poreia-data.json               # Πορεία page data (milestones, skills, radar) — edit here
 └── projects/                      # Project screenshot images
 design_system/
 └── DESIGN_SYSTEM.md               # Full design rules — read this before adding anything
@@ -82,7 +87,7 @@ design_system/
 /                          → Work.tsx
 /fun                       → Fun.tsx  (Experimentos)
 /about                     → About.tsx
-/resume                    → Resume.tsx
+/poreia                    → Poreia.tsx  (Πορεία — The Path)
 /case-study/thesisflow     → CaseStudyThesisFlow.tsx
 /case-study/quantumpdf     → CaseStudyQuantumPDF.tsx
 /case-study/data-notebook  → CaseStudyDataNotebook.tsx
