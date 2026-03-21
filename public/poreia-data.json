@@ -154,5 +154,16 @@
         ]
       }
     ]
+  },
+  "marquee": {
+    "words1": ["BUILD", "SHIP", "LEARN", "REPEAT"],
+    "words2": ["LEARN", "GROW", "REPEAT", "SHIP"]
+  },
+  "closing": {
+    "label": "The Road Ahead",
+    "quote": "I don't know where this goes. I just know I won't",
+    "quoteAccent": "stop.",
+    "meta": "This page updates as I do.",
+    "updatedDate": "March 2026"
   }
 }

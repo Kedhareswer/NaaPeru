@@ -355,40 +355,62 @@ When adding a new case study:
 ### 5.5 Poreia (The Path) Page
 
 Files:
-- `src/pages/Poreia.tsx` — main React page
-- `public/poreia-data.json` — all data (milestones, skills, radar) — edit here, no code changes needed
+- `src/pages/Poreia.tsx` — main React page (contains inline sub-components: AnimatedCounter, PoreiaMarquee, FeaturedCallout, ClosingManifesto)
+- `public/poreia-data.json` — all data (milestones, skills, radar, marquee, closing) — edit here, no code changes needed
 
 Route: `/poreia`
 
 **Data-driven architecture:**
-All milestones, skill levels, radar values, and copy are loaded from `poreia-data.json` at runtime via `fetch`. To update content (add a milestone, adjust a skill level, change text), edit the JSON file only.
+All milestones, skill levels, radar values, marquee items, closing manifesto copy, and section text are loaded from `poreia-data.json` at runtime via `fetch`. To update content (add a milestone, adjust a skill level, change marquee items, edit closing text), edit the JSON file only.
 
 **Sections (top to bottom):**
-1. **Hero** — ghost watermark "ΠΟΡΕΙΑ", heading with accent word in `text-primary`, subtitle, stats row (milestone counts).
-2. **18-Month Roadmap** — horizontal timeline with three domain tracks (AI/ML, Engineering, Career). Nodes are clickable. Legend uses the same red/glow/outline dot pattern as the prototype.
-3. **Detail Panel** — split grid (left: status, title, description, meta; right: progress bar, aim quote with `border-l-2 border-primary`, ideas list). Uses `AnimatePresence` for smooth transitions between milestones.
-4. **Radar Chart (Am I Good?)** — SVG with three polygon layers:
-   - Red solid (current) — `hsl(5,78%,42%)`
-   - Blue dashed (target) — `hsl(210,65%,55%)`
-   - Gold dashed faint (miracle) — `hsl(45,80%,55%)` at low opacity
-5. **Skill Bars (Where I Am → Where I Want to Be)** — grouped by domain (Core, ML & AI, Engineering). Each bar shows:
+1. **Hero** — ghost watermark "ΠΟΡΕΙΑ", staggered Framer Motion entrance (label, bar, heading, subtitle, stats). Stats are bordered cards (`border border-border/20 bg-card/40`) with AnimatedCounter (counts up from 0 on viewport entry).
+2. **"Currently Building" Featured Callout** — auto-selects first active milestone. Full-width card with `border-primary/25`, subtle red glow gradient, red top-edge line, progress bar, aim quote, ideas in 2-col grid.
+3. **Marquee Strip 1** — PoreiaMarquee component. Continuous horizontal scroll of skill/tool labels from `poreia-data.json` `marquee` array.
+4. **18-Month Roadmap Timeline** — horizontal timeline with three domain tracks (AI/ML, Engineering, Career). Bigger nodes (`w-4 h-4`), thicker track lines (`h-[3px]`), taller track height (`h-14`). Domains slide in from left with stagger on scroll. Nodes are clickable. Legend uses red/glow/outline dot pattern.
+5. **Detail Panel** — split grid (left: status, title, description, meta; right: progress bar, aim quote with `border-l-2 border-primary`, ideas list). Uses `AnimatePresence` for smooth transitions between milestones.
+6. **Marquee Strip 2** — same PoreiaMarquee component, reversed scroll direction.
+7. **Radar Chart (Am I Good?)** — SVG with three polygon layers that animate from center on scroll entry:
+   - Red solid (current) — `hsl(5,78%,42%)` — animates first
+   - Blue dashed (target) — `hsl(210,65%,55%)` — animates second
+   - Gold dashed faint (miracle) — `hsl(45,80%,55%)` at low opacity — animates third
+8. **Skill Bars (Where I Am -> Where I Want to Be)** — grouped by domain (Core, ML & AI, Engineering). Each bar animates width on scroll with per-row stagger. Shows:
    - Red fill = current level
    - Blue zone + marker = target
    - Gold zone + marker = miracle (faint)
-   - Triple value display: `75 → 82 → 88`
+   - Triple value display: `75 -> 82 -> 88`
+9. **Closing Manifesto** — ClosingManifesto component. Full-width section with heading and body text from `poreia-data.json` `closing` object. Serves as the page ending. **No Footer on this page.**
+
+**Page-specific components (defined inline in Poreia.tsx):**
+- `AnimatedCounter` — counts from 0 to target number on scroll into view using `useInView` + `useMotionValue`.
+- `PoreiaMarquee` — continuous horizontal marquee strip of labels, supports forward and reverse direction.
+- `FeaturedCallout` — "Currently Building" card highlighting the first active milestone.
+- `ClosingManifesto` — ending section with manifesto text, replaces the standard Footer.
 
 **Additional colors used (not in main palette but scoped to this page):**
 - Target blue: `hsl(210, 65%, 55%)` — for target polygons, markers, and values.
-- Miracle gold: `hsl(45, 80%, 55%)` — always at low opacity (0.15–0.4), never dominant.
+- Miracle gold: `hsl(45, 80%, 55%)` — always at low opacity (0.15-0.4), never dominant.
+
+**Scroll-driven animations:**
+- Radar chart polygons scale from center (0 -> 1) with stagger when scrolled into view.
+- Skill bar widths animate from 0 -> actual percentage with per-row stagger delay.
+- Timeline domain tracks slide in from left with stagger.
+- Hero elements use staggered Framer Motion entrance.
+- Stat card numbers count up via AnimatedCounter.
 
 **Design rules specific to this page:**
 - No rounded corners (consistent with global rules).
 - All panels use `border border-border/20 bg-card/40`.
 - First-person diary voice in all copy.
 - Stats use `font-heading` (Space Grotesk) for numbers, tiny uppercase labels below.
+- No Footer component — the ClosingManifesto serves as the ending.
+
+**Data additions in `poreia-data.json`:**
+- `marquee` — array of string labels displayed in the marquee strips.
+- `closing` — object with `heading` and `body` fields for the closing manifesto.
 
 **Adding a new milestone:**
-Add an object to the `milestones` array in `poreia-data.json`. Required fields: `id`, `domain`, `month` (0–18), `status` (done/active/planned), `title`, `desc`, `aim`, `progress` (0–100), `ideas` (string array), `date`, `cat`.
+Add an object to the `milestones` array in `poreia-data.json`. Required fields: `id`, `domain`, `month` (0-18), `status` (done/active/planned), `title`, `desc`, `aim`, `progress` (0-100), `ideas` (string array), `date`, `cat`.
 
 **Updating skill levels:**
 Edit the `radar.now`, `radar.target`, `radar.miracle` arrays (matched by index to `radar.domains`) and the corresponding entries in `skills.groups[].skills[]`.
@@ -412,7 +434,7 @@ Tone:
 
 If you change the brand voice, **this is where it will be most visible**. Update `chatbotResponses.ts` and `chatbotKnowledge.ts` accordingly.
 
-### 5.6 Error Template
+### 5.7 Error Template
 
 Files:
 - `src/pages/errors/ErrorTemplate.tsx`

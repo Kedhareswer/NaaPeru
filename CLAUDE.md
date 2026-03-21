@@ -73,7 +73,7 @@ src/
     └── useScrollTrigger.tsx
 public/
 ├── projects.json                  # All project data (source of truth for Work + Fun pages)
-├── poreia-data.json               # Πορεία page data (milestones, skills, radar) — edit here
+├── poreia-data.json               # Πορεία page data (milestones, skills, radar, marquee, closing) — edit here
 └── projects/                      # Project screenshot images
 design_system/
 └── DESIGN_SYSTEM.md               # Full design rules — read this before adding anything
