@@ -1,0 +1,17 @@
+/* TEAM */
+
+Name: Marlakunta Kedhareswer Naidu
+Role: AI Engineer & Full-Stack Developer
+Location: Madanapalli, Andhra Pradesh, India
+Contact: kedhareswer.12110626 [at] gmail.com
+LinkedIn: linkedin.com/in/kedhareswernaidu
+GitHub: github.com/Kedhareswer
+Kaggle: kaggle.com/kedhareswernaidu
+
+/* SITE */
+
+Last update: 2026-03-22
+Language: English
+Standards: HTML5, CSS3, JavaScript ES2024
+Components: React 18, Vite 5, TypeScript 5, Tailwind CSS 3
+Frameworks: shadcn/ui, Framer Motion, React Router DOM 6

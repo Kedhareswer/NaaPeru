@@ -136,11 +136,11 @@ const Fun = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Seo
-        title="Experimentos | Kedhar's Creative and AI Side Projects"
-        description="A curated index of experiments, creative prototypes, and AI side projects built by Kedhar."
+        title="Experimentos | AI Experiments by Kedhar (Kedhareswer Naidu)"
+        description="AI experiments and creative prototypes by Marlakunta Kedhareswer Naidu (Kedhar). Includes computer vision, voice AI, ML education tools, and more."
         path="/fun"
         image="/og-fun.png"
-        imageAlt="Experimentos project index by Kedhar"
+        imageAlt="AI experiments and side projects by Kedhar Kedhareswer Naidu"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",

@@ -1,10 +1,48 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { X, Send, ChevronDown } from "lucide-react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeSanitize from "rehype-sanitize";
 import { motion, AnimatePresence } from "motion/react";
 import { useChat } from "@/contexts/ChatContext";
+
+/** Lightweight markdown renderer — handles **bold**, - lists, links, and paragraphs.
+ *  Replaces react-markdown + remark-gfm + rehype-sanitize (207KB → ~1KB). */
+function renderLightMarkdown(text: string): string {
+  const escaped = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  const lines = escaped.split("\n");
+  const parts: string[] = [];
+  let inList = false;
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    const listMatch = trimmed.match(/^[-•]\s+(.*)/);
+
+    if (listMatch) {
+      if (!inList) { parts.push('<ul class="list-disc list-inside space-y-1">'); inList = true; }
+      parts.push(`<li class="[&>p]:inline [&>p]:m-0">${inlineFmt(listMatch[1])}</li>`);
+    } else {
+      if (inList) { parts.push("</ul>"); inList = false; }
+      if (trimmed === "") {
+        continue;
+      } else {
+        parts.push(`<p class="mb-2 last:mb-0">${inlineFmt(trimmed)}</p>`);
+      }
+    }
+  }
+  if (inList) parts.push("</ul>");
+  return parts.join("");
+}
+
+function inlineFmt(s: string): string {
+  return s
+    .replace(/\*\*(.+?)\*\*/g, '<strong class="font-bold text-primary">$1</strong>')
+    .replace(
+      /https?:\/\/[^\s<]+/g,
+      (url) => `<a href="${url}" target="_blank" rel="noreferrer noopener" class="underline decoration-primary/70 hover:text-primary">${url}</a>`,
+    );
+}
 import { queryMatcher } from "@/lib/chatbotMatcher";
 import {
   buildNextQuotaState,
@@ -373,40 +411,10 @@ export const ChatBot = () => {
                         }`}
                       >
                         {message.role === "assistant" ? (
-                          <div className="font-body text-sm leading-relaxed break-words">
-                            <ReactMarkdown
-                              remarkPlugins={[remarkGfm]}
-                              rehypePlugins={[rehypeSanitize]}
-                              skipHtml
-                              components={{
-                                p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
-                                ul: ({ children }) => (
-                                  <ul className="list-disc list-inside space-y-1">{children}</ul>
-                                ),
-                                ol: ({ children }) => (
-                                  <ol className="list-decimal list-inside space-y-1">{children}</ol>
-                                ),
-                                li: ({ children }) => (
-                                  <li className="[&>p]:inline [&>p]:m-0">{children}</li>
-                                ),
-                                strong: ({ children }) => (
-                                  <strong className="font-bold text-primary">{children}</strong>
-                                ),
-                                a: ({ children, href }) => (
-                                  <a
-                                    href={href}
-                                    target="_blank"
-                                    rel="noreferrer noopener"
-                                    className="underline decoration-primary/70 hover:text-primary"
-                                  >
-                                    {children}
-                                  </a>
-                                ),
-                              }}
-                            >
-                              {message.content}
-                            </ReactMarkdown>
-                          </div>
+                          <div
+                            className="font-body text-sm leading-relaxed break-words chatbot-md"
+                            dangerouslySetInnerHTML={{ __html: renderLightMarkdown(message.content) }}
+                          />
                         ) : (
                           <p className="font-body text-sm leading-relaxed break-words whitespace-pre-wrap">
                             {message.content}

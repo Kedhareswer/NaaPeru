@@ -32,20 +32,37 @@ const Work = () => {
   return (
     <>
       <Seo
-        title="Kedhar | AI Engineer Portfolio and Case Studies"
-        description="Portfolio of Kedhar featuring AI products, web engineering case studies, and human-centered digital experiences."
+        title="Kedhar (Kedhareswer) | AI Engineer Portfolio &amp; Case Studies"
+        description="Portfolio of Marlakunta Kedhareswer Naidu (Kedhar), AI Engineer from India. Featuring case studies on ThesisFlow AI, QuantumPDF RAG system, and 10+ AI-powered projects."
         path="/"
         image="/og-work.png"
-        imageAlt="Kedhar portfolio homepage and case studies"
+        imageAlt="Kedhar Kedhareswer Naidu AI Engineer portfolio and case studies"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Person",
-          name: "Kedhar",
+          name: "Marlakunta Kedhareswer Naidu",
+          alternateName: ["Kedhar", "Kedhareswer"],
           url: "https://kedhar.vercel.app/",
-          jobTitle: "AI Engineer and Developer",
+          jobTitle: "AI Engineer",
+          description:
+            "AI Engineer and Full-Stack Developer from India specializing in LLMs, RAG systems, computer vision, and human-centered AI products.",
+          knowsAbout: [
+            "Artificial Intelligence",
+            "Machine Learning",
+            "LLMs",
+            "RAG Systems",
+            "Computer Vision",
+            "NLP",
+            "Deep Learning",
+            "React",
+            "Python",
+            "TypeScript",
+          ],
           sameAs: [
             "https://github.com/Kedhareswer",
-            "https://linkedin.com/in/kedhareswernaidu",
+            "https://www.linkedin.com/in/kedhareswernaidu/",
+            "https://www.kaggle.com/kedhareswernaidu",
+            "https://21st.dev/community/kedhar",
           ],
         }}
       />

@@ -8,20 +8,36 @@ const About = () => {
   return (
     <div className="overflow-x-hidden">
       <Seo
-        title="About Kedhar | AI Engineer and Product Builder"
-        description="Learn about Kedhar's background, approach to AI product engineering, and focus on building practical, high-impact systems."
+        title="About Kedhar (Kedhareswer Naidu) | AI Engineer from India"
+        description="Marlakunta Kedhareswer Naidu (Kedhar) is an AI Engineer from Andhra Pradesh, India. B.Tech in CS (Data Science) from LPU. Works at DiligenceVault building AI document processing systems."
         path="/about"
         image="/og-about.png"
-        imageAlt="About Kedhar AI engineer profile page"
+        imageAlt="About Kedhar Kedhareswer Naidu AI Engineer profile"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "ProfilePage",
-          name: "About Kedhar",
+          name: "About Marlakunta Kedhareswer Naidu (Kedhar)",
           url: "https://kedhar.vercel.app/about",
           mainEntity: {
             "@type": "Person",
-            name: "Kedhar",
-            jobTitle: "AI Engineer and Developer",
+            name: "Marlakunta Kedhareswer Naidu",
+            alternateName: ["Kedhar", "Kedhareswer"],
+            jobTitle: "AI Engineer",
+            description:
+              "AI Engineer and Full-Stack Developer from Andhra Pradesh, India. Specializes in LLMs, RAG systems, computer vision, and NLP.",
+            worksFor: {
+              "@type": "Organization",
+              name: "DiligenceVault",
+            },
+            alumniOf: {
+              "@type": "CollegeOrUniversity",
+              name: "Lovely Professional University",
+            },
+            sameAs: [
+              "https://github.com/Kedhareswer",
+              "https://www.linkedin.com/in/kedhareswernaidu/",
+              "https://www.kaggle.com/kedhareswernaidu",
+            ],
           },
         }}
       />

@@ -96,3 +96,9 @@ Allow: /
 Disallow: /design_system/
 
 Sitemap: https://kedhar.vercel.app/sitemap.xml
+
+# AI-readable content
+# llms.txt — structured summary for AI systems
+# See https://llmstxt.org/ for the standard
+# llms.txt: https://kedhar.vercel.app/llms.txt
+# llms-full.txt: https://kedhar.vercel.app/llms-full.txt

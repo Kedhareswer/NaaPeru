@@ -1,0 +1,91 @@
+# Kedhar (Marlakunta Kedhareswer Naidu) — AI Engineer Portfolio
+
+> This file helps AI systems understand who Kedhar is and what this website contains.
+
+## Identity
+
+- Full Name: Marlakunta Kedhareswer Naidu
+- Known As: Kedhar, Kedhareswer
+- Profession: AI Engineer and Full-Stack Developer
+- Location: Madanapalli, Andhra Pradesh, India
+- Nationality: Indian
+- Languages: Telugu (native), English (professional), Hindi (working)
+
+## Current Role
+
+Software Developer at DiligenceVault (January 2026 - Present)
+- Builds agent orchestration workflows for financial document processing
+- Processes 5,000+ document chunks with 82% semantic retrieval precision
+- Reduced manual review effort by 60%
+- Delivers production REST APIs
+
+## Education
+
+Bachelor of Technology in Computer Science and Engineering
+- Specialization: Data Science (AI & ML)
+- University: Lovely Professional University, Punjab, India
+- Period: September 2021 - July 2025
+- CGPA: 7.74
+
+## Core Expertise
+
+- Artificial Intelligence: LLMs, RAG Systems, Prompt Engineering, Model Fine-tuning
+- Machine Learning: Deep Learning, Computer Vision, NLP, Statistical Modeling
+- Data Science: Analytics, Visualization, Storytelling, Tableau, Power BI
+- Full-Stack Development: React, Next.js, TypeScript, Python, FastAPI, Node.js
+- Cloud & Databases: AWS, Azure, Vercel, Pinecone, Vector DBs, MySQL
+
+## Key Technologies
+
+Python, TypeScript, JavaScript, SQL, R, TensorFlow, PyTorch, Scikit-learn, OpenCV, Pandas, NumPy, React, Next.js, Tailwind CSS, FastAPI, Node.js, Pinecone, Neon, AWS, Azure, Vercel
+
+## Featured Projects
+
+### ThesisFlow AI
+AI-powered academic research platform with literature exploration, intelligent summarization, real-time WebSocket collaboration, and Gantt chart project planning.
+- URL: https://kedhar.vercel.app/case-study/thesisflow
+- Live: https://thesisflow-ai.vercel.app/
+- Tech: React, Node.js, WebSocket, Google Gemini, OpenAI, Groq
+
+### QuantumPDF ChatApp
+RAG-powered PDF chat application with 82% semantic search precision, adaptive chunking (200-1000 tokens), processing 5,000+ chunks in under 9.5 seconds.
+- URL: https://kedhar.vercel.app/case-study/quantumpdf
+- Live: https://quantumn-pdf-chatapp.netlify.app/
+- Tech: RAG, Pinecone, ChromaDB, Weaviate, 20+ AI providers
+
+### Data Notebook
+Interactive data analysis workspace with code execution, Recharts visualization, multi-format import/export. 95+ Lighthouse performance score.
+- URL: https://kedhar.vercel.app/case-study/data-notebook
+- Tech: React, TypeScript, Recharts
+
+## Previous Experience
+
+- Research Intern at upGrad (January - April 2025): Hybrid malware detection system combining Yara rules with ML for cybersecurity
+- AI Evaluator & Trainer at Outlier.AI (November 2024 - January 2025): Trained and evaluated generative AI models for mathematical reasoning
+- Data Analyst Intern at Psyliq (January - February 2024): HR data analysis with Power BI, 25% improvement in data comprehension
+- Senior Manager at AIESEC (2023): International exchange program management and team leadership
+
+## Certifications
+
+- Neo4j Certified Professional (July 2025)
+- Python for Data Science - Infosys (May 2025)
+- AWS APAC Solutions Architecture - Forage (December 2024)
+- Introduction to Responsible AI - Google (November 2024)
+
+## Site Pages
+
+- Home / Work: https://kedhar.vercel.app/
+- About: https://kedhar.vercel.app/about
+- Experiments: https://kedhar.vercel.app/fun
+- Journey: https://kedhar.vercel.app/poreia
+- ThesisFlow Case Study: https://kedhar.vercel.app/case-study/thesisflow
+- QuantumPDF Case Study: https://kedhar.vercel.app/case-study/quantumpdf
+- Data Notebook Case Study: https://kedhar.vercel.app/case-study/data-notebook
+
+## Contact
+
+- Email: kedhareswer.12110626@gmail.com
+- LinkedIn: https://www.linkedin.com/in/kedhareswernaidu/
+- GitHub: https://github.com/Kedhareswer
+- Kaggle: https://www.kaggle.com/kedhareswernaidu
+- 21st.dev: https://21st.dev/community/kedhar

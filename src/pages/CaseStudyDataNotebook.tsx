@@ -49,12 +49,12 @@ export const CaseStudyDataNotebook = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="Data Notebook Case Study | Collaborative Data Analysis Platform"
-        description="Case study for Data Notebook, an interactive platform for no-code visualization, collaboration, and faster analytics workflows."
+        title="Data Notebook Case Study | Built by Kedhar (Kedhareswer)"
+        description="Case study by Kedhar (Marlakunta Kedhareswer Naidu): Data Notebook is an interactive data analysis platform with code execution, rich visualization, and 95+ Lighthouse score."
         path="/case-study/data-notebook"
         type="article"
         image="/og-data-notebook.png"
-        imageAlt="Data Notebook case study cover"
+        imageAlt="Data Notebook case study by Kedhar Kedhareswer Naidu"
         jsonLd={[
           {
             "@context": "https://schema.org",

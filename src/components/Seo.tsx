@@ -81,7 +81,12 @@ export const Seo = ({
 
     document.title = title;
     upsertMetaByName("description", description);
-    upsertMetaByName("robots", noindex ? "noindex, nofollow" : "index, follow");
+    upsertMetaByName(
+      "robots",
+      noindex
+        ? "noindex, nofollow"
+        : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+    );
 
     upsertMetaByProperty("og:title", title);
     upsertMetaByProperty("og:description", description);

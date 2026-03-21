@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
 import { Navigation } from "@/components/Navigation";
 import { TransitionLink } from "@/components/TransitionLink";
+import { Seo } from "@/components/Seo";
 
 interface Milestone {
   id: number;
@@ -318,6 +319,13 @@ export default function Poreia() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <Seo
+        title="Kedhar's Journey (Poreia) | AI Engineer Growth Roadmap"
+        description="Follow Kedhar's (Marlakunta Kedhareswer Naidu) growth roadmap as an AI Engineer — milestones, skills, and learning journey from 2026 onwards."
+        path="/poreia"
+        image="/og-work.png"
+        imageAlt="Kedhar Kedhareswer Naidu career growth and learning journey"
+      />
       <Navigation />
       <section className="container-portfolio relative pt-32 pb-12 overflow-hidden">
         <div className="font-heading text-[clamp(6rem,15vw,16rem)] font-bold tracking-tighter leading-none text-white/[0.02] select-none absolute top-16 right-[-2rem]" aria-hidden="true">ΠΟΡΕΙΑ</div>

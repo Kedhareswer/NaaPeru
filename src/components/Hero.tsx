@@ -186,7 +186,7 @@ export const Hero = () => {
 
               <img
                 src={heroImage}
-                alt="Professional portrait"
+                alt="Kedhar (Marlakunta Kedhareswer Naidu) — AI Engineer and Full-Stack Developer from India"
                 loading="eager"
                 decoding="async"
                 fetchPriority="high"

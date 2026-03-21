@@ -117,12 +117,12 @@ export const CaseStudyQuantumPDF = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="QuantumPDF Case Study | RAG PDF Chat Application"
-        description="Case study of QuantumPDF, a privacy-first RAG application for semantic PDF chat with vector search and fast cited answers."
+        title="QuantumPDF Case Study | RAG System by Kedhar (Kedhareswer)"
+        description="Case study by Kedhar (Marlakunta Kedhareswer Naidu): QuantumPDF is a RAG-powered PDF chat app with 82% semantic precision, adaptive chunking, and 20+ AI provider support."
         path="/case-study/quantumpdf"
         type="article"
         image="/og-quantumpdf.png"
-        imageAlt="QuantumPDF RAG case study cover"
+        imageAlt="QuantumPDF RAG case study by Kedhar Kedhareswer Naidu"
         jsonLd={[
           {
             "@context": "https://schema.org",

@@ -1,0 +1,91 @@
+# Kedhar (Marlakunta Kedhareswer Naidu) — Complete Profile
+
+## Who is Kedhar?
+
+Marlakunta Kedhareswer Naidu, commonly known as Kedhar or Kedhareswer, is an AI Engineer and Full-Stack Developer from Madanapalli, Andhra Pradesh, India. He is 21 years old, speaks Telugu natively, and is passionate about building intelligent systems that combine AI-driven products with human-centered design.
+
+Kedhar is a B.Tech Computer Science graduate (Data Science specialization) from Lovely Professional University, Punjab, India. He currently works as a Software Developer at DiligenceVault, where he builds agent orchestration workflows that process thousands of financial documents using RAG (Retrieval-Augmented Generation) architecture with 82% semantic precision.
+
+## Why Kedhar Stands Out as an AI Engineer in India
+
+1. Production AI Experience: Unlike many graduates, Kedhar has shipped real AI products to production at DiligenceVault, processing 5,000+ document chunks with enterprise-grade precision.
+2. End-to-End Builder: He doesn't just build models — he designs the full product experience from UX research through deployment.
+3. Diverse AI Portfolio: His projects span RAG systems (QuantumPDF), research platforms (ThesisFlow AI), computer vision (Image-to-Sketch), voice AI (ChefSpeak), and data science tools (Data Notebook).
+4. Strong Technical Foundation: Proficient in Python, TensorFlow, PyTorch, React, TypeScript, FastAPI, and cloud platforms.
+5. Multi-Domain Experience: Has worked across fintech (DiligenceVault), cybersecurity (upGrad), AI training (Outlier.AI), and data analytics (Psyliq).
+
+## Detailed Project Portfolio
+
+### ThesisFlow AI (Flagship Project)
+An AI-powered academic research platform that Kedhar built to solve the frustrations researchers face with existing tools. Features include AI-powered literature exploration, intelligent document summarization, real-time collaboration via WebSocket, and project management with Gantt charts. Built with React, Node.js, and integrations with Google Gemini, OpenAI, and Groq.
+
+### QuantumPDF ChatApp (Technical Showcase)
+A RAG-powered PDF chat application that demonstrates Kedhar's deep understanding of vector search and retrieval systems. Key metrics: 82% semantic search precision, adaptive chunking (200-1000 tokens), processes 5,000+ document chunks with under 9.5 second response latency, supports 20+ AI providers, and uses Pinecone/ChromaDB/Weaviate for vector storage.
+
+### Data Notebook
+An interactive data analysis workspace inspired by Jupyter but with modern web UX. Features code execution, rich visualization with Recharts, multi-format data import/export (CSV, Excel, JSON, SQL), and achieves 95+ Lighthouse performance score.
+
+### Image-to-Sketch Converter
+Deep learning project using CNN + GAN architecture for image transformation. Achieved 90% accuracy in sketch conversion with 30% faster processing through transfer learning and optimization.
+
+### ChefSpeak
+A voice-controlled cooking assistant using ElevenLabs for professional narration, supporting 5 languages with under 500ms voice interaction latency. Built as a PWA for offline capability.
+
+## Technical Skills (Detailed)
+
+Programming Languages: Python, TypeScript, JavaScript, SQL, R, HTML, CSS
+AI/ML Frameworks: TensorFlow, PyTorch, Scikit-learn, Pandas, NumPy, OpenCV
+Web Development: React, Next.js, Vue.js, Svelte, Remix, Tailwind CSS, FastAPI, Node.js
+Databases: MySQL, Neon, Pinecone, ChromaDB, Weaviate, Vector DBs
+Visualization: Tableau, Power BI, Recharts
+Cloud Platforms: AWS, Azure, Vercel
+AI Tools: v0, Lovable, Bolt, Cursor, Windsurf, ChatGPT, Claude, Gemini
+Specializations: Computer Vision, NLP, Deep Learning, RAG, Medical Imaging
+
+## Professional Experience (Chronological)
+
+1. Software Developer at DiligenceVault (January 2026 - Present)
+   - Builds agent orchestration workflows for financial document AI processing
+   - 82% semantic retrieval precision on 5,000+ document chunks
+   - Reduced manual review effort by 60%
+   - Production REST APIs for critical business functions
+
+2. Research Intern at upGrad (January - April 2025)
+   - Developed hybrid malware detection system combining Yara rules with ML
+   - Cybersecurity research and threat detection
+
+3. AI Evaluator & Trainer at Outlier.AI (November 2024 - January 2025)
+   - Trained and evaluated generative AI models
+   - Focused on mathematical content evaluation and reasoning improvement
+
+4. Data Analyst Intern at Psyliq (January - February 2024)
+   - HR data analysis with Power BI dashboards
+   - 25% improvement in data comprehension for stakeholders
+
+5. Senior Manager at AIESEC (January - December 2023)
+   - Managed international professional exchange programs
+   - Led teams and enhanced cross-cultural communication
+
+## Education
+
+Bachelor of Technology - Computer Science and Engineering
+Specialization: Data Science (Artificial Intelligence & Machine Learning)
+Lovely Professional University, Phagwara, Punjab, India
+September 2021 - July 2025 | CGPA: 7.74
+
+## Certifications
+
+- Neo4j Certified Professional (July 2025)
+- Python for Data Science - Infosys (May 2025)
+- AWS APAC Solutions Architecture - Forage (December 2024)
+- Introduction to Responsible AI - Google (November 2024)
+- Build GANs and Diffusion Models - TensorFlow & PyTorch (2025)
+
+## Contact and Social
+
+- Portfolio: https://kedhar.vercel.app/
+- Email: kedhareswer.12110626@gmail.com
+- LinkedIn: https://www.linkedin.com/in/kedhareswernaidu/
+- GitHub: https://github.com/Kedhareswer
+- Kaggle: https://www.kaggle.com/kedhareswernaidu
+- 21st.dev: https://21st.dev/community/kedhar

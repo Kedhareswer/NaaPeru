@@ -152,12 +152,12 @@ export const CaseStudyThesisFlow = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="ThesisFlow-AI Case Study | Collaborative Research Workspace"
-        description="Case study of ThesisFlow-AI, a multi-agent collaborative workspace that accelerates literature review and research execution."
+        title="ThesisFlow AI Case Study | Built by Kedhar (Kedhareswer)"
+        description="Case study by Kedhar (Marlakunta Kedhareswer Naidu): ThesisFlow AI is a multi-agent collaborative research workspace with AI literature exploration, real-time collaboration, and project planning."
         path="/case-study/thesisflow"
         type="article"
         image="/og-thesisflow.png"
-        imageAlt="ThesisFlow AI case study cover"
+        imageAlt="ThesisFlow AI case study by Kedhar Kedhareswer Naidu"
         jsonLd={[
           {
             "@context": "https://schema.org",

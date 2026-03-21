@@ -10,7 +10,7 @@ export const WorkProjects = () => {
       subtitle: "Collaborative AI research workspace",
       metadata: "AI RESEARCH • PLATFORM • 2025",
       tags: ["React", "Node.js", "AI Agents", "WebSocket"],
-      image: "/projects/research-bolt.png",
+      image: "/projects/research-bolt.webp",
       github: "https://github.com/Kedhareswer/ai-project-planner",
       demo: "https://thesisflow-ai.vercel.app/",
       caseStudy: "/case-study/thesisflow",
@@ -22,7 +22,7 @@ export const WorkProjects = () => {
       subtitle: "PDF intelligence assistant with RAG",
       metadata: "RAG APPLICATION • AI • JUN 2025",
       tags: ["Next.js 15", "Tailwind", "Vector DB", "LLM"],
-      image: "/projects/quantumpdf.png",
+      image: "/projects/quantumpdf.webp",
       github: "https://github.com/Kedhareswer/QuantumPDF_ChatApp_VectorDB",
       demo: "https://quantumn-pdf-chatapp.netlify.app/",
       caseStudy: "/case-study/quantumpdf",
@@ -34,7 +34,7 @@ export const WorkProjects = () => {
       subtitle: "Interactive data analysis platform",
       metadata: "DATA PLATFORM • ANALYTICS • APR 2025",
       tags: ["Next.js", "Radix UI", "Recharts", "TypeScript"],
-      image: "/projects/data-notebook.png",
+      image: "/projects/data-notebook.webp",
       github: "https://github.com/Kedhareswer/Data_Science_Platform",
       demo: "https://data-science-platform.vercel.app/",
       caseStudy: "/case-study/data-notebook",
@@ -58,6 +58,8 @@ export const WorkProjects = () => {
                     <img
                       src={project.image}
                       alt={project.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
 
@@ -79,6 +81,8 @@ export const WorkProjects = () => {
                     <img
                       src={project.image}
                       alt={project.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
 
