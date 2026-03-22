@@ -189,7 +189,6 @@ export const Hero = () => {
                 alt="Kedhar (Marlakunta Kedhareswer Naidu) — AI Engineer and Full-Stack Developer from India"
                 loading="eager"
                 decoding="async"
-                fetchPriority="high"
                 className="h-full w-full object-cover"
                 style={{
                   filter: "grayscale(100%) contrast(1.2)",

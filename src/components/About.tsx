@@ -1,5 +1,4 @@
-import { ArrowUpRight, Github, Linkedin, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { ArrowUpRight, Github, Linkedin, ChevronDown, Award, ExternalLink, BookmarkCheck } from "lucide-react";
 import { GitHubActivity } from "./GitHubActivity";
 
 export const About = () => {
@@ -61,6 +60,39 @@ export const About = () => {
     }
   ];
 
+  const certifications = [
+    {
+      title: "Introduction to Model Context Protocol",
+      issuer: "Anthropic Education",
+      date: "August 05, 2025",
+      verifyUrl: "#",
+    },
+    {
+      title: "Project: Deep Research with LangGraph",
+      issuer: "LangChain Academy",
+      date: "August 24, 2025",
+      verifyUrl: "#",
+    },
+    {
+      title: "Neo4j Certified Professional",
+      issuer: "Neo4j",
+      date: "July 2025",
+      verifyUrl: "#",
+    },
+    {
+      title: "Python for Data Science",
+      issuer: "Infosys",
+      date: "May 2025",
+      verifyUrl: "#",
+    },
+    {
+      title: "Introduction to Responsible AI",
+      issuer: "Google",
+      date: "November 2024",
+      verifyUrl: "#",
+    },
+  ];
+
   return (
     <div className="relative bg-background py-3xl md:py-4xl overflow-x-hidden overflow-y-visible">
       <div className="container-portfolio">
@@ -91,10 +123,10 @@ export const About = () => {
             {/* Left: Bio */}
             <div className="space-y-6">
               <p className="font-body text-lg sm:text-xl text-gray-light leading-relaxed max-w-3xl">
-                I don't fit into one box — I'm a <span className="text-foreground font-semibold">Data Scientist</span>, <span className="text-foreground font-semibold">AI Engineer</span>, <span className="text-foreground font-semibold">Designer</span>, and relentless experimenter.
+                I build things across <span className="text-foreground font-semibold">AI</span>, <span className="text-foreground font-semibold">data</span>, and <span className="text-foreground font-semibold">design</span> — whatever the problem needs, that's the hat I wear.
               </p>
               <p className="font-body text-base sm:text-lg text-gray-light/80 leading-relaxed max-w-3xl">
-                I design intelligence and shape it into experiences people actually feel. Exploring how AI-driven systems and human-centered design can coexist beautifully — and meaningfully.
+                Most of my work sits at the intersection of machine learning and real products. I care about making AI useful, not just impressive — systems that people can actually work with day to day.
               </p>
               
               {/* Status Indicator */}
@@ -222,7 +254,7 @@ export const About = () => {
                 Academic Chronicle
               </h2>
               <p className="font-body text-base sm:text-lg text-gray-light">
-                My academic background in computer science, data science, and artificial intelligence with specialized focus on machine learning.
+                Where I studied and what I studied — CS undergrad with a deep dive into data science and ML.
               </p>
             </div>
           </div>
@@ -311,6 +343,80 @@ export const About = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Certifications Section */}
+        <div className="mb-24 space-y-8">
+          <div className="space-y-6">
+            <span className="font-body text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">
+              Certifications
+            </span>
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr),minmax(0,1.4fr)]">
+              <h2
+                className="font-heading text-3xl sm:text-4xl md:text-5xl text-transparent"
+                style={{ WebkitTextStroke: "1.25px rgba(255,255,255,0.2)", color: "transparent" }}
+              >
+                Credentials
+              </h2>
+              <p className="font-body text-base sm:text-lg text-gray-light">
+                Courses and exams I've completed — the ones that actually taught me something.
+              </p>
+            </div>
+          </div>
+
+          <div className="overflow-x-auto pb-4 scrollbar-hide">
+            <div className="grid grid-cols-3 gap-6" style={{ minWidth: "820px" }}>
+            {certifications.map((cert, index) => (
+              <div
+                key={index}
+                className="group relative border-2 border-dashed border-foreground/20 bg-foreground/[0.03] backdrop-blur transition-all duration-normal hover:border-foreground/30"
+              >
+                <div className="p-6 lg:p-8 text-center space-y-3">
+                  <BookmarkCheck className="h-6 w-6 text-foreground/60 mx-auto" />
+
+                  <div className="space-y-1">
+                    <p className="font-heading text-sm uppercase tracking-[0.4em] text-foreground/90 font-bold">
+                      Certificate
+                    </p>
+                    <p className="font-body text-[10px] uppercase tracking-[0.35em] text-foreground/50">
+                      of {cert.title}
+                    </p>
+                  </div>
+
+                  <p className="font-body text-xs italic text-foreground/40">
+                    This is to certify that
+                  </p>
+                  <p className="font-heading text-lg text-foreground font-semibold">
+                    Kedhareswer
+                  </p>
+
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="h-px w-12 bg-foreground/20" />
+                    <p className="font-body text-xs text-foreground/50">
+                      {cert.issuer} — {cert.date}
+                    </p>
+                    <div className="h-px w-12 bg-foreground/20" />
+                  </div>
+
+                  <div className="pt-2">
+                    <Award className="h-5 w-5 text-foreground/30 mx-auto mb-1" />
+                    <p className="font-body text-[10px] uppercase tracking-[0.3em] text-foreground/40">
+                      Awarded on: {cert.date}
+                    </p>
+                  </div>
+
+                  <a
+                    href={cert.verifyUrl}
+                    className="inline-flex items-center gap-1.5 font-body text-xs text-primary/70 hover:text-primary transition-colors"
+                  >
+                    Verify Certificate
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                </div>
+              </div>
+            ))}
+            </div>
           </div>
         </div>
       </div>

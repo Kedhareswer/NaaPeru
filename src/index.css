@@ -118,6 +118,15 @@ All colors MUST be HSL.
 }
 
 @layer utilities {
+  /* Scrollbar hide */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Typography Classes */
   .text-hero {
     @apply text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight;

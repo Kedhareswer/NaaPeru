@@ -100,8 +100,7 @@ export const GitHubActivity = () => {
             Build Frequency
           </h2>
           <p className="font-body text-base sm:text-lg text-gray-light">
-            Open-source contribution activity over the last year. Proof that
-            shipping is a habit, not an event.
+            What my GitHub looks like over the past year — commits, PRs, and the odd weekend rabbit hole.
           </p>
         </div>
       </div>
