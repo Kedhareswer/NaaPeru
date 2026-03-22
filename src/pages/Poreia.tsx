@@ -289,7 +289,6 @@ export default function Poreia() {
   const [data, setData] = useState<PoreiaData | null>(null);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
-  const timelineInView = useInView(timelineRef, { once: true, margin: "-60px" });
 
   useEffect(() => {
     fetch("/poreia-data.json")
@@ -370,7 +369,8 @@ export default function Poreia() {
               key={domain}
               className="mb-3"
               initial={{ opacity: 0, x: -20 }}
-              animate={timelineInView ? { opacity: 1, x: 0 } : {}}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "0px" }}
               transition={{ duration: 0.5, delay: di * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <div className="text-[9px] uppercase tracking-[0.3em] text-[hsl(0,0%,28%)] mb-2">{domain}</div>

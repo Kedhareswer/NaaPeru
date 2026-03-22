@@ -17,7 +17,7 @@
     "demo": "https://llm-chess-agentic.vercel.app/",
     "category": "Multi-Agent AI",
     "project_date": "Jan 2026",
-    "image": "/projects/llm-chess.png",
+    "image": "/projects/llm-chess.webp",
     "featured": false,
     "created_at": "2026-01-15T00:00:00.000Z",
     "objectives": [
@@ -46,7 +46,7 @@
     "demo": "https://dream-home-design.vercel.app/",
     "category": "Web Development",
     "project_date": "Jan 2026",
-    "image": "/projects/dream-home-design.png",
+    "image": "/projects/dream-home-design.webp",
     "featured": false,
     "created_at": "2026-01-10T00:00:00.000Z",
     "objectives": [
@@ -76,7 +76,7 @@
     "demo": null,
     "category": "Multi-Agent AI",
     "project_date": "Nov 2025",
-    "image": "/projects/internal-policy-chatbot.png",
+    "image": "/projects/internal-policy-chatbot.webp",
     "featured": false,
     "created_at": "2025-11-18T00:00:00.000Z",
     "objectives": [
@@ -105,7 +105,7 @@
     "demo": "https://langchain-projects.vercel.app/",
     "category": "AI Chat",
     "project_date": "Aug 2025",
-    "image": "/projects/multipleprovider.png",
+    "image": "/projects/multipleprovider.webp",
     "featured": false,
     "created_at": "2025-08-09T13:11:21.997Z",
     "objectives": [
@@ -136,7 +136,7 @@
     "demo": "https://kedhareswer.github.io/My_Portfolio_Designs/",
     "category": "Web Development",
     "project_date": "July 2025",
-    "image": "/projects/portfolio-nexus.png",
+    "image": "/projects/portfolio-nexus.webp",
     "featured": true,
     "created_at": "2025-07-06T05:43:14.148Z",
     "objectives": [
@@ -174,7 +174,7 @@
     "demo": "https://prompt-enhancer-hazel.vercel.app/",
     "category": "Web Development",
     "project_date": "July 2025",
-    "image": "/projects/prompt-forger.png",
+    "image": "/projects/prompt-forger.webp",
     "featured": false,
     "created_at": "2025-07-05T15:48:12.808Z",
     "objectives": [
@@ -208,7 +208,7 @@
     "demo": "https://thesisflow-ai.vercel.app/",
     "category": "Web Development",
     "project_date": "July 2025",
-    "image": "/projects/research-bolt.png",
+    "image": "/projects/research-bolt.webp",
     "featured": true,
     "created_at": "2025-07-05T13:29:36.927Z",
     "objectives": [
@@ -246,7 +246,7 @@
     "demo": "https://quantumn-pdf-chatapp.netlify.app/",
     "category": "Deep Learning",
     "project_date": "Jun 2025",
-    "image": "/projects/quantumpdf.jpeg",
+    "image": "/projects/quantumpdf.webp",
     "featured": true,
     "created_at": "2025-07-05T15:07:35.602Z",
     "objectives": [
@@ -281,7 +281,7 @@
     "demo": "https://chef-speaks.netlify.app/",
     "category": "Web Development",
     "project_date": "Jun 2025",
-    "image": "/projects/chefspeak.png",
+    "image": "/projects/chefspeak.webp",
     "featured": false,
     "created_at": "2025-07-05T16:42:57.890Z",
     "objectives": [
@@ -316,7 +316,7 @@
     "demo": "https://ml-notebook.vercel.app/",
     "category": "Machine Learning",
     "project_date": "May 2025",
-    "image": "/projects/ml-notebook.png",
+    "image": "/projects/ml-notebook.webp",
     "featured": false,
     "created_at": "2025-07-05T13:29:36.927Z",
     "objectives": [
@@ -346,7 +346,7 @@
     "demo": "https://ai-classifier.netlify.app/",
     "category": "Deep Learning",
     "project_date": "May 2025",
-    "image": "/projects/digit.png",
+    "image": "/projects/digit.webp",
     "featured": false,
     "created_at": "2025-07-05T13:29:36.927Z",
     "objectives": [
@@ -375,7 +375,7 @@
     "demo": "https://huggingface.co/spaces/Kedhareswer/EndoscopyImageEnhancement",
     "category": "Deep Learning",
     "project_date": "May 2025",
-    "image": "/projects/endoscopy-image-enhancement.png",
+    "image": "/projects/endoscopy-image-enhancement.webp",
     "featured": false,
     "created_at": "2025-07-05T13:29:36.927Z",
     "objectives": [
@@ -412,7 +412,7 @@
     "demo": "https://data-science-platform.vercel.app/",
     "category": "Web Development",
     "project_date": "April 2025",
-    "image": "/projects/data-notebook.png",
+    "image": "/projects/data-notebook.webp",
     "featured": true,
     "created_at": "2025-07-05T15:34:41.802Z",
     "objectives": [
@@ -449,7 +449,7 @@
     "demo": "https://image-to-sketch-wine.vercel.app/",
     "category": "Deep Learning",
     "project_date": "April 2025",
-    "image": "/projects/image-to-sketch.png",
+    "image": "/projects/image-to-sketch.webp",
     "featured": false,
     "created_at": "2025-07-05T13:29:36.927Z",
     "objectives": [
@@ -479,7 +479,7 @@
     "demo": "https://v0-vintage-web-development-app.vercel.app/",
     "category": "Web Development",
     "project_date": "March 2023",
-    "image": "/projects/web-dev-projects.png",
+    "image": "/projects/web-dev-projects.webp",
     "featured": false,
     "created_at": "2025-07-05T13:29:36.927Z",
     "objectives": [
