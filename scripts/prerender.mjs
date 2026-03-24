@@ -96,6 +96,7 @@ async function prerender() {
 }
 
 prerender().catch((err) => {
-  console.error("Pre-render failed:", err);
-  process.exit(1);
+  console.warn("\n  Pre-render skipped:", err.message || err);
+  console.warn("  Build will continue without pre-rendered HTML.\n");
+  process.exit(0);
 });
