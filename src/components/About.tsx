@@ -406,13 +406,17 @@ export const About = () => {
                     </p>
                   </div>
 
-                  <a
-                    href={cert.verifyUrl}
-                    className="inline-flex items-center gap-1.5 font-body text-xs text-primary/70 hover:text-primary transition-colors"
-                  >
-                    Verify Certificate
-                    <ExternalLink className="h-3 w-3" />
-                  </a>
+                  {cert.verifyUrl && cert.verifyUrl !== "#" && (
+                    <a
+                      href={cert.verifyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-body text-xs text-primary/70 hover:text-primary transition-colors"
+                    >
+                      Verify Certificate
+                      <ExternalLink className="h-3 w-3" />
+                    </a>
+                  )}
                 </div>
               </div>
             ))}
