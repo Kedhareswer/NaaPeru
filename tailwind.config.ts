@@ -14,8 +14,12 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['Space Grotesk', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
+        // var() with fallback: :root needs no change, but a scoped surface
+        // (e.g. .kit-stage) can retype itself by setting --font-heading.
+        heading: ['var(--font-heading, "Space Grotesk")', 'sans-serif'],
+        body: ['var(--font-body, "Inter")', 'sans-serif'],
+        "inspo-serif": ['"Instrument Serif"', "Georgia", "Times New Roman", "serif"],
+        "inspo-mono": ['"IBM Plex Mono"', "ui-monospace", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -60,6 +64,12 @@ export default {
         surface: {
           subtle: "hsl(var(--surface-subtle))",
           elevated: "hsl(var(--surface-elevated))",
+        },
+        inspo: {
+          paper: "var(--inspo-paper)",
+          stock: "var(--inspo-stock)",
+          ink: "var(--inspo-ink)",
+          coral: "var(--inspo-coral)",
         },
       },
       spacing: {

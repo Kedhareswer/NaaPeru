@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QuantumPDF — demo loop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0e1116;
+    --line: hsl(0 0% 100% / 0.10);
+    --line-soft: hsl(0 0% 100% / 0.06);
+    --fg: #ffffff;
+    --dim: hsl(0 0% 100% / 0.55);
+    --dim2: hsl(0 0% 100% / 0.35);
+    --red: hsl(5 78% 47%);
+    --red-soft: hsl(5 78% 47% / 0.14);
+    --cycle: 8s;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1280px; height: 720px; overflow: hidden; }
+  body {
+    background:
+      radial-gradient(circle at 18% 12%, hsl(0 0% 100% / 0.04), transparent 42%),
+      radial-gradient(circle at 85% 0%, hsl(5 78% 47% / 0.05), transparent 40%),
+      linear-gradient(135deg, #11161f, #0c0f15 60%, #080a0e);
+    color: var(--fg);
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; pointer-events: none; opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .stage { position: relative; height: 100%; padding: 40px 56px 32px; display: flex; flex-direction: column; }
+
+  /* top bar */
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 24px; border-bottom: 1px solid var(--line-soft); }
+  .brand { display: flex; align-items: baseline; gap: 12px; }
+  .brand h1 { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.01em; }
+  .brand h1 .q { color: var(--red); }
+  .brand .tag { font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--dim2); }
+  .priv { font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--dim2); display: flex; align-items: center; gap: 8px; }
+  .dot { width: 7px; height: 7px; background: var(--red); display: inline-block; box-shadow: 0 0 10px var(--red); animation: blink var(--cycle) linear infinite; }
+
+  /* main split */
+  .main { flex: 1; display: grid; grid-template-columns: 1fr 1.05fr; gap: 28px; padding: 28px 0; min-height: 0; }
+  .panel { border: 1px solid var(--line); background: hsl(0 0% 100% / 0.015); position: relative; }
+  .panel-label { position: absolute; top: 14px; left: 16px; font-size: 9px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--dim2); }
+
+  /* left: PDF */
+  .pdf { padding: 44px 26px 22px; }
+  .pdf .doc-title { font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 14px; color: var(--dim); margin-bottom: 16px; }
+  .chunk { border-left: 2px solid var(--line); padding: 9px 12px; margin-bottom: 9px; position: relative; }
+  .chunk .ln { height: 6px; background: hsl(0 0% 100% / 0.10); margin: 6px 0; }
+  .chunk .ln.s { width: 70%; } .chunk .ln.m { width: 88%; } .chunk .ln.l { width: 96%; }
+  .chunk .badge { position: absolute; right: 10px; top: 8px; font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); opacity: 0; }
+  .chunk.hit { animation: hit var(--cycle) ease-in-out infinite; }
+  .chunk.hit .badge { animation: badge var(--cycle) ease-in-out infinite; }
+  .chunk.c1, .chunk.c1 .badge { animation-delay: 0s; }
+  .chunk.c2, .chunk.c2 .badge { animation-delay: .35s; }
+  .chunk.c3, .chunk.c3 .badge { animation-delay: .7s; }
+
+  /* right: chat */
+  .chat { padding: 44px 24px 22px; display: flex; flex-direction: column; gap: 14px; }
+  .bubble { border: 1px solid var(--line); padding: 13px 15px; font-size: 14px; line-height: 1.5; max-width: 92%; }
+  .q-bubble { align-self: flex-end; background: var(--red-soft); border-color: hsl(5 78% 47% / 0.4); opacity: 0; animation: qin var(--cycle) ease-out infinite; }
+  .status { align-self: flex-start; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim2); display: flex; align-items: center; gap: 9px; opacity: 0; animation: statusin var(--cycle) ease-out infinite; }
+  .spin { width: 11px; height: 11px; border: 2px solid hsl(0 0% 100% / 0.2); border-top-color: var(--red); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  .a-wrap { align-self: flex-start; max-width: 92%; opacity: 0; animation: awrap var(--cycle) ease-out infinite; }
+  .a-bubble { background: hsl(0 0% 100% / 0.02); }
+  .a-bubble .aln { height: 8px; background: hsl(0 0% 100% / 0.14); margin: 9px 0; opacity: 0; }
+  .a-bubble .aln.w1 { width: 94%; animation: aline var(--cycle) ease-out infinite; animation-delay: 0s; }
+  .a-bubble .aln.w2 { width: 86%; animation: aline var(--cycle) ease-out infinite; animation-delay: .25s; }
+  .a-bubble .aln.w3 { width: 72%; animation: aline var(--cycle) ease-out infinite; animation-delay: .5s; }
+  .a-bubble .cite { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); border: 1px solid hsl(5 78% 47% / 0.4); padding: 4px 9px; opacity: 0; animation: aline var(--cycle) ease-out infinite; animation-delay: .8s; }
+
+  /* pipeline strip */
+  .pipe { display: flex; align-items: center; padding-top: 22px; border-top: 1px solid var(--line-soft); }
+  .step { flex: 1; display: flex; align-items: center; }
+  .node { flex: 1; display: flex; align-items: center; gap: 10px; color: var(--dim2); }
+  .node .num { font-family: "Space Grotesk", sans-serif; font-size: 10px; font-weight: 700; color: currentColor; }
+  .node .nm { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: currentColor; }
+  .arrow { color: var(--dim2); font-size: 12px; padding: 0 6px; }
+  .p1 { animation: lit1 var(--cycle) ease-in-out infinite; }
+  .p2 { animation: lit2 var(--cycle) ease-in-out infinite; }
+  .p3 { animation: lit3 var(--cycle) ease-in-out infinite; }
+  .p4 { animation: lit4 var(--cycle) ease-in-out infinite; }
+  .p5 { animation: lit5 var(--cycle) ease-in-out infinite; }
+
+  /* keyframes — all share the 8s cycle and reset cleanly at 100% for seamless looping */
+  @keyframes qin { 0%,2%{opacity:0; transform:translateY(10px)} 8%,92%{opacity:1; transform:none} 100%{opacity:0} }
+  @keyframes statusin { 0%,16%{opacity:0} 22%,50%{opacity:1} 58%,100%{opacity:0} }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes hit {
+    0%,26%{ border-left-color: var(--line); background: transparent; }
+    34%,80%{ border-left-color: var(--red); background: var(--red-soft); }
+    90%,100%{ border-left-color: var(--line); background: transparent; }
+  }
+  @keyframes badge { 0%,30%{opacity:0} 38%,80%{opacity:1} 90%,100%{opacity:0} }
+  @keyframes awrap { 0%,50%{opacity:0} 56%,94%{opacity:1} 100%{opacity:0} }
+  @keyframes aline { 0%,52%{opacity:0; transform:translateY(5px)} 60%,94%{opacity:1; transform:none} 100%{opacity:0} }
+  @keyframes blink { 0%,46%,54%,100%{opacity:1} 50%{opacity:0.25} }
+  /* sequential pipeline light-up: Upload→Chunk→Vectorize→Retrieve→Answer */
+  @keyframes lit1 { 0%{color:var(--dim2)} 3%{color:var(--red)} 14%{color:var(--red)} 20%{color:var(--dim2)} 100%{color:var(--dim2)} }
+  @keyframes lit2 { 0%,14%{color:var(--dim2)} 18%{color:var(--red)} 28%{color:var(--red)} 34%{color:var(--dim2)} 100%{color:var(--dim2)} }
+  @keyframes lit3 { 0%,28%{color:var(--dim2)} 32%{color:var(--red)} 42%{color:var(--red)} 48%{color:var(--dim2)} 100%{color:var(--dim2)} }
+  @keyframes lit4 { 0%,40%{color:var(--dim2)} 44%{color:var(--red)} 58%{color:var(--red)} 64%{color:var(--dim2)} 100%{color:var(--dim2)} }
+  @keyframes lit5 { 0%,56%{color:var(--dim2)} 60%{color:var(--red)} 88%{color:var(--red)} 94%{color:var(--dim2)} 100%{color:var(--dim2)} }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="topbar">
+      <div class="brand">
+        <h1>Quantum<span class="q">PDF</span></h1>
+        <span class="tag">RAG engine</span>
+      </div>
+      <div class="priv"><span class="dot"></span> client-side · 0 uploads</div>
+    </div>
+
+    <div class="main">
+      <div class="panel pdf">
+        <span class="panel-label">research_paper.pdf · 214 pages</span>
+        <div class="doc-title">3.2 — Adaptive chunking strategy</div>
+        <div class="chunk c1 hit"><span class="badge">match · 0.91</span><div class="ln l"></div><div class="ln m"></div><div class="ln s"></div></div>
+        <div class="chunk c2 hit"><span class="badge">match · 0.88</span><div class="ln m"></div><div class="ln l"></div><div class="ln s"></div></div>
+        <div class="chunk c3 hit"><span class="badge">match · 0.84</span><div class="ln l"></div><div class="ln s"></div><div class="ln m"></div></div>
+        <div class="chunk"><div class="ln m"></div><div class="ln s"></div></div>
+      </div>
+
+      <div class="panel chat">
+        <span class="panel-label">conversation</span>
+        <div class="bubble q-bubble">What chunk size does the paper recommend, and why?</div>
+        <div class="status"><span class="spin"></span> Embedding query · searching 1,204 vectors</div>
+        <div class="a-wrap">
+          <div class="bubble a-bubble">
+            <div class="aln w1"></div>
+            <div class="aln w2"></div>
+            <div class="aln w3"></div>
+            <span class="cite">◆ source · p.12 §3.2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipe">
+      <div class="step"><div class="node p1"><span class="num">01</span><span class="nm">Upload</span></div><span class="arrow">→</span></div>
+      <div class="step"><div class="node p2"><span class="num">02</span><span class="nm">Chunk</span></div><span class="arrow">→</span></div>
+      <div class="step"><div class="node p3"><span class="num">03</span><span class="nm">Vectorize</span></div><span class="arrow">→</span></div>
+      <div class="step"><div class="node p4"><span class="num">04</span><span class="nm">Retrieve</span></div><span class="arrow">→</span></div>
+      <div class="step"><div class="node p5"><span class="num">05</span><span class="nm">Answer</span></div></div>
+    </div>
+  </div>
+</body>
+</html>

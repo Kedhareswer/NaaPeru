@@ -24,4 +24,13 @@ dist-ssr
 *.sw?
 .windsurf
 .playwright-mcp
+.playwright-cli/
 .claude
+.understand-anything
+
+# Local scratch / agent artifacts (do not commit)
+.tmp-*/
+.tmp-*.js
+.tmp-screenshots/
+output/
+.cursor-assets/

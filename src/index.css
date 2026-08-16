@@ -117,6 +117,24 @@ All colors MUST be HSL.
   }
 }
 
+/* Inspo library — paper-editorial surface (scoped; does not touch portfolio tokens) */
+.inspo-surface {
+  --inspo-paper: #f7f1e6;
+  --inspo-stock: #ebe3d6;
+  --inspo-ink: #111111;
+  --inspo-coral: #c45c4a;
+  background-color: var(--inspo-paper);
+  color: var(--inspo-ink);
+  background-image:
+    radial-gradient(ellipse at 10% 0%, rgba(196, 92, 74, 0.04), transparent 42%),
+    linear-gradient(180deg, #faf6ef 0%, #f3ede3 100%);
+}
+
+.inspo-surface ::selection {
+  background: var(--inspo-ink);
+  color: var(--inspo-paper);
+}
+
 @layer utilities {
   /* Scrollbar hide */
   .scrollbar-hide {
@@ -261,4 +279,130 @@ All colors MUST be HSL.
 @keyframes game-enemy-wiggle {
   0% { transform: translateX(-4px); }
   100% { transform: translateX(4px); }
+}
+
+/* ─── Archive gallery stage ───
+   The studies are Kedhar's work on display, not the portfolio's own chrome —
+   so they get their own skin. Every demo in UniquePreview.tsx already draws
+   with hsl(var(--card)) / var(--primary) / var(--border), so redefining the
+   tokens here re-skins all 100 studies without touching their source.
+   Warm off-white gallery wall, white exhibit cards, neutral graphite accent. */
+.kit-stage {
+  /* The wall and the exhibits must stay far enough apart in value that a demo
+     drawing itself with bg-card is legible against a bg-background frame.
+     The dark theme failed this (--card and --background were both 220 26% 7%),
+     which is why studies like "Stack fan" rendered as empty rectangles. */
+  --background: 43 22% 91%;
+  --foreground: 36 14% 7%;
+  --card: 0 0% 100%;
+  --card-foreground: 36 14% 7%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 36 14% 7%;
+  --border: 40 15% 80%;
+  --input: 40 15% 80%;
+  --muted: 41 14% 87%;
+  --muted-foreground: 36 6% 42%;
+  --primary: 30 4% 32%;
+  --primary-foreground: 0 0% 100%;
+  --primary-hover: 30 4% 24%;
+  --primary-glow: 30 4% 32%;
+  --accent: 30 4% 32%;
+  --accent-foreground: 0 0% 100%;
+  --ring: 30 4% 32%;
+  --surface-subtle: 43 18% 87%;
+  --surface-elevated: 0 0% 100%;
+  /* demos retype to a neutral sans — Space Grotesk is the portfolio's voice */
+  --font-heading: "Inter";
+  --font-body: "Inter";
+
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* Gallery chrome (wall labels) — serif, deliberately unlike the portfolio.
+   System stack, so it costs no extra font download. */
+.font-gallery {
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+/* ─── Archive scroll film ─── */
+.archive-page {
+  --archive-accent: hsl(var(--primary));
+}
+
+.archive-shutter-bar {
+  animation: archive-shutter-open 1s cubic-bezier(0.2, 0, 0, 1) forwards;
+  transform-origin: center;
+}
+
+@keyframes archive-shutter-open {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0);
+  }
+}
+
+.archive-pin-section {
+  background: hsl(var(--background));
+}
+
+.archive-frame--rewind {
+  filter: saturate(0.85);
+}
+
+/* Category animation overlays */
+.archive-anim-overlay {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.archive-frame:hover .archive-anim-overlay,
+.archive-frame:focus-within .archive-anim-overlay {
+  opacity: 1;
+}
+
+.archive-anim-agents {
+  background: radial-gradient(circle at 30% 40%, hsl(var(--primary) / 0.15), transparent 50%);
+}
+
+.archive-anim-chat {
+  background: linear-gradient(135deg, transparent 40%, hsl(var(--primary) / 0.12) 60%, transparent 80%);
+}
+
+.archive-anim-dl {
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 40px,
+    hsl(var(--primary) / 0.06) 40px,
+    hsl(var(--primary) / 0.06) 41px
+  );
+}
+
+.archive-anim-ml {
+  background: radial-gradient(ellipse at 70% 30%, hsl(var(--primary) / 0.1), transparent 55%);
+}
+
+.archive-anim-web {
+  background: linear-gradient(180deg, transparent, hsl(var(--primary) / 0.08));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .archive-shutter-bar {
+    animation: none;
+    transform: scaleY(0);
+  }
+
+  .archive-pin-section .flex {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .archive-frame {
+    height: auto;
+    min-height: 80vh;
+    width: 100%;
+  }
 }

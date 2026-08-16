@@ -1,5 +1,6 @@
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
 import { useMemo } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
 import heroImage from "@/assets/me.webp";
 
 function getTeluguGreeting(): { text: string; transliteration: string } {
@@ -12,6 +13,11 @@ function getTeluguGreeting(): { text: string; transliteration: string } {
 
 export const Hero = () => {
   const greeting = useMemo(() => getTeluguGreeting(), []);
+  // Scroll-driven chevron — fades out and drops away as user scrolls past hero,
+  // replaces the previous animate-bounce loop. Once it's served its purpose, it leaves.
+  const { scrollY } = useScroll();
+  const chevronOpacity = useTransform(scrollY, [0, 160], [1, 0]);
+  const chevronY = useTransform(scrollY, [0, 160], [0, 24]);
   const KaggleIcon = ({ className = "" }: { className?: string }) => (
     <svg
       className={className}
@@ -235,11 +241,14 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-12 sm:bottom-14 md:bottom-16 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 sm:gap-2">
+      {/* Scroll Indicator — fades + drops as user scrolls past hero */}
+      <motion.div
+        className="absolute bottom-12 sm:bottom-14 md:bottom-16 left-1/2 flex flex-col items-center gap-1 sm:gap-2 pointer-events-none"
+        style={{ x: "-50%", y: chevronY, opacity: chevronOpacity }}
+      >
         <span className="font-body text-[0.6rem] sm:text-xs uppercase tracking-wider text-foreground/60">SCROLL</span>
-        <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 animate-bounce text-foreground/60" />
-      </div>
+        <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-foreground/60" />
+      </motion.div>
 
       {/* Legacy Roles Strip */}
       <div className="absolute bottom-12 sm:bottom-14 md:bottom-16 left-0 hidden sm:block w-full">

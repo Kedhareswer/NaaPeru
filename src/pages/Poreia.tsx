@@ -1,428 +1,500 @@
-import { useState, useEffect, useMemo, useCallback, useRef } from "react";
-import { motion, AnimatePresence, useInView } from "motion/react";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useInView } from "motion/react";
 import { Navigation } from "@/components/Navigation";
-import { TransitionLink } from "@/components/TransitionLink";
+import { Footer } from "@/components/Footer";
 import { Seo } from "@/components/Seo";
 
-interface Milestone {
-  id: number;
-  domain: string;
-  month: number;
-  status: "done" | "active" | "planned";
-  title: string;
-  desc: string;
-  aim: string;
-  progress: number;
-  ideas: string[];
-  date: string;
-  cat: string;
-}
+/* ──────────────────────────────────────────────────────────────
+ * /poreia — "How I work"
+ * Five-phase narrative. Scroll-revealed, diary voice, camera/EXIF
+ * vocabulary continued from the rest of the site.
+ * Each project is one of these in some compressed form.
+ * ────────────────────────────────────────────────────────────── */
 
-interface SkillEntry {
-  name: string;
-  now: number;
-  target: number;
-  miracle: number;
-}
-
-interface SkillGroup {
-  domain: string;
-  skills: SkillEntry[];
-}
-
-interface PoreiaData {
-  hero: { heading: string; headingAccent: string; subtitle: string };
-  timeline: { totalMonths: number; currentMonth: number; domains: string[] };
-  milestones: Milestone[];
-  radar: {
-    title: string;
-    titleAccentWord: string;
-    subtitle: string;
-    domains: string[];
-    now: number[];
-    target: number[];
-    miracle: number[];
+type Phase = {
+  num: string;            // "01"
+  greek: string;          // Εἰσαγωγή
+  greekRoman: string;     // Eisagogí
+  title: string;          // "Intake"
+  question: string;       // headline question
+  body: string[];         // diary paragraphs
+  artifact: {
+    label: string;        // small uppercase tag on the artifact card
+    kind: "callout" | "table" | "code" | "list" | "metric";
+    content: unknown;     // shape depends on kind
   };
-  skills: {
-    title: string;
-    titleAccentWords: string;
-    subtitle: string;
-    groups: SkillGroup[];
+  exif: {
+    duration: string;     // "~2 DAYS"
+    tool: string;         // "NOTEPAD"
   };
-  marquee: { words1: string[]; words2: string[] };
-  closing: { label: string; quote: string; quoteAccent: string; meta: string; updatedDate: string };
-}
+};
 
-function AnimatedCounter({ value, duration = 1.2 }: { value: number; duration?: number }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
-  const [display, setDisplay] = useState(0);
-  useEffect(() => { if (!inView) return; let s = 0; const step = Math.ceil(value / (duration * 60)); const iv = setInterval(() => { s += step; if (s >= value) { setDisplay(value); clearInterval(iv); } else setDisplay(s); }, 1000 / 60); return () => clearInterval(iv); }, [inView, value, duration]);
-  return <span ref={ref}>{display}</span>;
-}
+const PHASES: Phase[] = [
+  {
+    num: "01",
+    greek: "Εἰσαγωγή",
+    greekRoman: "Eisagogí",
+    title: "Intake",
+    question: "What is the actual problem?",
+    body: [
+      "Most asks arrive wrapped in a solution. “Build a dashboard” usually means “we can’t tell what’s happening.” “Add AI” usually means “we’re behind a competitor.”",
+      "Phase one is unwrapping the ask until the real shape of the problem shows up. Until then the dashboard and the AI are both expensive guesses.",
+    ],
+    artifact: {
+      label: "QUESTIONS I ASK",
+      kind: "list",
+      content: [
+        "What does “done” look like, exactly?",
+        "Who notices if this works?",
+        "What’s the cost of doing nothing?",
+        "Whose problem stops being a problem?",
+      ],
+    },
+    exif: { duration: "~2 DAYS", tool: "NOTEPAD" },
+  },
+  {
+    num: "02",
+    greek: "Ἀναζήτησις",
+    greekRoman: "Anazítisis",
+    title: "Explore",
+    question: "What has been tried before?",
+    body: [
+      "A quick survey of three things — papers, products, and prior internal attempts. Papers say what’s theoretically possible. Products say what’s already commodity. Prior attempts say where the landmines are.",
+      "By the end I have a one-page map: solved territory, contested territory, open frontier. Most of the time the answer is hiding in the second column.",
+    ],
+    artifact: {
+      label: "TERRITORY MAP",
+      kind: "table",
+      content: [
+        { col: "Solved", val: "Generic RAG, dense retrieval, function-calling agents" },
+        { col: "Contested", val: "Long-context routing, multi-doc reasoning, cost↔latency tradeoffs" },
+        { col: "Open frontier", val: "Domain-specific evals, agentic supervision, failure attribution" },
+      ],
+    },
+    exif: { duration: "~3 DAYS", tool: "OBSIDIAN" },
+  },
+  {
+    num: "03",
+    greek: "Πρωτότυπος",
+    greekRoman: "Prōtótupos",
+    title: "Prototype",
+    question: "What is the smallest thing that proves the thing?",
+    body: [
+      "Not a demo. A test. The smallest possible version that answers the phase-one question. If the question is “is RAG enough for this corpus,” the prototype is ten documents, five questions, hand-evaluated answers. No UI. No infrastructure.",
+      "The point isn’t to be impressive. The point is to decide whether to keep going.",
+    ],
+    artifact: {
+      label: "WHAT GETS BUILT",
+      kind: "code",
+      content: [
+        "# the whole prototype",
+        "docs = load(\"./10-pdfs\")",
+        "index = embed(docs)",
+        "for q in questions:",
+        "    ctx = top_k(index, q, k=4)",
+        "    print(q, llm(ctx + q))",
+      ],
+    },
+    exif: { duration: "~1 WEEK", tool: "CURSOR" },
+  },
+  {
+    num: "04",
+    greek: "Δοκιμή",
+    greekRoman: "Dokimí",
+    title: "Test",
+    question: "How does it break on purpose?",
+    body: [
+      "Adversarial questions, weird input shapes, the things that don’t appear in the demo flow but live in production. If the system breaks here, that’s a feature — failures found now are failures not shipped.",
+      "I keep a running log: what broke, what I changed, what I’d do differently. The log outlives the project.",
+    ],
+    artifact: {
+      label: "ADVERSARIAL CASES",
+      kind: "list",
+      content: [
+        "Empty input → polite refusal, not crash.",
+        "Question outside the corpus → “I don’t know.”",
+        "Two contradicting sources → surface the disagreement.",
+        "Prompt injection in the document body → ignored.",
+        "Cold-start latency → measured, not hidden.",
+      ],
+    },
+    exif: { duration: "~3 DAYS", tool: "PROD-LOG" },
+  },
+  {
+    num: "05",
+    greek: "Ἀποστολή",
+    greekRoman: "Apostolí",
+    title: "Ship",
+    question: "Did it solve the problem from phase one?",
+    body: [
+      "Shipping is the easy part. Measuring is what most projects skip. I instrument the thing before launch so I can see whether it’s doing the job — not just whether it’s running.",
+      "A week later, the metrics speak. If the answer is no, the loop restarts at phase one. If the answer is yes, the loop restarts somewhere else.",
+    ],
+    artifact: {
+      label: "WHAT I WATCH",
+      kind: "metric",
+      content: [
+        { name: "Answer accept rate", target: 85, unit: "%" },
+        { name: "p95 latency", target: 1800, unit: "ms" },
+        { name: "Cost per query", target: 4, unit: "¢" },
+        { name: "Escalations to human", target: 6, unit: "%" },
+      ],
+    },
+    exif: { duration: "ONGOING", tool: "GRAFANA" },
+  },
+];
 
-function PoreiaMarquee({ words, reverse = false }: { words: string[]; reverse?: boolean }) {
-  const items = [...words, ...words, ...words, ...words];
+/* ───────────── Hero with ghost ΠΟΡΕΙΑ parallax ───────────── */
+
+function HeroSection() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const ghostX = useTransform(scrollYProgress, [0, 1], ["0%", "-18%"]);
+
   return (
-    <div className="relative w-full overflow-hidden border-y border-border/10 py-4 bg-card/20">
-      <div className="flex whitespace-nowrap" style={{ animation: `poreia-marquee 25s linear infinite${reverse ? " reverse" : ""}` }}>
-        {[...items, ...items].map((w, i) => (<span key={i} className="inline-flex items-center mx-8"><span className="font-heading text-xs font-bold tracking-[0.4em] uppercase text-foreground/[0.06]">{w}</span><span className="ml-8 text-primary/20 text-xs">&middot;</span></span>))}
-      </div>
-      <style>{`@keyframes poreia-marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}`}</style>
-    </div>
-  );
-}
-
-function RadarChart({ domains, now, target, miracle }: { domains: string[]; now: number[]; target: number[]; miracle: number[] }) {
-  const ref = useRef<SVGSVGElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const cx = 190, cy = 190, maxR = 140, n = domains.length;
-  const pol = (angle: number, r: number): [number, number] => [
-    cx + r * Math.cos(angle - Math.PI / 2),
-    cy + r * Math.sin(angle - Math.PI / 2),
-  ];
-  const makePolygon = (values: number[]) =>
-    values.map((v, i) => pol((2 * Math.PI * i) / n, maxR * (v / 100)).join(",")).join(" ");
-  const origin = `${cx}px ${cy}px`;
-
-  return (
-    <svg ref={ref} className="w-full max-w-[380px] h-auto" viewBox="0 0 380 380" role="img" aria-label="Radar chart showing current vs target vs miracle skill levels">
-      {[25, 50, 75, 100].map((lv) => {
-        const pts = Array.from({ length: n }, (_, i) => pol((2 * Math.PI * i) / n, maxR * (lv / 100)).join(",")).join(" ");
-        return (
-          <g key={lv}>
-            <polygon points={pts} fill="none" stroke={lv === 100 ? "hsla(0,0%,30%,0.4)" : "hsla(0,0%,20%,0.15)"} strokeWidth={lv === 100 ? 1 : 0.5} />
-            <text x={pol(0, maxR * (lv / 100))[0] + 8} y={pol(0, maxR * (lv / 100))[1]} fill="hsla(0,0%,100%,0.15)" fontSize={8} fontFamily="Inter">{lv}%</text>
-          </g>
-        );
-      })}
-      {domains.map((d, i) => {
-        const angle = (2 * Math.PI * i) / n;
-        const [ex, ey] = pol(angle, maxR);
-        const [lx, ly] = pol(angle, maxR + 22);
-        return (
-          <g key={d}>
-            <line x1={cx} y1={cy} x2={ex} y2={ey} stroke="hsla(0,0%,20%,0.1)" strokeWidth={0.5} />
-            <text x={lx} y={ly} textAnchor="middle" dominantBaseline="middle" fill="hsl(0,0%,50%)" fontSize={9} fontFamily="Space Grotesk,sans-serif" fontWeight={600}>{d}</text>
-          </g>
-        );
-      })}
-      <polygon points={makePolygon(miracle)} fill="hsla(45,80%,55%,0.04)" stroke="hsl(45,80%,55%)" strokeWidth={1} strokeDasharray="3 4" opacity={inView ? 0.4 : 0} style={{ transform: inView ? "scale(1)" : "scale(0)", transformOrigin: origin, transition: "all 1.2s cubic-bezier(0.25,0.46,0.45,0.94) 0.6s" }} />
-      {miracle.map((v, i) => { const [dx, dy] = pol((2 * Math.PI * i) / n, maxR * (v / 100)); return <circle key={`m-${i}`} cx={dx} cy={dy} r={2.5} fill="hsl(45,80%,55%)" opacity={inView ? 0.35 : 0} style={{ transition: `opacity 0.4s ease ${0.8 + i * 0.05}s` }} />; })}
-      <polygon points={makePolygon(target)} fill="hsla(210,65%,55%,0.08)" stroke="hsl(210,65%,55%)" strokeWidth={1.5} strokeDasharray="6 3" opacity={inView ? 1 : 0} style={{ transform: inView ? "scale(1)" : "scale(0)", transformOrigin: origin, transition: "all 1s cubic-bezier(0.25,0.46,0.45,0.94) 0.3s" }} />
-      {target.map((v, i) => { const [dx, dy] = pol((2 * Math.PI * i) / n, maxR * (v / 100)); return <circle key={`t-${i}`} cx={dx} cy={dy} r={3.5} fill="hsl(210,65%,55%)" opacity={inView ? 0.7 : 0} style={{ transition: `opacity 0.4s ease ${0.5 + i * 0.05}s` }} />; })}
-      <polygon points={makePolygon(now)} fill="hsla(5,78%,42%,0.15)" stroke="hsl(5,78%,42%)" strokeWidth={2} opacity={inView ? 1 : 0} style={{ transform: inView ? "scale(1)" : "scale(0)", transformOrigin: origin, transition: "all 0.8s cubic-bezier(0.25,0.46,0.45,0.94)" }} />
-      {now.map((v, i) => { const [dx, dy] = pol((2 * Math.PI * i) / n, maxR * (v / 100)); return <circle key={`c-${i}`} cx={dx} cy={dy} r={4} fill="hsl(5,78%,42%)" opacity={inView ? 1 : 0} style={{ transition: `opacity 0.4s ease ${0.2 + i * 0.05}s` }} />; })}
-    </svg>
-  );
-}
-
-function SkillBar({ skill, delay = 0 }: { skill: SkillEntry; delay?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-40px" });
-  return (
-    <div ref={ref} className="flex items-center gap-3 mb-[0.65rem]">
-      <div className="font-heading text-[0.78rem] font-medium w-[100px]">{skill.name}</div>
-      <div className="flex-1 relative h-3 flex items-center">
-        <div className="absolute top-1/2 left-0 right-0 h-[3px] -translate-y-1/2 bg-[hsla(0,0%,20%,0.2)]" />
-        <div className="absolute h-[3px] top-1/2 -translate-y-1/2 bg-[hsl(210,65%,55%)] opacity-35 z-[1]" style={{ left: `${skill.now}%`, width: inView ? `${skill.target - skill.now}%` : "0%", transition: `width 0.8s cubic-bezier(0.25,0.46,0.45,0.94) ${delay + 0.3}s` }} />
-        <div className="absolute h-[3px] top-1/2 -translate-y-1/2 bg-[hsl(45,80%,55%)] opacity-15 z-[1]" style={{ left: `${skill.target}%`, width: inView ? `${skill.miracle - skill.target}%` : "0%", transition: `width 0.8s cubic-bezier(0.25,0.46,0.45,0.94) ${delay + 0.5}s` }} />
-        <div className="absolute h-[3px] top-1/2 -translate-y-1/2 bg-primary z-[2]" style={{ width: inView ? `${skill.now}%` : "0%", transition: `width 0.8s cubic-bezier(0.25,0.46,0.45,0.94) ${delay}s` }} />
-        <div className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-[2px] h-[10px] bg-[hsl(210,65%,55%)] z-[3] opacity-80" style={{ left: `${skill.target}%` }} />
-        <div className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-[2px] h-[8px] bg-[hsl(45,80%,55%)] z-[3] opacity-40" style={{ left: `${skill.miracle}%` }} />
-      </div>
-      <div className="flex gap-[0.4rem] min-w-[90px] justify-end items-center">
-        <span className="font-heading text-[10px] font-bold text-primary">{skill.now}</span>
-        <span className="text-[9px] text-[hsl(0,0%,28%)]">&rarr;</span>
-        <span className="font-heading text-[10px] font-semibold text-[hsl(210,65%,55%)]">{skill.target}</span>
-        <span className="text-[9px] text-[hsl(0,0%,28%)]">&rarr;</span>
-        <span className="font-heading text-[10px] font-medium text-[hsl(45,80%,55%)] opacity-50">{skill.miracle}</span>
-      </div>
-    </div>
-  );
-}
-
-function DetailPanel({ milestone }: { milestone: Milestone | null }) {
-  if (!milestone) {
-    return (
-      <div className="border border-border/20 bg-card/40 min-h-[240px] flex items-center justify-center">
-        <span className="text-sm text-[hsl(0,0%,28%)]">Click a milestone to see details</span>
-      </div>
-    );
-  }
-  const m = milestone;
-  const statusLabel = m.status === "done" ? "\u25CF Shipped" : m.status === "active" ? "\u25C9 Building" : "\u25CB Planned";
-  const statusColor = m.status === "done" ? "text-primary" : m.status === "active" ? "text-[hsl(5,90%,55%)]" : "text-muted-foreground";
-
-  return (
-    <AnimatePresence mode="wait">
-      <motion.div key={m.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }} className="border border-border/20 bg-card/40 min-h-[240px] grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
-        <div className="p-8 lg:border-r border-border/10">
-          <div className={`inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] mb-3 ${statusColor}`}>{statusLabel}</div>
-          <h3 className="font-heading text-[1.75rem] font-bold tracking-tight leading-tight mb-2">{m.title}</h3>
-          <p className="text-sm text-muted-foreground leading-relaxed mb-6">{m.desc}</p>
-          <div className="flex gap-8">
-            {[{ label: "When", value: m.date }, { label: "Domain", value: m.domain }, { label: "Type", value: m.cat }].map((meta) => (
-              <div key={meta.label}>
-                <div className="text-[8px] uppercase tracking-[0.25em] text-[hsl(0,0%,28%)] mb-0.5">{meta.label}</div>
-                <div className="font-heading text-[0.95rem] font-semibold">{meta.value}</div>
-              </div>
-            ))}
-          </div>
+    <section
+      ref={ref}
+      className="relative min-h-screen overflow-hidden flex flex-col justify-end pb-24 pt-40"
+    >
+      {/* Ghost ΠΟΡΕΙΑ — giant, low-opacity, parallaxes horizontally */}
+      <div className="container-portfolio relative">
+        <div className="relative overflow-hidden">
+          <motion.h1
+            className="font-heading font-bold text-foreground/5 leading-[0.85] tracking-tighter select-none whitespace-nowrap"
+            style={{
+              x: ghostX,
+              fontSize: "clamp(7rem, 22vw, 22rem)",
+            }}
+          >
+            ΠΟΡΕΙΑ
+          </motion.h1>
         </div>
-        <div className="p-8">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="font-heading text-2xl font-bold text-primary min-w-[55px]">{m.progress}%</div>
-            <div className="flex-1 h-1 bg-[hsla(0,0%,20%,0.3)] relative">
-              <motion.div className="h-full bg-primary" initial={{ width: 0 }} animate={{ width: `${m.progress}%` }} transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }} />
-            </div>
-          </div>
-          <div className="text-[0.95rem] italic text-foreground leading-relaxed mb-6 pl-4 border-l-2 border-primary">{m.aim}</div>
-          <div className="text-[9px] uppercase tracking-[0.25em] text-primary font-semibold mb-2">What&apos;s involved</div>
-          <div className="flex flex-col gap-2">
-            {m.ideas.map((idea, i) => (
-              <div key={i} className="flex gap-2 items-start text-[0.82rem] text-muted-foreground leading-snug">
-                <div className="w-1 h-1 bg-primary opacity-60 mt-1.5 flex-shrink-0" />
-                {idea}
-              </div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-    </AnimatePresence>
-  );
-}
 
-function TimelineNode({ milestone, totalMonths, isSelected, onClick }: { milestone: Milestone; totalMonths: number; isSelected: boolean; onClick: () => void }) {
-  const left = `${(milestone.month / totalMonths) * 100}%`;
-  const dotClass = milestone.status === "done" ? "bg-primary" : milestone.status === "active" ? "bg-[hsl(5,90%,55%)] shadow-[0_0_12px_hsla(5,90%,55%,0.5)]" : "bg-transparent border-[1.5px] border-[hsl(0,0%,28%)]";
-
-  return (
-    <button type="button" className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer z-[5] p-2 group" style={{ left }} onClick={onClick} aria-label={`View milestone: ${milestone.title}`}>
-      <div className={`w-4 h-4 transition-all duration-200 relative ${dotClass} ${isSelected ? "scale-150 shadow-[0_0_14px_hsl(5,78%,42%)]" : "group-hover:scale-150"}`}>
-        {milestone.status === "active" && <span className="absolute inset-[-5px] border border-[hsl(5,90%,55%)] animate-ping" />}
-      </div>
-      <div className={`absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 whitespace-nowrap font-heading text-[10px] font-semibold bg-[hsl(220,20%,13%)] px-2 py-1 border border-border/25 transition-opacity pointer-events-none ${isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
-        {milestone.title}
-      </div>
-    </button>
-  );
-}
-
-function FeaturedCallout({ milestone }: { milestone: Milestone }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-  return (
-    <section ref={ref} className="container-portfolio mb-6">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="relative border border-primary/20 bg-card/40 overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] via-transparent to-transparent pointer-events-none" />
-        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-primary via-primary/60 to-transparent" />
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-0">
-          <div className="p-10 lg:p-12">
-            <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-primary font-bold mb-4">
-              <span className="w-2 h-2 bg-[hsl(5,90%,55%)] shadow-[0_0_10px_hsl(5,90%,55%)] animate-pulse" />
-              Currently Building
-            </div>
-            <h3 className="font-heading text-[clamp(1.6rem,3vw,2.2rem)] font-bold tracking-tight leading-tight mb-3">{milestone.title}</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-8 max-w-[520px]">{milestone.desc}</p>
-            <div className="flex items-center gap-5 mb-8">
-              <div className="font-heading text-3xl font-bold text-primary">{milestone.progress}%</div>
-              <div className="flex-1 max-w-[280px] h-[6px] bg-[hsla(0,0%,20%,0.3)] relative overflow-hidden">
-                <motion.div className="h-full bg-primary" initial={{ width: 0 }} animate={inView ? { width: `${milestone.progress}%` } : {}} transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.4 }} />
-              </div>
-            </div>
-            <div className="text-[0.95rem] italic text-foreground/80 leading-relaxed pl-4 border-l-2 border-primary/60">{milestone.aim}</div>
+        {/* Foreground intro */}
+        <div className="mt-16 max-w-3xl space-y-8">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-px bg-primary" />
+            <span className="font-body text-xs uppercase tracking-[0.4em] text-primary/80">
+              The Path &middot; How I work
+            </span>
           </div>
-          <div className="p-10 lg:p-12 lg:border-l border-border/10 bg-card/20">
-            <div className="text-[9px] uppercase tracking-[0.25em] text-primary font-semibold mb-4">What&apos;s involved</div>
-            <div className="flex flex-col gap-3">
-              {milestone.ideas.map((idea, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: 12 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.6 + i * 0.1 }}
-                  className="flex gap-3 items-start text-[0.82rem] text-muted-foreground leading-snug"
+
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-medium leading-[1.1] tracking-tight text-foreground">
+            Every project is the same five steps in different clothes.
+          </h2>
+
+          <p className="font-body text-base md:text-lg text-foreground/60 leading-relaxed max-w-2xl">
+            Below: how I take a problem from intake to ship. Diary voice, written in the order I actually do it, with the small artifacts that fall out of each step.
+          </p>
+
+          {/* Phase index */}
+          <div className="pt-8 border-t border-border/15">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-x-6 gap-y-4">
+              {PHASES.map((p) => (
+                <a
+                  key={p.num}
+                  href={`#phase-${p.num}`}
+                  className="group flex flex-col gap-1 transition-opacity hover:opacity-100 opacity-60"
                 >
-                  <div className="w-1.5 h-1.5 bg-primary opacity-60 mt-1.5 flex-shrink-0" />
-                  {idea}
-                </motion.div>
+                  <span className="font-heading text-xs font-semibold tracking-[0.2em] text-primary">
+                    {p.num}
+                  </span>
+                  <span className="font-body text-sm uppercase tracking-[0.15em] text-foreground group-hover:text-primary transition-colors">
+                    {p.title}
+                  </span>
+                </a>
               ))}
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
 
-function ClosingManifesto({ closing }: { closing: PoreiaData["closing"] }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+/* ───────────── Phase section ───────────── */
+
+function PhaseSection({ phase, index }: { phase: Phase; index: number }) {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-100px" });
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  // Ghost keyword behind content parallaxes opposite to scroll
+  const ghostX = useTransform(scrollYProgress, [0, 1], ["6%", "-12%"]);
+
+  const reveal = inView
+    ? { opacity: 1, y: 0 }
+    : { opacity: 0, y: 20 };
+  const numberReveal = inView
+    ? { y: 0 }
+    : { y: "100%" };
+
+  // Alternate left/right alignment per phase for rhythm — odd phases left, even phases right
+  const isRight = index % 2 === 1;
+
   return (
-    <section ref={ref} className="container-portfolio mb-20">
+    <section
+      ref={ref}
+      id={`phase-${phase.num}`}
+      className="relative py-32 md:py-40 overflow-hidden"
+    >
+      {/* Ghost keyword behind everything — same family as the hero ΠΟΡΕΙΑ but smaller */}
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="border border-border/15 bg-card/30 py-16 px-8 text-center relative overflow-hidden"
+        aria-hidden
+        className="absolute inset-0 pointer-events-none flex items-center"
+        style={{ x: ghostX }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] via-transparent to-transparent pointer-events-none" />
-        <div className="text-[10px] uppercase tracking-[0.4em] text-primary font-bold mb-6">{closing.label}</div>
-        <p className="font-heading text-[clamp(1.4rem,3vw,2rem)] font-bold tracking-tight leading-snug max-w-[600px] mx-auto mb-6">
-          {closing.quote} <em className="italic text-primary">{closing.quoteAccent}</em>
-        </p>
-        <div className="text-[11px] text-muted-foreground">
-          {closing.meta} <span className="text-foreground/30 mx-2">&middot;</span> <span className="text-primary/60">{closing.updatedDate}</span>
-        </div>
+        <span
+          className="font-heading font-bold text-foreground/[0.035] leading-none tracking-tighter whitespace-nowrap select-none"
+          style={{ fontSize: "clamp(7rem, 20vw, 18rem)" }}
+        >
+          {phase.title.toUpperCase()}
+        </span>
       </motion.div>
+
+      <div className="container-portfolio relative">
+        <div className={`grid gap-12 lg:gap-20 lg:grid-cols-12 ${isRight ? "lg:flow-rtl" : ""}`}>
+          {/* Left column — number + label + diary text */}
+          <div className={`lg:col-span-7 ${isRight ? "lg:col-start-6" : ""}`}>
+            {/* Big phase number with mask reveal */}
+            <div className="overflow-hidden h-[8rem] md:h-[10rem] lg:h-[12rem]">
+              <motion.div
+                initial={false}
+                animate={numberReveal}
+                transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="font-heading font-bold text-primary leading-none tracking-tighter"
+                style={{ fontSize: "clamp(7rem, 12vw, 12rem)" }}
+              >
+                {phase.num}
+              </motion.div>
+            </div>
+
+            {/* Greek + roman + English title */}
+            <motion.div
+              initial={false}
+              animate={reveal}
+              transition={{ duration: 0.6, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="mt-6 space-y-2"
+            >
+              <div className="flex items-baseline gap-4">
+                <span className="font-heading text-2xl md:text-3xl font-medium text-foreground">
+                  {phase.greek}
+                </span>
+                <span className="font-body text-xs uppercase tracking-[0.3em] text-foreground/40">
+                  {phase.greekRoman}
+                </span>
+              </div>
+              <h3 className="font-heading text-4xl md:text-5xl font-bold tracking-tight text-foreground">
+                {phase.title}
+              </h3>
+            </motion.div>
+
+            {/* Question */}
+            <motion.p
+              initial={false}
+              animate={reveal}
+              transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="mt-8 font-heading text-xl md:text-2xl leading-snug text-foreground/80 italic max-w-xl"
+            >
+              {phase.question}
+            </motion.p>
+
+            {/* Diary paragraphs */}
+            <div className="mt-8 space-y-5 max-w-xl">
+              {phase.body.map((p, i) => (
+                <motion.p
+                  key={i}
+                  initial={false}
+                  animate={reveal}
+                  transition={{ duration: 0.6, delay: 0.45 + i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  className="font-body text-[0.95rem] md:text-base text-foreground/70 leading-[1.7]"
+                >
+                  {p}
+                </motion.p>
+              ))}
+            </div>
+          </div>
+
+          {/* Right column — artifact card + EXIF markers */}
+          <div className={`lg:col-span-5 ${isRight ? "lg:col-start-1 lg:row-start-1" : ""}`}>
+            <motion.div
+              initial={false}
+              animate={inView ? { opacity: 1, clipPath: "inset(0 0 0 0)" } : { opacity: 0, clipPath: "inset(0 100% 0 0)" }}
+              transition={{ duration: 0.85, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="relative border border-border/25 bg-card/40 backdrop-blur p-6 md:p-8"
+            >
+              {/* EXIF corner markers — same vocabulary as Hero HEIGHT/AGE labels */}
+              <div className="absolute right-3 top-3 z-10 text-right">
+                <div className="font-heading text-[9px] uppercase tracking-[0.25em] text-primary/60">
+                  Phase
+                </div>
+                <div className="font-heading text-[11px] font-medium text-primary mt-0.5">
+                  {phase.num} / 05
+                </div>
+              </div>
+
+              <div className="font-body text-[10px] uppercase tracking-[0.35em] text-foreground/40 mb-4">
+                {phase.artifact.label}
+              </div>
+
+              {/* Artifact content — switches on kind */}
+              <ArtifactContent kind={phase.artifact.kind} content={phase.artifact.content} />
+
+              {/* Bottom EXIF row */}
+              <div className="mt-6 pt-4 border-t border-border/15 flex items-center justify-between gap-4 text-[9px] uppercase tracking-[0.25em]">
+                <div className="flex items-center gap-2 text-foreground/40">
+                  <span>Duration</span>
+                  <span className="text-foreground/70">{phase.exif.duration}</span>
+                </div>
+                <div className="flex items-center gap-2 text-foreground/40">
+                  <span>Tool</span>
+                  <span className="text-foreground/70">{phase.exif.tool}</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* row-direction helper — Tailwind doesn't ship lg:flow-rtl, fallback handled by order classes above */}
     </section>
   );
 }
 
-export default function Poreia() {
-  const [data, setData] = useState<PoreiaData | null>(null);
-  const [selectedId, setSelectedId] = useState<number | null>(null);
-  const timelineRef = useRef<HTMLDivElement>(null);
+/* ───────────── Artifact renderers ───────────── */
 
-  useEffect(() => {
-    fetch("/poreia-data.json")
-      .then((r) => r.json())
-      .then((d: PoreiaData) => {
-        setData(d);
-        const firstActive = d.milestones.find((m) => m.status === "active");
-        if (firstActive) setSelectedId(firstActive.id);
-      });
-  }, []);
+function ArtifactContent({ kind, content }: { kind: Phase["artifact"]["kind"]; content: unknown }) {
+  if (kind === "list") {
+    return (
+      <ul className="space-y-3">
+        {(content as string[]).map((item, i) => (
+          <li key={i} className="flex gap-3 items-start">
+            <span className="font-heading text-[10px] text-primary/60 font-medium mt-1 w-5 flex-shrink-0">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span className="font-body text-sm text-foreground/80 leading-relaxed">{item}</span>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  if (kind === "table") {
+    return (
+      <div className="space-y-3">
+        {(content as { col: string; val: string }[]).map((row, i) => (
+          <div key={i} className="grid grid-cols-[120px,1fr] gap-4 py-2 border-b border-border/10 last:border-b-0">
+            <div className="font-body text-[10px] uppercase tracking-[0.25em] text-primary/70">{row.col}</div>
+            <div className="font-body text-sm text-foreground/80 leading-relaxed">{row.val}</div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+  if (kind === "code") {
+    return (
+      <pre className="font-mono text-[12px] leading-[1.7] text-foreground/80 whitespace-pre-wrap">
+        {(content as string[]).map((line, i) => (
+          <div key={i} className="flex gap-3">
+            <span className="text-foreground/25 select-none w-5 text-right">{String(i + 1).padStart(2, "0")}</span>
+            <span>{line}</span>
+          </div>
+        ))}
+      </pre>
+    );
+  }
+  if (kind === "metric") {
+    const metrics = content as { name: string; target: number; unit: string }[];
+    return (
+      <div className="space-y-3">
+        {metrics.map((m, i) => (
+          <div key={i} className="flex items-baseline justify-between gap-4 py-2 border-b border-border/10 last:border-b-0">
+            <span className="font-body text-sm text-foreground/80">{m.name}</span>
+            <span className="font-heading text-base font-medium tabular-nums text-primary">
+              {m.target}
+              <span className="text-foreground/40 text-xs ml-0.5">{m.unit}</span>
+            </span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+  return null;
+}
 
-  const selectedMilestone = useMemo(() => data?.milestones.find((m) => m.id === selectedId) ?? null, [data, selectedId]);
-  const featuredMilestone = useMemo(() => data?.milestones.find((m) => m.status === "active") ?? null, [data]);
-  const stats = useMemo(() => {
-    if (!data) return { total: 0, shipped: 0, building: 0, planned: 0 };
-    const ms = data.milestones;
-    return { total: ms.length, shipped: ms.filter((m) => m.status === "done").length, building: ms.filter((m) => m.status === "active").length, planned: ms.filter((m) => m.status === "planned").length };
-  }, [data]);
-  const handleSelect = useCallback((id: number) => setSelectedId(id), []);
+/* ───────────── Closing section ───────────── */
 
-  if (!data) return null;
-
-  const monthMarkers = [
-    { i: 0, l: "Jan '26" }, { i: 2, l: "\u25CF Now", active: true }, { i: 5, l: "Jun '26" },
-    { i: 8, l: "Sep '26" }, { i: 11, l: "Dec '26" }, { i: 14, l: "Mar '27" }, { i: 17, l: "Jun '27" },
-  ];
+function ClosingSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <section className="relative py-32 md:py-40 border-t border-border/15">
+      <div className="container-portfolio">
+        <div ref={ref} className="max-w-3xl mx-auto text-center space-y-8">
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={inView ? { scaleX: 1 } : {}}
+            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="w-16 h-px bg-primary mx-auto origin-left"
+          />
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="space-y-6"
+          >
+            <p className="font-heading text-2xl md:text-3xl text-foreground/90 italic leading-snug">
+              And then the loop starts again.
+            </p>
+            <p className="font-body text-base text-foreground/60 leading-relaxed max-w-xl mx-auto">
+              Every project is one of these in some compressed form. Some collapse into a day. Others stretch into months. The shape is the same.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="pt-8 font-body text-[10px] uppercase tracking-[0.4em] text-foreground/40"
+          >
+            Πορεία &middot; updated this week
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ───────────── Page ───────────── */
+
+const Poreia = () => {
+  return (
+    <div className="bg-background min-h-screen">
       <Seo
-        title="Kedhar's Journey (Poreia) | AI Engineer Growth Roadmap"
-        description="Follow Kedhar's (Marlakunta Kedhareswer Naidu) growth roadmap as an AI Engineer — milestones, skills, and learning journey from 2026 onwards."
+        title="Πορεία — How I work | Kedhar"
+        description="Five-phase process narrative: how Kedhar (AI Engineer) takes a problem from intake through exploration, prototype, test, and ship."
         path="/poreia"
-        image="/og-work.png"
-        imageAlt="Kedhar Kedhareswer Naidu career growth and learning journey"
+        image="/og-image.png"
+        imageAlt="Poreia — How I work, by Kedhar"
       />
       <Navigation />
-      <section className="container-portfolio relative pt-32 pb-12 overflow-hidden">
-        <div className="font-heading text-[clamp(6rem,15vw,16rem)] font-bold tracking-tighter leading-none text-white/[0.02] select-none absolute top-16 right-[-2rem]" aria-hidden="true">ΠΟΡΕΙΑ</div>
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-[11px] uppercase tracking-[0.35em] text-primary opacity-80 mb-4">Πορεία — The Path</motion.div>
-        <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }} className="w-[60px] h-[3px] bg-primary mb-8 origin-left" />
-        <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="font-heading text-[clamp(2.5rem,5vw,4.5rem)] font-bold tracking-tight leading-[1.08] mb-4">
-          {data.hero.heading}<br /><em className="italic text-primary">{data.hero.headingAccent}</em>
-        </motion.h1>
-        <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.45 }} className="text-[1.05rem] text-muted-foreground max-w-[560px] leading-relaxed">{data.hero.subtitle}</motion.p>
-        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }} className="flex gap-8 sm:gap-12 mt-10 pt-6 border-t border-border/10">
-          {[{ num: stats.total, label: "Milestones" }, { num: stats.shipped, label: "Shipped" }, { num: stats.building, label: "In Progress" }, { num: stats.planned, label: "Planned" }].map((s, i) => (
-            <motion.div key={s.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.7 + i * 0.08 }} className="border border-border/15 bg-card/30 px-5 py-3">
-              <div className="font-heading text-2xl font-bold text-primary leading-none"><AnimatedCounter value={s.num} /></div>
-              <div className="text-[9px] uppercase tracking-[0.3em] text-[hsl(0,0%,28%)] mt-1">{s.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
-      {featuredMilestone && <FeaturedCallout milestone={featuredMilestone} />}
-
-      <PoreiaMarquee words={data.marquee.words1} />
-
-      <section ref={timelineRef} className="container-portfolio mt-16 mb-8" aria-label="18-month roadmap timeline">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="font-heading text-xl font-bold">18-Month Roadmap</h2>
-          <div className="flex gap-6">
-            {[{ cls: "bg-primary", label: "Shipped" }, { cls: "bg-[hsl(5,90%,55%)] shadow-[0_0_8px_hsl(5,90%,55%)]", label: "Building" }, { cls: "bg-transparent border-[1.5px] border-muted-foreground", label: "Planned" }].map((l) => (
-              <div key={l.label} className="flex items-center gap-2 text-[10px] text-muted-foreground uppercase tracking-wider">
-                <div className={`w-2 h-2 ${l.cls}`} />{l.label}
-              </div>
-            ))}
-          </div>
-        </div>
-        {data.timeline.domains.map((domain, di) => {
-          const domainMs = data.milestones.filter((m) => m.domain === domain).sort((a, b) => a.month - b.month);
-          const doneOrActive = domainMs.filter((m) => m.status === "done" || m.status === "active");
-          const fillStart = doneOrActive.length ? Math.min(...doneOrActive.map((m) => m.month)) : 0;
-          const fillEnd = doneOrActive.length ? Math.max(...doneOrActive.map((m) => m.month)) : 0;
-          return (
-            <motion.div
-              key={domain}
-              className="mb-3"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "0px" }}
-              transition={{ duration: 0.5, delay: di * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              <div className="text-[9px] uppercase tracking-[0.3em] text-[hsl(0,0%,28%)] mb-2">{domain}</div>
-              <div className="relative h-14">
-                <div className="absolute top-1/2 left-0 right-0 h-[3px] bg-border/10 -translate-y-1/2" />
-                {doneOrActive.length > 0 && (
-                  <div className="absolute top-1/2 h-[3px] bg-primary opacity-30 -translate-y-1/2" style={{ left: `${(fillStart / data.timeline.totalMonths) * 100}%`, width: `${((fillEnd - fillStart) / data.timeline.totalMonths) * 100}%` }} />
-                )}
-                {domainMs.map((m) => (
-                  <TimelineNode key={m.id} milestone={m} totalMonths={data.timeline.totalMonths} isSelected={selectedId === m.id} onClick={() => handleSelect(m.id)} />
-                ))}
-              </div>
-            </motion.div>
-          );
-        })}
-        <div className="flex justify-between mt-4 pt-3 border-t border-border/5">
-          {monthMarkers.map((km) => (
-            <div key={km.i} className={`text-[9px] uppercase tracking-wider ${km.active ? "text-primary font-bold" : "text-[hsl(0,0%,28%)]"}`}>{km.l}</div>
-          ))}
-        </div>
-      </section>
-
-      <section className="container-portfolio mb-12" aria-label="Milestone details">
-        <DetailPanel milestone={selectedMilestone} />
-      </section>
-
-      <PoreiaMarquee words={data.marquee.words2} reverse />
-
-      <section className="container-portfolio mb-20 mt-16 grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-12 items-start" aria-label="Skills assessment">
-        <div>
-          <h2 className="font-heading text-xl font-bold mb-2">Am <span className="text-primary">{data.radar.titleAccentWord}</span> Good?</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed mb-6">{data.radar.subtitle}</p>
-          <RadarChart domains={data.radar.domains} now={data.radar.now} target={data.radar.target} miracle={data.radar.miracle} />
-          <div className="flex gap-6 mt-4">
-            <div className="flex items-center gap-2 text-[10px] font-heading font-semibold"><div className="w-5 h-1 bg-primary" /><span className="text-primary">Now (Mar 2026)</span></div>
-            <div className="flex items-center gap-2 text-[10px] font-heading font-semibold"><div className="w-5 h-1 bg-[hsl(210,65%,55%)] opacity-70" /><span className="text-[hsl(210,65%,55%)]">Target (Mid 2027)</span></div>
-            <div className="flex items-center gap-2 text-[10px] font-heading font-semibold"><div className="w-5 h-1 bg-[hsl(45,80%,55%)] opacity-40" /><span className="text-[hsl(45,80%,55%)] opacity-50">Miracle</span></div>
-          </div>
-        </div>
-        <div>
-          <h2 className="font-heading text-xl font-bold mb-2">Where I Am &rarr; Where I <span className="text-primary">{data.skills.titleAccentWords}</span></h2>
-          <p className="text-sm text-muted-foreground mb-6">{data.skills.subtitle}</p>
-          {data.skills.groups.map((group) => (
-            <div key={group.domain} className="mb-6">
-              <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3 pb-1.5 border-b border-border/10">{group.domain}</div>
-              {group.skills.map((sk, si) => (<SkillBar key={sk.name} skill={sk} delay={si * 0.08} />))}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <ClosingManifesto closing={data.closing} />
-    </main>
+      <main>
+        <HeroSection />
+        {PHASES.map((phase, i) => (
+          <PhaseSection key={phase.num} phase={phase} index={i} />
+        ))}
+        <ClosingSection />
+      </main>
+      <Footer quote="The shape of the work is more important than the volume of it." />
+    </div>
   );
-}
+};
+
+export default Poreia;

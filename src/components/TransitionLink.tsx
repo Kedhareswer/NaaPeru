@@ -1,6 +1,6 @@
-import { type ReactNode, type MouseEvent } from "react";
+import { type ReactNode, type MouseEvent, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { useTransition } from "@/contexts/TransitionContext";
+import { useTransition, type CarrySource } from "@/contexts/TransitionContext";
 
 interface TransitionLinkProps {
   to: string;
@@ -19,17 +19,29 @@ export const TransitionLink = ({
 }: TransitionLinkProps) => {
   const { navigateTo, state } = useTransition();
   const location = useLocation();
+  const anchorRef = useRef<HTMLAnchorElement>(null);
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     if (state !== "idle") return;
     if (to === location.pathname) return;
     onClick?.();
-    navigateTo(to, label);
+
+    let carry: CarrySource | null = null;
+    const img = anchorRef.current?.querySelector("img");
+    if (img && img.complete) {
+      const r = img.getBoundingClientRect();
+      carry = {
+        rect: { left: r.left, top: r.top, width: r.width, height: r.height },
+        image: img.currentSrc || img.src,
+      };
+    }
+
+    navigateTo(to, label, carry);
   };
 
   return (
-    <a href={to} onClick={handleClick} className={className}>
+    <a ref={anchorRef} href={to} onClick={handleClick} className={className}>
       {children}
     </a>
   );

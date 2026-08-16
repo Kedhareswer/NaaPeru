@@ -46,18 +46,18 @@ const RESPONSE_TEMPLATES: Record<IntentId, string[]> = {
     "Academic track: Computer Science with AI/ML focus at LPU. I treated university as a launchpad — combined coursework with real internships and project deployment from day one. The certifications (Neo4j, AWS, Google AI) came as natural extensions.",
   ],
   resume: [
-    "Head to the **Resume** page on this portfolio — it has the full structured breakdown plus a downloadable PDF. That is the clean recruiter-ready version of everything I just told you.",
-    "Resume lives on the Resume tab with PDF export. It is the same information, just formatted for humans who read in bullet points.",
-    "Check the Resume page for the formal version. PDF download included. It covers experience, projects, skills, and education in the format hiring managers actually scan.",
+    "Hit the **Resume** button on the About page — it links straight to a downloadable PDF-ready version of everything I just told you.",
+    "Resume lives on the About page, top of the bio section. One click and it opens the formatted version — PDF export included.",
+    "Check the About page for the formal version — there's a Resume button right next to the 'Open to Collaborate' status. Covers experience, projects, skills, and education in the format hiring managers actually scan.",
   ],
   portfolio: [
-    "You are already inside it. **Work** has the flagship projects, **Experimentos** has the wild experiments, **About** has context about me, and **Resume** has the formal version. Navigate by mood.",
-    "This site is the hub. Work for serious builds, Experimentos for side experiments, About for background, Resume for hiring context, and case studies for deep dives. What are you looking for?",
-    "Portfolio layout: Work page for featured projects with case studies, Experimentos for everything else, About for my story, Resume for the formal PDF. Each project card links to a detailed breakdown.",
+    "You are already inside it. **Work** has the flagship projects, **Experimentos** has the wild experiments, and **About** has context about me plus a Resume download. Navigate by mood.",
+    "This site is the hub. Work for serious builds, Experimentos for side experiments, About for background and the formal resume, and case studies for deep dives. What are you looking for?",
+    "Portfolio layout: Work page for featured projects with case studies, Experimentos for everything else, About for my story and downloadable resume. Each project card links to a detailed breakdown.",
   ],
   contact: [
-    "Best channels: **LinkedIn** (linkedin.com/in/kedhareswernaidu) for professional connections, **GitHub** (github.com/Kedhareswer) for code, or **email** me directly. All links are in the About and Resume sections.",
-    "Professional contact info lives in the About and Resume pages. LinkedIn for networking, GitHub for code review, email for everything else. I respond faster to specific questions than generic intros.",
+    "Best channels: **LinkedIn** (linkedin.com/in/kedhareswernaidu) for professional connections, **GitHub** (github.com/Kedhareswer) for code, or **email** me directly. All links are on the About page.",
+    "Professional contact info lives on the About page, alongside the resume download. LinkedIn for networking, GitHub for code review, email for everything else. I respond faster to specific questions than generic intros.",
     "Find me on LinkedIn, GitHub, Kaggle, or 21st.dev — all linked in the About section. For direct communication, email works. I keep contact details on the portfolio so this chat does not become a spam vector.",
   ],
   hobby: [

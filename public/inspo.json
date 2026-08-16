@@ -1,0 +1,1239 @@
+{
+  "categories": [
+    { "id": "all", "label": "All" },
+    { "id": "brand-systems", "label": "Brand Systems" },
+    { "id": "process-docs", "label": "Process Docs" },
+    { "id": "product-ui", "label": "Product UI" },
+    { "id": "art-direction", "label": "Art Direction" },
+    { "id": "portfolio-sites", "label": "Portfolio Sites", "accent": true }
+  ],
+  "entries": [
+    {
+      "id": "01",
+      "slug": "evoke",
+      "title": "EVOKE",
+      "tagline": "brutalist fashion identity",
+      "category": "brand-systems",
+      "tags": [
+        "interlocking motif",
+        "cream + ink",
+        "mono utility type",
+        "invoice system",
+        "touchpoint consistency",
+        "wide display logo"
+      ],
+      "thumbnail": "/inspo/evoke.png",
+      "sourceUrl": "https://www.pinterest.com/pin/303078249941451882/",
+      "year": "2024",
+      "summary": "A fashion brand system that treats invoices, tags, receipts, and cards as one language. Cream stock + ink, a modular interlocking motif, and mono for all transactional text — taste through constraint, not decoration.",
+      "screenshots": [
+        {
+          "src": "/inspo/evoke.png",
+          "alt": "EVOKE brand system board",
+          "caption": "Full system — invoice, cards, receipt strip, thank-you notes, product tag",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "System consistency",
+          "observation": "Every touchpoint shares motif, type pair, and palette. Remove the logo and the shapes still read as EVOKE.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Hierarchy",
+          "observation": "Wide display for the wordmark; mono for prices, SKUs, and contact. Two jobs, two voices.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Uniqueness",
+          "observation": "The puzzle-block motif is the signature. Generic sans + stock mockups would not survive the brand test.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Digital transfer",
+          "observation": "Works as print/stationery. A live product UI would still need a motion and interaction layer.",
+          "verdict": "mixed"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--cream", "value": "#F2EBE0", "note": "paper ground" },
+            { "name": "--ink", "value": "#0A0A0A", "note": "fills + type" }
+          ]
+        },
+        {
+          "label": "Typography",
+          "tokens": [
+            { "name": "display", "value": "Wide geometric sans (all-caps)", "note": "EVOKE wordmark only" },
+            { "name": "utility", "value": "Monospace", "note": "prices, labels, TEL / EMAIL /" }
+          ]
+        },
+        {
+          "label": "Motif",
+          "tokens": [
+            { "name": "module", "value": "Interlocking rounded blocks", "note": "frames, fills, patterns" },
+            { "name": "radius", "value": "Large soft corners on modules", "note": "never generic pill chrome" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "One motif, many surfaces",
+          "explanation": "Significance comes from repeating one invented shape across invoice, tag, and card until it becomes identity — not from adding more ornaments."
+        },
+        {
+          "title": "Mono as honesty",
+          "explanation": "Monospace on prices and contact feels archival and precise. It signals craft over marketing gloss."
+        },
+        {
+          "title": "Cream instead of white",
+          "explanation": "Warm stock reads premium and print-aware. Pure white would flatten the system into generic digital."
+        }
+      ],
+      "takeaways": [
+        "Invent one modular shape and run it across every artifact.",
+        "Pair one loud display face with one quiet mono — stop at two.",
+        "If the first viewport could belong to another brand after removing the logo, the motif is too weak."
+      ]
+    },
+    {
+      "id": "02",
+      "slug": "client-folders",
+      "title": "Client Folders",
+      "tagline": "pastel IA taxonomy",
+      "category": "process-docs",
+      "tags": [
+        "folder tree",
+        "pastel hierarchy",
+        "LEGAL / DISCOVERY / BRAND",
+        "workflow clarity",
+        "illustrated system"
+      ],
+      "thumbnail": "/inspo/client-folders.png",
+      "sourceUrl": "https://www.pinterest.com/pin/1021120915508823192/",
+      "summary": "A client file taxonomy drawn as a tree of pastel folders. Not a UI screen — a process poster that makes invisible project structure feel physical and memorable.",
+      "screenshots": [
+        {
+          "src": "/inspo/client-folders.png",
+          "alt": "Client folder hierarchy diagram",
+          "caption": "Full tree — root client name into LEGAL, DISCOVERY, BRAND, FINAL FILES",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "Information architecture",
+          "observation": "Four pillars + nested leaves. Instantly scannable for freelancers and studios.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Visual metaphor",
+          "observation": "Actual folder icons + soft shadows make process feel tangible instead of a spreadsheet.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Color coding",
+          "observation": "Lavender root, lime categories, pink leaves — depth by hue, not by more labels.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Portfolio use",
+          "observation": "As a site section it would need interaction. As a taste reference for clarity, it is gold.",
+          "verdict": "mixed"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--root", "value": "#B8B5E8", "note": "lavender" },
+            { "name": "--category", "value": "#C5E86C", "note": "lime" },
+            { "name": "--leaf", "value": "#F5B8C8", "note": "pink" },
+            { "name": "--paper", "value": "#F7F4EE", "note": "ground" }
+          ]
+        },
+        {
+          "label": "Structure",
+          "tokens": [
+            { "name": "levels", "value": "3", "note": "root to pillar to leaf" },
+            { "name": "connectors", "value": "1px ink lines", "note": "parent-child" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "Make process visible",
+          "explanation": "Taste is not only final screens. Showing how work is organized signals professionalism and care."
+        },
+        {
+          "title": "Hue equals depth",
+          "explanation": "Color encodes hierarchy so the eye understands nesting without reading every label twice."
+        }
+      ],
+      "takeaways": [
+        "Document your own project IA as a designed artifact, not a Drive dump.",
+        "Use 3 hue bands for 3 hierarchy levels — never rainbow spam."
+      ]
+    },
+    {
+      "id": "03",
+      "slug": "fitness-user-flow",
+      "title": "Fitness Flow",
+      "tagline": "cursive craft + logic color",
+      "category": "process-docs",
+      "tags": [
+        "user flow",
+        "decision diamonds",
+        "yes/no color coding",
+        "stacked list metaphor",
+        "coaching app IA"
+      ],
+      "thumbnail": "/inspo/fitness-flow.png",
+      "sourceUrl": "https://www.pinterest.com/pin/1125337025669922472/",
+      "summary": "A fitness-app user flow that looks designed, not dumped from a whiteboard tool. Cursive title, black screen nodes, lime action parallelograms, and red/green yes-no paths.",
+      "screenshots": [
+        {
+          "src": "/inspo/fitness-flow.png",
+          "alt": "Fitness app user flow diagram",
+          "caption": "Full flow — onboarding through Home hub to Workouts, Coaching, Challenges",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "Legibility of logic",
+          "observation": "Blue forward / red return paths + green/red dots make happy path vs backtrack obvious at a glance.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Node vocabulary",
+          "observation": "Black pills = screens, lime parallelograms = inputs/actions, diamonds = decisions. Consistent grammar.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Taste signal",
+          "observation": "Hand-script title + beige ground elevate a document usually left ugly. Process can have presence.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Annotation density",
+          "observation": "Side notes help but can crowd; best when parked near the node they explain.",
+          "verdict": "mixed"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--ground", "value": "#D9D2C5" },
+            { "name": "--node", "value": "#111111" },
+            { "name": "--action", "value": "#C6E84A" },
+            { "name": "--yes", "value": "#2ECC71" },
+            { "name": "--no", "value": "#E74C3C" },
+            { "name": "--path-forward", "value": "#3B6FD9" }
+          ]
+        },
+        {
+          "label": "Shapes",
+          "tokens": [
+            { "name": "screen", "value": "Rounded black pill" },
+            { "name": "input", "value": "Lime parallelogram" },
+            { "name": "decision", "value": "Grey diamond" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "Grammar before decoration",
+          "explanation": "Uniqueness here is a consistent shape language for logic — not stickers or gradients."
+        },
+        {
+          "title": "Stack equals collection",
+          "explanation": "Stacked shadows on Workouts / Exercise communicate list-of-items without icons."
+        }
+      ],
+      "takeaways": [
+        "Give every UX diagram a designed title treatment and a limited color grammar.",
+        "Encode Yes/No in both line color and node color — redundancy helps scanning."
+      ]
+    },
+    {
+      "id": "04",
+      "slug": "vijaya-bank",
+      "title": "Vijaya Bank",
+      "tagline": "case-study walkthrough",
+      "category": "product-ui",
+      "tags": [
+        "yellow brand field",
+        "phone mockups",
+        "sitemap callout",
+        "5-step transfer",
+        "annotated case study"
+      ],
+      "thumbnail": "/inspo/vijaya-bank.png",
+      "sourceUrl": "https://www.pinterest.com/pin/1090082284809546690/",
+      "summary": "A banking-app redesign presented as a numbered screen story (01–05) with yellow brand discs, sitemap callouts, and a written 5-step transfer flow. Case study as designed object.",
+      "screenshots": [
+        {
+          "src": "/inspo/vijaya-bank.png",
+          "alt": "Vijaya Bank UI case study board",
+          "caption": "Screens 01–05 with annotations and main-navigation sitemap",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "Storytelling",
+          "observation": "Splash to Login to Home to Cards to Transfer reads as a journey, not a random gallery.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Annotation craft",
+          "observation": "Yellow square bullets + short prose explain why, not just what.",
+          "verdict": "strong"
+        },
+        {
+          "area": "IA extract",
+          "observation": "Home sprouts a sitemap tree — architecture made visible beside the UI.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Visual noise",
+          "observation": "Many devices + lines risk clutter on small viewports; works best as a poster or wide desktop.",
+          "verdict": "mixed"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--brand-yellow", "value": "#F5C518" },
+            { "name": "--ground", "value": "#E8E8E8" },
+            { "name": "--device", "value": "#FFFFFF" },
+            { "name": "--ink", "value": "#1A1A1A" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "Show the path, not just the pixels",
+          "explanation": "Significance comes from explaining navigation and transfer steps — proving thinking, not only polish."
+        },
+        {
+          "title": "Brand as field",
+          "explanation": "Yellow discs behind phones turn brand color into atmosphere instead of a tiny logo corner."
+        }
+      ],
+      "takeaways": [
+        "Number your case-study screens and connect them with flow arrows.",
+        "Park a sitemap next to the home screen so IA is not buried in a PDF."
+      ]
+    },
+    {
+      "id": "05",
+      "slug": "too-doo",
+      "title": "Too-Doo",
+      "tagline": "analyze then ideate",
+      "category": "process-docs",
+      "tags": [
+        "dot-grid notebook",
+        "mind map IA",
+        "hand wireframes",
+        "MVP prioritization",
+        "grayscale process"
+      ],
+      "thumbnail": "/inspo/too-doo.png",
+      "sourceUrl": "https://www.pinterest.com/pin/994521530187238615/",
+      "summary": "A process page for a personal-assistant app: (1) ANALYZE as a user mind-map, (2) IDEATE as eight hand-drawn wireframes on a dot grid. Thinking made visible.",
+      "screenshots": [
+        {
+          "src": "/inspo/too-doo.png",
+          "alt": "Too-Doo analyze and ideate board",
+          "caption": "Mind map + sketch wireframes on notebook ground",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "Process honesty",
+          "observation": "Shows messy thinking before polish — rare and trustworthy in portfolios.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Section rhythm",
+          "observation": "Numbered phases with one-line briefs. Clear job per block.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Sketch texture",
+          "observation": "Hand wireframes on dots feel human; pure Figma frames would kill the spell.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Outcome gap",
+          "observation": "Stops at ideate — a final UI strip would complete the story.",
+          "verdict": "mixed"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--paper", "value": "#E6E6E6" },
+            { "name": "--ink", "value": "#111111" },
+            { "name": "--grid", "value": "dot grid @ low opacity" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "Process is the product of taste",
+          "explanation": "Uniqueness here is willingness to show analysis and sketches — most portfolios hide the kitchen."
+        },
+        {
+          "title": "Dot grid equals studio",
+          "explanation": "The notebook texture frames the work as craft, not a slide deck."
+        }
+      ],
+      "takeaways": [
+        "Add an Analyze / Ideate strip before polished mockups in case studies.",
+        "Keep early wireframes hand-feel — do not over-clean them."
+      ]
+    },
+    {
+      "id": "06",
+      "slug": "one-bit-portraits",
+      "title": "1-Bit Portraits",
+      "tagline": "32px character system",
+      "category": "art-direction",
+      "tags": [
+        "1-bit pixel",
+        "monochrome grid",
+        "dither midtones",
+        "avatar system",
+        "constraint craft"
+      ],
+      "thumbnail": "/inspo/one-bit-portraits.png",
+      "sourceUrl": "https://www.pinterest.com/pin/331577591333121548/",
+      "summary": "Sixteen head-and-shoulder avatars in strict black/white pixel language. Diversity through silhouette and accessory — not through color.",
+      "screenshots": [
+        {
+          "src": "/inspo/one-bit-portraits.png",
+          "alt": "Grid of 1-bit pixel portraits",
+          "caption": "4x4 avatar system — glasses, hoods, beards, caps within one bit-depth",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "Constraint",
+          "observation": "One bit depth forces invention. Checker dither stands in for gray.",
+          "verdict": "strong"
+        },
+        {
+          "area": "System coherence",
+          "observation": "Same crop, same outline weight, same scale — a true set, not 16 random doodles.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Personality",
+          "observation": "Accessories and haircuts carry identity. Readable at tiny sizes.",
+          "verdict": "strong"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--ink", "value": "#000000" },
+            { "name": "--paper", "value": "#FFFFFF" },
+            { "name": "--mid", "value": "50% checker dither", "note": "fake gray" }
+          ]
+        },
+        {
+          "label": "Grid",
+          "tokens": [
+            { "name": "cell", "value": "32x32 px class" },
+            { "name": "stroke", "value": "1px silhouette" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "Limits create signature",
+          "explanation": "Taste often means refusing more colors. The set is memorable because it is strict."
+        },
+        {
+          "title": "Uniform frame, varied soul",
+          "explanation": "Same composition rules + different features = collection energy."
+        }
+      ],
+      "takeaways": [
+        "Try a one-bit or two-color illustration lane for a section of the portfolio.",
+        "When building a set, lock crop and stroke first — then vary content."
+      ]
+    },
+    {
+      "id": "07",
+      "slug": "flyq",
+      "title": "FLYQ",
+      "tagline": "pastel folder-tab site",
+      "category": "product-ui",
+      "tags": [
+        "angled folder tabs",
+        "pastel section colors",
+        "line illustration",
+        "stat typography",
+        "architecture site"
+      ],
+      "thumbnail": "/inspo/flyq.png",
+      "sourceUrl": "https://www.pinterest.com/pin/1131177631433955148/",
+      "summary": "A commercial real-estate site concept where each section is a giant rounded card with folder-index tabs. Pastel grounds + line art + big numbers.",
+      "screenshots": [
+        {
+          "src": "/inspo/flyq.png",
+          "alt": "FLYQ multi-section tabbed cards",
+          "caption": "Five section cards — white, blue, pink, mint, yellow — shared tab chrome",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "Navigation metaphor",
+          "observation": "Folder tabs make IA physical. Active tab color matches card ground.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Section identity",
+          "observation": "Each chapter owns a pastel — memory without reading labels twice.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Mix of media",
+          "observation": "Photo + line illustration + stats coexist because borders and type hierarchy hold them.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Rounded language",
+          "observation": "Very large radii — soft brand. Clashes with hard brutalist refs elsewhere; know when to choose.",
+          "verdict": "mixed"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--white", "value": "#FFFFFF" },
+            { "name": "--sky", "value": "#D6EAF8" },
+            { "name": "--rose", "value": "#F5D0D8" },
+            { "name": "--mint", "value": "#D8F0E0" },
+            { "name": "--butter", "value": "#F5E8B8" },
+            { "name": "--ink", "value": "#111111" }
+          ]
+        },
+        {
+          "label": "Chrome",
+          "tokens": [
+            { "name": "card-radius", "value": "32–48px" },
+            { "name": "tab", "value": "Angled index tabs" },
+            { "name": "border", "value": "1px ink" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "Tabs as identity",
+          "explanation": "The folder chrome is the uniqueness — not a standard sticky nav."
+        },
+        {
+          "title": "Color per chapter",
+          "explanation": "Pastels encode section memory so scrolling feels like flipping a physical binder."
+        }
+      ],
+      "takeaways": [
+        "Give each major portfolio chapter a color field and a shared chrome pattern.",
+        "Pair one photo with one line illustration — not a collage pile."
+      ]
+    },
+    {
+      "id": "08",
+      "slug": "jornada-analog",
+      "title": "Jornada Analog",
+      "tagline": "dossier on black void",
+      "category": "art-direction",
+      "tags": [
+        "skeuomorphic papers",
+        "binder clip",
+        "perforated ledger",
+        "slashed O",
+        "archival mono"
+      ],
+      "thumbnail": "/inspo/jornada-analog.png",
+      "sourceUrl": "https://www.pinterest.com/pin/292593307067045117/",
+      "summary": "Event poster as stacked physical documents on pure black: manila tab, perforated white sheet, blue sticky, graph scrap, binder clip. Analog-brutalist archival taste.",
+      "screenshots": [
+        {
+          "src": "/inspo/jornada-analog.png",
+          "alt": "Jornada de Dispositivos Analogos poster",
+          "caption": "Layered dossier — clip, sticky, perforated sheet, grid scrap, footer logos",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "Material storytelling",
+          "observation": "Paper types organize info categories. Containers do the IA work.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Contrast drama",
+          "observation": "Cream dossier on black void feels precious and gallery-ready.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Type pairing",
+          "observation": "Bold slashed-O display + mono for addresses/dates — technical + ceremonial.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Web translation",
+          "observation": "Needs CSS layering and assets; flat cards would lose the point.",
+          "verdict": "mixed"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--void", "value": "#000000" },
+            { "name": "--sheet", "value": "#FFFFFF" },
+            { "name": "--folder", "value": "#E1E8D7" },
+            { "name": "--sticky", "value": "#4A74C9" },
+            { "name": "--grid-scrap", "value": "#E5E0D4" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "Physical metaphor as structure",
+          "explanation": "Clips and paper stocks are not decoration — they are information containers."
+        },
+        {
+          "title": "Void as pedestal",
+          "explanation": "Black ground makes the dossier feel collected and significant."
+        }
+      ],
+      "takeaways": [
+        "Layer 2–3 paper surfaces for dense info pages instead of one flat card.",
+        "Put transactional data in mono; keep the headline ceremonial."
+      ]
+    },
+    {
+      "id": "09",
+      "slug": "antoni-alison",
+      "title": "Antoni Alison",
+      "tagline": "yellow note wall",
+      "category": "art-direction",
+      "tags": [
+        "sticky notes",
+        "hand ink",
+        "asymmetric whitespace",
+        "emotive words",
+        "mood wall"
+      ],
+      "thumbnail": "/inspo/antoni-alison.png",
+      "sourceUrl": "https://www.pinterest.com/pin/366621225935373654/",
+      "summary": "A wall of yellow sticky notes with marker words (GASP, STUN, SPEECHLESS) and sparse sketches. Conceptual planning as the visual — huge empty gray field as confidence.",
+      "screenshots": [
+        {
+          "src": "/inspo/antoni-alison.png",
+          "alt": "Antoni Alison sticky note composition",
+          "caption": "Asymmetric note cluster on gray — emotion words and doodles",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "Whitespace courage",
+          "observation": "Most of the canvas is empty. That emptiness is the taste.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Voice",
+          "observation": "Punchy handwritten copy beats polite portfolio filler.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Physical presence",
+          "observation": "Shadows under notes sell the object. Flat yellow rectangles would fail.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Information utility",
+          "observation": "Mood piece — weak as a product IA doc, strong as brand attitude.",
+          "verdict": "mixed"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--wall", "value": "#D0D0D0" },
+            { "name": "--note", "value": "#F0C830" },
+            { "name": "--ink", "value": "#111111" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "Empty as luxury",
+          "explanation": "Leaving the right half blank signals confidence. Crowding would kill uniqueness."
+        },
+        {
+          "title": "Words as objects",
+          "explanation": "Single emotive words on notes become graphic marks, not paragraphs."
+        }
+      ],
+      "takeaways": [
+        "Protect large empty regions in at least one portfolio section.",
+        "Try handwritten or marker-feel type for a mood strip — not for body copy."
+      ]
+    },
+    {
+      "id": "10",
+      "slug": "hinomaru-wave",
+      "title": "Hinomaru Wave",
+      "tagline": "flag melted into Hokusai",
+      "category": "art-direction",
+      "tags": [
+        "conceptual merge",
+        "Japan red",
+        "paper grain",
+        "thin black frame",
+        "symbolic wit"
+      ],
+      "thumbnail": "/inspo/hinomaru-wave.png",
+      "sourceUrl": "https://www.pinterest.com/pin/342484746647289604/",
+      "summary": "The Japanese sun disc dissolving into a Great-Wave crest inside a thin black frame on textured paper. Conceptual graphic with one clever move — taste as idea, not as UI kit.",
+      "screenshots": [
+        {
+          "src": "/inspo/hinomaru-wave.png",
+          "alt": "Hinomaru sun merging with Great Wave",
+          "caption": "Full composition — red field, wave foam, framed dissolving sun",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "Concept",
+          "observation": "One visual pun does the work of a paragraph. Memorable in one glance.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Restraint",
+          "observation": "Red, cream, black line. Nothing else. Scarcity creates significance.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Materiality",
+          "observation": "Paper grain keeps it from feeling like a flat vector sticker.",
+          "verdict": "strong"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--japan-red", "value": "#EE1C25" },
+            { "name": "--paper", "value": "#FDFCF8" },
+            { "name": "--frame", "value": "#000000" }
+          ]
+        },
+        {
+          "label": "Structure",
+          "tokens": [
+            { "name": "stroke", "value": "1px black rectangle" },
+            { "name": "grain", "value": "visible paper noise" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "Idea over ornament",
+          "explanation": "Uniqueness is the melt of sun into wave — a decision, not a filter pack."
+        },
+        {
+          "title": "Frame as anchor",
+          "explanation": "The thin rectangle grounds fluid motion so the piece does not float away."
+        }
+      ],
+      "takeaways": [
+        "Build at least one portfolio visual around a single conceptual move.",
+        "Add paper grain when a bold flat color risks feeling cheap."
+      ]
+    },
+    {
+      "id": "11",
+      "slug": "blossom-red",
+      "title": "Blossom on Red",
+      "tagline": "botanical on chroma field",
+      "category": "art-direction",
+      "tags": [
+        "full-bleed red",
+        "organic subject",
+        "extreme negative space",
+        "high signal-to-noise",
+        "diagonal branch"
+      ],
+      "thumbnail": "/inspo/blossom-red.png",
+      "sourceUrl": "https://www.pinterest.com/pin/342484746647289604/",
+      "summary": "A slender blossom branch on a flat saturated red field. Organic detail vs digital plane — confidence through emptiness and one precise subject.",
+      "screenshots": [
+        {
+          "src": "/inspo/blossom-red.png",
+          "alt": "White blossoms on solid red background",
+          "caption": "Full frame — diagonal branch, two blooms, chroma void",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "Focus",
+          "observation": "One subject. Zero competing modules. Portfolio hero energy.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Contrast strategy",
+          "observation": "Delicate white petals need the aggressive red field to feel precious.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Applicability",
+          "observation": "As a section background or interstitial it sings; as dense product UI it does not.",
+          "verdict": "mixed"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--field", "value": "#D20A11" },
+            { "name": "--petal", "value": "#FFFFFF" },
+            { "name": "--branch", "value": "#2A1B16" },
+            { "name": "--stamen", "value": "#E5B84B" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "Chroma as identity",
+          "explanation": "A single loud field color is a brand decision. Most portfolios fear it."
+        },
+        {
+          "title": "Organic vs flat",
+          "explanation": "Real botanical detail against a digital plane creates modern East-Asian graphic tension."
+        }
+      ],
+      "takeaways": [
+        "Try one full-bleed brand-color interstitial between case studies.",
+        "Let one image breathe — no badges, no chips, no floating labels."
+      ]
+    },
+    {
+      "id": "12",
+      "slug": "dissolving-sun",
+      "title": "Dissolving Sun",
+      "tagline": "circle into motion streaks",
+      "category": "art-direction",
+      "tags": [
+        "motion blur metaphor",
+        "film grain",
+        "centered icon",
+        "red on cream",
+        "minimal symbol"
+      ],
+      "thumbnail": "/inspo/dissolving-sun.png",
+      "sourceUrl": "https://www.pinterest.com/pin/342484746647289604/",
+      "summary": "A perfect red semicircle whose lower half breaks into vertical motion streaks on textured cream. Rising-sun motif reinvented with blur and grain.",
+      "screenshots": [
+        {
+          "src": "/inspo/dissolving-sun.png",
+          "alt": "Red sun dissolving into vertical streaks",
+          "caption": "Full frame — solid crest, blurred reflection bars, paper grain",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "Symbolic clarity",
+          "observation": "Reads as sun-on-water without literal photography.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Texture",
+          "observation": "Grain unifies figure and ground — premium analog feel.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Motion language",
+          "observation": "Blur as meaning, not as cheap transition. Translates well to hover/load states.",
+          "verdict": "strong"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--sun", "value": "#E31C23" },
+            { "name": "--paper", "value": "#F4F0E8" }
+          ]
+        },
+        {
+          "label": "Effect",
+          "tokens": [
+            { "name": "dissolve", "value": "vertical streak blur" },
+            { "name": "grain", "value": "film noise overlay" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "Transform a known symbol",
+          "explanation": "Everyone knows the red circle. Significance comes from breaking it intentionally."
+        },
+        {
+          "title": "Effect with purpose",
+          "explanation": "Motion blur is the metaphor for reflection — not a default CSS toy."
+        }
+      ],
+      "takeaways": [
+        "When using effects (blur, grain, glitch), tie them to a metaphor.",
+        "Center one symbol; protect margins like a gallery mat."
+      ]
+    },
+    {
+      "id": "13",
+      "slug": "dimension",
+      "title": "Dimension",
+      "tagline": "atmospheric AI product site",
+      "category": "portfolio-sites",
+      "tags": [
+        "glassmorphism dock",
+        "feature switcher",
+        "product-in-hero",
+        "gradient atmosphere",
+        "floating nav"
+      ],
+      "thumbnail": "/inspo/dimension.png",
+      "sourceUrl": "https://dimension.dev/",
+      "year": "2026",
+      "summary": "AI coworker landing page with gradient sky atmosphere, frosted floating nav, and a live Morning Briefing preview. Product shown, not just claimed. ([dimension.dev](https://dimension.dev/))",
+      "screenshots": [
+        {
+          "src": "/inspo/dimension.png",
+          "alt": "Dimension.dev hero screenshot",
+          "caption": "Hero — split pitch + briefing preview, floating bottom dock",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "Show don't tell",
+          "observation": "Right panel is a believable product surface (Steve's briefing). Trust builds instantly.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Atmosphere",
+          "observation": "Sky gradient + grain beats flat SaaS blue. Mood is the differentiator.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Nav invention",
+          "observation": "Bottom floating dock clears the hero and feels app-native.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Trend risk",
+          "observation": "Glass + gradient is now common in AI SaaS — execution quality saves it, but uniqueness is thinner than print/brutalist refs.",
+          "verdict": "mixed"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--sky", "value": "#7091C1" },
+            { "name": "--void", "value": "#040B1A" },
+            { "name": "--cta", "value": "#FFFFFF" },
+            { "name": "--active", "value": "#4A90E2" }
+          ]
+        },
+        {
+          "label": "Chrome",
+          "tokens": [
+            { "name": "dock", "value": "Frosted pill, bottom-center" },
+            { "name": "radius", "value": "Fully rounded CTAs" },
+            { "name": "blur", "value": "Heavy backdrop-filter on chrome" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "Product as hero media",
+          "explanation": "The briefing card is the brand image — no stock photos of smiling teams."
+        },
+        {
+          "title": "Feature list as theater",
+          "explanation": "Vertical Morning Briefing / Catch Up switcher drives the preview, reducing scroll fatigue."
+        }
+      ],
+      "takeaways": [
+        "Put a real product surface in the first viewport when the work is digital.",
+        "Steal atmosphere (gradient + grain), but invent a chrome pattern that is not default glass."
+      ]
+    },
+    {
+      "id": "14",
+      "slug": "sofia-khegai",
+      "title": "Sofia Khegai",
+      "tagline": "pink void wordmark",
+      "category": "portfolio-sites",
+      "tags": [
+        "extreme scale type",
+        "pink on black",
+        "pill outline nav",
+        "brand-first hero",
+        "CGI / VFX producer"
+      ],
+      "thumbnail": "/inspo/khegai.png",
+      "sourceUrl": "https://khegai.com/?ref=minimal.gallery",
+      "year": "2026",
+      "summary": "Creative producer portfolio that puts a custom geometric wordmark (khegai) at hero scale on black with bubblegum pink. Brand first — the name is the composition. ([khegai.com](https://khegai.com/?ref=minimal.gallery))",
+      "screenshots": [
+        {
+          "src": "/inspo/khegai.png",
+          "alt": "Sofia Khegai portfolio hero",
+          "caption": "Hero — massive pink wordmark, condensed bio, outline pill filters",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "Brand test",
+          "observation": "Remove nav and the page still belongs to Khegai. Name is the artwork.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Scale contrast",
+          "observation": "Giant display vs tiny all-caps bio creates luxury hierarchy.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Palette courage",
+          "observation": "Two colors only. Loud and memorable.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Content density",
+          "observation": "Work lives below; first paint is identity. Recruiters who need proof fast must scroll.",
+          "verdict": "mixed"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--void", "value": "#000000" },
+            { "name": "--signal", "value": "#FF80CC" }
+          ]
+        },
+        {
+          "label": "Type",
+          "tokens": [
+            { "name": "wordmark", "value": "Custom geometric ultra-bold" },
+            { "name": "meta", "value": "Condensed all-caps sans" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "Name as hero image",
+          "explanation": "Uniqueness is typographic authorship. A template font would collapse the brand test."
+        },
+        {
+          "title": "Nav as cluster",
+          "explanation": "Pill outline buttons in a corner replace boring top bars — boutique, not corporate."
+        }
+      ],
+      "takeaways": [
+        "Make your name (or a coined word) a designed object at hero scale.",
+        "Limit the first viewport to brand + one short line + one CTA group."
+      ]
+    },
+    {
+      "id": "15",
+      "slug": "boris-verks",
+      "title": "Boris Verks",
+      "tagline": "Swiss density portfolio",
+      "category": "portfolio-sites",
+      "tags": [
+        "all-caps grotesk",
+        "sidebar rails",
+        "highlights checklist",
+        "work snippet color block",
+        "open-to-work signal"
+      ],
+      "thumbnail": "/inspo/boris-verks.png",
+      "sourceUrl": "https://www.borisverks.com/?ref=minimal.gallery",
+      "year": "2026",
+      "summary": "Product-designer portfolio: headshot + giant all-caps intro, hairline sidebar, metric highlights, then a blue work-snippet stage. High information density with low visual noise. ([borisverks.com](https://www.borisverks.com/?ref=minimal.gallery))",
+      "screenshots": [
+        {
+          "src": "/inspo/boris-verks.png",
+          "alt": "Boris Verks portfolio screenshot",
+          "caption": "Above the fold — portrait, manifesto type, sidebar, Jetraw snippet",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "Recruiter UX",
+          "observation": "Role, availability, proof bullets, and contact are immediate. Friction near zero.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Monochrome + focal punch",
+          "observation": "Site stays ink/paper until work snippets explode in blue — controlled drama.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Typography",
+          "observation": "All-caps grotesk manifesto is confident; secondary grey line for open-to-work is smart hierarchy.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Warmth",
+          "observation": "Can feel austere. The headshot is what keeps it human.",
+          "verdict": "mixed"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--paper", "value": "#F7F7F5" },
+            { "name": "--ink", "value": "#111111" },
+            { "name": "--muted", "value": "#A3A3A3" },
+            { "name": "--snippet", "value": "#3B82F6" }
+          ]
+        },
+        {
+          "label": "Layout",
+          "tokens": [
+            { "name": "sidebar", "value": "~20% with hairline rules" },
+            { "name": "glyph", "value": "↗ external / case-study marker" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "Evidence over ambience",
+          "explanation": "Significance comes from checkmarked outcomes and named companies, not decorative hero art."
+        },
+        {
+          "title": "Color reserved for work",
+          "explanation": "Monochrome chrome makes the product screenshot the only color event — hierarchy by scarcity."
+        }
+      ],
+      "takeaways": [
+        "Put proof bullets (metrics, awards) next to the first project snippet.",
+        "Keep site chrome near-monochrome; spend color on the work itself."
+      ]
+    },
+    {
+      "id": "16",
+      "slug": "rachel-chen",
+      "title": "Rachel Chen",
+      "tagline": "designer who engineers",
+      "category": "portfolio-sites",
+      "tags": [
+        "serif manifesto",
+        "experience table in hero",
+        "pastel project cards",
+        "soft accent coral",
+        "dual identity"
+      ],
+      "thumbnail": "/inspo/rachel-chen.png",
+      "sourceUrl": "https://www.rachelchen.tech/?ref=minimal.gallery",
+      "year": "2026",
+      "summary": "Product designer + engineer portfolio: elegant serif line ('who engineers.'), right-rail internship table (Notion, Bloomberg, 1Password…), then pastel project cards. Soft, precise, credible. ([rachelchen.tech](https://www.rachelchen.tech/?ref=minimal.gallery))",
+      "screenshots": [
+        {
+          "src": "/inspo/rachel-chen.png",
+          "alt": "Rachel Chen portfolio hero",
+          "caption": "Hero — serif statement + year/company/role table + pastel card tops",
+          "kind": "full"
+        }
+      ],
+      "audit": [
+        {
+          "area": "Positioning",
+          "observation": "Italic 'engineers.' sells the dual skillset in one word. Sharp.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Social proof placement",
+          "observation": "Name-brand timeline lives in the hero — no click required.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Soft palette",
+          "observation": "Off-white + coral accent + pastel cards feel designed, not default dark-mode AI slop.",
+          "verdict": "strong"
+        },
+        {
+          "area": "Differentiation vs peers",
+          "observation": "Many designer portfolios share this soft minimal language — execution is high, but motif uniqueness is quieter than Khegai/EVOKE.",
+          "verdict": "mixed"
+        }
+      ],
+      "tokens": [
+        {
+          "label": "Color",
+          "tokens": [
+            { "name": "--paper", "value": "#F6F4F1" },
+            { "name": "--ink", "value": "#2A2A2A" },
+            { "name": "--muted", "value": "#8A8A8A" },
+            { "name": "--accent", "value": "#D97757" },
+            { "name": "--card-a", "value": "#F0E4D8" },
+            { "name": "--card-b", "value": "#E4E2F0" }
+          ]
+        },
+        {
+          "label": "Type",
+          "tokens": [
+            { "name": "display", "value": "High-contrast serif" },
+            { "name": "ui", "value": "Neutral sans (nav + table)" }
+          ]
+        }
+      ],
+      "intentions": [
+        {
+          "title": "Type encodes identity",
+          "explanation": "Serif for the human statement, sans for the resume table — designer + engineer as typographic pairing."
+        },
+        {
+          "title": "Proof without shouting",
+          "explanation": "Muted grey table of elite companies lets credentials whisper while the headline speaks."
+        }
+      ],
+      "takeaways": [
+        "Put a compact experience table in the hero if credentials are a strength.",
+        "Use one italicized verb to lock your unique positioning."
+      ]
+    }
+  ]
+}

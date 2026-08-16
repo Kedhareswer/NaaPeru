@@ -1,7 +1,17 @@
-import { ArrowUpRight, Github, Linkedin, ChevronDown, Award, ExternalLink, BookmarkCheck } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, ChevronDown, Award, ExternalLink, BookmarkCheck, Download } from "lucide-react";
+import { motion, useScroll, useTransform } from "motion/react";
+import { useRef } from "react";
 import { GitHubActivity } from "./GitHubActivity";
+import { ScrollScrubCounter } from "./ScrollScrubCounter";
 
 export const About = () => {
+  // Ghost ABOUT parallax — word translates horizontally as section scrolls past
+  const ghostSectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: ghostProgress } = useScroll({
+    target: ghostSectionRef,
+    offset: ["start end", "end start"],
+  });
+  const ghostX = useTransform(ghostProgress, [0, 1], ["8%", "-22%"]);
 
   const focusStreams = [
     "Applied AI platforms",
@@ -97,15 +107,16 @@ export const About = () => {
     <div className="relative bg-background py-3xl md:py-4xl overflow-x-hidden overflow-y-visible">
       <div className="container-portfolio">
         {/* My Presence Section - REDESIGNED */}
-        <section className="mb-32 space-y-12 overflow-visible md:overflow-hidden">
-          
-          {/* Header with Ghost Typography */}
-          <div className="relative">
-            <h2 
-              className="font-heading text-[5rem] sm:text-[8rem] md:text-[12rem] lg:text-[14rem] leading-none tracking-tighter text-foreground/5 select-none"
+        <section ref={ghostSectionRef} className="mb-32 space-y-12 overflow-visible md:overflow-hidden">
+
+          {/* Header with Ghost Typography — ABOUT parallaxes horizontally as section scrolls */}
+          <div className="relative overflow-hidden">
+            <motion.h2
+              className="font-heading text-[5rem] sm:text-[8rem] md:text-[12rem] lg:text-[14rem] leading-none tracking-tighter text-foreground/5 select-none whitespace-nowrap"
+              style={{ x: ghostX }}
             >
               ABOUT
-            </h2>
+            </motion.h2>
             <div className="absolute inset-0 flex items-center">
               <div className="space-y-4">
                 <span className="font-body text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">
@@ -129,28 +140,52 @@ export const About = () => {
                 Most of my work sits at the intersection of machine learning and real products. I care about making AI useful, not just impressive — systems that people can actually work with day to day.
               </p>
               
-              {/* Status Indicator */}
-              <div className="flex items-center gap-3 pt-4">
-                <span className="font-body text-sm uppercase tracking-[0.3em] text-foreground/80">Open to Collaborate</span>
-                <div className="relative">
-                  <div className="h-3 w-3 rounded-full bg-primary animate-ping absolute" />
-                  <div className="h-3 w-3 rounded-full bg-primary" />
+              {/* Status Indicator + Resume CTA */}
+              <div className="flex flex-wrap items-center gap-6 pt-4">
+                <div className="flex items-center gap-3">
+                  <span className="font-body text-sm uppercase tracking-[0.3em] text-foreground/80">Open to Collaborate</span>
+                  <div className="relative h-3 w-3">
+                    <motion.div
+                      className="absolute inset-0 rounded-full bg-primary"
+                      initial={{ scale: 1, opacity: 1 }}
+                      whileInView={{ scale: 2.6, opacity: 0 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{ duration: 1.4, ease: [0, 0, 0.2, 1] }}
+                    />
+                    <div className="absolute inset-0 rounded-full bg-primary" />
+                  </div>
                 </div>
+
+                <a
+                  href="/resume.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 border border-primary/50 px-5 py-2.5 font-body text-xs font-bold uppercase tracking-[0.25em] text-foreground transition-all duration-300 hover:border-primary hover:bg-primary hover:text-background"
+                >
+                  <Download className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-y-0.5" />
+                  Resume
+                </a>
               </div>
             </div>
 
-            {/* Right: Quick Stats */}
+            {/* Right: Quick Stats — counters scrub from 0 → target as section enters viewport */}
             <div className="grid grid-cols-2 gap-4">
               <div className="border-l-2 border-primary/50 pl-4 space-y-1">
-                <p className="font-heading text-4xl text-foreground">1+</p>
+                <p className="font-heading text-4xl text-foreground">
+                  <ScrollScrubCounter target={1} suffix="+" />
+                </p>
                 <p className="font-body text-xs uppercase tracking-[0.3em] text-gray-light/70">Years</p>
               </div>
               <div className="border-l-2 border-primary/30 pl-4 space-y-1">
-                <p className="font-heading text-4xl text-foreground">10+</p>
+                <p className="font-heading text-4xl text-foreground">
+                  <ScrollScrubCounter target={10} suffix="+" />
+                </p>
                 <p className="font-body text-xs uppercase tracking-[0.3em] text-gray-light/70">Projects</p>
               </div>
               <div className="border-l-2 border-primary/30 pl-4 space-y-1">
-                <p className="font-heading text-4xl text-foreground">4</p>
+                <p className="font-heading text-4xl text-foreground">
+                  <ScrollScrubCounter target={4} />
+                </p>
                 <p className="font-body text-xs uppercase tracking-[0.3em] text-gray-light/70">Domains</p>
               </div>
               <div className="border-l-2 border-primary/30 pl-4 space-y-1">

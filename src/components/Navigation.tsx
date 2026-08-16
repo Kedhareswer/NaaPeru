@@ -35,11 +35,15 @@ export const Navigation = () => {
   const menuItems = [
     { path: "/", label: "WORK" },
     { path: "/fun", label: "EXPERIMENTOS" },
+    { path: "/inspo", label: "INSPO" },
     { path: "/about", label: "ABOUT" },
-    { path: "/poreia", label: "\u03A0\u039F\u03A1\u0395\u0399\u0391" },
+    { path: "/archive", label: "ARCHIVE" },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) =>
+    path === "/inspo"
+      ? location.pathname.startsWith("/inspo")
+      : location.pathname === path;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-40 bg-transparent transition-all duration-slow">
@@ -91,7 +95,7 @@ export const Navigation = () => {
             <div className="hidden md:flex items-center gap-3 ml-auto">
               <button
                 onClick={openChat}
-                className="group flex items-center gap-2 font-sanchari text-xl font-bold text-primary transition-all hover:animate-glow-pulse cursor-pointer"
+                className="group flex items-center gap-2 font-sanchari text-xl font-bold text-primary transition-all cursor-pointer hover:[text-shadow:0_0_24px_hsla(5,78%,42%,0.7)] transition-[text-shadow] duration-300"
               >
                 సంచారి?
               </button>
@@ -113,7 +117,7 @@ export const Navigation = () => {
 
               <button
                 onClick={openChat}
-                className="group flex items-center gap-2 font-sanchari text-lg sm:text-2xl font-bold text-primary transition-all hover:animate-glow-pulse cursor-pointer"
+                className="group flex items-center gap-2 font-sanchari text-lg sm:text-2xl font-bold text-primary transition-all cursor-pointer hover:[text-shadow:0_0_24px_hsla(5,78%,42%,0.7)] transition-[text-shadow] duration-300"
               >
                 సంచారి?
               </button>

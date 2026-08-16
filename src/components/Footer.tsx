@@ -20,7 +20,7 @@ export const Footer = ({ quote }: FooterProps) => {
           </p>
           <button
             onClick={openChat}
-            className="font-sanchari text-2xl font-bold text-primary transition-all hover:animate-glow-pulse cursor-pointer"
+            className="font-sanchari text-2xl font-bold text-primary cursor-pointer hover:[text-shadow:0_0_24px_hsla(5,78%,42%,0.7)] transition-[text-shadow] duration-300"
           >
             సంచారి?
           </button>
