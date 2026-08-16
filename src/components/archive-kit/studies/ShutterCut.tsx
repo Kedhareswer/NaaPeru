@@ -138,7 +138,7 @@ export default function ShutterCut() {
               onClick={() => expose(i)}
               className={`border-r border-border px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors last:border-r-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-1 focus-visible:ring-offset-background ${
                 selected === i
-                  ? "bg-foreground text-background"
+                  ? "bg-primary text-primary-foreground"
                   : "text-foreground/55 hover:text-foreground"
               }`}
             >
@@ -196,7 +196,7 @@ export default function ShutterCut() {
               <div
                 key={i}
                 aria-hidden
-                className="pointer-events-none absolute left-0 w-full bg-foreground"
+                className="pointer-events-none absolute left-0 w-full bg-black"
                 style={{
                   top: `${(i / BLADES) * 100}%`,
                   height: `${100 / BLADES + 0.4}%`, // overlap kills seam lines
@@ -208,7 +208,7 @@ export default function ShutterCut() {
                   willChange: moving ? "transform" : undefined,
                 }}
               >
-                <div className="absolute inset-x-0 bottom-0 h-px bg-background/15" />
+                <div className="absolute inset-x-0 bottom-0 h-px bg-white/10" />
               </div>
             );
           })}
@@ -231,7 +231,7 @@ export default function ShutterCut() {
                   key={seg.phase}
                   className={`border-r border-border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] tabular-nums transition-colors last:border-r-0 ${
                     phase === seg.phase
-                      ? "bg-foreground text-background"
+                      ? "bg-primary text-primary-foreground"
                       : "bg-card/80 text-foreground/45"
                   }`}
                 >

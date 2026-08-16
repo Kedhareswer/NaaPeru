@@ -7,8 +7,15 @@ import FilmStrip from "./FilmStrip";
 import FocusPull from "./FocusPull";
 import ExifInspector from "./ExifInspector";
 import ExposureCurve from "./ExposureCurve";
+import {
+  SelectionMatStudy,
+  PolyglotPillStudy,
+  GradeRackStudy,
+  NeedlePipelineStudy,
+  ApertureDialStudy,
+} from "./LiquidStudies";
 
-export type StudyGroup = "Reveal" | "Browse" | "Focus" | "Inspect";
+export type StudyGroup = "Reveal" | "Browse" | "Focus" | "Inspect" | "Liquid";
 
 export type Study = {
   id: string;
@@ -113,8 +120,63 @@ export const STUDIES: Study[] = [
     invite: "Drag the sliders",
     Component: ExposureCurve,
   },
+  {
+    id: "09",
+    slug: "selection-mat",
+    title: "Selection mat",
+    group: "Liquid",
+    purpose:
+      "Selection that never teleports. A highlight that jumps between frames reads as one thing vanishing and another appearing; a liquid mat that stretches across the sheet reads as the same selection travelling.",
+    technique: "SVG-silhouette goo layer under crisp DOM, spring-trailed indicator (liquid-gooey move)",
+    invite: "Pick a frame",
+    Component: SelectionMatStudy,
+  },
+  {
+    id: "10",
+    slug: "polyglot-pill",
+    title: "Polyglot pill",
+    group: "Liquid",
+    purpose:
+      "One label, three scripts, no jump-cut. Swapping text of a different width normally snaps the container; here the liquid mass flows toward the new word and re-forms around it, so the change reads as the same object re-shaping.",
+    technique: "Liquid shape-change physics (morph.shape), content cross-blurred only while the surface moves",
+    invite: "Tap the pill",
+    Component: PolyglotPillStudy,
+  },
+  {
+    id: "11",
+    slug: "grade-rack",
+    title: "Grade rack",
+    group: "Liquid",
+    purpose:
+      "Hover feedback with material continuity. Buttons that scale independently float apart from their group; chips sharing one liquid surface swell into their neighbours, and the chosen grade re-develops the print beside them.",
+    technique: "Hover-scaled blobs bridging through a shared goo filter, CSS-filter grade crossfade",
+    invite: "Hover the chips, pick a grade",
+    Component: GradeRackStudy,
+  },
+  {
+    id: "12",
+    slug: "needle-pipeline",
+    title: "Needle pipeline",
+    group: "Liquid",
+    purpose:
+      "Architecture you can watch run. The chatbot's offline brain — Needle 2, a 14 MB WASM LLM with 17 local tools — drawn as a draggable node canvas: ask, and the droplet of inference rides the wires while the tool trace lights up. Zero network.",
+    technique: "Live-derived bezier wires, offset-path droplet with a liquid move-trail, observed gooey ports",
+    invite: "Drag a card, then Ask",
+    Component: NeedlePipelineStudy,
+  },
+  {
+    id: "13",
+    slug: "aperture-dial",
+    title: "Aperture dial",
+    group: "Liquid",
+    purpose:
+      "A control that shows its consequence. The stop you pick drives depth of field on the photograph beside it — the dial teaches exposure while it works instead of describing it.",
+    technique: "Detent-snapped droplet thumb with move trail, two-layer sharp-subject mask for depth of field",
+    invite: "Drag between stops",
+    Component: ApertureDialStudy,
+  },
 ];
 
-export const STUDY_GROUPS: StudyGroup[] = ["Reveal", "Browse", "Focus", "Inspect"];
+export const STUDY_GROUPS: StudyGroup[] = ["Reveal", "Browse", "Focus", "Inspect", "Liquid"];
 
 export const STUDY_COUNT = STUDIES.length;

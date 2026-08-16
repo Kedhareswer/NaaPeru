@@ -17,12 +17,12 @@ const PERFS = 4;
 /** Vertical scroll distance spent advancing one frame through the gate. */
 const SCROLL_PER_FRAME = 130;
 
-/** A punched sprocket lane. Holes are the wall showing through the base — literally `bg-background`. */
+/** A punched sprocket lane. The film base is true black; holes read as backlight through the punches. */
 function Lane() {
   return (
     <div className="flex h-[13px] shrink-0 items-center justify-around px-1">
       {Array.from({ length: PERFS }, (_, i) => (
-        <span key={i} className="h-[6px] w-[9px] bg-background" />
+        <span key={i} className="h-[6px] w-[9px] bg-white/15" />
       ))}
     </div>
   );
@@ -31,10 +31,10 @@ function Lane() {
 /** Unexposed leader / tail — the roll starts and ends somewhere. */
 function Blank({ label, width }: { label: string; width: number }) {
   return (
-    <div className="flex shrink-0 flex-col bg-foreground" style={{ width }}>
+    <div className="flex shrink-0 flex-col bg-black" style={{ width }}>
       <Lane />
       <div
-        className="flex items-center justify-center font-mono text-[9px] uppercase tracking-[0.2em] text-background/40"
+        className="flex items-center justify-center font-mono text-[9px] uppercase tracking-[0.2em] text-white/35"
         style={{ height: Math.round((width * 2) / 3) }}
       >
         {label}
@@ -60,7 +60,7 @@ function FilmCell({ frame, index, width, active, reduced, onActivate }: CellProp
   const code = String(index + 1).padStart(2, "0");
 
   return (
-    <div className="flex shrink-0 flex-col bg-foreground" style={{ width }}>
+    <div className="flex shrink-0 flex-col bg-black" style={{ width }}>
       <Lane />
       <button
         type="button"
@@ -73,7 +73,7 @@ function FilmCell({ frame, index, width, active, reduced, onActivate }: CellProp
         onFocus={() => !reduced && onActivate(index)}
         aria-label={`Frame ${code}, ${frame.title}`}
         aria-current={active ? "true" : undefined}
-        className="relative block w-full overflow-hidden focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-background"
+        className="relative block w-full overflow-hidden focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-white/60"
         style={{ height: Math.round((width * 2) / 3) }}
       >
         <img
@@ -94,14 +94,14 @@ function FilmCell({ frame, index, width, active, reduced, onActivate }: CellProp
           style={{
             boxShadow: active
               ? "inset 0 0 0 1px hsl(var(--primary) / 0.65)"
-              : "inset 0 0 0 1px hsl(var(--background) / 0.12)",
+              : "inset 0 0 0 1px rgba(255, 255, 255, 0.12)",
             transition: reduced ? "none" : `box-shadow 240ms ${EASE_OPTIC}`,
           }}
         />
       </button>
       <Lane />
       {/* Rebate markings — etched on the base between the perforations and the edge. */}
-      <div className="flex h-[12px] items-center justify-between px-1.5 font-mono text-[8px] uppercase tracking-[0.16em] text-background/55">
+      <div className="flex h-[12px] items-center justify-between px-1.5 font-mono text-[8px] uppercase tracking-[0.16em] text-white/45">
         <span>{code}A</span>
         <span>KDR·400</span>
       </div>

@@ -1,4 +1,5 @@
 import type { ChatbotReply } from "./chatbotTypes";
+import { fetchNeedleFallbackReply } from "./chatbotNeedleFallback";
 
 export interface FallbackQuotaState {
   totalTurns: number;
@@ -37,6 +38,13 @@ export const buildNextQuotaState = (
 export const fetchAiFallbackReply = async (
   payload: AiFallbackPayload,
 ): Promise<string | null> => {
+  // Try Needle WASM fallback first (local, private, fast)
+  const needleReply = await fetchNeedleFallbackReply(payload);
+  if (needleReply) {
+    return needleReply;
+  }
+
+  // Fallback to external API if Needle fails
   try {
     const response = await fetch("/api/chat", {
       method: "POST",

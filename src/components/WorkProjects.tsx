@@ -98,13 +98,24 @@ export const WorkProjects = () => {
 
                 {/* Text Below - Title Left, Metadata Right */}
                 <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 md:gap-6">
-                  <div className="space-y-1">
-                    <h3 className="font-heading text-2xl md:text-3xl lg:text-4xl font-normal text-foreground">
+                  <div className="space-y-2">
+                    <h3 className="font-heading text-2xl md:text-3xl lg:text-4xl font-normal text-foreground group-hover:text-primary transition-colors duration-300">
                       {project.title}
                     </h3>
                     <p className="font-body text-sm md:text-base text-foreground/60">
                       {project.subtitle}
                     </p>
+                    {/* Interactive tags */}
+                    <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-0.5 rounded-full border border-border/30 bg-surface-elevated/40 text-[10px] font-body uppercase tracking-wider text-foreground/50 transition-colors hover:border-primary/40 hover:text-primary"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                   <div className="font-body text-xs md:text-sm uppercase tracking-[0.15em] text-foreground/50 whitespace-nowrap">
                     {project.metadata}

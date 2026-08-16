@@ -13,7 +13,6 @@ export const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Collapse navigation after scrolling 100px
       setIsScrolled(window.scrollY > 100);
     };
 
@@ -21,9 +20,7 @@ export const Navigation = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
-    // Initial check
     handleResize();
-
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleResize);
     return () => {
@@ -62,7 +59,7 @@ export const Navigation = () => {
               </p>
             </div>
           )}
-          
+
           {/* Scrolled - Just show minimal spacing */}
           {isScrolled && <div className="md:hidden" />}
 
@@ -108,7 +105,7 @@ export const Navigation = () => {
               <button
                 type="button"
                 onClick={() => setMenuOpen((prev) => !prev)}
-                className="rounded-full border border-border/30 bg-background/60 p-2 text-foreground transition-all hover:border-primary hover:text-primary"
+                className="rounded-full border border-border/30 bg-background/60 p-2 text-foreground transition-all hover:border-primary hover:text-primary cursor-pointer"
                 aria-label="Toggle navigation menu"
                 aria-expanded={menuOpen}
               >

@@ -50,6 +50,7 @@ import {
   shouldUseAiFallback,
   type FallbackQuotaState,
 } from "@/lib/chatbotAiFallback";
+import { getNeedleStatus, type NeedleStatus } from "@/lib/chatbotNeedleFallback";
 import {
   collapseWhitespace,
   isMeaningfulText,
@@ -214,6 +215,16 @@ export const ChatBot = () => {
     [],
   );
 
+  /* Which brain is answering — the local Needle model or the cloud API.
+     Polled while open: the model may finish warming after the panel mounts. */
+  const [needleStatus, setNeedleStatus] = useState<NeedleStatus>(getNeedleStatus());
+  useEffect(() => {
+    if (!isChatOpen) return;
+    setNeedleStatus(getNeedleStatus());
+    const id = window.setInterval(() => setNeedleStatus(getNeedleStatus()), 1500);
+    return () => window.clearInterval(id);
+  }, [isChatOpen]);
+
   /* ─── message helpers ──────────────────────────────────── */
 
   const pushAssistantMessage = (content: string, suggestions?: string[]) => {
@@ -369,6 +380,13 @@ export const ChatBot = () => {
                     style={{ originX: 0 }}
                     className="h-px bg-gradient-to-r from-primary/70 to-transparent mt-0.5"
                   />
+                  <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.25em] text-foreground/35">
+                    {needleStatus === "ready"
+                      ? "local model · in-browser"
+                      : needleStatus === "loading"
+                        ? "local model · warming"
+                        : "cloud fallback · api"}
+                  </p>
                 </div>
                 <motion.button
                   onClick={handleCloseChat}

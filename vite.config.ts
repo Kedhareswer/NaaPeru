@@ -8,6 +8,10 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    headers: {
+      "Cross-Origin-Opener-Policy": "same-origin",
+      "Cross-Origin-Embedder-Policy": "require-corp",
+    },
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
@@ -24,5 +28,9 @@ export default defineConfig(({ mode }) => ({
         },
       },
     },
+    target: "esnext",
+  },
+  optimizeDeps: {
+    exclude: ["needle"],
   },
 }));

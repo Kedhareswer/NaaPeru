@@ -282,41 +282,56 @@ All colors MUST be HSL.
 }
 
 /* ─── Archive gallery stage ───
-   The studies are Kedhar's work on display, not the portfolio's own chrome —
-   so they get their own skin. Every demo in UniquePreview.tsx already draws
-   with hsl(var(--card)) / var(--primary) / var(--border), so redefining the
-   tokens here re-skins all 100 studies without touching their source.
-   Warm off-white gallery wall, white exhibit cards, neutral graphite accent. */
+   One dark identity across the whole portfolio — the gallery is no longer a
+   light wall. Every study draws with hsl(var(--card)) / var(--primary) /
+   var(--border), so this token block re-skins all of them at once.
+   The one rule that must survive: the wall and the exhibits stay far enough
+   apart in value that a demo drawing bg-card is legible against a
+   bg-background frame (the global dark theme fails this — --card and
+   --background are both 220 26% 7% — so --card is lifted here). */
 .kit-stage {
-  /* The wall and the exhibits must stay far enough apart in value that a demo
-     drawing itself with bg-card is legible against a bg-background frame.
-     The dark theme failed this (--card and --background were both 220 26% 7%),
-     which is why studies like "Stack fan" rendered as empty rectangles. */
-  --background: 43 22% 91%;
-  --foreground: 36 14% 7%;
-  --card: 0 0% 100%;
-  --card-foreground: 36 14% 7%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 36 14% 7%;
-  --border: 40 15% 80%;
-  --input: 40 15% 80%;
-  --muted: 41 14% 87%;
-  --muted-foreground: 36 6% 42%;
-  --primary: 30 4% 32%;
+  --background: 220 26% 7%;
+  --foreground: 0 0% 100%;
+  --card: 220 20% 12%;
+  --card-foreground: 0 0% 100%;
+  --popover: 220 20% 12%;
+  --popover-foreground: 0 0% 100%;
+  --border: 0 0% 22%;
+  --input: 0 0% 22%;
+  --muted: 220 22% 10%;
+  --muted-foreground: 0 0% 62%;
+  --primary: 5 78% 42%;
   --primary-foreground: 0 0% 100%;
-  --primary-hover: 30 4% 24%;
-  --primary-glow: 30 4% 32%;
-  --accent: 30 4% 32%;
+  --primary-hover: 5 82% 36%;
+  --primary-glow: 5 78% 42%;
+  --accent: 5 78% 42%;
   --accent-foreground: 0 0% 100%;
-  --ring: 30 4% 32%;
-  --surface-subtle: 43 18% 87%;
-  --surface-elevated: 0 0% 100%;
+  --ring: 5 78% 42%;
+  --surface-subtle: 220 22% 10%;
+  --surface-elevated: 220 20% 15%;
   /* demos retype to a neutral sans — Space Grotesk is the portfolio's voice */
   --font-heading: "Inter";
   --font-body: "Inter";
 
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
+}
+
+/* Studies own internal scrollers — the OS default scrollbar reads as a bright
+   strip on the dark wall, so restyle it to the gallery's hairline. */
+.kit-stage * {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+.kit-stage *::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.kit-stage *::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+}
+.kit-stage *::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 /* Gallery chrome (wall labels) — serif, deliberately unlike the portfolio.

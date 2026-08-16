@@ -28,7 +28,7 @@ const Archive = () => {
     <div className="min-h-screen bg-background">
       <Seo
         title="Archive — motion studies | Kedhar"
-        description={`${STUDY_COUNT} interaction studies in camera optics: aperture, focus, shutter. Each one solves a stated interface problem.`}
+        description={`${STUDY_COUNT} interaction studies in camera optics and liquid physics. Each one solves a stated interface problem.`}
         path="/archive"
         image="/og-work.png"
         imageAlt="NaaPeru archive"
@@ -45,13 +45,13 @@ const Archive = () => {
             Motion studies
           </h1>
           <p className="mt-5 max-w-xl font-body text-base leading-relaxed text-foreground/55">
-            Eight interactions borrowed from camera optics — aperture, focus, shutter — each
-            built to solve one interface problem. Every study states what the motion is for.
+            Interactions borrowed from camera optics and liquid physics — each built to solve
+            one interface problem. Every study states what the motion is for.
           </p>
         </section>
 
         {/* ── Gallery: its own surface, its own type. Not the portfolio's skin. ── */}
-        <section id="kit" className="kit-stage scroll-mt-28 border-y border-black/10">
+        <section id="kit" className="kit-stage scroll-mt-28 border-y border-border/20">
           <div className="container-portfolio grid gap-0 py-14 md:py-20 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] lg:gap-14">
             {/* Index */}
             <aside className="lg:sticky lg:top-28 lg:self-start">
@@ -189,7 +189,7 @@ const Archive = () => {
         </section>
       </main>
 
-      <Footer quote="Eight studies. Each one answers a question." />
+      <Footer quote={`${STUDY_COUNT} studies. Each one answers a question.`} />
     </div>
   );
 };
