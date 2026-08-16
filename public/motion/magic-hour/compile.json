@@ -1,0 +1,92 @@
+{
+  "study": "magic-hour",
+  "source": "https://www.pinterest.com/pin/128282289381536118/ (720x1280, 30fps, 303 frames)",
+  "pipeline": "oil-motion: probe -> motion_budget --strict -> 48fps interpolation -> loop-seam cleanup (seam@477, 207 near-duplicates dropped, tail trimmed) -> all-intra H.264 encode",
+  "delivery": {
+    "selected": "chroma-video",
+    "runtime": "webgl-chroma-video",
+    "reasonCodes": [
+      "long-linear-sequence"
+    ],
+    "atlasWithinBudget": false,
+    "thresholds": {
+      "atlasMaxSheets": 1,
+      "atlasMaxDecodedMemoryMiB": 192.0,
+      "linearVideoMinFrames": 180
+    }
+  },
+  "budget": {
+    "display": {
+      "width": 360,
+      "height": 640,
+      "dpr": 2.0
+    },
+    "requiredCell": {
+      "width": 720,
+      "height": 1280
+    },
+    "frames": 303,
+    "texture": {
+      "maxSize": 4096,
+      "columnsPerSheet": 5,
+      "rowsPerSheet": 3,
+      "framesPerSheet": 15,
+      "sheetCount": 21
+    },
+    "decodedFrameMemoryMiB": 1065.2,
+    "sourceCheck": {
+      "width": 720,
+      "height": 1280,
+      "required_width": 720,
+      "required_height": 1280,
+      "width_ratio": 1.0,
+      "height_ratio": 1.0,
+      "passes": true
+    },
+    "cellCheck": null,
+    "temporalCheck": {
+      "scrollPages": 5.0,
+      "framesPerPage": 60.6,
+      "targetFramesPerPage": 24.0,
+      "requiredFrames": 120,
+      "passes": true
+    },
+    "driver": "scroll",
+    "parameterSpace": "linear",
+    "access": "sequential",
+    "delivery": {
+      "selected": "chroma-video",
+      "runtime": "webgl-chroma-video",
+      "reasonCodes": [
+        "long-linear-sequence"
+      ],
+      "atlasWithinBudget": false,
+      "thresholds": {
+        "atlasMaxSheets": 1,
+        "atlasMaxDecodedMemoryMiB": 192.0,
+        "linearVideoMinFrames": 180
+      }
+    },
+    "failures": [],
+    "passes": true
+  },
+  "assets": {
+    "desktop": {
+      "file": "scrub-desktop.mp4",
+      "size": "720x1280",
+      "frames": 271,
+      "fps": 48,
+      "gop": 1
+    },
+    "mobile": {
+      "file": "scrub-mobile.mp4",
+      "size": "640x1138",
+      "frames": 271,
+      "fps": 48,
+      "gop": 1
+    },
+    "poster": "poster.jpg"
+  },
+  "runtime": "src/lib/motion/interactiveMotion.ts — scroll progress -> smoothDamp -> integer frame -> video.currentTime (serialized seeks)",
+  "note": "Full-frame footage: chroma keying not applicable (route C, existing video). Page background independent; reduced-motion falls back to poster."
+}

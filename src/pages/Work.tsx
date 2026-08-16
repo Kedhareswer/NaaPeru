@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
+import { CrowFooter } from "@/components/CrowFooter";
 import { WorkHero } from "@/components/WorkHero";
 import { InfiniteMarquee } from "@/components/InfiniteMarquee";
 import { WorkProjects } from "@/components/WorkProjects";
@@ -68,14 +68,14 @@ const Work = () => {
       />
       {loading && <LoadingScreen onComplete={handleLoadingComplete} />}
       
-      <div className={loading ? "hidden" : "block overflow-x-hidden"}>
+      <div className={loading ? "hidden" : "block overflow-x-clip"}>
         <Navigation />
-        <main className="overflow-x-hidden">
+        <main className="overflow-x-clip">
           <WorkHero />
           <InfiniteMarquee />
           <WorkProjects />
         </main>
-        <Footer quote="Design with intent. Engineer with care." />
+        <CrowFooter quote="Design with intent. Engineer with care." />
       </div>
     </>
   );

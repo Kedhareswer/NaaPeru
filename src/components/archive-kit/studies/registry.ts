@@ -7,6 +7,8 @@ import FilmStrip from "./FilmStrip";
 import FocusPull from "./FocusPull";
 import ExifInspector from "./ExifInspector";
 import ExposureCurve from "./ExposureCurve";
+import MagicHour from "./MagicHour";
+import StillLife from "./StillLife";
 import {
   SelectionMatStudy,
   PolyglotPillStudy,
@@ -15,7 +17,7 @@ import {
   ApertureDialStudy,
 } from "./LiquidStudies";
 
-export type StudyGroup = "Reveal" | "Browse" | "Focus" | "Inspect" | "Liquid";
+export type StudyGroup = "Reveal" | "Browse" | "Focus" | "Inspect" | "Liquid" | "Scrub";
 
 export type Study = {
   id: string;
@@ -32,6 +34,32 @@ export type Study = {
 };
 
 export const STUDIES: Study[] = [
+  // Scrub studies lead: the array order is the visit order, and the archive
+  // opens on STUDIES[0]. Accession ids stay stable — they are not positions.
+  {
+    id: "14",
+    slug: "magic-hour",
+    title: "Magic hour",
+    group: "Scrub",
+    purpose:
+      "Time itself as the scrub axis. A looping render normally autoplays — the clip decides the pace and you wait through the night. Mapping scroll onto the timeline hands the viewer the clock: the sun sets, the moon crosses, dawn returns exactly as fast as they ask, and backwards works too.",
+    technique:
+      "Cinemagraph recompiled to an all-keyframe scrub video (oil-motion pipeline: 48 fps interpolation, loop-seam cleanup), scroll smooth-damped onto integer frames driving currentTime",
+    invite: "Scroll to turn the sky",
+    Component: MagicHour,
+  },
+  {
+    id: "15",
+    slug: "still-life",
+    title: "Still life",
+    group: "Scrub",
+    purpose:
+      "Growth as the scrub axis. The source clip autoplays seventeen seconds of bloom and decides your pace; here scroll is the stem — a single flower becomes the whole bouquet, the vase re-throws itself five times along the way, and pulling back ungrows it.",
+    technique:
+      "527-frame measured rebuild of a Pinterest render (background plates + per-frame sprites, Real-ESRGAN 4x), exported as a 130-frame WebP sequence, scroll smooth-damped onto integer frames drawn to canvas",
+    invite: "Scroll to grow the bouquet",
+    Component: StillLife,
+  },
   {
     id: "01",
     slug: "aperture-reveal",
@@ -177,6 +205,6 @@ export const STUDIES: Study[] = [
   },
 ];
 
-export const STUDY_GROUPS: StudyGroup[] = ["Reveal", "Browse", "Focus", "Inspect", "Liquid"];
+export const STUDY_GROUPS: StudyGroup[] = ["Scrub", "Reveal", "Browse", "Focus", "Inspect", "Liquid"];
 
 export const STUDY_COUNT = STUDIES.length;
