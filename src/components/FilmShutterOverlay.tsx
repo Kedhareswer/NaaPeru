@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useLayoutEffect, useRef, useCallback } from "react";
 import { useTransition, TRANSITION_TIMING } from "@/contexts/TransitionContext";
 
 const NUM_BARS = 7;
@@ -11,6 +11,7 @@ export const FilmShutterOverlay = () => {
   const scanlineRef = useRef<HTMLDivElement>(null);
   const carriedRef = useRef<HTMLDivElement>(null);
   const barsRef = useRef<HTMLDivElement[]>([]);
+  const labelTextRef = useRef<HTMLHeadingElement>(null);
   const prevStateRef = useRef(state);
 
   const setBarRef = useCallback(
@@ -19,6 +20,44 @@ export const FilmShutterOverlay = () => {
     },
     [],
   );
+
+  /**
+   * Fit the ghost word to the viewport.
+   *
+   * A single font-size clamp cannot serve these labels: they run from "WORK"
+   * (4 characters) to "DATA NOTEBOOK" (13), and the word is set `nowrap` and
+   * centred with translate(-50%). The old `clamp(8rem, 18vw, 20rem)` had a
+   * floor of 8rem, so a 390px phone rendered ARCHIVE at 128px — about 525px
+   * wide — and clipped it off BOTH edges. Every label longer than about six
+   * characters lost letters on a phone.
+   *
+   * Measuring is the only thing that actually holds for arbitrary label length
+   * and arbitrary viewport, so the size is measured and scaled to fit rather
+   * than guessed. The scale lands on the <h2>, not the wrapper, so it does not
+   * fight the wrapper's centring transform (which the state machine also
+   * animates); transform-origin stays centred, so the word stays centred.
+   */
+  useLayoutEffect(() => {
+    const el = labelTextRef.current;
+    if (!el || !targetLabel) return;
+
+    const fit = () => {
+      el.style.transform = "scale(1)";
+      const available = window.innerWidth * 0.9; // leave a margin either side
+      const natural = el.scrollWidth;
+      el.style.transform = natural > available ? `scale(${available / natural})` : "scale(1)";
+    };
+
+    fit();
+    // The heading webfont can land after the first measure and change metrics.
+    document.fonts?.ready.then(fit).catch(() => {});
+    window.addEventListener("resize", fit);
+    window.addEventListener("orientationchange", fit);
+    return () => {
+      window.removeEventListener("resize", fit);
+      window.removeEventListener("orientationchange", fit);
+    };
+  }, [targetLabel]);
 
   useEffect(() => {
     const prev = prevStateRef.current;
@@ -220,8 +259,15 @@ export const FilmShutterOverlay = () => {
         }}
       >
         <h2
+          ref={labelTextRef}
           className="font-heading font-bold tracking-tighter text-foreground/5 leading-none"
-          style={{ fontSize: "clamp(8rem, 18vw, 20rem)" }}
+          style={{
+            // Floor dropped from 8rem: it was the clipping. The measured fit
+            // above is the guarantee; this is just a sane starting size.
+            fontSize: "clamp(2.5rem, 16vw, 20rem)",
+            transformOrigin: "center",
+            willChange: "transform",
+          }}
         >
           {targetLabel}
         </h2>

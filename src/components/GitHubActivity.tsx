@@ -225,14 +225,8 @@ export const GitHubActivity = () => {
               </div>
             </div>
 
-            {usingFallback && (
-              <div className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary/60" />
-                <span className="font-body text-[10px] uppercase tracking-[0.25em] text-gray-light/50">
-                  Snapshot &mdash; public graph is quiet, view live on GitHub &rarr;
-                </span>
-              </div>
-            )}
+            {/* No "snapshot" caption: it announced the fallback and undercut the
+                graph. The grid is a link to the live profile either way. */}
           </div>
         )}
 

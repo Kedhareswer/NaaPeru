@@ -32,15 +32,11 @@ export const Navigation = () => {
   const menuItems = [
     { path: "/", label: "WORK" },
     { path: "/fun", label: "EXPERIMENTOS" },
-    { path: "/inspo", label: "INSPO" },
     { path: "/about", label: "ABOUT" },
     { path: "/archive", label: "ARCHIVE" },
   ];
 
-  const isActive = (path: string) =>
-    path === "/inspo"
-      ? location.pathname.startsWith("/inspo")
-      : location.pathname === path;
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-40 bg-transparent transition-all duration-slow">

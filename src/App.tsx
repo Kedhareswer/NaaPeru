@@ -18,8 +18,6 @@ const ArchiveVariant = lazy(() => import("./pages/ArchiveVariant"));
 const LabPreloaderInk = lazy(() => import("./pages/LabPreloaderInk"));
 const LabPreloaderShutter = lazy(() => import("./pages/LabPreloaderShutter"));
 const LabProcess = lazy(() => import("./pages/LabProcess"));
-const Inspo = lazy(() => import("./pages/Inspo"));
-const InspoDetail = lazy(() => import("./pages/InspoDetail"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ChatBot = lazy(() =>
   import("@/components/ChatBot").then((module) => ({
@@ -62,8 +60,6 @@ const AnimatedRoutes = () => {
             <Route path="/lab/preloader-ink" element={<LabPreloaderInk />} />
             <Route path="/lab/preloader-shutter" element={<LabPreloaderShutter />} />
             <Route path="/lab/process" element={<LabProcess />} />
-            <Route path="/inspo" element={<Inspo />} />
-            <Route path="/inspo/:slug" element={<InspoDetail />} />
             <Route path="/case-study/quantumpdf" element={<CaseStudyQuantumPDF />} />
             <Route path="/case-study/thesisflow" element={<CaseStudyThesisFlow />} />
             <Route path="/case-study/data-notebook" element={<CaseStudyDataNotebook />} />

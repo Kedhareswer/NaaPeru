@@ -184,6 +184,7 @@ const ShipSprite = () => (
 const NotFound = () => {
   const location = useLocation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const bgVideoRef = useRef<HTMLVideoElement>(null);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [gameState, setGameState] = useState<"splash" | "playing" | "gameover">("splash");
@@ -192,6 +193,13 @@ const NotFound = () => {
     const s = localStorage.getItem("naaperu-404-hi-score");
     return s ? parseInt(s) : 0;
   });
+  // Read once: this only gates which element the splash renders, and re-reading it
+  // per render would not change anything mid-session.
+  const [reduceMotion] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
   const [activePowerUps, setActivePowerUps] = useState<{ shield: number; rapid: number; multi: number }>({ shield: 0, rapid: 0, multi: 0 });
   const [permanentActive, setPermanentActive] = useState<{ triple: boolean; turbo: boolean }>({ triple: false, turbo: false });
 
@@ -600,7 +608,18 @@ const NotFound = () => {
     </button>
   );
 
-  // === SPLASH SCREEN — 404 themed ===
+  // === SPLASH SCREEN — pixel-art attract screen ===
+  // The "404" is NOT in this markup. It is baked into the artwork itself, standing in
+  // the archway as lit stone with the fog and light shaft passing across it (see the
+  // 404-screen rebuild in the after-effects tree). A DOM title over the video read as
+  // an overlay no matter how it was styled, because it was one. Consequences here:
+  //   - the scrim is a bottom gradient only, never a full-frame wash, or it would
+  //     dim the title along with the scene;
+  //   - the only <h1> is screen-reader/SEO text, since the visible one is pixels;
+  //   - the CTA lives in the lower band, which stays dark at every crop.
+  // The loop is a ping-pong: the source clip does not loop on its own, so it plays
+  // forward then backward -- seamless by construction, and over ambient fog it reads
+  // as the wind changing rather than as rewind.
   if (gameState === "splash") {
     return (
       <>
@@ -610,87 +629,106 @@ const NotFound = () => {
           path="/404"
           noindex
         />
-        <div className="relative min-h-screen w-full bg-background text-foreground overflow-hidden flex flex-col">
-          {/* Background effects */}
+        <div className="relative min-h-screen w-full overflow-hidden bg-[#181A1A] text-foreground flex flex-col">
+          {/* Pixel-art scene. Poster is frame 0 of the same loop, so the first paint
+              matches the video exactly and there is no swap flash. Under
+              prefers-reduced-motion the poster is all that renders. */}
           <div className="absolute inset-0 z-0">
-            <div className="game-stars-bg absolute w-1 h-1" />
-            <div className="game-stars-bg absolute w-[2px] h-[2px] opacity-50" style={{ animationDuration: "120s", left: "10%" }} />
-            <div className="absolute inset-0 game-hud-scanline pointer-events-none z-50" />
+            {reduceMotion ? (
+              <img
+                src="/404-bg-poster.jpg"
+                alt=""
+                aria-hidden="true"
+                className="h-full w-full object-cover"
+                style={{ imageRendering: "pixelated", objectPosition: "56% 50%" }}
+              />
+            ) : (
+              <video
+                ref={bgVideoRef}
+                className="h-full w-full object-cover"
+                style={{ imageRendering: "pixelated", objectPosition: "56% 50%" }}
+                src="/404-bg.mp4"
+                poster="/404-bg-poster.jpg"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                aria-hidden="true"
+                tabIndex={-1}
+              />
+            )}
+            {/* Bottom-weighted scrim only. The chrome and CTA need a ground to sit
+                on, but the arch -- and the baked title inside it -- must stay at full
+                brightness, so nothing washes the middle of the frame. */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to bottom, rgba(24,26,26,0.55) 0%, rgba(24,26,26,0.04) 20%, rgba(24,26,26,0.04) 46%, rgba(24,26,26,0.55) 68%, rgba(24,26,26,0.9) 84%, rgba(24,26,26,0.97) 100%)",
+              }}
+            />
+            <div className="game-hud-scanline pointer-events-none absolute inset-0 z-50 opacity-40" />
           </div>
 
           {/* Top bar */}
-          <nav className="relative z-40 w-full p-6 md:p-10 flex justify-between items-start">
+          <nav className="relative z-40 flex w-full items-start justify-between p-6 md:p-10">
             <div className="flex flex-col gap-3">
-              <div className="font-heading text-xs uppercase tracking-[0.3em] text-primary">
-                ERROR <span className="text-foreground">404</span>
+              <div className="font-pixel text-[9px] uppercase tracking-[0.2em] text-primary">
+                ERROR <span className="text-[#F8F3EC]">404</span>
               </div>
-              <div className="font-body text-xs text-muted-foreground">
-                {location.pathname}
-              </div>
+              <div className="font-body text-xs text-[#F8F3EC]/55">{location.pathname}</div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="hidden md:block font-heading text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                HI-SCORE: {String(hiScore).padStart(5, "0")}
+              <div className="hidden font-pixel text-[9px] uppercase tracking-[0.15em] text-[#F8F3EC]/55 md:block">
+                HI {String(hiScore).padStart(5, "0")}
               </div>
               <SoundToggle />
             </div>
           </nav>
 
-          {/* Main content */}
-          <main className="relative z-20 flex-grow flex flex-col items-center justify-center px-6 cursor-pointer" onClick={startGame}>
-            <div className="mb-12" style={{ animation: "game-enemy-wiggle 2s ease-in-out infinite alternate" }}>
-              <EnemySprite />
+          {/* Main content. justify-end, not center: the middle of the frame belongs
+              to the archway and the title standing in it. */}
+          <main
+            className="relative z-20 flex flex-grow cursor-pointer flex-col items-center justify-end px-6 pb-6"
+            onClick={startGame}
+          >
+            {/* The visible title is in the video. This is the one the machines read. */}
+            <h1 className="sr-only">404 — Page not found</h1>
+
+            <p className="text-center font-body text-sm text-[#F8F3EC]/70">
+              The path <span className="font-mono text-primary">{location.pathname}</span> doesn&apos;t exist.
+            </p>
+
+            <div
+              className="mt-6 font-pixel text-[10px] uppercase tracking-[0.18em] text-[#F8F3EC] md:text-xs"
+              style={{ animation: "game-blink 1s step-end infinite" }}
+            >
+              <span className="pointer-coarse:hidden">Press Space to Start</span>
+              <span className="hidden pointer-coarse:inline">Tap to Start</span>
             </div>
 
-            <h1 className="font-heading text-[20vw] md:text-[14vw] lg:text-[10vw] leading-none text-foreground/10 text-center select-none relative">
-              404
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="font-heading text-3xl md:text-5xl lg:text-6xl text-foreground tracking-tight">
-                  Page not found.
-                </span>
-                <span className="mt-3 font-body text-sm md:text-base text-muted-foreground max-w-md text-center">
-                  The path <span className="font-mono text-primary">{location.pathname}</span> doesn&apos;t exist. Shoot some aliens instead.
-                </span>
-              </div>
-            </h1>
-
-            <div className="mt-10 flex items-center gap-4">
-              <div className="w-[8vw] h-[8vw] max-w-[60px] max-h-[60px]" style={{ animation: "game-float-ship 3s ease-in-out infinite" }}>
-                <ShipSprite />
-              </div>
-            </div>
-
-            <div className="mt-8 font-heading text-xs uppercase tracking-[0.3em] text-primary" style={{ animation: "game-blink 1s step-end infinite" }}>
-              PRESS SPACE OR CLICK TO PLAY
-            </div>
-
-            <div className="mt-3 font-body text-[10px] text-muted-foreground text-center leading-relaxed uppercase tracking-widest">
-              ARROWS / WASD TO MOVE &middot; SPACE / UP TO SHOOT
+            <div className="mt-4 text-center font-pixel text-[7px] uppercase leading-relaxed tracking-[0.15em] text-[#F8F3EC]/45 md:text-[8px]">
+              <span className="pointer-coarse:hidden">Arrows / WASD to move &middot; Space to shoot</span>
+              <span className="hidden pointer-coarse:inline">Drag to move &middot; Tap to shoot</span>
             </div>
           </main>
 
           {/* Footer */}
           <footer className="relative z-30 w-full p-6 md:p-10">
-            <div className="flex justify-between items-center border-t border-border/20 pt-6">
+            <div className="flex items-center justify-between border-t border-[#F8F3EC]/15 pt-6">
               <Link
                 to="/"
-                className="group inline-flex items-center gap-2 font-heading text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:text-primary"
+                className="group inline-flex items-center gap-2 font-pixel text-[9px] uppercase tracking-[0.15em] text-[#F8F3EC]/60 transition-colors hover:text-primary"
               >
                 <ArrowLeft className="h-3 w-3 transition-transform group-hover:-translate-x-1" />
                 Back to Home
               </Link>
-              <div className="font-body text-[10px] text-foreground/20">
-                KEDHAR SOFT &middot; 404 DEFENSE SYSTEM
+              <div className="font-pixel text-[7px] uppercase tracking-[0.15em] text-[#F8F3EC]/25">
+                KEDHAR SOFT
               </div>
             </div>
           </footer>
-
-          {/* Decorative elements */}
-          <div className="absolute inset-0 z-10 pointer-events-none opacity-30">
-            <div className="absolute top-[20%] left-[15%] w-0.5 h-6 bg-primary animate-pulse" />
-            <div className="absolute bottom-[35%] right-[20%] w-0.5 h-4 bg-foreground/50" />
-            <div className="absolute top-[50%] right-[10%] w-1 h-1 bg-foreground" />
-          </div>
         </div>
       </>
     );

@@ -294,90 +294,76 @@ export const About = () => {
             </div>
           </div>
 
-          <div className="space-y-8">
-            {educationData.map((edu, index) => (
-              <div
-                key={index}
-                className="group relative overflow-hidden border border-border/20 bg-card/40 backdrop-blur transition-all duration-normal hover:border-primary/40 hover:bg-card/60"
-              >
-                <div className="absolute left-0 top-0 h-full w-1 bg-primary/60" />
-                <div className="grid gap-6 p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr),minmax(0,1.35fr)]">
-                  <div className="flex flex-col justify-between gap-6">
-                    <div className="space-y-1.5">
-                      <h3 className="font-body text-sm font-semibold uppercase tracking-[0.25em] text-primary">
+          <div className="space-y-5">
+            {educationData.map((edu, index) => {
+              // "CGPA: 7.74" -> label + value, so the number can be set as a stat
+              // instead of buried in a sentence fragment.
+              const [gradeLabel, gradeValue] = edu.grade.includes(":")
+                ? edu.grade.split(":").map((part) => part.trim())
+                : ["Result", edu.grade];
+
+              return (
+                <article
+                  key={index}
+                  className="group relative overflow-hidden border border-border/20 bg-card/40 backdrop-blur transition-colors duration-fast ease-confident hover:border-primary/40 hover:bg-card/60"
+                >
+                  {/* Left rule thickens on hover — the one moving part, and it
+                      moves 1px. Enough to acknowledge the pointer, not enough to
+                      shift anything around it. */}
+                  <span
+                    aria-hidden
+                    className="absolute left-0 top-0 h-full w-[2px] bg-primary/50 transition-[width,background-color] duration-fast ease-confident group-hover:w-[3px] group-hover:bg-primary"
+                  />
+
+                  <div className="p-6 sm:p-8">
+                    {/* Header rule: who, and when. The period was floating loose
+                        under the institution; opposite it, the pair reads as one
+                        line and the dates stay scannable down the column. */}
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-border/15 pb-4">
+                      <h3 className="font-body text-xs font-semibold uppercase tracking-[0.25em] text-primary sm:text-sm">
                         {edu.institution}
                       </h3>
-                      <div className="space-y-1">
-                        <p className="font-body text-xs uppercase tracking-[0.3em] text-gray-light/70">
-                          {edu.period}
+                      <p className="font-body text-[11px] uppercase tracking-[0.28em] text-gray-light/60">
+                        {edu.period}
+                      </p>
+                    </div>
+
+                    {/* Degree carries the weight; the grade sits opposite it as a
+                        stat rather than as a stray label at the far edge of the
+                        card, so the two things a reader actually scans for are on
+                        the same line. */}
+                    <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between sm:gap-10">
+                      <div className="min-w-0 space-y-1.5">
+                        <h4 className="font-heading text-xl font-semibold leading-tight text-foreground sm:text-2xl">
+                          {edu.degree}
+                        </h4>
+                        {edu.specialization && (
+                          <p className="font-body text-sm text-primary/80">
+                            {edu.specialization}
+                          </p>
+                        )}
+                      </div>
+                      <div className="shrink-0 sm:text-right">
+                        <p className="font-body text-[10px] uppercase tracking-[0.3em] text-gray-light/50">
+                          {gradeLabel}
                         </p>
-                        <p className="font-body text-xs text-gray-light/60">
-                          {edu.location}
+                        <p className="mt-1 font-heading text-2xl leading-none text-foreground sm:text-3xl">
+                          {gradeValue}
                         </p>
                       </div>
                     </div>
-                    <div className="space-y-1.5">
-                      <h4 className="font-heading text-xl sm:text-2xl font-semibold text-foreground leading-tight">
-                        {edu.degree}
-                      </h4>
-                      {edu.specialization && (
-                        <p className="font-body text-sm text-primary/80">
-                          {edu.specialization}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex flex-col justify-between gap-6">
-                    <p className="font-body text-sm sm:text-base text-gray-light leading-relaxed">
+
+                    <p className="mt-5 max-w-2xl font-body text-sm leading-relaxed text-gray-light sm:text-base">
                       {edu.description}
                     </p>
-                    <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr),auto] sm:items-center">
-                      <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-                        <span className="inline-flex h-px w-8 bg-primary/40" />
-                        <span className="relative inline-block h-16 w-16 sm:h-18 sm:w-18 select-none text-[#0b7a52]" aria-label={`${edu.status} stamp`} title={edu.status}>
-                          <svg viewBox="0 0 100 100" className="h-full w-full" aria-hidden>
-                            <defs>
-                              <filter id="roughen" x="-10%" y="-10%" width="120%" height="120%">
-                                <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="noise" />
-                                <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2" xChannelSelector="R" yChannelSelector="G" />
-                              </filter>
-                            </defs>
-                            <g filter="url(#roughen)">
-                              {/* faint ink fill */}
-                              <circle cx="50" cy="50" r="48" fill="currentColor" opacity="0.12" />
-                              {/* main ring */}
-                              <circle cx="50" cy="50" r="44" stroke="currentColor" strokeWidth="3.25" fill="none" opacity="0.95" />
-                              {/* secondary imperfect ring */}
-                              <g transform="translate(1 1)">
-                                <circle cx="49" cy="49" r="41" stroke="currentColor" strokeWidth="1.6" strokeDasharray="3 2" fill="none" opacity="0.55" />
-                              </g>
-                              {/* text */}
-                              <g transform="rotate(-8 50 50)">
-                                <text
-                                  x="50"
-                                  y="53"
-                                  textAnchor="middle"
-                                  fill="currentColor"
-                                  fontWeight="900"
-                                  dominantBaseline="middle"
-                                  fontSize={(edu.status?.length ?? 6) > 10 ? 10 : (edu.status?.length ?? 6) > 7 ? 12 : 15}
-                                  style={{ letterSpacing: (edu.status?.length ?? 6) > 10 ? '0.8px' : (edu.status?.length ?? 6) > 7 ? '1.2px' : '1.8px' }}
-                                >
-                                  {(edu.status?.toUpperCase?.() || 'STATUS') as unknown as string}
-                                </text>
-                              </g>
-                            </g>
-                          </svg>
-                        </span>
-                      </div>
-                      <span className="font-body text-sm font-semibold text-foreground sm:text-base">
-                        {edu.grade}
-                      </span>
-                    </div>
+
+                    <p className="mt-5 font-body text-xs text-gray-light/50">
+                      {edu.location}
+                    </p>
                   </div>
-                </div>
-              </div>
-            ))}
+                </article>
+              );
+            })}
           </div>
         </div>
 

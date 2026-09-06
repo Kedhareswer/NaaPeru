@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 export default {
   darkMode: ["class"],
@@ -20,6 +21,9 @@ export default {
         body: ['var(--font-body, "Inter")', 'sans-serif'],
         "inspo-serif": ['"Instrument Serif"', "Georgia", "Times New Roman", "serif"],
         "inspo-mono": ['"IBM Plex Mono"', "ui-monospace", "monospace"],
+        // Loaded in index.html. NotFound's canvas already drew with this family
+        // by name; before it was added to the font request it fell back silently.
+        pixel: ['"Press Start 2P"', "ui-monospace", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -162,5 +166,15 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    // pointer-coarse: / pointer-fine: are built in from Tailwind v4; this project is
+    // on 3.4, so register them here. Used to split touch vs keyboard copy on the 404
+    // attract screen -- pointer type, not viewport width, is what decides whether
+    // "Press Space" is an instruction the visitor can actually follow.
+    plugin(({ addVariant }) => {
+      addVariant("pointer-coarse", "@media (pointer: coarse)");
+      addVariant("pointer-fine", "@media (pointer: fine)");
+    }),
+  ],
 } satisfies Config;

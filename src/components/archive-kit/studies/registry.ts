@@ -1,12 +1,9 @@
 import type { ComponentType } from "react";
-import ApertureReveal from "./ApertureReveal";
 import ShutterCut from "./ShutterCut";
 import ContactSheet from "./ContactSheet";
 import RackFocus from "./RackFocus";
 import FilmStrip from "./FilmStrip";
 import FocusPull from "./FocusPull";
-import ExifInspector from "./ExifInspector";
-import ExposureCurve from "./ExposureCurve";
 import MagicHour from "./MagicHour";
 import StillLife from "./StillLife";
 import {
@@ -17,7 +14,7 @@ import {
   ApertureDialStudy,
 } from "./LiquidStudies";
 
-export type StudyGroup = "Reveal" | "Browse" | "Focus" | "Inspect" | "Liquid" | "Scrub";
+export type StudyGroup = "Reveal" | "Browse" | "Focus" | "Liquid" | "Scrub";
 
 export type Study = {
   id: string;
@@ -59,17 +56,6 @@ export const STUDIES: Study[] = [
       "527-frame measured rebuild of a Pinterest render (background plates + per-frame sprites, Real-ESRGAN 4x), exported as a 130-frame WebP sequence, scroll smooth-damped onto integer frames drawn to canvas",
     invite: "Scroll to grow the bouquet",
     Component: StillLife,
-  },
-  {
-    id: "01",
-    slug: "aperture-reveal",
-    title: "Aperture reveal",
-    group: "Reveal",
-    purpose:
-      "Paces a reveal to reading position. The caption only lands once the frame is fully open, so the image is never competing with the text for attention.",
-    technique: "Scroll-linked hexagonal clip-path, blades unwinding as they retract",
-    invite: "Scroll inside the frame",
-    Component: ApertureReveal,
   },
   {
     id: "02",
@@ -125,28 +111,6 @@ export const STUDIES: Study[] = [
     technique: "Distance-derived blur and contrast falloff, pointer and keyboard sharing one focus index",
     invite: "Move down the list",
     Component: FocusPull,
-  },
-  {
-    id: "07",
-    slug: "exif-inspector",
-    title: "EXIF inspector",
-    group: "Inspect",
-    purpose:
-      "Binds an explanation to the exact thing it explains. A numbered legend makes the reader do the matching; a drawn connector removes the ambiguity entirely.",
-    technique: "SVG connectors animated by stroke-dashoffset, percentage-anchored hotspots",
-    invite: "Hover a marker",
-    Component: ExifInspector,
-  },
-  {
-    id: "08",
-    slug: "exposure-curve",
-    title: "Exposure curve",
-    group: "Inspect",
-    purpose:
-      "Shows the cost of an edit, not just the result. Most sliders hide what they destroy; pairing the image with a live histogram makes clipping visible at the moment it happens, so the control teaches while it works.",
-    technique: "Native range inputs driving CSS filters and a recomputed luminance distribution",
-    invite: "Drag the sliders",
-    Component: ExposureCurve,
   },
   {
     id: "09",
@@ -205,6 +169,6 @@ export const STUDIES: Study[] = [
   },
 ];
 
-export const STUDY_GROUPS: StudyGroup[] = ["Scrub", "Reveal", "Browse", "Focus", "Inspect", "Liquid"];
+export const STUDY_GROUPS: StudyGroup[] = ["Scrub", "Reveal", "Browse", "Focus", "Liquid"];
 
 export const STUDY_COUNT = STUDIES.length;
